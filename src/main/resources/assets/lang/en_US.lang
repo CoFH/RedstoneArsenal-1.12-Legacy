@@ -1,0 +1,33 @@
+#en_US
+
+death.attack.flux=%1$s had their reality torn apart by Flux!
+death.attack.flux.player=%1$s was Fluxed to death by %2$s!
+
+info.redstonearsenal.tool.chargeOn=to Empower
+info.redstonearsenal.tool.chargeOff=to Quell
+info.redstonearsenal.tool.energyPerUse=RF Per Use
+info.redstonearsenal.tool.shovel=Also serves as a Hoe.
+info.redstonearsenal.tool.wrench=Also serves as Shears.
+
+item.redstonearsenal.material.dustElectrumFlux.name=Fluxed Electrum Blend
+item.redstonearsenal.material.ingotElectrumFlux.name=Fluxed Electrum Ingot
+item.redstonearsenal.material.nuggetElectrumFlux.name=Fluxed Electrum Nugget
+item.redstonearsenal.material.gemCrystalFlux.name=Flux Crystal
+item.redstonearsenal.material.rodObsidian.name=Obsidian Rod
+item.redstonearsenal.material.rodObsidianFlux.name=Infused Obsidian Rod
+
+item.redstonearsenal.tool.wrench.name=Flux-Infused OmniWrench
+item.redstonearsenal.tool.battleWrench.name=Flux-Infused BattleWrench 
+item.redstonearsenal.tool.sword.name=Flux-Infused Sword
+item.redstonearsenal.tool.shovel.name=Flux-Infused Shovel
+item.redstonearsenal.tool.pickaxe.name=Flux-Infused Pickaxe
+item.redstonearsenal.tool.axe.name=Flux-Infused Axe
+item.redstonearsenal.tool.sickle.name=Flux-Infused Sickle
+item.redstonearsenal.tool.bow.name=Flux-Infused Bow
+
+itemGroup.redstonearsenal.creativeTab=Redstone Arsenal
+
+keybind.redstonearsenal.empower=Empower/Quell Flux Tool/Weapon
+
+tile.redstonearsenal.storage.electrumFlux.name=Fluxed Electrum Block
+tile.redstonearsenal.storage.crystalFlux.name=Flux Crystal Block
