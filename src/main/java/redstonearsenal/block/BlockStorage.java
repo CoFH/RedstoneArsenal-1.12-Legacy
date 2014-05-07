@@ -16,18 +16,15 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.oredict.OreDictionary;
-import net.minecraftforge.oredict.ShapedOreRecipe;
 import redstonearsenal.RedstoneArsenal;
 import redstonearsenal.util.Utils;
 import cofh.api.core.IInitializer;
 import cofh.render.IconRegistry;
 import cofh.util.EnergyHelper;
+import cofh.util.ItemHelper;
 import cofh.util.MathHelper;
 import cofh.util.ServerHelper;
 import cofh.util.StringHelper;
-import cpw.mods.fml.common.event.FMLInterModComms;
-import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -129,13 +126,6 @@ public class BlockStorage extends Block implements IInitializer {
 		}
 	}
 
-	protected void registerWithHandlers(String oreName, ItemStack stack) {
-
-		OreDictionary.registerOre(oreName, stack);
-		GameRegistry.registerCustomItemStack(oreName, stack);
-		FMLInterModComms.sendMessage("ForgeMicroblock", "microMaterial", stack);
-	}
-
 	/* IInitializer */
 	@Override
 	public boolean preInit() {
@@ -163,8 +153,8 @@ public class BlockStorage extends Block implements IInitializer {
 		blockElectrumFlux = new ItemStack(this, 1, 0);
 		blockCrystalFlux = new ItemStack(this, 1, 1);
 
-		registerWithHandlers("blockElectrumFlux", blockElectrumFlux);
-		registerWithHandlers("blockCrystalFlux", blockCrystalFlux);
+		ItemHelper.registerWithHandlers("blockElectrumFlux", blockElectrumFlux);
+		ItemHelper.registerWithHandlers("blockCrystalFlux", blockCrystalFlux);
 
 		return true;
 	}
@@ -172,8 +162,8 @@ public class BlockStorage extends Block implements IInitializer {
 	@Override
 	public boolean postInit() {
 
-		GameRegistry.addRecipe(new ShapedOreRecipe(blockElectrumFlux, new Object[] { "III", "III", "III", 'I', "ingotElectrumFlux" }));
-		GameRegistry.addRecipe(new ShapedOreRecipe(blockCrystalFlux, new Object[] { "III", "III", "III", 'I', "gemCrystalFlux" }));
+		ItemHelper.addStorageRecipe(blockElectrumFlux, "ingotElectrumFlux");
+		ItemHelper.addStorageRecipe(blockCrystalFlux, "ingotCrystalFlux");
 
 		return true;
 	}

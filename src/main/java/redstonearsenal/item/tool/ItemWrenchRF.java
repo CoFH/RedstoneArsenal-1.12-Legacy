@@ -1,8 +1,11 @@
 package redstonearsenal.item.tool;
 
+import ic2.api.tile.IWrenchable;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import mods.railcraft.api.core.items.IToolCrowbar;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
@@ -30,7 +33,6 @@ import cofh.api.block.IDismantleable;
 import cofh.api.energy.IEnergyContainerItem;
 import cofh.audio.SoundBase;
 import cofh.util.BlockHelper;
-import cofh.util.CoreUtils;
 import cofh.util.EnergyHelper;
 import cofh.util.MathHelper;
 import cofh.util.ServerHelper;
@@ -226,9 +228,9 @@ public class ItemWrenchRF extends ItemShears implements IToolCrowbar, IToolWrenc
 
 				for (ItemStack drop : drops) {
 					EntityItem ent = entity.entityDropItem(drop, 1.0F);
-					ent.motionY += CoreUtils.rand.nextFloat() * 0.05F;
-					ent.motionX += (CoreUtils.rand.nextFloat() - CoreUtils.rand.nextFloat()) * 0.1F;
-					ent.motionZ += (CoreUtils.rand.nextFloat() - CoreUtils.rand.nextFloat()) * 0.1F;
+					ent.motionY += MathHelper.RANDOM.nextFloat() * 0.05F;
+					ent.motionX += (MathHelper.RANDOM.nextFloat() - MathHelper.RANDOM.nextFloat()) * 0.1F;
+					ent.motionZ += (MathHelper.RANDOM.nextFloat() - MathHelper.RANDOM.nextFloat()) * 0.1F;
 				}
 				if (!player.capabilities.isCreativeMode) {
 					useEnergy(stack, false);
@@ -258,9 +260,9 @@ public class ItemWrenchRF extends ItemShears implements IToolCrowbar, IToolWrenc
 
 				for (ItemStack drop : drops) {
 					float f = 0.7F;
-					double d = CoreUtils.rand.nextFloat() * f + (1.0F - f) * 0.5D;
-					double d1 = CoreUtils.rand.nextFloat() * f + (1.0F - f) * 0.5D;
-					double d2 = CoreUtils.rand.nextFloat() * f + (1.0F - f) * 0.5D;
+					double d = MathHelper.RANDOM.nextFloat() * f + (1.0F - f) * 0.5D;
+					double d1 = MathHelper.RANDOM.nextFloat() * f + (1.0F - f) * 0.5D;
+					double d2 = MathHelper.RANDOM.nextFloat() * f + (1.0F - f) * 0.5D;
 					EntityItem entityitem = new EntityItem(player.worldObj, x + d, y + d1, z + d2, drop);
 					entityitem.delayBeforeCanPickup = 10;
 					player.worldObj.spawnEntityInWorld(entityitem);

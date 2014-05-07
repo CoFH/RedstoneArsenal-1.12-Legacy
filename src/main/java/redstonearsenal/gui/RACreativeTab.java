@@ -35,7 +35,7 @@ public class RACreativeTab extends CreativeTabs {
 	@SideOnly(Side.CLIENT)
 	public Item getTabIconItem() {
 
-		return RAItems.itemSword;
+		return getIconItemStack().getItem();
 	}
 
 	@Override
