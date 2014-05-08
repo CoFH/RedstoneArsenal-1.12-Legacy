@@ -22,6 +22,7 @@ import net.minecraftforge.event.entity.player.ArrowNockEvent;
 import org.lwjgl.input.Keyboard;
 
 import redstonearsenal.core.ProxyClient;
+import redstonearsenal.util.KeyBindingEmpower;
 import cofh.api.energy.IEnergyContainerItem;
 import cofh.util.EnergyHelper;
 import cofh.util.MathHelper;
@@ -169,10 +170,10 @@ public class ItemBowRF extends ItemBow implements IEmpowerableItem, IEnergyConta
 		list.add(StringHelper.ORANGE + getEnergyPerUse(stack) + " " + StringHelper.localize("info.redstonearsenal.tool.energyPerUse") + StringHelper.END);
 		if (isEmpowered(stack)) {
 			list.add(StringHelper.YELLOW + StringHelper.ITALIC + StringHelper.localize("info.cofh.press") + " "
-					+ Keyboard.getKeyName(ProxyClient.empower.keyCode) + " " + StringHelper.localize("info.redstonearsenal.tool.chargeOff") + StringHelper.END);
+					+ Keyboard.getKeyName(KeyBindingEmpower.instance.getKey()) + " " + StringHelper.localize("info.redstonearsenal.tool.chargeOff") + StringHelper.END);
 		} else {
 			list.add(StringHelper.BRIGHT_BLUE + StringHelper.ITALIC + StringHelper.localize("info.cofh.press") + " "
-					+ Keyboard.getKeyName(ProxyClient.empower.keyCode) + " " + StringHelper.localize("info.redstonearsenal.tool.chargeOn") + StringHelper.END);
+					+ Keyboard.getKeyName(KeyBindingEmpower.instance.getKey()) + " " + StringHelper.localize("info.redstonearsenal.tool.chargeOn") + StringHelper.END);
 		}
 	}
 

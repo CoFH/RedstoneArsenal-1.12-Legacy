@@ -24,6 +24,7 @@ import net.minecraft.world.World;
 import org.lwjgl.input.Keyboard;
 
 import redstonearsenal.core.ProxyClient;
+import redstonearsenal.util.KeyBindingEmpower;
 import redstonearsenal.util.Utils;
 import cofh.api.energy.IEnergyContainerItem;
 import cofh.util.EnergyHelper;
@@ -182,10 +183,10 @@ public class ItemSwordRF extends ItemSword implements IEmpowerableItem, IEnergyC
 		list.add(StringHelper.ORANGE + getEnergyPerUse(stack) + " " + StringHelper.localize("info.redstonearsenal.tool.energyPerUse") + StringHelper.END);
 		if (isEmpowered(stack)) {
 			list.add(StringHelper.YELLOW + StringHelper.ITALIC + StringHelper.localize("info.cofh.press") + " "
-					+ Keyboard.getKeyName(ProxyClient.empower.keyCode) + " " + StringHelper.localize("info.redstonearsenal.tool.chargeOff") + StringHelper.END);
+					+ Keyboard.getKeyName(KeyBindingEmpower.instance.getKey()) + " " + StringHelper.localize("info.redstonearsenal.tool.chargeOff") + StringHelper.END);
 		} else {
 			list.add(StringHelper.BRIGHT_BLUE + StringHelper.ITALIC + StringHelper.localize("info.cofh.press") + " "
-					+ Keyboard.getKeyName(ProxyClient.empower.keyCode) + " " + StringHelper.localize("info.redstonearsenal.tool.chargeOn") + StringHelper.END);
+					+ Keyboard.getKeyName(KeyBindingEmpower.instance.getKey()) + " " + StringHelper.localize("info.redstonearsenal.tool.chargeOn") + StringHelper.END);
 		}
 		if (getEnergyStored(stack) >= getEnergyPerUse(stack)) {
 			list.add("");

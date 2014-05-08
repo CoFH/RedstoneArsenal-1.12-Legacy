@@ -1,13 +1,13 @@
 package redstonearsenal.core;
 
 import redstonearsenal.util.KeyBindingEmpower;
-import cofh.hud.CoFHServerKeyHandler;
+import cofh.key.CoFHKey;
 
 public class Proxy {
 
 	public void registerKeyBinds() {
 
-		CoFHServerKeyHandler.addServerKeyBind(KeyBindingEmpower.instance, RAProps.empowerKeyName);
+		CoFHKey.addServerKeyBind(KeyBindingEmpower.instance);
 	}
 
 }
