@@ -14,7 +14,6 @@ import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 import redstonearsenal.RedstoneArsenal;
 import redstonearsenal.block.BlockStorage;
-import redstonearsenal.block.ItemBlockStorage;
 import redstonearsenal.item.tool.ItemAxeRF;
 import redstonearsenal.item.tool.ItemPickaxeRF;
 import redstonearsenal.item.tool.ItemShovelRF;
@@ -38,11 +37,12 @@ public class RAItems {
 
 	public static void preInit() {
 
-	}
+		int harvestLevel = RedstoneArsenal.config.get("item.feature", "ToolFluxInfusedHarvestLevel", 4);
 
-	public static void initialize() {
-
-		itemMaterial = (ItemBase) new ItemBase("redstonearsenal").setUnlocalizedName("material");
+		if (harvestLevel < 1) {
+			harvestLevel = 1;
+		}
+		itemMaterial = (ItemBase) new ItemBase("redstonearsenal").setUnlocalizedName("material").setCreativeTab(RedstoneArsenal.tab);
 
 		itemWrench = new ItemWrenchRF(TOOL_MATERIAL_FLUX).setUnlocalizedName(TOOL + "wrench").setTextureName(TOOL_TEX_FLUX + "Wrench")
 				.setCreativeTab(RedstoneArsenal.tab);
@@ -50,29 +50,31 @@ public class RAItems {
 				.setCreativeTab(RedstoneArsenal.tab);
 		itemSword = new ItemSwordRF(TOOL_MATERIAL_FLUX).setUnlocalizedName(TOOL + "sword").setTextureName(TOOL_TEX_FLUX + "Sword")
 				.setCreativeTab(RedstoneArsenal.tab);
-
-		int harvestLevel = RedstoneArsenal.config.get("item.feature", "ToolFluxInfusedHarvestLevel", 4);
-
-		if (harvestLevel < 1) {
-			harvestLevel = 1;
-		}
 		itemShovel = new ItemShovelRF(TOOL_MATERIAL_FLUX, harvestLevel).setUnlocalizedName(TOOL + "shovel").setTextureName(TOOL_TEX_FLUX + "Shovel")
 				.setCreativeTab(RedstoneArsenal.tab);
 		itemPickaxe = new ItemPickaxeRF(TOOL_MATERIAL_FLUX, harvestLevel).setUnlocalizedName(TOOL + "pickaxe").setTextureName(TOOL_TEX_FLUX + "Pickaxe")
 				.setCreativeTab(RedstoneArsenal.tab);
 		itemAxe = new ItemAxeRF(TOOL_MATERIAL_FLUX, harvestLevel).setUnlocalizedName(TOOL + "axe").setTextureName(TOOL_TEX_FLUX + "Axe")
 				.setCreativeTab(RedstoneArsenal.tab);
-
 		itemSickle = new ItemSickleRF(TOOL_MATERIAL_FLUX).setUnlocalizedName(TOOL + "sickle").setTextureName(TOOL_TEX_FLUX + "Sickle")
 				.setCreativeTab(RedstoneArsenal.tab);
 		// itemBow = new ItemBowRF(RedstoneArsenal.config.getItemId(TOOL_CONFIG_FLUX + "Bow"), TOOL_MATERIAL_FLUX).setUnlocalizedName(TOOL + "bow")
 		// .setTextureName(TOOL_TEX_FLUX + "Bow").setCreativeTab(RedstoneArsenal.tab);
 
+		GameRegistry.registerItem(itemWrench, "tool.wrench");
+		GameRegistry.registerItem(itemBattleWrench, "tool.battleWrench");
+		GameRegistry.registerItem(itemSword, "tool.sword");
+		GameRegistry.registerItem(itemShovel, "tool.shovel");
+		GameRegistry.registerItem(itemPickaxe, "tool.pickaxe");
+		GameRegistry.registerItem(itemAxe, "tool.axe");
+		GameRegistry.registerItem(itemSickle, "tool.sickle");
+		// GameRegistry.registerItem(itemBow, "tool.bow");
+
 		blockStorage = new BlockStorage();
+		((IInitializer) blockStorage).preInit();
+	}
 
-		GameRegistry.registerBlock(blockStorage, ItemBlockStorage.class, "Storage");
-
-		((IInitializer) blockStorage).initialize();
+	public static void initialize() {
 
 		loadItems();
 	}

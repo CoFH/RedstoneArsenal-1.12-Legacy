@@ -17,6 +17,12 @@ local.properties
 .classpath
 .settings/
 .loadpath
+config/
+crash-reports/
+logs/
+mods/
+resourcepacks/
+save/
 
 # External tool builders
 .externalToolBuilders/
