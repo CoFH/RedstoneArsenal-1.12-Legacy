@@ -40,12 +40,6 @@ public class KeyBindingEmpower implements IKeyBinding {
 	}
 
 	@Override
-	public boolean suppressRepeating() {
-
-		return true;
-	}
-
-	@Override
 	public boolean hasServerSide() {
 
 		return true;
