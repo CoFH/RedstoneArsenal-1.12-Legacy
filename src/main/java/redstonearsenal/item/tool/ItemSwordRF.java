@@ -1,5 +1,12 @@
 package redstonearsenal.item.tool;
 
+import cofh.api.energy.IEnergyContainerItem;
+import cofh.util.EnergyHelper;
+import cofh.util.MathHelper;
+import cofh.util.StringHelper;
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Multimap;
+
 import java.util.List;
 
 import net.minecraft.block.Block;
@@ -25,13 +32,6 @@ import org.lwjgl.input.Keyboard;
 
 import redstonearsenal.util.KeyBindingEmpower;
 import redstonearsenal.util.Utils;
-import cofh.api.energy.IEnergyContainerItem;
-import cofh.util.EnergyHelper;
-import cofh.util.MathHelper;
-import cofh.util.StringHelper;
-
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.Multimap;
 
 public class ItemSwordRF extends ItemSword implements IEmpowerableItem, IEnergyContainerItem {
 

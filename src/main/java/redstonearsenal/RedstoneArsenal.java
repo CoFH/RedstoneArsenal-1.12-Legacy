@@ -1,5 +1,16 @@
 package redstonearsenal;
 
+import cofh.core.CoFHProps;
+import cofh.mod.BaseMod;
+import cofh.util.ConfigHandler;
+import cpw.mods.fml.common.Mod;
+import cpw.mods.fml.common.Mod.EventHandler;
+import cpw.mods.fml.common.Mod.Instance;
+import cpw.mods.fml.common.SidedProxy;
+import cpw.mods.fml.common.event.FMLInitializationEvent;
+import cpw.mods.fml.common.event.FMLPostInitializationEvent;
+import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+
 import java.io.File;
 
 import net.minecraft.creativetab.CreativeTabs;
@@ -12,16 +23,6 @@ import redstonearsenal.core.Proxy;
 import redstonearsenal.core.RAProps;
 import redstonearsenal.gui.RACreativeTab;
 import redstonearsenal.item.RAItems;
-import cofh.core.CoFHProps;
-import cofh.mod.BaseMod;
-import cofh.util.ConfigHandler;
-import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.Mod.EventHandler;
-import cpw.mods.fml.common.Mod.Instance;
-import cpw.mods.fml.common.SidedProxy;
-import cpw.mods.fml.common.event.FMLInitializationEvent;
-import cpw.mods.fml.common.event.FMLPostInitializationEvent;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 
 @Mod(modid = RedstoneArsenal.modId, name = RedstoneArsenal.modName, version = RedstoneArsenal.version, dependencies = "required-after:Forge@["
 		+ CoFHProps.FORGE_REQ + ",);required-after:CoFHCore@[" + CoFHProps.VERSION + ",);after:ThermalExpansion")
@@ -36,6 +37,12 @@ public class RedstoneArsenal extends BaseMod {
 
 	@SidedProxy(clientSide = "redstonearsenal.core.ProxyClient", serverSide = "redstonearsenal.core.Proxy")
 	public static Proxy proxy;
+
+	public static final Logger log = LogManager.getLogger(modId);
+
+	public static final ConfigHandler config = new ConfigHandler(RAProps.VERSION);
+
+	public static final CreativeTabs tab = new RACreativeTab();
 
 	/* INIT SEQUENCE */
 	public RedstoneArsenal() {
@@ -67,10 +74,6 @@ public class RedstoneArsenal extends BaseMod {
 
 		config.cleanUp(false, true);
 	}
-
-	public static Logger log = LogManager.getLogger(modId);
-	public static ConfigHandler config = new ConfigHandler(RAProps.VERSION);
-	public static final CreativeTabs tab = new RACreativeTab();
 
 	/* BaseMod */
 	@Override

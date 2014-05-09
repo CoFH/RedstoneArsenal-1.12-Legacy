@@ -1,6 +1,7 @@
 package redstonearsenal.item.tool;
 
 import gnu.trove.set.hash.THashSet;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityLivingBase;

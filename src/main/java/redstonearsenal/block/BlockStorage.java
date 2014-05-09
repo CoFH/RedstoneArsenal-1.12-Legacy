@@ -1,5 +1,16 @@
 package redstonearsenal.block;
 
+import cofh.api.core.IInitializer;
+import cofh.render.IconRegistry;
+import cofh.util.EnergyHelper;
+import cofh.util.ItemHelper;
+import cofh.util.MathHelper;
+import cofh.util.ServerHelper;
+import cofh.util.StringHelper;
+import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 import java.util.List;
 
 import net.minecraft.block.Block;
@@ -16,18 +27,9 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+
 import redstonearsenal.RedstoneArsenal;
 import redstonearsenal.util.Utils;
-import cofh.api.core.IInitializer;
-import cofh.render.IconRegistry;
-import cofh.util.EnergyHelper;
-import cofh.util.ItemHelper;
-import cofh.util.MathHelper;
-import cofh.util.ServerHelper;
-import cofh.util.StringHelper;
-import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockStorage extends Block implements IInitializer {
 
@@ -131,6 +133,8 @@ public class BlockStorage extends Block implements IInitializer {
 	@Override
 	public boolean preInit() {
 
+		GameRegistry.registerBlock(this, ItemBlockStorage.class, "Storage");
+
 		String category = "block.feature";
 		enableDamage[0] = RedstoneArsenal.config.get(category, "Storage.Electrum.Damage.Enable", true);
 		enableDamage[1] = RedstoneArsenal.config.get(category, "Storage.Crystal.Damage.Enable", true);
@@ -147,8 +151,6 @@ public class BlockStorage extends Block implements IInitializer {
 
 		blockElectrumFlux = new ItemStack(this, 1, 0);
 		blockCrystalFlux = new ItemStack(this, 1, 1);
-
-		GameRegistry.registerBlock(this, ItemBlockStorage.class, "Storage");
 
 		ItemHelper.registerWithHandlers("blockElectrumFlux", blockElectrumFlux);
 		ItemHelper.registerWithHandlers("blockCrystalFlux", blockCrystalFlux);

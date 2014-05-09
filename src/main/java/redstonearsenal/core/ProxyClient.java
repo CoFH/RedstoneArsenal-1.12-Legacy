@@ -1,8 +1,9 @@
 package redstonearsenal.core;
 
-import redstonearsenal.util.KeyBindingEmpower;
 import cofh.key.CoFHKey;
 import cpw.mods.fml.common.FMLCommonHandler;
+
+import redstonearsenal.util.KeyBindingEmpower;
 
 public class ProxyClient extends Proxy {
 

@@ -1,11 +1,26 @@
 package redstonearsenal.item.tool;
 
+import buildcraft.api.tools.IToolWrench;
+
+import cofh.api.block.IDismantleable;
+import cofh.api.energy.IEnergyContainerItem;
+import cofh.audio.SoundBase;
+import cofh.util.BlockHelper;
+import cofh.util.EnergyHelper;
+import cofh.util.MathHelper;
+import cofh.util.ServerHelper;
+import cofh.util.StringHelper;
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Multimap;
+import cpw.mods.fml.client.FMLClientHandler;
+
 import ic2.api.tile.IWrenchable;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import mods.railcraft.api.core.items.IToolCrowbar;
+
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
@@ -28,20 +43,6 @@ import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IShearable;
 import net.minecraftforge.common.util.ForgeDirection;
-import buildcraft.api.tools.IToolWrench;
-import cofh.api.block.IDismantleable;
-import cofh.api.energy.IEnergyContainerItem;
-import cofh.audio.SoundBase;
-import cofh.util.BlockHelper;
-import cofh.util.EnergyHelper;
-import cofh.util.MathHelper;
-import cofh.util.ServerHelper;
-import cofh.util.StringHelper;
-
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.Multimap;
-
-import cpw.mods.fml.client.FMLClientHandler;
 
 public class ItemWrenchRF extends ItemShears implements IToolCrowbar, IToolWrench, IEnergyContainerItem {
 

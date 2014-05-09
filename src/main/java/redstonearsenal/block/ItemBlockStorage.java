@@ -1,10 +1,11 @@
 package redstonearsenal.block;
 
+import cofh.util.StringHelper;
+
 import net.minecraft.block.Block;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import cofh.util.StringHelper;
 
 public class ItemBlockStorage extends ItemBlock {
 

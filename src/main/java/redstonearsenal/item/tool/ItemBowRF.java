@@ -1,5 +1,10 @@
 package redstonearsenal.item.tool;
 
+import cofh.api.energy.IEnergyContainerItem;
+import cofh.util.EnergyHelper;
+import cofh.util.MathHelper;
+import cofh.util.StringHelper;
+
 import java.util.List;
 
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -22,10 +27,6 @@ import net.minecraftforge.event.entity.player.ArrowNockEvent;
 import org.lwjgl.input.Keyboard;
 
 import redstonearsenal.util.KeyBindingEmpower;
-import cofh.api.energy.IEnergyContainerItem;
-import cofh.util.EnergyHelper;
-import cofh.util.MathHelper;
-import cofh.util.StringHelper;
 
 public class ItemBowRF extends ItemBow implements IEmpowerableItem, IEnergyContainerItem {
 

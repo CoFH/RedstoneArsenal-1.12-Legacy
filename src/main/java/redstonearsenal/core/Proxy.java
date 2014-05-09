@@ -1,7 +1,8 @@
 package redstonearsenal.core;
 
-import redstonearsenal.util.KeyBindingEmpower;
 import cofh.key.CoFHKey;
+
+import redstonearsenal.util.KeyBindingEmpower;
 
 public class Proxy {
 

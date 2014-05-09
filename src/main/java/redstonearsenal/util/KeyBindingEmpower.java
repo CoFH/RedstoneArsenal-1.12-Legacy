@@ -1,8 +1,9 @@
 package redstonearsenal.util;
 
-import net.minecraft.entity.player.EntityPlayer;
 import cofh.CoFHCore;
 import cofh.key.IKeyBinding;
+
+import net.minecraft.entity.player.EntityPlayer;
 
 public class KeyBindingEmpower implements IKeyBinding {
 

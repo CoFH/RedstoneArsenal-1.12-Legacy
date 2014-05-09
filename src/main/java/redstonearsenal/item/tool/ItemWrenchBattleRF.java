@@ -1,10 +1,20 @@
 package redstonearsenal.item.tool;
 
+import buildcraft.api.tools.IToolWrench;
+
+import cofh.api.block.IDismantleable;
+import cofh.api.energy.IEnergyContainerItem;
+import cofh.audio.SoundBase;
+import cofh.util.BlockHelper;
+import cofh.util.ServerHelper;
+import cpw.mods.fml.client.FMLClientHandler;
+
 import ic2.api.tile.IWrenchable;
 
 import java.util.List;
 
 import mods.railcraft.api.core.items.IToolCrowbar;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -16,13 +26,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
-import buildcraft.api.tools.IToolWrench;
-import cofh.api.block.IDismantleable;
-import cofh.api.energy.IEnergyContainerItem;
-import cofh.audio.SoundBase;
-import cofh.util.BlockHelper;
-import cofh.util.ServerHelper;
-import cpw.mods.fml.client.FMLClientHandler;
 
 public class ItemWrenchBattleRF extends ItemSwordRF implements IToolCrowbar, IToolWrench, IEnergyContainerItem {
 

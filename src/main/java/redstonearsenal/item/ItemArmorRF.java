@@ -1,14 +1,15 @@
 package redstonearsenal.item;
 
+import cofh.api.energy.IEnergyContainerItem;
+import cofh.item.ItemArmorAdv;
+import cofh.util.EnergyHelper;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraftforge.common.ISpecialArmor;
-import cofh.api.energy.IEnergyContainerItem;
-import cofh.item.ItemArmorAdv;
-import cofh.util.EnergyHelper;
 
 public class ItemArmorRF extends ItemArmorAdv implements ISpecialArmor, IEnergyContainerItem {
 

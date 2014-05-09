@@ -1,5 +1,10 @@
 package redstonearsenal.item.tool;
 
+import cofh.util.MathHelper;
+import cofh.util.ServerHelper;
+import cofh.util.StringHelper;
+import cpw.mods.fml.common.eventhandler.Event.Result;
+
 import java.util.List;
 
 import net.minecraft.block.Block;
@@ -12,10 +17,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.UseHoeEvent;
-import cofh.util.MathHelper;
-import cofh.util.ServerHelper;
-import cofh.util.StringHelper;
-import cpw.mods.fml.common.eventhandler.Event.Result;
 
 public class ItemShovelRF extends ItemToolRF {
 

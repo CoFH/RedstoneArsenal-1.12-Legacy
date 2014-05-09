@@ -22,7 +22,7 @@ crash-reports/
 logs/
 mods/
 resourcepacks/
-save/
+saves/
 
 # External tool builders
 .externalToolBuilders/
