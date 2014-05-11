@@ -168,7 +168,7 @@ public class BlockStorage extends Block implements IInitializer {
 	public boolean postInit() {
 
 		ItemHelper.addStorageRecipe(blockElectrumFlux, "ingotElectrumFlux");
-		ItemHelper.addStorageRecipe(blockCrystalFlux, "ingotCrystalFlux");
+		ItemHelper.addStorageRecipe(blockCrystalFlux, "gemCrystalFlux");
 
 		return true;
 	}
