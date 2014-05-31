@@ -1,8 +1,5 @@
 #ru_RU
 
-death.attack.flux=%1$s был разодран флаксом!
-death.attack.flux.player=%1$s был зафлаксирован до смерти %2$s!
-
 info.redstonearsenal.tool.chargeOn=для усиления
 info.redstonearsenal.tool.chargeOff=для ослабления
 info.redstonearsenal.tool.energyPerUse=РФ за использование
@@ -26,8 +23,6 @@ item.redstonearsenal.tool.sickle.name=Заряженный флаксом сер
 item.redstonearsenal.tool.bow.name=Заряженный флаксом лук
 
 itemGroup.redstonearsenal.creativeTab=Redstone Arsenal
-
-keybind.redstonearsenal.empower=Усиление/Ослабление Флаксовый инструмент/оружие
 
 tile.redstonearsenal.storage.electrumFlux.name=Флаксовый электрумовый блок
 tile.redstonearsenal.storage.crystalFlux.name=Блок Флаксового кристалла

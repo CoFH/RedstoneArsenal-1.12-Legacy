@@ -1,8 +1,5 @@
 #fr_FR
 
-death.attack.flux=%1$s ont vu leur réalité détruite par le Flux!
-death.attack.flux.player=%1$s a été Fluxé à mort par %2$s!
-
 info.redstonearsenal.tool.chargeOn=Renforcer
 info.redstonearsenal.tool.chargeOff=Atténuer
 info.redstonearsenal.tool.energyPerUse=RF par Utilisation
@@ -26,8 +23,6 @@ item.redstonearsenal.tool.sickle.name=Faucille Imprégnée de Flux
 item.redstonearsenal.tool.bow.name=Arc Imprégné de Flux
 
 itemGroup.redstonearsenal.creativeTab=Redstone Arsenal
-
-keybind.redstonearsenal.empower=Renforcer/Atténuer le Flux d'un(e) Outil/Arme
 
 tile.redstonearsenal.storage.electrumFlux.name=Bloc d'Électrum Fluxé
 tile.redstonearsenal.storage.crystalFlux.name=Bloc de Cristal de Flux

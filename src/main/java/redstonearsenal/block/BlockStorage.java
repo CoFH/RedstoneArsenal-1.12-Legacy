@@ -2,6 +2,7 @@ package redstonearsenal.block;
 
 import cofh.api.core.IInitializer;
 import cofh.render.IconRegistry;
+import cofh.util.DamageHelper;
 import cofh.util.EnergyHelper;
 import cofh.util.ItemHelper;
 import cofh.util.MathHelper;
@@ -29,7 +30,6 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 import redstonearsenal.RedstoneArsenal;
-import redstonearsenal.util.Utils;
 
 public class BlockStorage extends Block implements IInitializer {
 
@@ -103,7 +103,7 @@ public class BlockStorage extends Block implements IInitializer {
 			break;
 		}
 		if (fluxDamage > 0) {
-			entity.attackEntityFrom(Utils.flux, (float) fluxDamage);
+			entity.attackEntityFrom(DamageHelper.flux, (float) fluxDamage);
 
 			if (entity instanceof EntityPlayerMP) {
 				EntityPlayerMP player = (EntityPlayerMP) entity;

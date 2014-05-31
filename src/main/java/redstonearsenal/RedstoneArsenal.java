@@ -1,12 +1,13 @@
 package redstonearsenal;
 
+import cofh.CoFHCore;
 import cofh.core.CoFHProps;
 import cofh.mod.BaseMod;
+import cofh.updater.UpdateManager;
 import cofh.util.ConfigHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
-import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
@@ -19,29 +20,23 @@ import net.minecraftforge.common.config.Configuration;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import redstonearsenal.core.Proxy;
-import redstonearsenal.core.RAProps;
 import redstonearsenal.gui.RACreativeTab;
 import redstonearsenal.item.RAItems;
 
-@Mod(modid = RedstoneArsenal.modId, name = RedstoneArsenal.modName, version = RedstoneArsenal.version, dependencies = "required-after:Forge@["
-		+ CoFHProps.FORGE_REQ + ",);required-after:CoFHCore@[" + CoFHProps.VERSION + ",);after:ThermalExpansion")
+@Mod(modid = RedstoneArsenal.modId, name = RedstoneArsenal.modName, version = RedstoneArsenal.version, dependencies = RedstoneArsenal.dependencies)
 public class RedstoneArsenal extends BaseMod {
 
 	public static final String modId = "RedstoneArsenal";
-	public static final String version = RAProps.VERSION;
-	public static final String modName = RAProps.NAME;
+	public static final String modName = "Redstone Arsenal";
+	public static final String version = "1.7.2R1.0.1B1";
+	public static final String dependencies = "required-after:CoFHCore@[" + CoFHCore.version + ",);after:ThermalExpansion";
+	public static final String releaseURL = "http://teamcofh.com/redstonearsenal/version/version.txt";
 
 	@Instance("RedstoneArsenal")
 	public static RedstoneArsenal instance;
 
-	@SidedProxy(clientSide = "redstonearsenal.core.ProxyClient", serverSide = "redstonearsenal.core.Proxy")
-	public static Proxy proxy;
-
 	public static final Logger log = LogManager.getLogger(modId);
-
-	public static final ConfigHandler config = new ConfigHandler(RAProps.VERSION);
-
+	public static final ConfigHandler config = new ConfigHandler(version);
 	public static final CreativeTabs tab = new RACreativeTab();
 
 	/* INIT SEQUENCE */
@@ -53,6 +48,8 @@ public class RedstoneArsenal extends BaseMod {
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 
+		UpdateManager.registerUpdater(new UpdateManager(this, releaseURL));
+
 		config.setConfiguration(new Configuration(new File(CoFHProps.configDir, "/cofh/RedstoneArsenal.cfg")));
 
 		RAItems.preInit();
@@ -63,8 +60,6 @@ public class RedstoneArsenal extends BaseMod {
 
 		RAItems.initialize();
 		RACreativeTab.initialize();
-
-		proxy.registerKeyBinds();
 	}
 
 	@EventHandler

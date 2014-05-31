@@ -1,8 +1,5 @@
 #de_DE
 
-death.attack.flux=Die Realität von %1$s wurde durch Flux auseinandergerissen!
-death.attack.flux.player=%1$s wurde von %2$s zu Tode gefluxt!
-
 info.redstonearsenal.tool.chargeOn=, um zu ermächtigen
 info.redstonearsenal.tool.chargeOff=, um zu bändigen
 info.redstonearsenal.tool.energyPerUse=RF je Nutzung
@@ -26,8 +23,6 @@ item.redstonearsenal.tool.sickle.name=Fluxierende Sichel
 item.redstonearsenal.tool.bow.name=Fluxierender Bogen
 
 itemGroup.redstonearsenal.creativeTab=Redstone Arsenal
-
-keybind.redstonearsenal.empower=Fluxwerkzeug/-waffe ermächtigen/bändigen
 
 tile.redstonearsenal.storage.electrumFlux.name=Fluxierender Elektrumblock
 tile.redstonearsenal.storage.crystalFlux.name=Fluxkristallblock

@@ -24,6 +24,7 @@ import net.minecraftforge.oredict.ShapelessOreRecipe;
 import redstonearsenal.RedstoneArsenal;
 import redstonearsenal.block.BlockStorage;
 import redstonearsenal.item.tool.ItemAxeRF;
+import redstonearsenal.item.tool.ItemBowRF;
 import redstonearsenal.item.tool.ItemPickaxeRF;
 import redstonearsenal.item.tool.ItemShovelRF;
 import redstonearsenal.item.tool.ItemSickleRF;
@@ -60,8 +61,7 @@ public class RAItems {
 				.setCreativeTab(RedstoneArsenal.tab);
 		itemSickle = new ItemSickleRF(TOOL_MATERIAL_FLUX).setUnlocalizedName(TOOL + "sickle").setTextureName(TOOL_TEX_FLUX + "Sickle")
 				.setCreativeTab(RedstoneArsenal.tab);
-		// itemBow = new ItemBowRF(RedstoneArsenal.config.getItemId(TOOL_CONFIG_FLUX + "Bow"), TOOL_MATERIAL_FLUX).setUnlocalizedName(TOOL + "bow")
-		// .setTextureName(TOOL_TEX_FLUX + "Bow").setCreativeTab(RedstoneArsenal.tab);
+		itemBow = new ItemBowRF(TOOL_MATERIAL_FLUX).setUnlocalizedName(TOOL + "bow").setTextureName(TOOL_TEX_FLUX + "Bow").setCreativeTab(RedstoneArsenal.tab);
 
 		GameRegistry.registerItem(itemWrench, "tool.wrench");
 		GameRegistry.registerItem(itemBattleWrench, "tool.battleWrench");
@@ -70,7 +70,7 @@ public class RAItems {
 		GameRegistry.registerItem(itemPickaxe, "tool.pickaxe");
 		GameRegistry.registerItem(itemAxe, "tool.axe");
 		GameRegistry.registerItem(itemSickle, "tool.sickle");
-		// GameRegistry.registerItem(itemBow, "tool.bow");
+		GameRegistry.registerItem(itemBow, "tool.bow");
 
 		blockStorage = new BlockStorage();
 		((IInitializer) blockStorage).preInit();
@@ -104,7 +104,7 @@ public class RAItems {
 		fluxPickaxe = EnergyHelper.setDefaultEnergyTag(new ItemStack(itemPickaxe), 0);
 		fluxAxe = EnergyHelper.setDefaultEnergyTag(new ItemStack(itemAxe), 0);
 		fluxSickle = EnergyHelper.setDefaultEnergyTag(new ItemStack(itemSickle), 0);
-		// fluxBow = new ItemStack(itemBow);
+		fluxBow = EnergyHelper.setDefaultEnergyTag(new ItemStack(itemBow), 0);
 
 		GameRegistry.registerCustomItemStack("fluxWrench", fluxWrench);
 		GameRegistry.registerCustomItemStack("fluxBattleWrench", fluxBattleWrench);
@@ -113,7 +113,7 @@ public class RAItems {
 		GameRegistry.registerCustomItemStack("fluxPickaxe", fluxPickaxe);
 		GameRegistry.registerCustomItemStack("fluxAxe", fluxAxe);
 		GameRegistry.registerCustomItemStack("fluxSickle", fluxSickle);
-		// GameRegistry.registerCustomItemStack("fluxBow", fluxBow);
+		GameRegistry.registerCustomItemStack("fluxBow", fluxBow);
 
 		if (Loader.isModLoaded("ThermalExpansion")) {
 			ThermalExpansionHelper.addTransposerFill(8000, new ItemStack(Items.diamond), gemCrystalFlux,
@@ -191,7 +191,7 @@ public class RAItems {
 		enable[4] = RedstoneArsenal.config.get(category, TOOL_CONFIG_FLUX + "Pickaxe", true);
 		enable[5] = RedstoneArsenal.config.get(category, TOOL_CONFIG_FLUX + "Axe", true);
 		enable[6] = RedstoneArsenal.config.get(category, TOOL_CONFIG_FLUX + "Sickle", true);
-		// enable[7] = RedstoneArsenal.config.get(category, TOOL_CONFIG_FLUX + "Bow", true);
+		enable[7] = RedstoneArsenal.config.get(category, TOOL_CONFIG_FLUX + "Bow", true);
 	}
 
 	public static Block blockStorage;

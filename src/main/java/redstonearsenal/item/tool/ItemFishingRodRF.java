@@ -1,47 +1,43 @@
 package redstonearsenal.item.tool;
 
 import cofh.api.energy.IEnergyContainerItem;
+import cofh.api.item.IEmpowerableItem;
+import cofh.entity.EntityCoFHFishHook;
 import cofh.util.EnergyHelper;
+import cofh.util.KeyBindingEmpower;
 import cofh.util.MathHelper;
+import cofh.util.ServerHelper;
 import cofh.util.StringHelper;
 
 import java.util.List;
 
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.projectile.EntityArrow;
-import net.minecraft.init.Items;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBow;
+import net.minecraft.item.ItemFishingRod;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.entity.player.ArrowLooseEvent;
-import net.minecraftforge.event.entity.player.ArrowNockEvent;
 
 import org.lwjgl.input.Keyboard;
 
-import redstonearsenal.util.KeyBindingEmpower;
+public class ItemFishingRodRF extends ItemFishingRod implements IEmpowerableItem, IEnergyContainerItem {
 
-public class ItemBowRF extends ItemBow implements IEmpowerableItem, IEnergyContainerItem {
-
-	protected Item.ToolMaterial toolMaterial;
-
-	IIcon normalIcons[] = new IIcon[4];
-	IIcon activeIcons[] = new IIcon[4];
+	IIcon normalIcons[] = new IIcon[2];
+	IIcon activeIcons[] = new IIcon[2];
 	IIcon drainedIcon;
+
+	protected ToolMaterial toolMaterial;
 
 	public int maxEnergy = 160000;
 	public int maxTransfer = 1600;
 	public int energyPerUse = 200;
 	public int energyPerUseCharged = 800;
 
-	public ItemBowRF(Item.ToolMaterial toolMaterial) {
+	public ItemFishingRodRF(ToolMaterial toolMaterial) {
 
 		super();
 		this.toolMaterial = toolMaterial;
@@ -81,83 +77,34 @@ public class ItemBowRF extends ItemBow implements IEmpowerableItem, IEnergyConta
 	}
 
 	@Override
-	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
+	public boolean isItemTool(ItemStack stack) {
 
-		if (!player.capabilities.isCreativeMode && getEnergyStored(stack) < getEnergyPerUse(stack)) {
-			return stack;
-		}
-		ArrowNockEvent event = new ArrowNockEvent(player, stack);
-		MinecraftForge.EVENT_BUS.post(event);
-		if (event.isCanceled()) {
-			return event.result;
-		}
-		if (player.capabilities.isCreativeMode || player.inventory.hasItem(Items.arrow)) {
-			player.setItemInUse(stack, this.getMaxItemUseDuration(stack));
-		}
-		return stack;
+		return true;
 	}
 
 	@Override
-	public void onPlayerStoppedUsing(ItemStack stack, World world, EntityPlayer player, int itemUse) {
+	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
 
-		int draw = this.getMaxItemUseDuration(stack) - itemUse;
+		// TODO: WTF
+		if (player.fishEntity != null) {
+			int i = player.fishEntity.func_146034_e();
+			useEnergy(stack);
+		} else {
+			world.playSoundAtEntity(player, "random.bow", 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
 
-		ArrowLooseEvent event = new ArrowLooseEvent(player, stack, draw);
-		MinecraftForge.EVENT_BUS.post(event);
-		if (event.isCanceled()) {
-			return;
-		}
-		draw = event.charge;
-
-		boolean flag = player.capabilities.isCreativeMode || EnchantmentHelper.getEnchantmentLevel(Enchantment.infinity.effectId, stack) > 0;
-
-		if (flag || player.inventory.hasItem(Items.arrow)) {
-			float f = draw / 20.0F;
-			f = (f * f + f * 2.0F) / 3.0F;
-
-			if (f < 0.1D) {
-				return;
-			}
-			if (f > 1.0F) {
-				f = 1.0F;
-			}
-			EntityArrow entityarrow = new EntityArrow(world, player, f * 2.0F);
-
-			if (f == 1.0F) {
-				entityarrow.setIsCritical(true);
-			}
-			int k = EnchantmentHelper.getEnchantmentLevel(Enchantment.power.effectId, stack);
-
-			if (k > 0) {
-				entityarrow.setDamage(entityarrow.getDamage() + k * 0.5D + 0.5D);
-			}
-			int l = EnchantmentHelper.getEnchantmentLevel(Enchantment.punch.effectId, stack);
-
-			if (l > 0) {
-				entityarrow.setKnockbackStrength(l);
-			}
-			if (EnchantmentHelper.getEnchantmentLevel(Enchantment.flame.effectId, stack) > 0) {
-				entityarrow.setFire(100);
-			}
-			stack.damageItem(1, player);
-			world.playSoundAtEntity(player, "random.bow", 1.0F, 1.0F / (itemRand.nextFloat() * 0.4F + 1.2F) + f * 0.5F);
-
-			if (flag) {
-				entityarrow.canBePickedUp = 2;
-			} else {
-				player.inventory.consumeInventoryItem(Items.arrow);
-			}
-			if (!world.isRemote) {
-				world.spawnEntityInWorld(entityarrow);
+			if (ServerHelper.isServerWorld(world)) {
+				world.spawnEntityInWorld(new EntityCoFHFishHook(world, player));
 			}
 		}
+		player.swingItem();
+		return stack;
 	}
 
 	@Override
 	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean check) {
 
 		if (StringHelper.displayShiftForDetail && !StringHelper.isShiftKeyDown()) {
-			list.add(StringHelper.shiftForInfo);
+			list.add(StringHelper.shiftForInfo());
 		}
 		if (!StringHelper.isShiftKeyDown()) {
 			return;
@@ -200,56 +147,11 @@ public class ItemBowRF extends ItemBow implements IEmpowerableItem, IEnergyConta
 		return stack.getItemDamage() != Short.MAX_VALUE;
 	}
 
-	@Override
-	public IIcon getIconIndex(ItemStack stack) {
-
-		return getIcon(stack, 0);
-	}
-
-	@Override
-	public IIcon getIcon(ItemStack stack, int pass) {
-
-		return isEmpowered(stack) ? this.activeIcons[0] : getEnergyStored(stack) <= 0 ? this.drainedIcon : this.normalIcons[0];
-	}
-
-	@Override
-	public IIcon getIcon(ItemStack stack, int renderPass, EntityPlayer player, ItemStack usingItem, int useRemaining) {
-
-		if (getEnergyStored(stack) <= 0) {
-			return this.drainedIcon;
-		}
-		if (useRemaining > 0) {
-			int draw = stack.getMaxItemUseDuration() - useRemaining;
-
-			if (draw > 17) {
-				return isEmpowered(stack) ? this.activeIcons[3] : this.normalIcons[3];
-			} else if (draw > 13) {
-				return isEmpowered(stack) ? this.activeIcons[2] : this.normalIcons[2];
-			} else if (draw > 0) {
-				return isEmpowered(stack) ? this.activeIcons[1] : this.normalIcons[1];
-			}
-		}
-		return isEmpowered(stack) ? this.activeIcons[0] : this.normalIcons[0];
-	}
-
-	@Override
-	public void registerIcons(IIconRegister ir) {
-
-		this.drainedIcon = ir.registerIcon(this.getIconString() + "_Drained");
-		this.normalIcons[0] = ir.registerIcon(this.getIconString());
-		this.activeIcons[0] = ir.registerIcon(this.getIconString() + "_Active");
-
-		for (int i = 1; i < 4; i++) {
-			this.normalIcons[i] = ir.registerIcon(this.getIconString() + "_" + (i - 1));
-			this.activeIcons[i] = ir.registerIcon(this.getIconString() + "_" + (i - 1) + "_Active");
-		}
-	}
-
 	/* IEmpowerableItem */
 	@Override
 	public boolean isEmpowered(ItemStack stack) {
 
-		return stack.stackTagCompound.getBoolean("Empowered");
+		return stack.stackTagCompound == null ? false : stack.stackTagCompound.getBoolean("Empowered");
 	}
 
 	@Override
@@ -261,6 +163,16 @@ public class ItemBowRF extends ItemBow implements IEmpowerableItem, IEnergyConta
 		}
 		stack.stackTagCompound.setBoolean("Empowered", false);
 		return false;
+	}
+
+	@Override
+	public void onStateChange(EntityPlayer player, ItemStack stack) {
+
+		if (isEmpowered(stack)) {
+			player.worldObj.playSoundAtEntity(player, "ambient.weather.thunder", 0.4F, 1.0F);
+		} else {
+			player.worldObj.playSoundAtEntity(player, "random.orb", 0.2F, 0.6F);
+		}
 	}
 
 	/* IEnergyContainerItem */

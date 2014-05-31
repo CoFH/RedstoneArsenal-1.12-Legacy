@@ -1,8 +1,5 @@
 #zh_CN
 
-death.attack.flux=%1$s的现实已经被RF撕裂了!
-death.attack.flux.player=%1$s被%2$s利用RF杀死了.
-
 info.redstonearsenal.tool.chargeOn=按住Alt键+右击蓄力
 info.redstonearsenal.tool.chargeOff=按住Alt键+右击释放
 info.redstonearsenal.tool.energyPerUse=RF/次
@@ -26,8 +23,6 @@ item.redstonearsenal.tool.sickle.name=RF充能镰刀
 item.redstonearsenal.tool.bow.name=RF充能弓
 
 itemGroup.redstonearsenal.creativeTab=红石兵工厂
-
-keybind.redstonearsenal.empower=激活/关闭RF能武器以及工具能力
 
 tile.redstonearsenal.storage.electrumFlux.name=RF琥珀金块
 tile.redstonearsenal.storage.crystalFlux.name=RF水晶块
