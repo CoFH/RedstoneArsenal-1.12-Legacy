@@ -119,8 +119,8 @@ public class RAItems {
 			ThermalExpansionHelper.addTransposerFill(8000, new ItemStack(Items.diamond), gemCrystalFlux,
 					new FluidStack(FluidRegistry.getFluid("redstone"), 200), false);
 
-			ThermalExpansionHelper.addTransposerFill(4000, GameRegistry.findItemStack("ThermalExpansion", "dustElectrum", 1), dustElectrumFlux, new FluidStack(
-					FluidRegistry.getFluid("redstone"), 200), false);
+			ThermalExpansionHelper.addTransposerFill(4000, GameRegistry.findItemStack("ThermalFoundation", "dustElectrum", 1), dustElectrumFlux,
+					new FluidStack(FluidRegistry.getFluid("redstone"), 200), false);
 
 			ThermalExpansionHelper.addSmelterBlastOre("ElectrumFlux");
 		}
