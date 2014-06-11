@@ -17,7 +17,6 @@ import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 
@@ -83,18 +82,13 @@ public class RAItems {
 
 	private static void loadItems() {
 
-		dustElectrumFlux = itemMaterial.addItem(0, "dustElectrumFlux", 1);
-		ingotElectrumFlux = itemMaterial.addItem(32, "ingotElectrumFlux", 1);
-		nuggetElectrumFlux = itemMaterial.addItem(64, "nuggetElectrumFlux", 1);
-		gemCrystalFlux = itemMaterial.addItem(96, "gemCrystalFlux", 1);
+		dustElectrumFlux = itemMaterial.addOreDictItem(0, "dustElectrumFlux", 1);
+		ingotElectrumFlux = itemMaterial.addOreDictItem(32, "ingotElectrumFlux", 1);
+		nuggetElectrumFlux = itemMaterial.addOreDictItem(64, "nuggetElectrumFlux", 1);
+		gemCrystalFlux = itemMaterial.addOreDictItem(96, "gemCrystalFlux", 1);
 
 		rodObsidian = itemMaterial.addItem(192, "rodObsidian");
 		rodObsidianFlux = itemMaterial.addItem(193, "rodObsidianFlux", 1);
-
-		OreDictionary.registerOre("dustElectrumFlux", dustElectrumFlux);
-		OreDictionary.registerOre("ingotElectrumFlux", ingotElectrumFlux);
-		OreDictionary.registerOre("nuggetElectrumFlux", nuggetElectrumFlux);
-		OreDictionary.registerOre("gemCrystalFlux", gemCrystalFlux);
 
 		/* Tools */
 		fluxWrench = EnergyHelper.setDefaultEnergyTag(new ItemStack(itemWrench), 0);
@@ -169,15 +163,10 @@ public class RAItems {
 		if (enable[6]) {
 			GameRegistry.addRecipe(new ShapedOreRecipe(fluxSickle, new Object[] { " I ", "  I", "RI ", 'I', "ingotElectrumFlux", 'R', rodObsidianFlux }));
 		}
-		addReverseStorageRecipe(ingotElectrumFlux, "blockElectrumFlux");
-		addReverseStorageRecipe(gemCrystalFlux, "blockCrystalFlux");
+		ItemHelper.addReverseStorageRecipe(ingotElectrumFlux, "blockElectrumFlux");
+		ItemHelper.addReverseStorageRecipe(gemCrystalFlux, "blockCrystalFlux");
 
 		((IInitializer) blockStorage).postInit();
-	}
-
-	static void addReverseStorageRecipe(ItemStack nine, String one) {
-
-		GameRegistry.addRecipe(new ShapelessOreRecipe(ItemHelper.cloneStack(nine, 9), new Object[] { one }));
 	}
 
 	public static boolean[] enable = new boolean[8];
