@@ -16,7 +16,7 @@ public class RACreativeTab extends CreativeTabs {
 
 	public static void initialize() {
 
-		iconStack = new ItemStack(RAItems.itemSword, 1, Short.MAX_VALUE);
+		iconStack = new ItemStack(RAItems.itemSwordFlux, 1, Short.MAX_VALUE);
 		iconStack.setTagCompound(new NBTTagCompound());
 		iconStack.stackTagCompound.setBoolean("Empowered", true);
 	}

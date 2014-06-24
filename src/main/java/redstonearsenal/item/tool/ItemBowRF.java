@@ -2,6 +2,7 @@ package redstonearsenal.item.tool;
 
 import cofh.api.energy.IEnergyContainerItem;
 import cofh.api.item.IEmpowerableItem;
+import cofh.item.tool.ItemBowAdv;
 import cofh.util.EnergyHelper;
 import cofh.util.KeyBindingEmpower;
 import cofh.util.MathHelper;
@@ -19,7 +20,6 @@ import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBow;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
@@ -29,11 +29,8 @@ import net.minecraftforge.event.entity.player.ArrowNockEvent;
 
 import org.lwjgl.input.Keyboard;
 
-public class ItemBowRF extends ItemBow implements IEmpowerableItem, IEnergyContainerItem {
+public class ItemBowRF extends ItemBowAdv implements IEmpowerableItem, IEnergyContainerItem {
 
-	protected Item.ToolMaterial toolMaterial;
-
-	IIcon normalIcons[] = new IIcon[4];
 	IIcon activeIcons[] = new IIcon[4];
 	IIcon drainedIcon;
 
@@ -44,9 +41,7 @@ public class ItemBowRF extends ItemBow implements IEmpowerableItem, IEnergyConta
 
 	public ItemBowRF(Item.ToolMaterial toolMaterial) {
 
-		super();
-		this.toolMaterial = toolMaterial;
-		setMaxDamage(toolMaterial.getMaxUses());
+		super(toolMaterial);
 		setNoRepair();
 	}
 
@@ -60,12 +55,6 @@ public class ItemBowRF extends ItemBow implements IEmpowerableItem, IEnergyConta
 
 		int unbreakingLevel = MathHelper.clampI(EnchantmentHelper.getEnchantmentLevel(Enchantment.unbreaking.effectId, stack), 0, 4);
 		return (isEmpowered(stack) ? energyPerUseCharged : energyPerUse) * (5 - unbreakingLevel) / 5;
-	}
-
-	@Override
-	public int getItemEnchantability() {
-
-		return toolMaterial.getEnchantability();
 	}
 
 	@Override
@@ -114,7 +103,6 @@ public class ItemBowRF extends ItemBow implements IEmpowerableItem, IEnergyConta
 
 		if (flag || player.inventory.hasItem(Items.arrow)) {
 			boolean empowered = isEmpowered(stack);
-
 			float f = draw / 20.0F;
 			f = (f * f + f * 2.0F) / 3.0F;
 
@@ -123,13 +111,10 @@ public class ItemBowRF extends ItemBow implements IEmpowerableItem, IEnergyConta
 			} else if (f < 0.1F) {
 				return;
 			}
-			EntityArrow arrow;
+			EntityArrow arrow = new EntityArrow(world, player, f * arrowSpeedMultiplier * (empowered ? 1.0F : 1.25F));
+			double damage = arrow.getDamage() * arrowDamageMultiplier * (empowered ? 1.0F : 1.25F);
+			arrow.setDamage(damage);
 
-			if (empowered) {
-				arrow = new EntityArrow(world, player, f * 3.0F);
-			} else {
-				arrow = new EntityArrow(world, player, f * 2.0F);
-			}
 			if (f == 1.0F) {
 				arrow.setIsCritical(true);
 			}
@@ -158,7 +143,6 @@ public class ItemBowRF extends ItemBow implements IEmpowerableItem, IEnergyConta
 				arrow.canBePickedUp = 2;
 			} else {
 				player.inventory.consumeInventoryItem(Items.arrow);
-
 				if (empowered) {
 					arrow.canBePickedUp = 2;
 				}
@@ -220,12 +204,6 @@ public class ItemBowRF extends ItemBow implements IEmpowerableItem, IEnergyConta
 	}
 
 	@Override
-	public IIcon getIconIndex(ItemStack stack) {
-
-		return getIcon(stack, 0);
-	}
-
-	@Override
 	public IIcon getIcon(ItemStack stack, int pass) {
 
 		return isEmpowered(stack) ? this.activeIcons[0] : getEnergyStored(stack) <= 0 ? this.drainedIcon : this.normalIcons[0];
@@ -254,12 +232,12 @@ public class ItemBowRF extends ItemBow implements IEmpowerableItem, IEnergyConta
 	@Override
 	public void registerIcons(IIconRegister ir) {
 
+		super.registerIcons(ir);
+
 		this.drainedIcon = ir.registerIcon(this.getIconString() + "_Drained");
-		this.normalIcons[0] = ir.registerIcon(this.getIconString());
 		this.activeIcons[0] = ir.registerIcon(this.getIconString() + "_Active");
 
 		for (int i = 1; i < 4; i++) {
-			this.normalIcons[i] = ir.registerIcon(this.getIconString() + "_" + (i - 1));
 			this.activeIcons[i] = ir.registerIcon(this.getIconString() + "_" + (i - 1) + "_Active");
 		}
 	}

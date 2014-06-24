@@ -1,8 +1,10 @@
 package redstonearsenal.item.tool;
 
+import cofh.CoFHCore;
 import cofh.api.energy.IEnergyContainerItem;
 import cofh.api.item.IEmpowerableItem;
 import cofh.entity.EntityCoFHFishHook;
+import cofh.item.tool.ItemFishingRodAdv;
 import cofh.util.EnergyHelper;
 import cofh.util.KeyBindingEmpower;
 import cofh.util.MathHelper;
@@ -11,26 +13,23 @@ import cofh.util.StringHelper;
 
 import java.util.List;
 
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemFishingRod;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 
 import org.lwjgl.input.Keyboard;
 
-public class ItemFishingRodRF extends ItemFishingRod implements IEmpowerableItem, IEnergyContainerItem {
+public class ItemFishingRodRF extends ItemFishingRodAdv implements IEmpowerableItem, IEnergyContainerItem {
 
-	IIcon normalIcons[] = new IIcon[2];
 	IIcon activeIcons[] = new IIcon[2];
 	IIcon drainedIcon;
-
-	protected ToolMaterial toolMaterial;
 
 	public int maxEnergy = 160000;
 	public int maxTransfer = 1600;
@@ -39,7 +38,7 @@ public class ItemFishingRodRF extends ItemFishingRod implements IEmpowerableItem
 
 	public ItemFishingRodRF(ToolMaterial toolMaterial) {
 
-		super();
+		super(toolMaterial);
 		this.toolMaterial = toolMaterial;
 		setMaxDamage(toolMaterial.getMaxUses());
 		setNoRepair();
@@ -58,12 +57,6 @@ public class ItemFishingRodRF extends ItemFishingRod implements IEmpowerableItem
 	}
 
 	@Override
-	public int getItemEnchantability() {
-
-		return toolMaterial.getEnchantability();
-	}
-
-	@Override
 	public EnumRarity getRarity(ItemStack stack) {
 
 		return EnumRarity.uncommon;
@@ -77,15 +70,11 @@ public class ItemFishingRodRF extends ItemFishingRod implements IEmpowerableItem
 	}
 
 	@Override
-	public boolean isItemTool(ItemStack stack) {
-
-		return true;
-	}
-
-	@Override
 	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
 
-		// TODO: WTF
+		if (!player.capabilities.isCreativeMode && getEnergyStored(stack) < getEnergyPerUse(stack)) {
+			return stack;
+		}
 		if (player.fishEntity != null) {
 			int i = player.fishEntity.func_146034_e();
 			useEnergy(stack);
@@ -145,6 +134,27 @@ public class ItemFishingRodRF extends ItemFishingRod implements IEmpowerableItem
 	public boolean isDamaged(ItemStack stack) {
 
 		return stack.getItemDamage() != Short.MAX_VALUE;
+	}
+
+	@Override
+	public IIcon getIcon(ItemStack stack, int pass) {
+
+		EntityPlayer player = CoFHCore.proxy.getClientPlayer();
+
+		if (player.inventory.getCurrentItem() == stack && player.fishEntity != null) {
+			return isEmpowered(stack) ? this.activeIcons[1] : this.normalIcons[1];
+		}
+		return isEmpowered(stack) ? this.activeIcons[0] : getEnergyStored(stack) <= 0 ? this.drainedIcon : this.normalIcons[0];
+	}
+
+	@Override
+	public void registerIcons(IIconRegister ir) {
+
+		super.registerIcons(ir);
+
+		this.drainedIcon = ir.registerIcon(this.getIconString() + "_Drained");
+		this.activeIcons[0] = ir.registerIcon(this.getIconString() + "_Active_Uncast");
+		this.activeIcons[1] = ir.registerIcon(this.getIconString() + "_Active_Cast");
 	}
 
 	/* IEmpowerableItem */

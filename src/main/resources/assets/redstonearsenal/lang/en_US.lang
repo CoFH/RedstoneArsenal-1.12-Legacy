@@ -10,17 +10,24 @@ item.redstonearsenal.material.dustElectrumFlux.name=Fluxed Electrum Blend
 item.redstonearsenal.material.ingotElectrumFlux.name=Fluxed Electrum Ingot
 item.redstonearsenal.material.nuggetElectrumFlux.name=Fluxed Electrum Nugget
 item.redstonearsenal.material.gemCrystalFlux.name=Flux Crystal
+item.redstonearsenal.material.plateFlux.name=Fluxed Armor Plating
 item.redstonearsenal.material.rodObsidian.name=Obsidian Rod
 item.redstonearsenal.material.rodObsidianFlux.name=Infused Obsidian Rod
 
-item.redstonearsenal.tool.wrench.name=Flux-Infused OmniWrench
-item.redstonearsenal.tool.battleWrench.name=Flux-Infused BattleWrench 
-item.redstonearsenal.tool.sword.name=Flux-Infused Sword
-item.redstonearsenal.tool.shovel.name=Flux-Infused Shovel
-item.redstonearsenal.tool.pickaxe.name=Flux-Infused Pickaxe
-item.redstonearsenal.tool.axe.name=Flux-Infused Axe
-item.redstonearsenal.tool.sickle.name=Flux-Infused Sickle
-item.redstonearsenal.tool.bow.name=Flux-Infused Bow
+item.redstonearsenal.armor.fluxHelmet.name=Flux-Infused Helm
+item.redstonearsenal.armor.fluxPlate.name=Flux-Infused Chestplate
+item.redstonearsenal.armor.fluxLegs.name=Flux-Infused Leggings
+item.redstonearsenal.armor.fluxBoots.name=Flux-Infused Boots
+
+item.redstonearsenal.tool.fluxWrench.name=Flux-Infused OmniWrench
+item.redstonearsenal.tool.fluxBattleWrench.name=Flux-Infused BattleWrench 
+item.redstonearsenal.tool.fluxSword.name=Flux-Infused Sword
+item.redstonearsenal.tool.fluxShovel.name=Flux-Infused Shovel
+item.redstonearsenal.tool.fluxPickaxe.name=Flux-Infused Pickaxe
+item.redstonearsenal.tool.fluxAxe.name=Flux-Infused Axe
+item.redstonearsenal.tool.fluxFishingRod.name=Flux-Infused Fishing Rod
+item.redstonearsenal.tool.fluxSickle.name=Flux-Infused Sickle
+item.redstonearsenal.tool.fluxBow.name=Flux-Infused Bow
 
 itemGroup.redstonearsenal.creativeTab=Redstone Arsenal
 
