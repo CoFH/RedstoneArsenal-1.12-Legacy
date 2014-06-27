@@ -143,9 +143,6 @@ public class ItemBowRF extends ItemBowAdv implements IEmpowerableItem, IEnergyCo
 				arrow.canBePickedUp = 2;
 			} else {
 				player.inventory.consumeInventoryItem(Items.arrow);
-				if (empowered) {
-					arrow.canBePickedUp = 2;
-				}
 			}
 			if (ServerHelper.isServerWorld(world)) {
 				world.spawnEntityInWorld(arrow);
