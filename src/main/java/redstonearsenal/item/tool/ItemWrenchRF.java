@@ -4,7 +4,6 @@ import buildcraft.api.tools.IToolWrench;
 
 import cofh.api.block.IDismantleable;
 import cofh.api.energy.IEnergyContainerItem;
-import cofh.audio.SoundBase;
 import cofh.util.BlockHelper;
 import cofh.util.EnergyHelper;
 import cofh.util.MathHelper;
@@ -12,7 +11,6 @@ import cofh.util.ServerHelper;
 import cofh.util.StringHelper;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
-import cpw.mods.fml.client.FMLClientHandler;
 
 import ic2.api.tile.IWrenchable;
 
@@ -144,18 +142,10 @@ public class ItemWrenchRF extends ItemShears implements IToolCrowbar, IToolWrenc
 
 			if (player.isSneaking()) {
 				world.setBlockMetadataWithNotify(x, y, z, BlockHelper.rotateVanillaBlockAlt(world, block, x, y, z), 3);
-
-				if (ServerHelper.isClientWorld(world)) {
-					String soundName = block.stepSound.getBreakSound();
-					FMLClientHandler.instance().getClient().getSoundHandler().playSound(new SoundBase(soundName, 1.0F, 0.6F));
-				}
+				world.playSoundEffect(x + 0.5, y + 0.5, z + 0.5, block.stepSound.getBreakSound(), 1.0F, 0.6F);
 			} else {
 				world.setBlockMetadataWithNotify(x, y, z, BlockHelper.rotateVanillaBlock(world, block, x, y, z), 3);
-
-				if (ServerHelper.isClientWorld(world)) {
-					String soundName = block.stepSound.getBreakSound();
-					FMLClientHandler.instance().getClient().getSoundHandler().playSound(new SoundBase(soundName, 1.0F, 0.8F));
-				}
+				world.playSoundEffect(x + 0.5, y + 0.5, z + 0.5, block.stepSound.getBreakSound(), 1.0F, 0.8F);
 			}
 			if (!player.capabilities.isCreativeMode) {
 				useEnergy(stack, false);

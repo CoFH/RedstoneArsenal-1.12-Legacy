@@ -1,7 +1,6 @@
 package redstonearsenal.block;
 
 import cofh.api.core.IInitializer;
-import cofh.render.IconRegistry;
 import cofh.util.DamageHelper;
 import cofh.util.EnergyHelper;
 import cofh.util.ItemHelper;
@@ -117,7 +116,7 @@ public class BlockStorage extends Block implements IInitializer {
 	@Override
 	public IIcon getIcon(int side, int metadata) {
 
-		return IconRegistry.getIcon("StorageFlux", metadata);
+		return TEXTURES[metadata];
 	}
 
 	@Override
@@ -125,7 +124,7 @@ public class BlockStorage extends Block implements IInitializer {
 	public void registerBlockIcons(IIconRegister ir) {
 
 		for (int i = 0; i < NAMES.length; i++) {
-			IconRegistry.addIcon("StorageFlux" + i, "redstonearsenal:storage/Block_" + StringHelper.titleCase(NAMES[i]), ir);
+			TEXTURES[i] = ir.registerIcon("redstonearsenal:storage/Block_" + StringHelper.titleCase(NAMES[i]));
 		}
 	}
 
@@ -174,6 +173,7 @@ public class BlockStorage extends Block implements IInitializer {
 	}
 
 	public static final String[] NAMES = { "electrumFlux", "crystalFlux" };
+	public static final IIcon[] TEXTURES = new IIcon[NAMES.length];
 
 	public static boolean enableDamage[] = new boolean[2];
 	public static boolean enableDamageCharge[] = new boolean[2];
