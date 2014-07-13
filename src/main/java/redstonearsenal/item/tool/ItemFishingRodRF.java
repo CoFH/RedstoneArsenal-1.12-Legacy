@@ -153,8 +153,8 @@ public class ItemFishingRodRF extends ItemFishingRodAdv implements IEmpowerableI
 		super.registerIcons(ir);
 
 		this.drainedIcon = ir.registerIcon(this.getIconString() + "_Drained");
-		this.activeIcons[0] = ir.registerIcon(this.getIconString() + "_Active_Uncast");
-		this.activeIcons[1] = ir.registerIcon(this.getIconString() + "_Active_Cast");
+		this.activeIcons[0] = ir.registerIcon(this.getIconString() + "_Uncast_Active");
+		this.activeIcons[1] = ir.registerIcon(this.getIconString() + "_Cast_Active");
 	}
 
 	/* IEmpowerableItem */
