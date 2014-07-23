@@ -1,10 +1,10 @@
 package redstonearsenal.item.tool;
 
-import cofh.CoFHCore;
 import cofh.api.energy.IEnergyContainerItem;
 import cofh.api.item.IEmpowerableItem;
 import cofh.entity.EntityCoFHFishHook;
 import cofh.item.tool.ItemFishingRodAdv;
+import cofh.util.CoreUtils;
 import cofh.util.EnergyHelper;
 import cofh.util.KeyBindingEmpower;
 import cofh.util.MathHelper;
@@ -139,7 +139,7 @@ public class ItemFishingRodRF extends ItemFishingRodAdv implements IEmpowerableI
 	@Override
 	public IIcon getIcon(ItemStack stack, int pass) {
 
-		EntityPlayer player = CoFHCore.proxy.getClientPlayer();
+		EntityPlayer player = CoreUtils.getClientPlayer();
 
 		if (player.inventory.getCurrentItem() == stack && player.fishEntity != null) {
 			return isEmpowered(stack) ? this.activeIcons[1] : this.normalIcons[1];
