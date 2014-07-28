@@ -1,19 +1,21 @@
 [
-{
-  "modid": "RedstoneArsenal",
-  "name": "Redstone Arsenal",
-  "description": "Behold the Redstone (Flux) Revolution!",
-  "version": "1.0.1B1",
-  "credits": "Team CoFH",
-  "logoFile": "/assets/redstonearsenal/textures/logo.png",
-  "mcversion": "1.7.10",
-  "url": "http://www.teamcofh.com",
-  "updateUrl": "",
-  "authors": [ "Team CoFH" ],
-  "parent":"",
-  "screenshots": [],
-  "dependencies": [
-     "MinecraftForge,CoFHCore"
-  ]
-}
+    {
+        "modid": "RedstoneArsenal",
+        "name": "Redstone Arsenal",
+        "description": "Behold the Redstone (Flux) Revolution!",
+        "version": "1.0.1B1",
+        "credits": "Team CoFH",
+        "logoFile": "/assets/redstonearsenal/textures/logo.png",
+        "mcversion": "1.7.10",
+        "url": "http://www.teamcofh.com",
+        "updateUrl": "",
+        "authors": [
+            "Team CoFH"
+        ],
+        "parent": "",
+        "screenshots": [],
+        "dependencies": [
+            "MinecraftForge,CoFHCore"
+        ]
+    }
 ]
