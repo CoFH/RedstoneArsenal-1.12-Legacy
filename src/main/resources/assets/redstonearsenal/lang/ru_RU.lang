@@ -10,17 +10,24 @@ item.redstonearsenal.material.dustElectrumFlux.name=Флаксовая элек�
 item.redstonearsenal.material.ingotElectrumFlux.name=Флаксовый электрумовый слиток
 item.redstonearsenal.material.nuggetElectrumFlux.name=Флаксовый электрумовый самородок
 item.redstonearsenal.material.gemCrystalFlux.name=Флаксовый кристалл
+item.redstonearsenal.material.plateFlux.name=Флаксовое бронированное покрытие
 item.redstonearsenal.material.rodObsidian.name=Обсидиановый стержень
 item.redstonearsenal.material.rodObsidianFlux.name=Заряженный обсидиановый стержень
 
-item.redstonearsenal.tool.wrench.name=Заряженный флаксом гаечный ключ
-item.redstonearsenal.tool.battleWrench.name=Заряженный флаксом боевой гаечный ключ
-item.redstonearsenal.tool.sword.name=Заряженный флаксом меч
-item.redstonearsenal.tool.shovel.name=Заряженная флаксом лопата
-item.redstonearsenal.tool.pickaxe.name=Заряженная флаксом кирка
-item.redstonearsenal.tool.axe.name=Заряженный флаксом топор
-item.redstonearsenal.tool.sickle.name=Заряженный флаксом серп
-item.redstonearsenal.tool.bow.name=Заряженный флаксом лук
+item.redstonearsenal.armor.fluxHelmet.name=Заряженный флаксом шлем
+item.redstonearsenal.armor.fluxPlate.name=Заряженная флаксом кираса
+item.redstonearsenal.armor.fluxLegs.name=Заряженные флаксом поножи
+item.redstonearsenal.armor.fluxBoots.name=Заряженные флаксом ботинки
+
+item.redstonearsenal.tool.fluxWrench.name=Заряженный флаксом гаечный ключ
+item.redstonearsenal.tool.fluxBattleWrench.name=Заряженный флаксом боевой гаечный ключ
+item.redstonearsenal.tool.fluxSword.name=Заряженный флаксом меч
+item.redstonearsenal.tool.fluxShovel.name=Заряженная флаксом лопата
+item.redstonearsenal.tool.fluxPickaxe.name=Заряженная флаксом кирка
+item.redstonearsenal.tool.fluxAxe.name=Заряженный флаксом топор
+item.redstonearsenal.tool.fluxFishingRod.name=Заряженная флаксом удочка
+item.redstonearsenal.tool.fluxSickle.name=Заряженный флаксом серп
+item.redstonearsenal.tool.fluxBow.name=Заряженный флаксом лук
 
 itemGroup.redstonearsenal.creativeTab=Redstone Arsenal
 
