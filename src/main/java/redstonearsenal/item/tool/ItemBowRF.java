@@ -111,8 +111,8 @@ public class ItemBowRF extends ItemBowAdv implements IEmpowerableItem, IEnergyCo
 			} else if (f < 0.1F) {
 				return;
 			}
-			EntityArrow arrow = new EntityArrow(world, player, f * arrowSpeedMultiplier * (empowered ? 1.0F : 1.25F));
-			double damage = arrow.getDamage() * arrowDamageMultiplier * (empowered ? 1.0F : 1.25F);
+			EntityArrow arrow = new EntityArrow(world, player, f * arrowSpeedMultiplier * (empowered ? 1.25F : 1.0F));
+			double damage = arrow.getDamage() * arrowDamageMultiplier * (empowered ? 1.25F : 1.0F);
 			arrow.setDamage(damage);
 
 			if (f == 1.0F) {
