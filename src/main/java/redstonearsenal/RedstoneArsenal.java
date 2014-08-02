@@ -30,7 +30,7 @@ public class RedstoneArsenal extends BaseMod {
 	public static final String modName = "Redstone Arsenal";
 	public static final String version = "1.7.10R1.0.1B2";
 	public static final String dependencies = "required-after:CoFHCore@[" + CoFHCore.version + ",);after:ThermalExpansion";
-	public static final String releaseURL = "http://github.com/CoFH/RedstoneArsenal/blob/master/VERSION";
+	public static final String releaseURL = "https://raw.github.com/CoFH/RedstoneArsenal/master/VERSION";
 
 	@Instance("RedstoneArsenal")
 	public static RedstoneArsenal instance;
