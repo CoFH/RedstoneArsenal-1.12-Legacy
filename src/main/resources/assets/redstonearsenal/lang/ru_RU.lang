@@ -2,7 +2,7 @@
 
 info.redstonearsenal.tool.chargeOn=для усиления
 info.redstonearsenal.tool.chargeOff=для ослабления
-info.redstonearsenal.tool.energyPerUse=РФ за использование
+info.redstonearsenal.tool.energyPerUse=RF за использование
 info.redstonearsenal.tool.shovel=Также служит как мотыга.
 info.redstonearsenal.tool.wrench=Также служит как ножницы.
 
@@ -32,4 +32,4 @@ item.redstonearsenal.tool.fluxBow.name=Заряженный флаксом лу�
 itemGroup.redstonearsenal.creativeTab=Redstone Arsenal
 
 tile.redstonearsenal.storage.electrumFlux.name=Флаксовый электрумовый блок
-tile.redstonearsenal.storage.crystalFlux.name=Блок Флаксового кристалла
+tile.redstonearsenal.storage.crystalFlux.name=Блок флаксового кристалла
