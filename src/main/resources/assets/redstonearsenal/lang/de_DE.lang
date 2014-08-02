@@ -10,17 +10,24 @@ item.redstonearsenal.material.dustElectrumFlux.name=Fluxierende Elektrummischung
 item.redstonearsenal.material.ingotElectrumFlux.name=Fluxierender Elektrumbarren
 item.redstonearsenal.material.nuggetElectrumFlux.name=Fluxierender Elektrumnugget
 item.redstonearsenal.material.gemCrystalFlux.name=Fluxkristall
+item.redstonearsenal.material.plateFlux.name=Fluxierende Rüstungsplatte
 item.redstonearsenal.material.rodObsidian.name=Obsidianstab
 item.redstonearsenal.material.rodObsidianFlux.name=Infundierter Obsidianstab
 
-item.redstonearsenal.tool.wrench.name=Fluxierender OmniWrench
-item.redstonearsenal.tool.battleWrench.name=Fluxierender Kampfschraubenschlüssel
-item.redstonearsenal.tool.sword.name=Fluxierendes Schwert
-item.redstonearsenal.tool.shovel.name=Fluxierende Schaufel
-item.redstonearsenal.tool.pickaxe.name=Fluxierende Spitzhacke
-item.redstonearsenal.tool.axe.name=Fluxierende Axt
-item.redstonearsenal.tool.sickle.name=Fluxierende Sichel
-item.redstonearsenal.tool.bow.name=Fluxierender Bogen
+item.redstonearsenal.armor.fluxHelmet.name=Fluxierender Helm
+item.redstonearsenal.armor.fluxPlate.name=Fluxierender Brustpanzer
+item.redstonearsenal.armor.fluxLegs.name=Fluxierender Beinschutz
+item.redstonearsenal.armor.fluxBoots.name=Fluxierende Stiefel
+
+item.redstonearsenal.tool.fluxWrench.name=Fluxierender OmniWrench
+item.redstonearsenal.tool.fluxBattleWrench.name=Fluxierender Kampfschraubenschlüssel
+item.redstonearsenal.tool.fluxSword.name=Fluxierendes Schwert
+item.redstonearsenal.tool.fluxShovel.name=Fluxierende Schaufel
+item.redstonearsenal.tool.fluxPickaxe.name=Fluxierende Spitzhacke
+item.redstonearsenal.tool.fluxAxe.name=Fluxierende Axt
+item.redstonearsenal.tool.fluxFishingRod.name=Fluxierende Angelrute
+item.redstonearsenal.tool.fluxSickle.name=Fluxierende Sichel
+item.redstonearsenal.tool.fluxBow.name=Fluxierender Bogen
 
 itemGroup.redstonearsenal.creativeTab=Redstone Arsenal
 
