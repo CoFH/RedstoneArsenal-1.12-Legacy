@@ -1,10 +1,10 @@
 package redstonearsenal.item;
 
 import cofh.api.core.IInitializer;
-import cofh.item.ItemBase;
-import cofh.util.EnergyHelper;
-import cofh.util.ItemHelper;
-import cofh.util.ThermalExpansionHelper;
+import cofh.api.modhelpers.ThermalExpansionHelper;
+import cofh.core.item.ItemBase;
+import cofh.lib.util.helpers.EnergyHelper;
+import cofh.lib.util.helpers.ItemHelper;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.registry.GameRegistry;
 

@@ -1,7 +1,7 @@
 package redstonearsenal.item.tool;
 
-import cofh.util.CoreUtils;
-import cofh.util.ServerHelper;
+import cofh.core.util.CoreUtils;
+import cofh.lib.util.helpers.ServerHelper;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;

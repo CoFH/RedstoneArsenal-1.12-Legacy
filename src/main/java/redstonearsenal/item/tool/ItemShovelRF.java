@@ -1,8 +1,8 @@
 package redstonearsenal.item.tool;
 
-import cofh.util.MathHelper;
-import cofh.util.ServerHelper;
-import cofh.util.StringHelper;
+import cofh.lib.util.helpers.MathHelper;
+import cofh.lib.util.helpers.ServerHelper;
+import cofh.lib.util.helpers.StringHelper;
 import cpw.mods.fml.common.eventhandler.Event.Result;
 
 import java.util.List;

@@ -2,12 +2,12 @@ package redstonearsenal.item.tool;
 
 import cofh.api.energy.IEnergyContainerItem;
 import cofh.api.item.IEmpowerableItem;
-import cofh.item.tool.ItemBowAdv;
-import cofh.util.EnergyHelper;
-import cofh.util.KeyBindingEmpower;
-import cofh.util.MathHelper;
-import cofh.util.ServerHelper;
-import cofh.util.StringHelper;
+import cofh.core.item.tool.ItemBowAdv;
+import cofh.core.util.KeyBindingEmpower;
+import cofh.lib.util.helpers.EnergyHelper;
+import cofh.lib.util.helpers.MathHelper;
+import cofh.lib.util.helpers.ServerHelper;
+import cofh.lib.util.helpers.StringHelper;
 
 import java.util.List;
 
@@ -243,7 +243,7 @@ public class ItemBowRF extends ItemBowAdv implements IEmpowerableItem, IEnergyCo
 	@Override
 	public boolean isEmpowered(ItemStack stack) {
 
-		return stack.stackTagCompound.getBoolean("Empowered");
+		return stack.stackTagCompound == null ? false : stack.stackTagCompound.getBoolean("Empowered");
 	}
 
 	@Override

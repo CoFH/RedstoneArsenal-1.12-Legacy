@@ -1,12 +1,12 @@
 package redstonearsenal.block;
 
 import cofh.api.core.IInitializer;
-import cofh.util.DamageHelper;
-import cofh.util.EnergyHelper;
-import cofh.util.ItemHelper;
-import cofh.util.MathHelper;
-import cofh.util.ServerHelper;
-import cofh.util.StringHelper;
+import cofh.lib.util.helpers.DamageHelper;
+import cofh.lib.util.helpers.EnergyHelper;
+import cofh.lib.util.helpers.ItemHelper;
+import cofh.lib.util.helpers.MathHelper;
+import cofh.lib.util.helpers.ServerHelper;
+import cofh.lib.util.helpers.StringHelper;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;

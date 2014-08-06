@@ -2,12 +2,12 @@ package redstonearsenal.item.tool;
 
 import cofh.api.energy.IEnergyContainerItem;
 import cofh.api.item.IEmpowerableItem;
-import cofh.item.tool.ItemToolAdv;
-import cofh.util.DamageHelper;
-import cofh.util.EnergyHelper;
-import cofh.util.KeyBindingEmpower;
-import cofh.util.MathHelper;
-import cofh.util.StringHelper;
+import cofh.core.item.tool.ItemToolAdv;
+import cofh.core.util.KeyBindingEmpower;
+import cofh.lib.util.helpers.DamageHelper;
+import cofh.lib.util.helpers.EnergyHelper;
+import cofh.lib.util.helpers.MathHelper;
+import cofh.lib.util.helpers.StringHelper;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 

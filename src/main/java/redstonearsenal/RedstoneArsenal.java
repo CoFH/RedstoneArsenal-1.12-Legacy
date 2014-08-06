@@ -2,9 +2,9 @@ package redstonearsenal;
 
 import cofh.CoFHCore;
 import cofh.core.CoFHProps;
+import cofh.core.util.ConfigHandler;
 import cofh.mod.BaseMod;
-import cofh.updater.UpdateManager;
-import cofh.util.ConfigHandler;
+import cofh.mod.updater.UpdateManager;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -28,7 +28,7 @@ public class RedstoneArsenal extends BaseMod {
 
 	public static final String modId = "RedstoneArsenal";
 	public static final String modName = "Redstone Arsenal";
-	public static final String version = "1.7.10R1.0.1B2";
+	public static final String version = "1.7.10R1.1.0B3";
 	public static final String dependencies = "required-after:CoFHCore@[" + CoFHCore.version + ",);after:ThermalExpansion";
 	public static final String releaseURL = "https://raw.github.com/CoFH/RedstoneArsenal/master/VERSION";
 

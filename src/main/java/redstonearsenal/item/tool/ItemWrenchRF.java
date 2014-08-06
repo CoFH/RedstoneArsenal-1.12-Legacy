@@ -4,11 +4,11 @@ import buildcraft.api.tools.IToolWrench;
 
 import cofh.api.block.IDismantleable;
 import cofh.api.energy.IEnergyContainerItem;
-import cofh.util.BlockHelper;
-import cofh.util.EnergyHelper;
-import cofh.util.MathHelper;
-import cofh.util.ServerHelper;
-import cofh.util.StringHelper;
+import cofh.lib.util.helpers.BlockHelper;
+import cofh.lib.util.helpers.EnergyHelper;
+import cofh.lib.util.helpers.MathHelper;
+import cofh.lib.util.helpers.ServerHelper;
+import cofh.lib.util.helpers.StringHelper;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 

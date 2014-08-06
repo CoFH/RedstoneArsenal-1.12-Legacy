@@ -1,9 +1,9 @@
 package redstonearsenal.item.armor;
 
 import cofh.api.energy.IEnergyContainerItem;
-import cofh.item.ItemArmorAdv;
-import cofh.util.EnergyHelper;
-import cofh.util.StringHelper;
+import cofh.core.item.ItemArmorAdv;
+import cofh.lib.util.helpers.EnergyHelper;
+import cofh.lib.util.helpers.StringHelper;
 
 import java.util.List;
 

@@ -2,14 +2,14 @@ package redstonearsenal.item.tool;
 
 import cofh.api.energy.IEnergyContainerItem;
 import cofh.api.item.IEmpowerableItem;
-import cofh.entity.EntityCoFHFishHook;
-import cofh.item.tool.ItemFishingRodAdv;
-import cofh.util.CoreUtils;
-import cofh.util.EnergyHelper;
-import cofh.util.KeyBindingEmpower;
-import cofh.util.MathHelper;
-import cofh.util.ServerHelper;
-import cofh.util.StringHelper;
+import cofh.core.entity.EntityCoFHFishHook;
+import cofh.core.item.tool.ItemFishingRodAdv;
+import cofh.core.util.CoreUtils;
+import cofh.core.util.KeyBindingEmpower;
+import cofh.lib.util.helpers.EnergyHelper;
+import cofh.lib.util.helpers.MathHelper;
+import cofh.lib.util.helpers.ServerHelper;
+import cofh.lib.util.helpers.StringHelper;
 
 import java.util.List;
 

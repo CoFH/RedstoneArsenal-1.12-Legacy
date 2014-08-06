@@ -4,8 +4,8 @@ import buildcraft.api.tools.IToolWrench;
 
 import cofh.api.block.IDismantleable;
 import cofh.api.energy.IEnergyContainerItem;
-import cofh.util.BlockHelper;
-import cofh.util.ServerHelper;
+import cofh.lib.util.helpers.BlockHelper;
+import cofh.lib.util.helpers.ServerHelper;
 
 import ic2.api.tile.IWrenchable;
 

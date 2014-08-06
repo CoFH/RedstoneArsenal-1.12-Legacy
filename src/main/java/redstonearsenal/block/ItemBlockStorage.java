@@ -1,6 +1,6 @@
 package redstonearsenal.block;
 
-import cofh.util.StringHelper;
+import cofh.lib.util.helpers.StringHelper;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.EnumRarity;
