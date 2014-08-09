@@ -2,10 +2,12 @@ package redstonearsenal.item.tool;
 
 import cofh.api.energy.IEnergyContainerItem;
 import cofh.api.item.IEmpowerableItem;
+import cofh.core.item.IEqualityOverrideItem;
 import cofh.core.item.tool.ItemToolAdv;
 import cofh.core.util.KeyBindingEmpower;
 import cofh.lib.util.helpers.DamageHelper;
 import cofh.lib.util.helpers.EnergyHelper;
+import cofh.lib.util.helpers.ItemHelper;
 import cofh.lib.util.helpers.MathHelper;
 import cofh.lib.util.helpers.StringHelper;
 import com.google.common.collect.HashMultimap;
@@ -23,13 +25,14 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.IIcon;
 
 import org.lwjgl.input.Keyboard;
 
-public abstract class ItemToolRF extends ItemToolAdv implements IEmpowerableItem, IEnergyContainerItem {
+public abstract class ItemToolRF extends ItemToolAdv implements IEmpowerableItem, IEnergyContainerItem, IEqualityOverrideItem {
 
 	IIcon activeIcon;
 	IIcon drainedIcon;
@@ -197,6 +200,24 @@ public abstract class ItemToolRF extends ItemToolAdv implements IEmpowerableItem
 		this.itemIcon = ir.registerIcon(this.getIconString());
 		this.activeIcon = ir.registerIcon(this.getIconString() + "_Active");
 		this.drainedIcon = ir.registerIcon(this.getIconString() + "_Drained");
+	}
+
+	/* IEqualityOverrideItem */
+	@Override
+	public boolean isLastHeldItemEqual(ItemStack current, ItemStack previous) {
+
+		NBTTagCompound a = current.stackTagCompound, b = previous.stackTagCompound;
+		if (a == b) {
+			return true;
+		}
+		if (a == null | b == null) {
+			return false;
+		}
+		a = (NBTTagCompound) a.copy();
+		b = (NBTTagCompound) b.copy();
+		a.removeTag("Energy");
+		b.removeTag("Energy");
+		return a.equals(b);
 	}
 
 	/* IEmpowerableItem */
