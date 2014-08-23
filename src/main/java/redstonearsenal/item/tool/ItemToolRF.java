@@ -7,7 +7,6 @@ import cofh.core.item.tool.ItemToolAdv;
 import cofh.core.util.KeyBindingEmpower;
 import cofh.lib.util.helpers.DamageHelper;
 import cofh.lib.util.helpers.EnergyHelper;
-import cofh.lib.util.helpers.ItemHelper;
 import cofh.lib.util.helpers.MathHelper;
 import cofh.lib.util.helpers.StringHelper;
 import com.google.common.collect.HashMultimap;
@@ -202,24 +201,6 @@ public abstract class ItemToolRF extends ItemToolAdv implements IEmpowerableItem
 		this.drainedIcon = ir.registerIcon(this.getIconString() + "_Drained");
 	}
 
-	/* IEqualityOverrideItem */
-	@Override
-	public boolean isLastHeldItemEqual(ItemStack current, ItemStack previous) {
-
-		NBTTagCompound a = current.stackTagCompound, b = previous.stackTagCompound;
-		if (a == b) {
-			return true;
-		}
-		if (a == null | b == null) {
-			return false;
-		}
-		a = (NBTTagCompound) a.copy();
-		b = (NBTTagCompound) b.copy();
-		a.removeTag("Energy");
-		b.removeTag("Energy");
-		return a.equals(b);
-	}
-
 	/* IEmpowerableItem */
 	@Override
 	public boolean isEmpowered(ItemStack stack) {
@@ -298,6 +279,24 @@ public abstract class ItemToolRF extends ItemToolAdv implements IEmpowerableItem
 	public int getMaxEnergyStored(ItemStack container) {
 
 		return maxEnergy;
+	}
+
+	/* IEqualityOverrideItem */
+	@Override
+	public boolean isLastHeldItemEqual(ItemStack current, ItemStack previous) {
+
+		NBTTagCompound a = current.stackTagCompound, b = previous.stackTagCompound;
+		if (a == b) {
+			return true;
+		}
+		if (a == null | b == null) {
+			return false;
+		}
+		a = (NBTTagCompound) a.copy();
+		b = (NBTTagCompound) b.copy();
+		a.removeTag("Energy");
+		b.removeTag("Energy");
+		return a.equals(b);
 	}
 
 }
