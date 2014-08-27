@@ -3,14 +3,14 @@
 info.redstonearsenal.tool.chargeOn=per attivare
 info.redstonearsenal.tool.chargeOff=per disattivare
 info.redstonearsenal.tool.energyPerUse=RF per uso
-info.redstonearsenal.tool.shovel=Anche usata come zappa.
-info.redstonearsenal.tool.wrench=Anche usata come cesoie.
+info.redstonearsenal.tool.shovel=Usabile anche come zappa.
+info.redstonearsenal.tool.wrench=Usabile anche come cesoie.
 
-item.redstonearsenal.material.dustElectrumFlux.name=Miscuglio di elettro fluxato
-item.redstonearsenal.material.ingotElectrumFlux.name=Lingotto di elettro fluxato
-item.redstonearsenal.material.nuggetElectrumFlux.name=Pepita di elettro fluxato
+item.redstonearsenal.material.dustElectrumFlux.name=Miscuglio di elettro infuso
+item.redstonearsenal.material.ingotElectrumFlux.name=Lingotto di elettro infuso
+item.redstonearsenal.material.nuggetElectrumFlux.name=Pepita di elettro infuso
 item.redstonearsenal.material.gemCrystalFlux.name=Cristallo di flux
-item.redstonearsenal.material.plateFlux.name=Piastra per armatura fluxata
+item.redstonearsenal.material.plateFlux.name=Piastra per armatura infusa
 item.redstonearsenal.material.rodObsidian.name=Verga di ossidiana
 item.redstonearsenal.material.rodObsidianFlux.name=Verga di ossidiana infusa
 
@@ -31,5 +31,5 @@ item.redstonearsenal.tool.fluxBow.name=Arco infuso di flux
 
 itemGroup.redstonearsenal.creativeTab=Redstone Arsenal
 
-tile.redstonearsenal.storage.electrumFlux.name=Blocco di elettro fluxato
+tile.redstonearsenal.storage.electrumFlux.name=Blocco di elettro infuso
 tile.redstonearsenal.storage.crystalFlux.name=Blocco di cristallo di flux
