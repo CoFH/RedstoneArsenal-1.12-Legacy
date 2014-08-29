@@ -4,8 +4,11 @@ import buildcraft.api.tools.IToolWrench;
 
 import cofh.api.block.IDismantleable;
 import cofh.api.energy.IEnergyContainerItem;
+import cofh.api.item.IToolHammer;
+import cofh.asm.relauncher.Strippable;
 import cofh.lib.util.helpers.BlockHelper;
 import cofh.lib.util.helpers.ServerHelper;
+import cpw.mods.fml.common.eventhandler.Event.Result;
 
 import ic2.api.tile.IWrenchable;
 
@@ -23,9 +26,13 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent.Action;
 
-public class ItemWrenchBattleRF extends ItemSwordRF implements IToolCrowbar, IToolWrench, IEnergyContainerItem {
+@Strippable({ "buildcraft.api.tools.IToolWrench", "mods.railcraft.api.core.items.IToolCrowbar" })
+public class ItemWrenchBattleRF extends ItemSwordRF implements IEnergyContainerItem, IToolHammer, IToolCrowbar, IToolWrench {
 
 	public ItemWrenchBattleRF(Item.ToolMaterial toolMaterial) {
 
@@ -59,6 +66,13 @@ public class ItemWrenchBattleRF extends ItemSwordRF implements IToolCrowbar, ITo
 		}
 		Block block = world.getBlock(x, y, z);
 
+		if (block == null) {
+			return false;
+		}
+		PlayerInteractEvent event = new PlayerInteractEvent(player, Action.RIGHT_CLICK_BLOCK, x, y, z, hitSide, world);
+		if (MinecraftForge.EVENT_BUS.post(event) || event.getResult() == Result.DENY || event.useBlock == Result.DENY || event.useItem == Result.DENY) {
+			return false;
+		}
 		if (ServerHelper.isServerWorld(world) && player.isSneaking() && block instanceof IDismantleable
 				&& ((IDismantleable) block).canDismantle(player, world, x, y, z)) {
 			((IDismantleable) block).dismantleBlock(player, world, x, y, z, false);
@@ -193,6 +207,25 @@ public class ItemWrenchBattleRF extends ItemSwordRF implements IToolCrowbar, ITo
 			useEnergy(crowbar, false);
 		}
 		player.swingItem();
+	}
+
+	/* IToolHammer */
+	@Override
+	public boolean isUsable(ItemStack item, EntityLivingBase user, int x, int y, int z) {
+
+		return true;
+	}
+
+	@Override
+	public void toolUsed(ItemStack item, EntityLivingBase user, int x, int y, int z) {
+
+		if (user instanceof EntityPlayer) {
+			EntityPlayer player = (EntityPlayer) user;
+
+			if (!player.capabilities.isCreativeMode) {
+				useEnergy(player.getCurrentEquippedItem(), false);
+			}
+		}
 	}
 
 	/* IToolWrench */
