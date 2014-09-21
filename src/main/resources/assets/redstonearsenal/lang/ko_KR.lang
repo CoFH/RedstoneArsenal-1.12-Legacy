@@ -1,10 +1,10 @@
 #ko_KR
 
-info.redstonearsenal.tool.chargeOn=제한해제
-info.redstonearsenal.tool.chargeOff=제한
-info.redstonearsenal.tool.energyPerUse=RF/1회사용
-info.redstonearsenal.tool.shovel=괭이 역할도 합니다.
-info.redstonearsenal.tool.wrench=가위 역할도 합니다.
+info.redstonearsenal.tool.chargeOn=폭주모드
+info.redstonearsenal.tool.chargeOff=폭주모드 해제
+info.redstonearsenal.tool.energyPerUse=1회당 사용 RF
+info.redstonearsenal.tool.shovel=괭이겸용
+info.redstonearsenal.tool.wrench=가위겸용
 
 item.redstonearsenal.material.dustElectrumFlux.name=플럭스 일렉트럼 가루
 item.redstonearsenal.material.ingotElectrumFlux.name=플럭스 일렉트럼 주괴
@@ -29,7 +29,7 @@ item.redstonearsenal.tool.fluxFishingRod.name=플럭스가 주입된 낚시대
 item.redstonearsenal.tool.fluxSickle.name=플럭스가 주입된 낫
 item.redstonearsenal.tool.fluxBow.name=플럭스가 주입된 활
 
-itemGroup.redstonearsenal.creativeTab=레드스톤 아스널
+itemGroup.redstonearsenal.creativeTab=레드스톤 아스널[Redstone Arsenal]
 
 tile.redstonearsenal.storage.electrumFlux.name=플럭스 일렉트럼 블럭
 tile.redstonearsenal.storage.crystalFlux.name=플럭스 수정 블럭
