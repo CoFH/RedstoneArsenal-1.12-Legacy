@@ -1,44 +1,35 @@
 #zh_CN
 
-death.attack.flux=%1$s 的现实已经被RF撕裂了!
-death.attack.flux.player=%1$s 被 %2$s 用RF杀死了!
+info.redstonearsenal.tool.chargeOn=切换充能模式
+info.redstonearsenal.tool.chargeOff=关闭充能模式
+info.redstonearsenal.tool.energyPerUse=RF/次使用
+info.redstonearsenal.tool.shovel=具有锄头的功能
+info.redstonearsenal.tool.wrench=具有剪刀的功能
 
-info.redstonearsenal.tool.chargeOn=按住Alt键+右击蓄力
-info.redstonearsenal.tool.chargeOff=按住Alt键+右击释放
-info.redstonearsenal.tool.energyPerUse=RF/次
-info.redstonearsenal.tool.shovel=也可以用作锄头.
-info.redstonearsenal.tool.wrench=也可以用作剪刀.
-info.redstonearsenal.tool.enderiumshovel=也可以用作骨粉.
-
-item.redstonearsenal.material.dustElectrumFlux.name=RF琥珀金粉末
-item.redstonearsenal.material.ingotElectrumFlux.name=RF琥珀金锭
-item.redstonearsenal.material.ingotGelidEnderium.name=极寒末影锭
-item.redstonearsenal.material.nuggetElectrumFlux.name=RF琥珀金粒
-item.redstonearsenal.material.nuggetGelidEnderium.name=极寒末影粒
-item.redstonearsenal.material.gemCrystalFlux.name=RF水晶
+item.redstonearsenal.material.dustElectrumFlux.name=红石琥珀金粉末
+item.redstonearsenal.material.ingotElectrumFlux.name=红石琥珀金锭
+item.redstonearsenal.material.nuggetElectrumFlux.name=红石琥珀金粒
+item.redstonearsenal.material.gemCrystalFlux.name=红石水晶
+item.redstonearsenal.material.plateFlux.name=红石装甲防护板
 item.redstonearsenal.material.rodObsidian.name=黑曜石手柄
-item.redstonearsenal.material.rodObsidianFlux.name=RF黑曜石手柄
+item.redstonearsenal.material.rodObsidianFlux.name=充能黑曜石手柄
 
-item.redstonearsenal.tool.wrench.name=RF充能新月锤
-item.redstonearsenal.tool.battleWrench.name=RF充能战锤
-item.redstonearsenal.tool.sword.name=RF充能剑
-item.redstonearsenal.tool.shovel.name=RF充能铲
-item.redstonearsenal.tool.pickaxe.name=RF充能镐
-item.redstonearsenal.tool.axe.name=RF充能斧
-item.redstonearsenal.tool.sickle.name=RF充能镰刀
-item.redstonearsenal.tool.bow.name=RF充能弓
+item.redstonearsenal.armor.fluxHelmet.name=红石充能头盔
+item.redstonearsenal.armor.fluxPlate.name=红石充能胸甲
+item.redstonearsenal.armor.fluxLegs.name=红石充能护腿
+item.redstonearsenal.armor.fluxBoots.name=红石充能靴子
 
-item.redstonearsenal.tool.enderium.pickaxe.name=极寒末影镐
-item.redstonearsenal.tool.enderium.sword.name=极寒末影剑
-item.redstonearsenal.tool.enderium.shovel.name=极寒末影铲
-item.redstonearsenal.tool.enderium.axe.name=极寒末影斧
-item.redstonearsenal.tool.enderium.sickle.name=极寒末影镰刀
-item.redstonearsenal.tool.enderium.battleWrench.name=极寒末影战锤
+item.redstonearsenal.tool.fluxWrench.name=红石充能新月锤
+item.redstonearsenal.tool.fluxBattleWrench.name=红石充能战锤
+item.redstonearsenal.tool.fluxSword.name=红石充能剑
+item.redstonearsenal.tool.fluxShovel.name=红石充能铲
+item.redstonearsenal.tool.fluxPickaxe.name=红石充能镐
+item.redstonearsenal.tool.fluxAxe.name=红石充能斧
+item.redstonearsenal.tool.fluxFishingRod.name=红石充能鱼竿
+item.redstonearsenal.tool.fluxSickle.name=红石充能镰刀
+item.redstonearsenal.tool.fluxBow.name=红石充能弓
 
 itemGroup.redstonearsenal.creativeTab=红石兵工厂
 
-keybind.redstonearsenal.empower=激活/关闭RF能武器以及工具能力
-
-tile.redstonearsenal.storage.electrumFlux.name=RF琥珀金块
-tile.redstonearsenal.storage.crystalFlux.name=RF水晶块
-tile.redstonearsenal.storage.gelidEnderium.name=极寒末影块
+tile.redstonearsenal.storage.electrumFlux.name=红石琥珀金块
+tile.redstonearsenal.storage.crystalFlux.name=红石水晶块
