@@ -139,11 +139,13 @@ public class RAItems {
 		GameRegistry.registerCustomItemStack("toolFluxSickle", toolFluxSickle);
 		GameRegistry.registerCustomItemStack("toolFluxBow", toolFluxBow);
 
-		ThermalExpansionHelper.addTransposerFill(8000, new ItemStack(Items.diamond), gemCrystalFlux, new FluidStack(FluidRegistry.getFluid("redstone"), 200),
-				false);
-		ThermalExpansionHelper.addTransposerFill(4000, GameRegistry.findItemStack("ThermalFoundation", "dustElectrum", 1), dustElectrumFlux, new FluidStack(
-				FluidRegistry.getFluid("redstone"), 200), false);
-		ThermalExpansionHelper.addSmelterBlastOre("ElectrumFlux");
+		if (Loader.isModLoaded("ThermalExpansion")) {
+			ThermalExpansionHelper.addTransposerFill(8000, new ItemStack(Items.diamond), gemCrystalFlux,
+					new FluidStack(FluidRegistry.getFluid("redstone"), 200), false);
+			ThermalExpansionHelper.addTransposerFill(4000, GameRegistry.findItemStack("ThermalFoundation", "dustElectrum", 1), dustElectrumFlux,
+					new FluidStack(FluidRegistry.getFluid("redstone"), 200), false);
+			ThermalExpansionHelper.addSmelterBlastOre("ElectrumFlux");
+		}
 	}
 
 	public static void postInit() {
