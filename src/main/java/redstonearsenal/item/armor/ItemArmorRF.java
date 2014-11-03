@@ -3,10 +3,13 @@ package redstonearsenal.item.armor;
 import cofh.api.energy.IEnergyContainerItem;
 import cofh.core.item.ItemArmorAdv;
 import cofh.lib.util.helpers.EnergyHelper;
+import cofh.lib.util.helpers.MathHelper;
 import cofh.lib.util.helpers.StringHelper;
 
 import java.util.List;
 
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
@@ -17,13 +20,13 @@ import net.minecraftforge.common.ISpecialArmor;
 public class ItemArmorRF extends ItemArmorAdv implements ISpecialArmor, IEnergyContainerItem {
 
 	public static final ArmorProperties UNBLOCKABLE = new ArmorProperties(0, 0.0D, 0);
-	public static final ArmorProperties FLUX = new ArmorProperties(0, 0.5D, Integer.MAX_VALUE);
+	public static final ArmorProperties FLUX = new ArmorProperties(0, 0.125D, Integer.MAX_VALUE);
 
 	public int maxEnergy = 400000;
 	public int maxTransfer = 2000;
 
 	public double absorbRatio = 0.8D;
-	public int energyPerDamage = 80;
+	public int energyPerDamage = 160;
 
 	public String[] textures = new String[2];
 
@@ -103,6 +106,12 @@ public class ItemArmorRF extends ItemArmorAdv implements ISpecialArmor, IEnergyC
 		return 0;
 	}
 
+	protected int getEnergyPerDamage(ItemStack stack) {
+
+		int unbreakingLevel = MathHelper.clampI(EnchantmentHelper.getEnchantmentLevel(Enchantment.unbreaking.effectId, stack), 0, 4);
+		return energyPerDamage * (5 - unbreakingLevel) / 5;
+	}
+
 	/* ISpecialArmor */
 	@Override
 	public ArmorProperties getProperties(EntityLivingBase player, ItemStack armor, DamageSource source, double damage, int slot) {
@@ -112,26 +121,28 @@ public class ItemArmorRF extends ItemArmorAdv implements ISpecialArmor, IEnergyC
 		} else if (source.isUnblockable()) {
 			return UNBLOCKABLE;
 		}
-		int absorbMax = energyPerDamage > 0 ? 25 * getEnergyStored(armor) / energyPerDamage : 0;
-		return new ArmorProperties(0, absorbRatio, absorbMax);
+		int absorbMax = getEnergyPerDamage(armor) > 0 ? 25 * getEnergyStored(armor) / getEnergyPerDamage(armor) : 0;
+		return new ArmorProperties(0, absorbRatio * getArmorMaterial().getDamageReductionAmount(armorType) * 0.05, absorbMax);
+		// 0.05 = 1 / 20 (max armor)
 	}
 
 	@Override
 	public int getArmorDisplay(EntityPlayer player, ItemStack armor, int slot) {
 
-		if (getEnergyStored(armor) >= energyPerDamage) {
+		if (getEnergyStored(armor) >= getEnergyPerDamage(armor)) {
 			return Math.min(getBaseAbsorption(), 20) * getAbsorptionRatio() / 100;
 		}
 		return 0;
 	}
 
 	@Override
-	public void damageArmor(EntityLivingBase entity, ItemStack stack, DamageSource source, int damage, int slot) {
+	public void damageArmor(EntityLivingBase entity, ItemStack armor, DamageSource source, int damage, int slot) {
 
 		if (source.damageType.equals("flux")) {
-			receiveEnergy(stack, damage * energyPerDamage, false);
+			boolean p = source.getEntity() == null;
+			receiveEnergy(armor, damage * (p ? energyPerDamage / 2 : getEnergyPerDamage(armor)), false);
 		} else {
-			extractEnergy(stack, damage * energyPerDamage, false);
+			extractEnergy(armor, damage * getEnergyPerDamage(armor), false);
 		}
 	}
 
