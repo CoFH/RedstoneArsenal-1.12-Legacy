@@ -1,10 +1,9 @@
 package redstonearsenal.item.tool;
 
-import buildcraft.api.tools.IToolWrench;
-
 import cofh.api.block.IDismantleable;
 import cofh.api.energy.IEnergyContainerItem;
 import cofh.api.item.IToolHammer;
+import cofh.asm.relauncher.Implementable;
 import cofh.asm.relauncher.Strippable;
 import cofh.lib.util.helpers.BlockHelper;
 import cofh.lib.util.helpers.ServerHelper;
@@ -31,8 +30,9 @@ import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.Action;
 
-@Strippable({ "buildcraft.api.tools.IToolWrench", "mods.railcraft.api.core.items.IToolCrowbar" })
-public class ItemWrenchBattleRF extends ItemSwordRF implements IEnergyContainerItem, IToolHammer, IToolCrowbar, IToolWrench {
+@Strippable("mods.railcraft.api.core.items.IToolCrowbar")
+@Implementable("buildcraft.api.tools.IToolWrench")
+public class ItemWrenchBattleRF extends ItemSwordRF implements IEnergyContainerItem, IToolHammer, IToolCrowbar {
 
 	public ItemWrenchBattleRF(Item.ToolMaterial toolMaterial) {
 
@@ -229,14 +229,12 @@ public class ItemWrenchBattleRF extends ItemSwordRF implements IEnergyContainerI
 	}
 
 	/* IToolWrench */
-	@Override
 	public boolean canWrench(EntityPlayer player, int x, int y, int z) {
 
 		ItemStack stack = player.getCurrentEquippedItem();
 		return getEnergyStored(stack) >= getEnergyPerUse(stack) || player.capabilities.isCreativeMode;
 	}
 
-	@Override
 	public void wrenchUsed(EntityPlayer player, int x, int y, int z) {
 
 		if (!player.capabilities.isCreativeMode) {
