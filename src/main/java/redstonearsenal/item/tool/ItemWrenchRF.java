@@ -318,19 +318,19 @@ public class ItemWrenchRF extends ItemShears implements IEnergyContainerItem, IT
 		if (stack.stackTagCompound == null) {
 			EnergyHelper.setDefaultEnergyTag(stack, 0);
 		}
-		return 1 + maxEnergy - stack.stackTagCompound.getInteger("Energy");
+		return maxEnergy - stack.stackTagCompound.getInteger("Energy");
 	}
 
 	@Override
 	public int getMaxDamage(ItemStack stack) {
 
-		return 1 + maxEnergy;
+		return maxEnergy;
 	}
 
 	@Override
 	public boolean isDamaged(ItemStack stack) {
 
-		return stack.getItemDamage() != Short.MAX_VALUE;
+		return true;
 	}
 
 	@Override

@@ -8,11 +8,13 @@ import cofh.lib.util.helpers.StringHelper;
 
 import java.util.List;
 
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraftforge.common.ISpecialArmor;
@@ -68,19 +70,26 @@ public class ItemArmorRF extends ItemArmorAdv implements ISpecialArmor, IEnergyC
 		if (stack.stackTagCompound == null) {
 			EnergyHelper.setDefaultEnergyTag(stack, 0);
 		}
-		return 1 + maxEnergy - stack.stackTagCompound.getInteger("Energy");
+		return maxEnergy - stack.stackTagCompound.getInteger("Energy");
 	}
 
 	@Override
 	public int getMaxDamage(ItemStack stack) {
 
-		return 1 + maxEnergy;
+		return maxEnergy;
 	}
 
 	@Override
 	public boolean isDamaged(ItemStack stack) {
 
-		return stack.getItemDamage() != Short.MAX_VALUE;
+		return true;
+	}
+
+	@Override
+	public void getSubItems(Item item, CreativeTabs tab, List list) {
+
+		list.add(EnergyHelper.setDefaultEnergyTag(new ItemStack(item, 1, 0), 0));
+		list.add(EnergyHelper.setDefaultEnergyTag(new ItemStack(item, 1, 0), maxEnergy));
 	}
 
 	protected int getBaseAbsorption() {
