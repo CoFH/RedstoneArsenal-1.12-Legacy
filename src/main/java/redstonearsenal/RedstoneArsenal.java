@@ -6,6 +6,7 @@ import cofh.core.util.ConfigHandler;
 import cofh.mod.BaseMod;
 import cofh.mod.updater.UpdateManager;
 import cpw.mods.fml.common.Mod;
+import cpw.mods.fml.common.Mod.CustomProperty;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
@@ -23,7 +24,8 @@ import org.apache.logging.log4j.Logger;
 import redstonearsenal.gui.RACreativeTab;
 import redstonearsenal.item.RAItems;
 
-@Mod(modid = RedstoneArsenal.modId, name = RedstoneArsenal.modName, version = RedstoneArsenal.version, dependencies = RedstoneArsenal.dependencies)
+@Mod(modid = RedstoneArsenal.modId, name = RedstoneArsenal.modName, version = RedstoneArsenal.version, dependencies = RedstoneArsenal.dependencies,
+customProperties = @CustomProperty(k = "cofhversion", v = "true"))
 public class RedstoneArsenal extends BaseMod {
 
 	public static final String modId = "RedstoneArsenal";
