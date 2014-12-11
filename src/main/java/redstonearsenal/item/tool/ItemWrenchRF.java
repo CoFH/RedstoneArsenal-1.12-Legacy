@@ -152,8 +152,6 @@ public class ItemWrenchRF extends ItemShears implements IEnergyContainerItem, IT
 			return true;
 		}
 		if (BlockHelper.canRotate(block)) {
-			int bMeta = world.getBlockMetadata(x, y, z);
-
 			if (player.isSneaking()) {
 				world.setBlockMetadataWithNotify(x, y, z, BlockHelper.rotateVanillaBlockAlt(world, block, x, y, z), 3);
 				world.playSoundEffect(x + 0.5, y + 0.5, z + 0.5, block.stepSound.getBreakSound(), 1.0F, 0.6F);
@@ -333,6 +331,7 @@ public class ItemWrenchRF extends ItemShears implements IEnergyContainerItem, IT
 		return true;
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public Multimap getAttributeModifiers(ItemStack stack) {
 

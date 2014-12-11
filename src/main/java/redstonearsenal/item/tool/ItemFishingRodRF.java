@@ -76,6 +76,7 @@ public class ItemFishingRodRF extends ItemFishingRodAdv implements IEmpowerableI
 			return stack;
 		}
 		if (player.fishEntity != null) {
+			@SuppressWarnings("unused")
 			int i = player.fishEntity.func_146034_e();
 			useEnergy(stack);
 		} else {

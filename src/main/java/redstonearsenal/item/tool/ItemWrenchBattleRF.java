@@ -1,7 +1,6 @@
 package redstonearsenal.item.tool;
 
 import cofh.api.block.IDismantleable;
-import cofh.api.energy.IEnergyContainerItem;
 import cofh.api.item.IToolHammer;
 import cofh.asm.relauncher.Implementable;
 import cofh.asm.relauncher.Strippable;
@@ -32,7 +31,7 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent.Action;
 
 @Strippable("mods.railcraft.api.core.items.IToolCrowbar")
 @Implementable("buildcraft.api.tools.IToolWrench")
-public class ItemWrenchBattleRF extends ItemSwordRF implements IEnergyContainerItem, IToolHammer, IToolCrowbar {
+public class ItemWrenchBattleRF extends ItemSwordRF implements IToolHammer, IToolCrowbar {
 
 	public ItemWrenchBattleRF(Item.ToolMaterial toolMaterial) {
 
@@ -83,8 +82,6 @@ public class ItemWrenchBattleRF extends ItemSwordRF implements IEnergyContainerI
 			return true;
 		}
 		if (BlockHelper.canRotate(block)) {
-			int bMeta = world.getBlockMetadata(x, y, z);
-
 			if (player.isSneaking()) {
 				world.setBlockMetadataWithNotify(x, y, z, BlockHelper.rotateVanillaBlockAlt(world, block, x, y, z), 3);
 				world.playSoundEffect(x + 0.5, y + 0.5, z + 0.5, block.stepSound.getBreakSound(), 1.0F, 0.6F);
