@@ -4,13 +4,13 @@ import gnu.trove.set.hash.THashSet;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemPickaxe;
 import net.minecraft.item.ItemSpade;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeHooks;
 
 public class ItemPickaxeRF extends ItemToolRF {
 
@@ -45,22 +45,24 @@ public class ItemPickaxeRF extends ItemToolRF {
 	}
 
 	@Override
-	public boolean onBlockDestroyed(ItemStack stack, World world, Block block, int x, int y, int z, EntityLivingBase entity) {
+	public boolean onBlockStartBreak(ItemStack stack, int x, int y, int z, EntityPlayer player) {
 
-		if (!(entity instanceof EntityPlayer)) {
-			return false;
-		}
-		EntityPlayer player = (EntityPlayer) entity;
+		World world = player.worldObj;
+		Block block = world.getBlock(x, y, z);
 
-		if (block.getBlockHardness(world, x, y, z) != 0.0D) {
+		float refStrength = ForgeHooks.blockStrength(block, player, world, x, y, z);
+		if (refStrength != 0.0D) {
 			if (isEmpowered(stack) && canHarvestBlock(block, stack)) {
-				Material bMat = world.getBlock(x, y, z).getMaterial();
+				Material bMat = block.getMaterial();
 				Block adjBlock = world.getBlock(x, y - 1, z);
-				if (adjBlock != null && adjBlock.getMaterial() == bMat && adjBlock.getBlockHardness(world, x, y - 1, z) != -1) {
+
+				float strength = ForgeHooks.blockStrength(adjBlock, player, world, x, y - 1, z);
+				if (strength > 0f && refStrength/strength <= 10f && adjBlock.getMaterial() == bMat) {
 					harvestBlock(world, x, y - 1, z, player);
 				}
 				adjBlock = world.getBlock(x, y + 1, z);
-				if (adjBlock != null && adjBlock.getMaterial() == bMat && adjBlock.getBlockHardness(world, x, y + 1, z) != -1) {
+				strength = ForgeHooks.blockStrength(adjBlock, player, world, x, y + 1, z);
+				if (strength > 0f && refStrength/strength <= 10f && adjBlock.getMaterial() == bMat) {
 					harvestBlock(world, x, y + 1, z, player);
 				}
 			}
@@ -68,7 +70,7 @@ public class ItemPickaxeRF extends ItemToolRF {
 				useEnergy(stack, false);
 			}
 		}
-		return true;
+		return false;
 	}
 
 }

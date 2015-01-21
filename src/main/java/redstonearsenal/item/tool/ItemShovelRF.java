@@ -8,7 +8,6 @@ import cpw.mods.fml.common.eventhandler.Event.Result;
 import java.util.List;
 
 import net.minecraft.block.Block;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
@@ -51,8 +50,7 @@ public class ItemShovelRF extends ItemToolRF {
 		if (!air) {
 			Block block2 = world.getBlock(x, y + 1, z);
 			if (block2.getBlockHardness(world, x, y + 1, z) == 0.0D) {
-				harvestBlock(world, x, y + 1, z, player);
-				air = true;
+				air = harvestBlock(world, x, y + 1, z, player);
 			}
 		}
 		if (air && (block == Blocks.grass || block == Blocks.dirt)) {
@@ -73,49 +71,51 @@ public class ItemShovelRF extends ItemToolRF {
 	}
 
 	@Override
-	public boolean onBlockDestroyed(ItemStack stack, World world, Block block, int x, int y, int z, EntityLivingBase entity) {
+	public boolean onBlockStartBreak(ItemStack stack, int x, int y, int z, EntityPlayer player) {
 
-		if (!(entity instanceof EntityPlayer)) {
+		World world = player.worldObj;
+		Block block = world.getBlock(x, y, z);
+		if (block.getBlockHardness(world, x, y, z) == 0.0D) {
 			return false;
 		}
-		if (block.getBlockHardness(world, x, y, z) == 0.0D) {
-			return true;
-		}
-		EntityPlayer player = (EntityPlayer) entity;
 
 		if (effectiveBlocks.contains(block) && isEmpowered(stack)) {
-			int facing = MathHelper.floor(entity.rotationYaw * 4.0F / 360.0F + 0.5D) & 3;
+			int facing = MathHelper.floor(player.rotationYaw * 4.0F / 360.0F + 0.5D) & 3;
 			switch (facing) {
 			case 0:
-				for (int i = z; i < z + range; i++) {
+				for (int i = ++z; i < z + range; i++) {
 					if (!effectiveBlocks.contains(world.getBlock(x, y, i))) {
 						break;
 					}
-					harvestBlock(world, x, y, i, player);
+					if (!harvestBlock(world, x, y, i, player))
+						break;
 				}
 				break;
 			case 1:
-				for (int i = x; i > x - range; i--) {
+				for (int i = --x; i > x - range; i--) {
 					if (!effectiveBlocks.contains(world.getBlock(i, y, z))) {
 						break;
 					}
-					harvestBlock(world, i, y, z, player);
+					if (!harvestBlock(world, i, y, z, player))
+						break;
 				}
 				break;
 			case 2:
-				for (int i = z; i > z - range; i--) {
+				for (int i = --z; i > z - range; i--) {
 					if (!effectiveBlocks.contains(world.getBlock(x, y, i))) {
 						break;
 					}
-					harvestBlock(world, x, y, i, player);
+					if (!harvestBlock(world, x, y, i, player))
+						break;
 				}
 				break;
 			case 3:
-				for (int i = x; i < x + range; i++) {
+				for (int i = ++x; i < x + range; i++) {
 					if (!effectiveBlocks.contains(world.getBlock(i, y, z))) {
 						break;
 					}
-					harvestBlock(world, i, y, z, player);
+					if (!harvestBlock(world, i, y, z, player))
+						break;
 				}
 				break;
 			}
@@ -123,7 +123,7 @@ public class ItemShovelRF extends ItemToolRF {
 		if (!player.capabilities.isCreativeMode) {
 			useEnergy(stack, false);
 		}
-		return true;
+		return false;
 	}
 
 	@Override
