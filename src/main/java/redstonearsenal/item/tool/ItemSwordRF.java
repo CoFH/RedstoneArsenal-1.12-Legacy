@@ -213,6 +213,13 @@ public class ItemSwordRF extends ItemSword implements IEmpowerableItem, IEnergyC
 	}
 
 	@Override
+	public boolean showDurabilityBar(ItemStack stack) {
+
+		return stack.stackTagCompound == null || !stack.stackTagCompound.getBoolean("CreativeTab");
+	}
+
+
+	@Override
 	public boolean isDamaged(ItemStack stack) {
 
 		return true;
