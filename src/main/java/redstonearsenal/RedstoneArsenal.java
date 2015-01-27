@@ -25,14 +25,14 @@ import redstonearsenal.gui.RACreativeTab;
 import redstonearsenal.item.RAItems;
 
 @Mod(modid = RedstoneArsenal.modId, name = RedstoneArsenal.modName, version = RedstoneArsenal.version, dependencies = RedstoneArsenal.dependencies,
-customProperties = @CustomProperty(k = "cofhversion", v = "true"))
+		customProperties = @CustomProperty(k = "cofhversion", v = "true"))
 public class RedstoneArsenal extends BaseMod {
 
 	public static final String modId = "RedstoneArsenal";
 	public static final String modName = "Redstone Arsenal";
 	public static final String version = "1.7.10R1.1.0RC1";
 	public static final String dependencies = "required-after:CoFHCore@[" + CoFHCore.version + ",);after:ThermalExpansion";
-	public static final String releaseURL = "https://raw.github.com/CoFH/RedstoneArsenal/master/VERSION";
+	public static final String releaseURL = "https://raw.github.com/CoFH/VERSION/master/RedstoneArsenal";
 
 	@Instance("RedstoneArsenal")
 	public static RedstoneArsenal instance;
