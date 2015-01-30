@@ -40,6 +40,8 @@ public class BlockStorage extends Block implements IInitializer {
 		setStepSound(soundTypeMetal);
 		setCreativeTab(RedstoneArsenal.tab);
 		setBlockName("redstonearsenal.storage");
+
+		setHarvestLevel("pickaxe", 2);
 	}
 
 	@Override
