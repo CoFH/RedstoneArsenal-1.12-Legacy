@@ -165,7 +165,7 @@ public class RAItems {
 			} else {
 				GameRegistry.addRecipe(new ShapelessOreRecipe(dustElectrumFlux, new Object[] { "ingotGold", "blockRedstone" }));
 			}
-			GameRegistry.addRecipe(new ShapelessOreRecipe(gemCrystalFlux, new Object[] { Items.diamond, "dustRedstone", "dustRedstone", "dustRedstone",
+			GameRegistry.addRecipe(new ShapelessOreRecipe(gemCrystalFlux, new Object[] { "gemDiamond", "dustRedstone", "dustRedstone", "dustRedstone",
 					"dustRedstone", "dustRedstone" }));
 			GameRegistry.addSmelting(dustElectrumFlux, ingotElectrumFlux, 0.0F);
 		}
