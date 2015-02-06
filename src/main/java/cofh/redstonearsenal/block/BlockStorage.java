@@ -1,4 +1,4 @@
-package redstonearsenal.block;
+package cofh.redstonearsenal.block;
 
 import cofh.api.core.IInitializer;
 import cofh.lib.util.helpers.DamageHelper;
@@ -7,6 +7,7 @@ import cofh.lib.util.helpers.ItemHelper;
 import cofh.lib.util.helpers.MathHelper;
 import cofh.lib.util.helpers.ServerHelper;
 import cofh.lib.util.helpers.StringHelper;
+import cofh.redstonearsenal.RedstoneArsenal;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -27,8 +28,6 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-
-import redstonearsenal.RedstoneArsenal;
 
 public class BlockStorage extends Block implements IInitializer {
 
@@ -143,8 +142,8 @@ public class BlockStorage extends Block implements IInitializer {
 		enableDamageCharge[0] = RedstoneArsenal.config.get(category, "Storage.Electrum.Damage.Charge", true);
 		enableDamageCharge[1] = RedstoneArsenal.config.get(category, "Storage.Crystal.Damage.Charge", true);
 
-		damage[0] = RedstoneArsenal.config.get(category, "Storage.Electrum.Damage.Amount", 0.5);
-		damage[1] = RedstoneArsenal.config.get(category, "Storage.Crystal.Damage.Amount", 1);
+		damage[0] = RedstoneArsenal.config.get(category, "Storage.Electrum.Damage.Amount", 0.5D);
+		damage[1] = RedstoneArsenal.config.get(category, "Storage.Crystal.Damage.Amount", 1.0D);
 
 		String comment = "Amount of Redstone Flux charged per tick while touching a block; multiplied by damage dealt by the block. Max: 1000; Default: 50";
 		chargeRate = RedstoneArsenal.config.get(category, "Storage.FluxPerTickPerDamage", chargeRate, comment);

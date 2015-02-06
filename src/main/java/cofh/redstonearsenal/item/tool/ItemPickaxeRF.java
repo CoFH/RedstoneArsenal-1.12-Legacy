@@ -1,4 +1,4 @@
-package redstonearsenal.item.tool;
+package cofh.redstonearsenal.item.tool;
 
 import gnu.trove.set.hash.THashSet;
 

@@ -1,14 +1,12 @@
-package redstonearsenal.gui;
+package cofh.redstonearsenal.gui;
 
+import cofh.redstonearsenal.item.RAItems;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-
-import redstonearsenal.item.RAItems;
 
 public class RACreativeTab extends CreativeTabs {
 

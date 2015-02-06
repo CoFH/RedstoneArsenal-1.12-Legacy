@@ -1,10 +1,12 @@
-package redstonearsenal;
+package cofh.redstonearsenal;
 
 import cofh.CoFHCore;
 import cofh.core.CoFHProps;
 import cofh.core.util.ConfigHandler;
 import cofh.mod.BaseMod;
 import cofh.mod.updater.UpdateManager;
+import cofh.redstonearsenal.gui.RACreativeTab;
+import cofh.redstonearsenal.item.RAItems;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.CustomProperty;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -21,11 +23,8 @@ import net.minecraftforge.common.config.Configuration;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import redstonearsenal.gui.RACreativeTab;
-import redstonearsenal.item.RAItems;
-
 @Mod(modid = RedstoneArsenal.modId, name = RedstoneArsenal.modName, version = RedstoneArsenal.version, dependencies = RedstoneArsenal.dependencies,
-		customProperties = @CustomProperty(k = "cofhversion", v = "true"))
+customProperties = @CustomProperty(k = "cofhversion", v = "true"))
 public class RedstoneArsenal extends BaseMod {
 
 	public static final String modId = "RedstoneArsenal";
@@ -52,7 +51,7 @@ public class RedstoneArsenal extends BaseMod {
 
 		UpdateManager.registerUpdater(new UpdateManager(this, releaseURL));
 
-		config.setConfiguration(new Configuration(new File(CoFHProps.configDir, "/cofh/RedstoneArsenal.cfg")));
+		config.setConfiguration(new Configuration(new File(CoFHProps.configDir, "/cofh/redstonearsenal/common.cfg")));
 
 		RAItems.preInit();
 	}

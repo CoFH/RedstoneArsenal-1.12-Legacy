@@ -1,4 +1,4 @@
-package redstonearsenal.item.tool;
+package cofh.redstonearsenal.item.tool;
 
 import cofh.core.util.CoreUtils;
 import cofh.lib.util.helpers.ServerHelper;

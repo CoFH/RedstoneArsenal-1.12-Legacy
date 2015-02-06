@@ -1,4 +1,4 @@
-package redstonearsenal.item.armor;
+package cofh.redstonearsenal.item.armor;
 
 import cofh.api.energy.IEnergyContainerItem;
 import cofh.core.item.ItemArmorAdv;

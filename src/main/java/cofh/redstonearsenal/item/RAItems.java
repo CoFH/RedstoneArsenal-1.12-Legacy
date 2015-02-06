@@ -1,13 +1,24 @@
-package redstonearsenal.item;
+package cofh.redstonearsenal.item;
 
 import cofh.api.core.IInitializer;
 import cofh.api.modhelpers.ThermalExpansionHelper;
 import cofh.core.item.ItemBase;
 import cofh.lib.util.helpers.EnergyHelper;
 import cofh.lib.util.helpers.ItemHelper;
+import cofh.redstonearsenal.RedstoneArsenal;
+import cofh.redstonearsenal.block.BlockStorage;
+import cofh.redstonearsenal.item.armor.ItemArmorRF;
+import cofh.redstonearsenal.item.tool.ItemAxeRF;
+import cofh.redstonearsenal.item.tool.ItemBowRF;
+import cofh.redstonearsenal.item.tool.ItemFishingRodRF;
+import cofh.redstonearsenal.item.tool.ItemPickaxeRF;
+import cofh.redstonearsenal.item.tool.ItemShovelRF;
+import cofh.redstonearsenal.item.tool.ItemSickleRF;
+import cofh.redstonearsenal.item.tool.ItemSwordRF;
+import cofh.redstonearsenal.item.tool.ItemWrenchBattleRF;
+import cofh.redstonearsenal.item.tool.ItemWrenchRF;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.registry.GameRegistry;
-
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -19,19 +30,6 @@ import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
-
-import redstonearsenal.RedstoneArsenal;
-import redstonearsenal.block.BlockStorage;
-import redstonearsenal.item.armor.ItemArmorRF;
-import redstonearsenal.item.tool.ItemAxeRF;
-import redstonearsenal.item.tool.ItemBowRF;
-import redstonearsenal.item.tool.ItemFishingRodRF;
-import redstonearsenal.item.tool.ItemPickaxeRF;
-import redstonearsenal.item.tool.ItemShovelRF;
-import redstonearsenal.item.tool.ItemSickleRF;
-import redstonearsenal.item.tool.ItemSwordRF;
-import redstonearsenal.item.tool.ItemWrenchBattleRF;
-import redstonearsenal.item.tool.ItemWrenchRF;
 
 public class RAItems {
 

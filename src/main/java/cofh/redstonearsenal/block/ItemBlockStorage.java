@@ -1,4 +1,4 @@
-package redstonearsenal.block;
+package cofh.redstonearsenal.block;
 
 import cofh.lib.util.helpers.StringHelper;
 
