@@ -4,7 +4,6 @@ import cofh.api.core.IInitializer;
 import cofh.lib.util.helpers.DamageHelper;
 import cofh.lib.util.helpers.EnergyHelper;
 import cofh.lib.util.helpers.ItemHelper;
-import cofh.lib.util.helpers.MathHelper;
 import cofh.lib.util.helpers.ServerHelper;
 import cofh.lib.util.helpers.StringHelper;
 import cofh.redstonearsenal.RedstoneArsenal;
@@ -89,16 +88,19 @@ public class BlockStorage extends Block implements IInitializer {
 			return;
 		}
 		double fluxDamage = 0;
+		int chargeRate = 0;
 
 		switch (world.getBlockMetadata(x, y, z)) {
 		case 0:
 			if (enableDamage[0]) {
 				fluxDamage = damage[0];
+				chargeRate = charge[0];
 			}
 			break;
 		case 1:
 			if (enableDamage[1]) {
 				fluxDamage = damage[1];
+				chargeRate = charge[1];
 			}
 			break;
 		}
@@ -107,7 +109,7 @@ public class BlockStorage extends Block implements IInitializer {
 
 			if (entity instanceof EntityPlayerMP) {
 				EntityPlayerMP player = (EntityPlayerMP) entity;
-				if (EnergyHelper.isPlayerHoldingEnergyContainerItem(player)) {
+				if (chargeRate > 0 && EnergyHelper.isPlayerHoldingEnergyContainerItem(player)) {
 					EnergyHelper.insertEnergyIntoHeldContainer(player, (int) (chargeRate * fluxDamage), false);
 				}
 			}
@@ -135,19 +137,36 @@ public class BlockStorage extends Block implements IInitializer {
 
 		GameRegistry.registerBlock(this, ItemBlockStorage.class, "Storage");
 
-		String category = "block.feature";
-		enableDamage[0] = RedstoneArsenal.config.get(category, "Storage.Electrum.Damage.Enable", true);
-		enableDamage[1] = RedstoneArsenal.config.get(category, "Storage.Crystal.Damage.Enable", true);
+		String comment;
+		String category;
 
-		enableDamageCharge[0] = RedstoneArsenal.config.get(category, "Storage.Electrum.Damage.Charge", true);
-		enableDamageCharge[1] = RedstoneArsenal.config.get(category, "Storage.Crystal.Damage.Charge", true);
+		category = "Storage.FluxedElectrum";
 
-		damage[0] = RedstoneArsenal.config.get(category, "Storage.Electrum.Damage.Amount", 0.5D);
-		damage[1] = RedstoneArsenal.config.get(category, "Storage.Crystal.Damage.Amount", 1.0D);
+		comment = "Set to false to prevent this block from damaging entities.";
+		enableDamage[0] = RedstoneArsenal.config.get(category, "Damage.Enable", true, comment);
 
-		String comment = "Amount of Redstone Flux charged per tick while touching a block; multiplied by damage dealt by the block. Max: 1000; Default: 50";
-		chargeRate = RedstoneArsenal.config.get(category, "Storage.FluxPerTickPerDamage", chargeRate, comment);
-		chargeRate = MathHelper.clampI(chargeRate, 0, 1000);
+		comment = "Set to false to prevent this block from charging held items.";
+		enableDamageCharge[0] = RedstoneArsenal.config.get(category, "Charge.Enable", true, comment);
+
+		comment = "Base damage dealt to entities for touching this block.";
+		damage[0] = RedstoneArsenal.config.get(category, "Damage.Amount", 0.5D, comment);
+
+		comment = "Base rate of flux charge per tick while entities are in contact with this block; multiplied by damage dealt by the block.";
+		charge[0] = RedstoneArsenal.config.get(category, "Charge.Amount", 50, comment);
+
+		category = "Storage.FluxedCrystal";
+
+		comment = "Set to false to prevent this block from damaging entities.";
+		enableDamage[1] = RedstoneArsenal.config.get(category, "Damage.Enable", true, comment);
+
+		comment = "Set to false to prevent this block from charging held items.";
+		enableDamageCharge[1] = RedstoneArsenal.config.get(category, "Charge.Enable", true, comment);
+
+		comment = "Base damage dealt to entities for touching this block.";
+		damage[1] = RedstoneArsenal.config.get(category, "Damage.Amount", 1.0D, comment);
+
+		comment = "Base rate of flux charge per tick while entities are in contact with this block; multiplied by damage dealt by the block.";
+		charge[1] = RedstoneArsenal.config.get(category, "Charge.Amount", 50, comment);
 
 		blockElectrumFlux = new ItemStack(this, 1, 0);
 		blockCrystalFlux = new ItemStack(this, 1, 1);
@@ -173,13 +192,13 @@ public class BlockStorage extends Block implements IInitializer {
 		return true;
 	}
 
-	public static final String[] NAMES = { "electrumFlux", "crystalFlux" };
-	public static final IIcon[] TEXTURES = new IIcon[NAMES.length];
+	static final String[] NAMES = { "electrumFlux", "crystalFlux" };
+	static final IIcon[] TEXTURES = new IIcon[NAMES.length];
 
-	public static boolean enableDamage[] = new boolean[2];
-	public static boolean enableDamageCharge[] = new boolean[2];
-	public static double damage[] = new double[2];
-	public static int chargeRate = 50;
+	static boolean enableDamage[] = new boolean[2];
+	static boolean enableDamageCharge[] = new boolean[2];
+	static double damage[] = new double[2];
+	static int charge[] = new int[2];
 
 	public static ItemStack blockElectrumFlux;
 	public static ItemStack blockCrystalFlux;

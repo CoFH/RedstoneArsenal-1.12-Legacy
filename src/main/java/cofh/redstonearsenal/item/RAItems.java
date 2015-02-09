@@ -5,6 +5,7 @@ import cofh.api.modhelpers.ThermalExpansionHelper;
 import cofh.core.item.ItemBase;
 import cofh.lib.util.helpers.EnergyHelper;
 import cofh.lib.util.helpers.ItemHelper;
+import cofh.lib.util.helpers.MathHelper;
 import cofh.redstonearsenal.RedstoneArsenal;
 import cofh.redstonearsenal.block.BlockStorage;
 import cofh.redstonearsenal.item.armor.ItemArmorRF;
@@ -19,6 +20,7 @@ import cofh.redstonearsenal.item.tool.ItemWrenchBattleRF;
 import cofh.redstonearsenal.item.tool.ItemWrenchRF;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.registry.GameRegistry;
+
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -35,11 +37,8 @@ public class RAItems {
 
 	public static void preInit() {
 
-		int harvestLevel = RedstoneArsenal.config.get("item.feature", "ToolFluxInfusedHarvestLevel", 4);
+		int harvestLevel = MathHelper.clampI(RedstoneArsenal.config.get("Equipment.Flux-Infused", "HarvestLevel", 4), 1, Integer.MAX_VALUE);
 
-		if (harvestLevel < 1) {
-			harvestLevel = 1;
-		}
 		itemMaterial = (ItemBase) new ItemBase("redstonearsenal").setUnlocalizedName("material").setCreativeTab(RedstoneArsenal.tab);
 
 		itemHelmetFlux = (ItemArmorRF) new ItemArmorRF(ARMOR_MATERIAL_FLUX, 0).setArmorTextures(TEXTURE_FLUX).setUnlocalizedName(ARMOR + "fluxHelmet")
@@ -154,7 +153,7 @@ public class RAItems {
 		GameRegistry.addRecipe(new ShapedOreRecipe(rodObsidianFlux, new Object[] { "  O", " B ", "O  ", 'B', rodObsidian, 'O', "gemCrystalFlux" }));
 		GameRegistry.addRecipe(new ShapedOreRecipe(rodObsidian, new Object[] { "  O", " B ", "O  ", 'B', Items.blaze_powder, 'O', "dustObsidian" }));
 		GameRegistry.addRecipe(new ShapedOreRecipe(plateFlux, new Object[] { "NNN", "GIG", "NNN", 'G', "gemCrystalFlux", 'I', "ingotElectrumFlux", 'N',
-				"nuggetElectrumFlux" }));
+		"nuggetElectrumFlux" }));
 
 		if (!Loader.isModLoaded("ThermalExpansion")) {
 			if (ItemHelper.oreNameExists("dustElectrum")) {
@@ -222,17 +221,19 @@ public class RAItems {
 	public static boolean[] enableTool = new boolean[9];
 
 	static {
-		String category = "item.feature";
-		enableArmor = RedstoneArsenal.config.get(category, "Armor.Flux", true);
-		enableTool[0] = RedstoneArsenal.config.get(category, "Tool.Flux.Wrench", true);
-		enableTool[1] = RedstoneArsenal.config.get(category, "Tool.Flux.BattleWrench", true);
-		enableTool[2] = RedstoneArsenal.config.get(category, "Tool.Flux.Sword", true);
-		enableTool[3] = RedstoneArsenal.config.get(category, "Tool.Flux.Shovel", true);
-		enableTool[4] = RedstoneArsenal.config.get(category, "Tool.Flux.Pickaxe", true);
-		enableTool[5] = RedstoneArsenal.config.get(category, "Tool.Flux.Axe", true);
-		enableTool[6] = RedstoneArsenal.config.get(category, "Tool.Flux.FishingRod", true);
-		enableTool[7] = RedstoneArsenal.config.get(category, "Tool.Flux.Sickle", true);
-		enableTool[8] = RedstoneArsenal.config.get(category, "Tool.Flux.Bow", true);
+		String category = "Equipment.Flux-Infused";
+		enableArmor = RedstoneArsenal.config.get(category, "Armor", true);
+
+		category += ".Tool";
+		enableTool[0] = RedstoneArsenal.config.get(category, "Wrench", true);
+		enableTool[1] = RedstoneArsenal.config.get(category, "BattleWrench", true);
+		enableTool[2] = RedstoneArsenal.config.get(category, "Sword", true);
+		enableTool[3] = RedstoneArsenal.config.get(category, "Shovel", true);
+		enableTool[4] = RedstoneArsenal.config.get(category, "Pickaxe", true);
+		enableTool[5] = RedstoneArsenal.config.get(category, "Axe", true);
+		enableTool[6] = RedstoneArsenal.config.get(category, "FishingRod", true);
+		enableTool[7] = RedstoneArsenal.config.get(category, "Sickle", true);
+		enableTool[8] = RedstoneArsenal.config.get(category, "Bow", true);
 	}
 
 	public static Block blockStorage;

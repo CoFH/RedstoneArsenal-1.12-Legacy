@@ -24,7 +24,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 @Mod(modid = RedstoneArsenal.modId, name = RedstoneArsenal.modName, version = RedstoneArsenal.version, dependencies = RedstoneArsenal.dependencies,
-customProperties = @CustomProperty(k = "cofhversion", v = "true"))
+guiFactory = RedstoneArsenal.modGuiFactory, customProperties = @CustomProperty(k = "cofhversion", v = "true"))
 public class RedstoneArsenal extends BaseMod {
 
 	public static final String modId = "RedstoneArsenal";
@@ -32,6 +32,7 @@ public class RedstoneArsenal extends BaseMod {
 	public static final String version = "1.7.10R1.1.0RC1";
 	public static final String dependencies = "required-after:CoFHCore@[" + CoFHCore.version + ",);after:ThermalExpansion";
 	public static final String releaseURL = "https://raw.github.com/CoFH/VERSION/master/RedstoneArsenal";
+	public static final String modGuiFactory = "cofh.redstonearsenal.gui.GuiConfigRAFactory";
 
 	@Instance("RedstoneArsenal")
 	public static RedstoneArsenal instance;
@@ -51,7 +52,7 @@ public class RedstoneArsenal extends BaseMod {
 
 		UpdateManager.registerUpdater(new UpdateManager(this, releaseURL));
 
-		config.setConfiguration(new Configuration(new File(CoFHProps.configDir, "/cofh/redstonearsenal/common.cfg")));
+		config.setConfiguration(new Configuration(new File(CoFHProps.configDir, "/cofh/redstonearsenal/common.cfg"), true));
 
 		RAItems.preInit();
 	}
@@ -69,6 +70,18 @@ public class RedstoneArsenal extends BaseMod {
 		RAItems.postInit();
 
 		config.cleanUp(false, true);
+	}
+
+	void cleanConfig(boolean preInit) {
+
+		if (preInit) {
+
+		}
+		String prefix = "config.redstonearsenal.";
+		String[] categoryNames = config.getCategoryNames().toArray(new String[config.getCategoryNames().size()]);
+		for (int i = 0; i < categoryNames.length; i++) {
+			config.getCategory(categoryNames[i]).setLanguageKey(prefix + categoryNames[i]).setRequiresMcRestart(true);
+		}
 	}
 
 	/* BaseMod */
