@@ -87,8 +87,9 @@ public class ItemShovelRF extends ItemToolRF {
 					if (!effectiveBlocks.contains(world.getBlock(x, y, i))) {
 						break;
 					}
-					if (!harvestBlock(world, x, y, i, player))
+					if (!harvestBlock(world, x, y, i, player)) {
 						break;
+					}
 				}
 				break;
 			case 1:
@@ -96,8 +97,9 @@ public class ItemShovelRF extends ItemToolRF {
 					if (!effectiveBlocks.contains(world.getBlock(i, y, z))) {
 						break;
 					}
-					if (!harvestBlock(world, i, y, z, player))
+					if (!harvestBlock(world, i, y, z, player)) {
 						break;
+					}
 				}
 				break;
 			case 2:
@@ -105,8 +107,9 @@ public class ItemShovelRF extends ItemToolRF {
 					if (!effectiveBlocks.contains(world.getBlock(x, y, i))) {
 						break;
 					}
-					if (!harvestBlock(world, x, y, i, player))
+					if (!harvestBlock(world, x, y, i, player)) {
 						break;
+					}
 				}
 				break;
 			case 3:
@@ -114,8 +117,9 @@ public class ItemShovelRF extends ItemToolRF {
 					if (!effectiveBlocks.contains(world.getBlock(i, y, z))) {
 						break;
 					}
-					if (!harvestBlock(world, i, y, z, player))
+					if (!harvestBlock(world, i, y, z, player)) {
 						break;
+					}
 				}
 				break;
 			}

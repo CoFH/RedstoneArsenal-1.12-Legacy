@@ -11,16 +11,16 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 
 /**
- * 
+ *
  * @author CovertJaguar <http://www.railcraft.info>
  */
 public interface IToolCrowbar {
 
 	/**
 	 * Controls non-rotational interactions with blocks. Crowbar specific stuff.
-	 * 
+	 *
 	 * Rotational interaction is handled by the Block.rotateBlock() function, which should be called from the Item.onUseFirst() function of your tool.
-	 * 
+	 *
 	 * @param player
 	 * @param crowbar
 	 * @param x
@@ -32,7 +32,7 @@ public interface IToolCrowbar {
 
 	/**
 	 * Callback to do damage to the item.
-	 * 
+	 *
 	 * @param player
 	 * @param crowbar
 	 * @param x
@@ -43,7 +43,7 @@ public interface IToolCrowbar {
 
 	/**
 	 * Controls whether you can link a cart.
-	 * 
+	 *
 	 * @param player
 	 * @param crowbar
 	 * @param cart
@@ -53,7 +53,7 @@ public interface IToolCrowbar {
 
 	/**
 	 * Callback to do damage.
-	 * 
+	 *
 	 * @param player
 	 * @param crowbar
 	 * @param cart
@@ -62,7 +62,7 @@ public interface IToolCrowbar {
 
 	/**
 	 * Controls whether you can boost a cart.
-	 * 
+	 *
 	 * @param player
 	 * @param crowbar
 	 * @param cart
@@ -72,7 +72,7 @@ public interface IToolCrowbar {
 
 	/**
 	 * Callback to do damage, boosting a cart usually does more damage than normal usage.
-	 * 
+	 *
 	 * @param player
 	 * @param crowbar
 	 * @param cart

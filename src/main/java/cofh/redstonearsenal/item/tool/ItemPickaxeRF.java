@@ -57,12 +57,12 @@ public class ItemPickaxeRF extends ItemToolRF {
 				Block adjBlock = world.getBlock(x, y - 1, z);
 
 				float strength = ForgeHooks.blockStrength(adjBlock, player, world, x, y - 1, z);
-				if (strength > 0f && refStrength/strength <= 10f && adjBlock.getMaterial() == bMat) {
+				if (strength > 0f && refStrength / strength <= 10f && adjBlock.getMaterial() == bMat) {
 					harvestBlock(world, x, y - 1, z, player);
 				}
 				adjBlock = world.getBlock(x, y + 1, z);
 				strength = ForgeHooks.blockStrength(adjBlock, player, world, x, y + 1, z);
-				if (strength > 0f && refStrength/strength <= 10f && adjBlock.getMaterial() == bMat) {
+				if (strength > 0f && refStrength / strength <= 10f && adjBlock.getMaterial() == bMat) {
 					harvestBlock(world, x, y + 1, z, player);
 				}
 			}
