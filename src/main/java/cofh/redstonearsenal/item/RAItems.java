@@ -153,7 +153,7 @@ public class RAItems {
 		GameRegistry.addRecipe(new ShapedOreRecipe(rodObsidianFlux, new Object[] { "  O", " B ", "O  ", 'B', rodObsidian, 'O', "gemCrystalFlux" }));
 		GameRegistry.addRecipe(new ShapedOreRecipe(rodObsidian, new Object[] { "  O", " B ", "O  ", 'B', Items.blaze_powder, 'O', "dustObsidian" }));
 		GameRegistry.addRecipe(new ShapedOreRecipe(plateFlux, new Object[] { "NNN", "GIG", "NNN", 'G', "gemCrystalFlux", 'I', "ingotElectrumFlux", 'N',
-		"nuggetElectrumFlux" }));
+				"nuggetElectrumFlux" }));
 
 		if (!Loader.isModLoaded("ThermalExpansion")) {
 			if (ItemHelper.oreNameExists("dustElectrum")) {
