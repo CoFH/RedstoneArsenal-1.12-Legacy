@@ -4,7 +4,6 @@ import cofh.api.block.IDismantleable;
 import cofh.api.energy.IEnergyContainerItem;
 import cofh.api.item.IToolHammer;
 import cofh.asm.relauncher.Implementable;
-import cofh.asm.relauncher.Strippable;
 import cofh.lib.util.helpers.BlockHelper;
 import cofh.lib.util.helpers.EnergyHelper;
 import cofh.lib.util.helpers.MathHelper;
@@ -18,8 +17,6 @@ import ic2.api.tile.IWrenchable;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import mods.railcraft.api.core.items.IToolCrowbar;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -47,9 +44,8 @@ import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.Action;
 
-@Strippable("mods.railcraft.api.core.items.IToolCrowbar")
-@Implementable("buildcraft.api.tools.IToolWrench")
-public class ItemWrenchRF extends ItemShears implements IEnergyContainerItem, IToolHammer, IToolCrowbar {
+@Implementable({ "buildcraft.api.tools.IToolWrench", "mods.railcraft.api.core.items.IToolCrowbar" })
+public class ItemWrenchRF extends ItemShears implements IEnergyContainerItem, IToolHammer {
 
 	protected Item.ToolMaterial toolMaterial;
 
@@ -408,13 +404,11 @@ public class ItemWrenchRF extends ItemShears implements IEnergyContainerItem, IT
 	}
 
 	/* IToolCrowbar */
-	@Override
 	public boolean canWhack(EntityPlayer player, ItemStack crowbar, int x, int y, int z) {
 
 		return getEnergyStored(crowbar) >= getEnergyPerUse(crowbar) || player.capabilities.isCreativeMode;
 	}
 
-	@Override
 	public void onWhack(EntityPlayer player, ItemStack crowbar, int x, int y, int z) {
 
 		if (!player.capabilities.isCreativeMode) {
@@ -423,13 +417,11 @@ public class ItemWrenchRF extends ItemShears implements IEnergyContainerItem, IT
 		player.swingItem();
 	}
 
-	@Override
 	public boolean canLink(EntityPlayer player, ItemStack crowbar, EntityMinecart cart) {
 
 		return player.isSneaking() && getEnergyStored(crowbar) >= getEnergyPerUse(crowbar) || player.capabilities.isCreativeMode;
 	}
 
-	@Override
 	public void onLink(EntityPlayer player, ItemStack crowbar, EntityMinecart cart) {
 
 		if (!player.capabilities.isCreativeMode) {
@@ -438,13 +430,11 @@ public class ItemWrenchRF extends ItemShears implements IEnergyContainerItem, IT
 		player.swingItem();
 	}
 
-	@Override
 	public boolean canBoost(EntityPlayer player, ItemStack crowbar, EntityMinecart cart) {
 
 		return !player.isSneaking() && getEnergyStored(crowbar) >= getEnergyPerUse(crowbar);
 	}
 
-	@Override
 	public void onBoost(EntityPlayer player, ItemStack crowbar, EntityMinecart cart) {
 
 		if (!player.capabilities.isCreativeMode) {
