@@ -94,13 +94,19 @@ public class BlockStorage extends Block implements IInitializer {
 		case 0:
 			if (enableDamage[0]) {
 				fluxDamage = damage[0];
-				chargeRate = charge[0];
+
+				if (enableDamageCharge[0]) {
+					chargeRate = charge[0];
+				}
 			}
 			break;
 		case 1:
 			if (enableDamage[1]) {
 				fluxDamage = damage[1];
-				chargeRate = charge[1];
+
+				if (enableDamageCharge[1]) {
+					chargeRate = charge[1];
+				}
 			}
 			break;
 		}
