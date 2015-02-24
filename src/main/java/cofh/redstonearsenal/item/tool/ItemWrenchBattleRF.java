@@ -200,7 +200,12 @@ public class ItemWrenchBattleRF extends ItemSwordRF implements IToolHammer {
 	@Override
 	public boolean isUsable(ItemStack item, EntityLivingBase user, int x, int y, int z) {
 
-		return true;
+		if (user instanceof EntityPlayer) {
+			if (((EntityPlayer) user).capabilities.isCreativeMode) {
+				return true;
+			}
+		}
+		return getEnergyStored(item) >= getEnergyPerUse(item);
 	}
 
 	@Override
