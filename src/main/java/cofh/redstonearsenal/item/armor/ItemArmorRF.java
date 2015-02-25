@@ -37,6 +37,14 @@ public class ItemArmorRF extends ItemArmorAdv implements ISpecialArmor, IEnergyC
 		super(material, type);
 	}
 
+	ItemArmorRF setEnergyParams(int maxEnergy, int maxTransfer, int energyPerUse, int energyPerUseCharged) {
+
+		this.maxEnergy = maxEnergy;
+		this.maxTransfer = maxTransfer;
+
+		return this;
+	}
+
 	@Override
 	public boolean getIsRepairable(ItemStack itemToRepair, ItemStack stack) {
 

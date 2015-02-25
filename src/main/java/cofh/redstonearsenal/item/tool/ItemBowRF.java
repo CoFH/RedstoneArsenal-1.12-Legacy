@@ -46,6 +46,16 @@ public class ItemBowRF extends ItemBowAdv implements IEmpowerableItem, IEnergyCo
 		setNoRepair();
 	}
 
+	ItemBowRF setEnergyParams(int maxEnergy, int maxTransfer, int energyPerUse, int energyPerUseCharged) {
+
+		this.maxEnergy = maxEnergy;
+		this.maxTransfer = maxTransfer;
+		this.energyPerUse = energyPerUse;
+		this.energyPerUseCharged = energyPerUseCharged;
+
+		return this;
+	}
+
 	protected void useEnergy(ItemStack stack) {
 
 		int unbreakingLevel = MathHelper.clampI(EnchantmentHelper.getEnchantmentLevel(Enchantment.unbreaking.effectId, stack), 0, 4);

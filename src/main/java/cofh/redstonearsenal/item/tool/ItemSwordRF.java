@@ -52,6 +52,16 @@ public class ItemSwordRF extends ItemSword implements IEmpowerableItem, IEnergyC
 		setNoRepair();
 	}
 
+	ItemSwordRF setEnergyParams(int maxEnergy, int maxTransfer, int energyPerUse, int energyPerUseCharged) {
+
+		this.maxEnergy = maxEnergy;
+		this.maxTransfer = maxTransfer;
+		this.energyPerUse = energyPerUse;
+		this.energyPerUseCharged = energyPerUseCharged;
+
+		return this;
+	}
+
 	protected int useEnergy(ItemStack stack, boolean simulate) {
 
 		int unbreakingLevel = MathHelper.clampI(EnchantmentHelper.getEnchantmentLevel(Enchantment.unbreaking.effectId, stack), 0, 4);

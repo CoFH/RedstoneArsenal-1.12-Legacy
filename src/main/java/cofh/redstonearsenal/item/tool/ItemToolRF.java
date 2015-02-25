@@ -55,6 +55,16 @@ public abstract class ItemToolRF extends ItemToolAdv implements IEmpowerableItem
 		setNoRepair();
 	}
 
+	ItemToolRF setEnergyParams(int maxEnergy, int maxTransfer, int energyPerUse, int energyPerUseCharged) {
+
+		this.maxEnergy = maxEnergy;
+		this.maxTransfer = maxTransfer;
+		this.energyPerUse = energyPerUse;
+		this.energyPerUseCharged = energyPerUseCharged;
+
+		return this;
+	}
+
 	@Override
 	protected float getEfficiency(ItemStack stack) {
 

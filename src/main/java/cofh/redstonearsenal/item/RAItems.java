@@ -218,13 +218,37 @@ public class RAItems {
 	}
 
 	public static boolean enableArmor = true;
+	public static int[] armorRFCapacity = new int[4];
+	public static int[] armorRFTransfer = new int[4];
+
 	public static boolean[] enableTool = new boolean[9];
+	public static int[] toolRFCapacity = new int[9];
+	public static int[] toolRFTransfer = new int[9];
+	public static int[] toolRFUsed = new int[9];
+	public static int[] toolRFCharged = new int[9];
+
+	public static final String[] toolNames = { "Wrench", "BattleWrench", "Sword", "Shovel", "Pickaxe", "Axe", "FishingRod", "Sickle", "Bow" };
+
+	public static final int TOOL_RF_CAPACITY = 160000;
+	public static final int TOOL_RF_TRANSFER = 1600;
+	public static final int TOOL_RF_USE = 200;
+	public static final int TOOL_RF_CHARGED = 800;
 
 	static {
 		String category = "Equipment.Flux-Infused";
 		enableArmor = RedstoneArsenal.config.get(category, "Armor", true);
 
+		// for (int i = 0; i < toolNames.length; i++) {
+		// category += ".Tool." + toolNames[i];
+		// enableTool[i] = RedstoneArsenal.config.get(category, "Recipe", true);
+		// toolRFCapacity[i] = RedstoneArsenal.config.get(category, "RF_Capacity", TOOL_RF_CAPACITY);
+		// toolRFCapacity[i] = RedstoneArsenal.config.get(category, "RF_Transfer", TOOL_RF_CAPACITY);
+		// toolRFCapacity[i] = RedstoneArsenal.config.get(category, "RF_OnUse", TOOL_RF_CAPACITY);
+		// toolRFCapacity[i] = RedstoneArsenal.config.get(category, "RF_ChargedUse", TOOL_RF_CAPACITY);
+		// }
+
 		category += ".Tool";
+
 		enableTool[0] = RedstoneArsenal.config.get(category, "Wrench", true);
 		enableTool[1] = RedstoneArsenal.config.get(category, "BattleWrench", true);
 		enableTool[2] = RedstoneArsenal.config.get(category, "Sword", true);
