@@ -35,280 +35,280 @@ import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 public class RAItems {
 
-	public static void preInit() {
+    public static void preInit() {
 
-		int harvestLevel = MathHelper.clampI(RedstoneArsenal.config.get("Equipment.Flux-Infused", "HarvestLevel", 4), 1, Integer.MAX_VALUE);
+        int harvestLevel = MathHelper.clampI(RedstoneArsenal.config.get("Equipment.Flux-Infused", "HarvestLevel", 4), 1, Integer.MAX_VALUE);
 
-		itemMaterial = (ItemBase) new ItemBase("redstonearsenal").setUnlocalizedName("material").setCreativeTab(RedstoneArsenal.tab);
+        itemMaterial = (ItemBase) new ItemBase("redstonearsenal").setUnlocalizedName("material").setCreativeTab(RedstoneArsenal.tab);
 
-		itemHelmetFlux = (ItemArmorRF) new ItemArmorRF(ARMOR_MATERIAL_FLUX, 0).setArmorTextures(TEXTURE_FLUX).setUnlocalizedName(ARMOR + "fluxHelmet")
-				.setTextureName(ARMOR_TEX_FLUX + "Helmet").setCreativeTab(RedstoneArsenal.tab);
-		itemPlateFlux = (ItemArmorRF) new ItemArmorRF(ARMOR_MATERIAL_FLUX, 1).setArmorTextures(TEXTURE_FLUX).setUnlocalizedName(ARMOR + "fluxPlate")
-				.setTextureName(ARMOR_TEX_FLUX + "Chestplate").setCreativeTab(RedstoneArsenal.tab);
-		itemLegsFlux = (ItemArmorRF) new ItemArmorRF(ARMOR_MATERIAL_FLUX, 2).setArmorTextures(TEXTURE_FLUX).setUnlocalizedName(ARMOR + "fluxLegs")
-				.setTextureName(ARMOR_TEX_FLUX + "Legs").setCreativeTab(RedstoneArsenal.tab);
-		itemBootsFlux = (ItemArmorRF) new ItemArmorRF(ARMOR_MATERIAL_FLUX, 3).setArmorTextures(TEXTURE_FLUX).setUnlocalizedName(ARMOR + "fluxBoots")
-				.setTextureName(ARMOR_TEX_FLUX + "Boots").setCreativeTab(RedstoneArsenal.tab);
+        itemHelmetFlux = (ItemArmorRF) new ItemArmorRF(ARMOR_MATERIAL_FLUX, 0).setArmorTextures(TEXTURE_FLUX).setUnlocalizedName(ARMOR + "fluxHelmet")
+                .setTextureName(ARMOR_TEX_FLUX + "Helmet").setCreativeTab(RedstoneArsenal.tab);
+        itemPlateFlux = (ItemArmorRF) new ItemArmorRF(ARMOR_MATERIAL_FLUX, 1).setArmorTextures(TEXTURE_FLUX).setUnlocalizedName(ARMOR + "fluxPlate")
+                .setTextureName(ARMOR_TEX_FLUX + "Chestplate").setCreativeTab(RedstoneArsenal.tab);
+        itemLegsFlux = (ItemArmorRF) new ItemArmorRF(ARMOR_MATERIAL_FLUX, 2).setArmorTextures(TEXTURE_FLUX).setUnlocalizedName(ARMOR + "fluxLegs")
+                .setTextureName(ARMOR_TEX_FLUX + "Legs").setCreativeTab(RedstoneArsenal.tab);
+        itemBootsFlux = (ItemArmorRF) new ItemArmorRF(ARMOR_MATERIAL_FLUX, 3).setArmorTextures(TEXTURE_FLUX).setUnlocalizedName(ARMOR + "fluxBoots")
+                .setTextureName(ARMOR_TEX_FLUX + "Boots").setCreativeTab(RedstoneArsenal.tab);
 
-		itemWrenchFlux = new ItemWrenchRF(TOOL_MATERIAL_FLUX).setUnlocalizedName(TOOL + "fluxWrench").setTextureName(TOOL_TEX_FLUX + "Wrench")
-				.setCreativeTab(RedstoneArsenal.tab);
-		itemBattleWrenchFlux = new ItemWrenchBattleRF(TOOL_MATERIAL_FLUX).setUnlocalizedName(TOOL + "fluxBattleWrench")
-				.setTextureName(TOOL_TEX_FLUX + "BattleWrench").setCreativeTab(RedstoneArsenal.tab);
-		itemSwordFlux = new ItemSwordRF(TOOL_MATERIAL_FLUX).setUnlocalizedName(TOOL + "fluxSword").setTextureName(TOOL_TEX_FLUX + "Sword")
-				.setCreativeTab(RedstoneArsenal.tab);
-		itemShovelFlux = new ItemShovelRF(TOOL_MATERIAL_FLUX, harvestLevel).setUnlocalizedName(TOOL + "fluxShovel").setTextureName(TOOL_TEX_FLUX + "Shovel")
-				.setCreativeTab(RedstoneArsenal.tab);
-		itemPickaxeFlux = new ItemPickaxeRF(TOOL_MATERIAL_FLUX, harvestLevel).setUnlocalizedName(TOOL + "fluxPickaxe")
-				.setTextureName(TOOL_TEX_FLUX + "Pickaxe").setCreativeTab(RedstoneArsenal.tab);
-		itemAxeFlux = new ItemAxeRF(TOOL_MATERIAL_FLUX, harvestLevel).setUnlocalizedName(TOOL + "fluxAxe").setTextureName(TOOL_TEX_FLUX + "Axe")
-				.setCreativeTab(RedstoneArsenal.tab);
-		itemFishingRodFlux = new ItemFishingRodRF(TOOL_MATERIAL_FLUX).setUnlocalizedName(TOOL + "fluxFishingRod").setTextureName(TOOL_TEX_FLUX + "FishingRod")
-				.setCreativeTab(RedstoneArsenal.tab);
-		itemSickleFlux = new ItemSickleRF(TOOL_MATERIAL_FLUX).setUnlocalizedName(TOOL + "fluxSickle").setTextureName(TOOL_TEX_FLUX + "Sickle")
-				.setCreativeTab(RedstoneArsenal.tab);
-		itemBowFlux = new ItemBowRF(TOOL_MATERIAL_FLUX).setArrowSpeed(3.0F).setArrowDamage(1.5F).setUnlocalizedName(TOOL + "fluxBow")
-				.setTextureName(TOOL_TEX_FLUX + "Bow").setCreativeTab(RedstoneArsenal.tab);
+        itemWrenchFlux = new ItemWrenchRF(TOOL_MATERIAL_FLUX).setUnlocalizedName(TOOL + "fluxWrench").setTextureName(TOOL_TEX_FLUX + "Wrench")
+                .setCreativeTab(RedstoneArsenal.tab);
+        itemBattleWrenchFlux = new ItemWrenchBattleRF(TOOL_MATERIAL_FLUX).setUnlocalizedName(TOOL + "fluxBattleWrench")
+                .setTextureName(TOOL_TEX_FLUX + "BattleWrench").setCreativeTab(RedstoneArsenal.tab);
+        itemSwordFlux = new ItemSwordRF(TOOL_MATERIAL_FLUX).setUnlocalizedName(TOOL + "fluxSword").setTextureName(TOOL_TEX_FLUX + "Sword")
+                .setCreativeTab(RedstoneArsenal.tab);
+        itemShovelFlux = new ItemShovelRF(TOOL_MATERIAL_FLUX, harvestLevel).setUnlocalizedName(TOOL + "fluxShovel").setTextureName(TOOL_TEX_FLUX + "Shovel")
+                .setCreativeTab(RedstoneArsenal.tab);
+        itemPickaxeFlux = new ItemPickaxeRF(TOOL_MATERIAL_FLUX, harvestLevel).setUnlocalizedName(TOOL + "fluxPickaxe")
+                .setTextureName(TOOL_TEX_FLUX + "Pickaxe").setCreativeTab(RedstoneArsenal.tab);
+        itemAxeFlux = new ItemAxeRF(TOOL_MATERIAL_FLUX, harvestLevel).setUnlocalizedName(TOOL + "fluxAxe").setTextureName(TOOL_TEX_FLUX + "Axe")
+                .setCreativeTab(RedstoneArsenal.tab);
+        itemFishingRodFlux = new ItemFishingRodRF(TOOL_MATERIAL_FLUX).setUnlocalizedName(TOOL + "fluxFishingRod").setTextureName(TOOL_TEX_FLUX + "FishingRod")
+                .setCreativeTab(RedstoneArsenal.tab);
+        itemSickleFlux = new ItemSickleRF(TOOL_MATERIAL_FLUX).setUnlocalizedName(TOOL + "fluxSickle").setTextureName(TOOL_TEX_FLUX + "Sickle")
+                .setCreativeTab(RedstoneArsenal.tab);
+        itemBowFlux = new ItemBowRF(TOOL_MATERIAL_FLUX).setArrowSpeed(3.0F).setArrowDamage(1.5F).setUnlocalizedName(TOOL + "fluxBow")
+                .setTextureName(TOOL_TEX_FLUX + "Bow").setCreativeTab(RedstoneArsenal.tab);
 
-		GameRegistry.registerItem(itemHelmetFlux, "armor.helmetFlux");
-		GameRegistry.registerItem(itemPlateFlux, "armor.plateFlux");
-		GameRegistry.registerItem(itemLegsFlux, "armor.legsFlux");
-		GameRegistry.registerItem(itemBootsFlux, "armor.bootsFlux");
+        GameRegistry.registerItem(itemHelmetFlux, "armor.helmetFlux");
+        GameRegistry.registerItem(itemPlateFlux, "armor.plateFlux");
+        GameRegistry.registerItem(itemLegsFlux, "armor.legsFlux");
+        GameRegistry.registerItem(itemBootsFlux, "armor.bootsFlux");
 
-		GameRegistry.registerItem(itemWrenchFlux, "tool.wrenchFlux");
-		GameRegistry.registerItem(itemBattleWrenchFlux, "tool.battleWrenchFlux");
-		GameRegistry.registerItem(itemSwordFlux, "tool.swordFlux");
-		GameRegistry.registerItem(itemShovelFlux, "tool.shovelFlux");
-		GameRegistry.registerItem(itemPickaxeFlux, "tool.pickaxeFlux");
-		GameRegistry.registerItem(itemAxeFlux, "tool.axeFlux");
-		GameRegistry.registerItem(itemFishingRodFlux, "tool.fishingRodFlux");
-		GameRegistry.registerItem(itemSickleFlux, "tool.sickleFlux");
-		GameRegistry.registerItem(itemBowFlux, "tool.bowFlux");
+        GameRegistry.registerItem(itemWrenchFlux, "tool.wrenchFlux");
+        GameRegistry.registerItem(itemBattleWrenchFlux, "tool.battleWrenchFlux");
+        GameRegistry.registerItem(itemSwordFlux, "tool.swordFlux");
+        GameRegistry.registerItem(itemShovelFlux, "tool.shovelFlux");
+        GameRegistry.registerItem(itemPickaxeFlux, "tool.pickaxeFlux");
+        GameRegistry.registerItem(itemAxeFlux, "tool.axeFlux");
+        GameRegistry.registerItem(itemFishingRodFlux, "tool.fishingRodFlux");
+        GameRegistry.registerItem(itemSickleFlux, "tool.sickleFlux");
+        GameRegistry.registerItem(itemBowFlux, "tool.bowFlux");
 
-		blockStorage = new BlockStorage();
-		((IInitializer) blockStorage).preInit();
-	}
+        blockStorage = new BlockStorage();
+        ((IInitializer) blockStorage).preInit();
+    }
 
-	public static void initialize() {
+    public static void initialize() {
 
-		loadItems();
-	}
+        loadItems();
+    }
 
-	private static void loadItems() {
+    private static void loadItems() {
 
-		dustElectrumFlux = itemMaterial.addOreDictItem(0, "dustElectrumFlux", 1);
-		ingotElectrumFlux = itemMaterial.addOreDictItem(32, "ingotElectrumFlux", 1);
-		nuggetElectrumFlux = itemMaterial.addOreDictItem(64, "nuggetElectrumFlux", 1);
-		gemCrystalFlux = itemMaterial.addOreDictItem(96, "gemCrystalFlux", 1);
-		plateFlux = itemMaterial.addItem(128, "plateFlux", 1);
+        dustElectrumFlux = itemMaterial.addOreDictItem(0, "dustElectrumFlux", 1);
+        ingotElectrumFlux = itemMaterial.addOreDictItem(32, "ingotElectrumFlux", 1);
+        nuggetElectrumFlux = itemMaterial.addOreDictItem(64, "nuggetElectrumFlux", 1);
+        gemCrystalFlux = itemMaterial.addOreDictItem(96, "gemCrystalFlux", 1);
+        plateFlux = itemMaterial.addItem(128, "plateFlux", 1);
 
-		rodObsidian = itemMaterial.addItem(192, "rodObsidian");
-		rodObsidianFlux = itemMaterial.addItem(193, "rodObsidianFlux", 1);
+        rodObsidian = itemMaterial.addItem(192, "rodObsidian");
+        rodObsidianFlux = itemMaterial.addItem(193, "rodObsidianFlux", 1);
 
-		/* Armor */
-		armorFluxHelmet = EnergyHelper.setDefaultEnergyTag(new ItemStack(itemHelmetFlux), 0);
-		armorFluxPlate = EnergyHelper.setDefaultEnergyTag(new ItemStack(itemPlateFlux), 0);
-		armorFluxLegs = EnergyHelper.setDefaultEnergyTag(new ItemStack(itemLegsFlux), 0);
-		armorFluxBoots = EnergyHelper.setDefaultEnergyTag(new ItemStack(itemBootsFlux), 0);
+        /* Armor */
+        armorFluxHelmet = EnergyHelper.setDefaultEnergyTag(new ItemStack(itemHelmetFlux), 0);
+        armorFluxPlate = EnergyHelper.setDefaultEnergyTag(new ItemStack(itemPlateFlux), 0);
+        armorFluxLegs = EnergyHelper.setDefaultEnergyTag(new ItemStack(itemLegsFlux), 0);
+        armorFluxBoots = EnergyHelper.setDefaultEnergyTag(new ItemStack(itemBootsFlux), 0);
 
-		GameRegistry.registerCustomItemStack("armorFluxHelmet", armorFluxHelmet);
-		GameRegistry.registerCustomItemStack("armorFluxPlate", armorFluxPlate);
-		GameRegistry.registerCustomItemStack("armorFluxLegs", armorFluxLegs);
-		GameRegistry.registerCustomItemStack("armorFluxBoots", armorFluxBoots);
+        GameRegistry.registerCustomItemStack("armorFluxHelmet", armorFluxHelmet);
+        GameRegistry.registerCustomItemStack("armorFluxPlate", armorFluxPlate);
+        GameRegistry.registerCustomItemStack("armorFluxLegs", armorFluxLegs);
+        GameRegistry.registerCustomItemStack("armorFluxBoots", armorFluxBoots);
 
-		/* Tools */
-		toolFluxWrench = EnergyHelper.setDefaultEnergyTag(new ItemStack(itemWrenchFlux), 0);
-		toolFluxBattleWrench = EnergyHelper.setDefaultEnergyTag(new ItemStack(itemBattleWrenchFlux), 0);
-		toolFluxSword = EnergyHelper.setDefaultEnergyTag(new ItemStack(itemSwordFlux), 0);
-		toolFluxShovel = EnergyHelper.setDefaultEnergyTag(new ItemStack(itemShovelFlux), 0);
-		toolFluxPickaxe = EnergyHelper.setDefaultEnergyTag(new ItemStack(itemPickaxeFlux), 0);
-		toolFluxAxe = EnergyHelper.setDefaultEnergyTag(new ItemStack(itemAxeFlux), 0);
-		toolFluxSickle = EnergyHelper.setDefaultEnergyTag(new ItemStack(itemSickleFlux), 0);
-		toolFluxFishingRod = EnergyHelper.setDefaultEnergyTag(new ItemStack(itemFishingRodFlux), 0);
-		toolFluxBow = EnergyHelper.setDefaultEnergyTag(new ItemStack(itemBowFlux), 0);
+        /* Tools */
+        toolFluxWrench = EnergyHelper.setDefaultEnergyTag(new ItemStack(itemWrenchFlux), 0);
+        toolFluxBattleWrench = EnergyHelper.setDefaultEnergyTag(new ItemStack(itemBattleWrenchFlux), 0);
+        toolFluxSword = EnergyHelper.setDefaultEnergyTag(new ItemStack(itemSwordFlux), 0);
+        toolFluxShovel = EnergyHelper.setDefaultEnergyTag(new ItemStack(itemShovelFlux), 0);
+        toolFluxPickaxe = EnergyHelper.setDefaultEnergyTag(new ItemStack(itemPickaxeFlux), 0);
+        toolFluxAxe = EnergyHelper.setDefaultEnergyTag(new ItemStack(itemAxeFlux), 0);
+        toolFluxSickle = EnergyHelper.setDefaultEnergyTag(new ItemStack(itemSickleFlux), 0);
+        toolFluxFishingRod = EnergyHelper.setDefaultEnergyTag(new ItemStack(itemFishingRodFlux), 0);
+        toolFluxBow = EnergyHelper.setDefaultEnergyTag(new ItemStack(itemBowFlux), 0);
 
-		GameRegistry.registerCustomItemStack("toolFluxWrench", toolFluxWrench);
-		GameRegistry.registerCustomItemStack("toolFluxBattleWrench", toolFluxBattleWrench);
-		GameRegistry.registerCustomItemStack("toolFluxSword", toolFluxSword);
-		GameRegistry.registerCustomItemStack("toolFluxShovel", toolFluxShovel);
-		GameRegistry.registerCustomItemStack("toolFluxPickaxe", toolFluxPickaxe);
-		GameRegistry.registerCustomItemStack("toolFluxAxe", toolFluxAxe);
-		GameRegistry.registerCustomItemStack("toolFluxFishingRod", toolFluxFishingRod);
-		GameRegistry.registerCustomItemStack("toolFluxSickle", toolFluxSickle);
-		GameRegistry.registerCustomItemStack("toolFluxBow", toolFluxBow);
+        GameRegistry.registerCustomItemStack("toolFluxWrench", toolFluxWrench);
+        GameRegistry.registerCustomItemStack("toolFluxBattleWrench", toolFluxBattleWrench);
+        GameRegistry.registerCustomItemStack("toolFluxSword", toolFluxSword);
+        GameRegistry.registerCustomItemStack("toolFluxShovel", toolFluxShovel);
+        GameRegistry.registerCustomItemStack("toolFluxPickaxe", toolFluxPickaxe);
+        GameRegistry.registerCustomItemStack("toolFluxAxe", toolFluxAxe);
+        GameRegistry.registerCustomItemStack("toolFluxFishingRod", toolFluxFishingRod);
+        GameRegistry.registerCustomItemStack("toolFluxSickle", toolFluxSickle);
+        GameRegistry.registerCustomItemStack("toolFluxBow", toolFluxBow);
 
-		if (Loader.isModLoaded("ThermalExpansion")) {
-			ThermalExpansionHelper.addTransposerFill(8000, new ItemStack(Items.diamond), gemCrystalFlux,
-					new FluidStack(FluidRegistry.getFluid("redstone"), 200), false);
-			ThermalExpansionHelper.addTransposerFill(4000, GameRegistry.findItemStack("ThermalFoundation", "dustElectrum", 1), dustElectrumFlux,
-					new FluidStack(FluidRegistry.getFluid("redstone"), 200), false);
-			ThermalExpansionHelper.addSmelterBlastOre("ElectrumFlux");
-		}
-	}
+        if (Loader.isModLoaded("ThermalExpansion")) {
+            ThermalExpansionHelper.addTransposerFill(8000, new ItemStack(Items.diamond), gemCrystalFlux,
+                    new FluidStack(FluidRegistry.getFluid("redstone"), 200), false);
+            ThermalExpansionHelper.addTransposerFill(4000, GameRegistry.findItemStack("ThermalFoundation", "dustElectrum", 1), dustElectrumFlux,
+                    new FluidStack(FluidRegistry.getFluid("redstone"), 200), false);
+            ThermalExpansionHelper.addSmelterBlastOre("ElectrumFlux");
+        }
+    }
 
-	public static void postInit() {
+    public static void postInit() {
 
-		ItemHelper.addStorageRecipe(ingotElectrumFlux, "nuggetElectrumFlux");
-		ItemHelper.addReverseStorageRecipe(nuggetElectrumFlux, "ingotElectrumFlux");
+        ItemHelper.addStorageRecipe(ingotElectrumFlux, "nuggetElectrumFlux");
+        ItemHelper.addReverseStorageRecipe(nuggetElectrumFlux, "ingotElectrumFlux");
 
-		GameRegistry.addRecipe(new ShapedOreRecipe(rodObsidianFlux, new Object[] { "  O", " B ", "O  ", 'B', rodObsidian, 'O', "gemCrystalFlux" }));
-		GameRegistry.addRecipe(new ShapedOreRecipe(rodObsidian, new Object[] { "  O", " B ", "O  ", 'B', Items.blaze_powder, 'O', "dustObsidian" }));
-		GameRegistry.addRecipe(new ShapedOreRecipe(plateFlux, new Object[] { "NNN", "GIG", "NNN", 'G', "gemCrystalFlux", 'I', "ingotElectrumFlux", 'N',
-				"nuggetElectrumFlux" }));
+        GameRegistry.addRecipe(new ShapedOreRecipe(rodObsidianFlux, new Object[] { "  O", " B ", "O  ", 'B', rodObsidian, 'O', "gemCrystalFlux" }));
+        GameRegistry.addRecipe(new ShapedOreRecipe(rodObsidian, new Object[] { "  O", " B ", "O  ", 'B', Items.blaze_powder, 'O', "dustObsidian" }));
+        GameRegistry.addRecipe(new ShapedOreRecipe(plateFlux, new Object[] { "NNN", "GIG", "NNN", 'G', "gemCrystalFlux", 'I', "ingotElectrumFlux", 'N',
+                "nuggetElectrumFlux" }));
 
-		if (!Loader.isModLoaded("ThermalExpansion")) {
-			if (ItemHelper.oreNameExists("dustElectrum")) {
-				GameRegistry.addRecipe(new ShapelessOreRecipe(dustElectrumFlux, new Object[] { "dustElectrum", "dustRedstone", "dustRedstone", "dustRedstone",
-						"dustRedstone", "dustRedstone" }));
-			} else {
-				GameRegistry.addRecipe(new ShapelessOreRecipe(dustElectrumFlux, new Object[] { "ingotGold", "blockRedstone" }));
-			}
-			GameRegistry.addRecipe(new ShapelessOreRecipe(gemCrystalFlux, new Object[] { "gemDiamond", "dustRedstone", "dustRedstone", "dustRedstone",
-					"dustRedstone", "dustRedstone" }));
-			GameRegistry.addSmelting(dustElectrumFlux, ingotElectrumFlux, 0.0F);
-		}
-		if (ItemHelper.oreNameExists("dustObsidian")) {
-			GameRegistry.addRecipe(new ShapedOreRecipe(rodObsidian, new Object[] { "  O", " B ", "O  ", 'B', Items.blaze_powder, 'O', "dustObsidian" }));
-		} else {
-			GameRegistry.addRecipe(new ShapedOreRecipe(rodObsidian, new Object[] { "  O", " B ", "O  ", 'B', Items.blaze_powder, 'O', Blocks.obsidian }));
-		}
+        if (!Loader.isModLoaded("ThermalExpansion")) {
+            if (ItemHelper.oreNameExists("dustElectrum")) {
+                GameRegistry.addRecipe(new ShapelessOreRecipe(dustElectrumFlux, new Object[] { "dustElectrum", "dustRedstone", "dustRedstone", "dustRedstone",
+                        "dustRedstone", "dustRedstone" }));
+            } else {
+                GameRegistry.addRecipe(new ShapelessOreRecipe(dustElectrumFlux, new Object[] { "ingotGold", "blockRedstone" }));
+            }
+            GameRegistry.addRecipe(new ShapelessOreRecipe(gemCrystalFlux, new Object[] { "gemDiamond", "dustRedstone", "dustRedstone", "dustRedstone",
+                    "dustRedstone", "dustRedstone" }));
+            GameRegistry.addSmelting(dustElectrumFlux, ingotElectrumFlux, 0.0F);
+        }
+        if (ItemHelper.oreNameExists("dustObsidian")) {
+            GameRegistry.addRecipe(new ShapedOreRecipe(rodObsidian, new Object[] { "  O", " B ", "O  ", 'B', Items.blaze_powder, 'O', "dustObsidian" }));
+        } else {
+            GameRegistry.addRecipe(new ShapedOreRecipe(rodObsidian, new Object[] { "  O", " B ", "O  ", 'B', Items.blaze_powder, 'O', Blocks.obsidian }));
+        }
 
-		/* Armor */
-		if (enableArmor) {
-			GameRegistry.addRecipe(new ShapedOreRecipe(armorFluxHelmet, new Object[] { "III", "I I", 'I', plateFlux }));
-			GameRegistry.addRecipe(new ShapedOreRecipe(armorFluxPlate, new Object[] { "I I", "III", "III", 'I', plateFlux }));
-			GameRegistry.addRecipe(new ShapedOreRecipe(armorFluxLegs, new Object[] { "III", "I I", "I I", 'I', plateFlux }));
-			GameRegistry.addRecipe(new ShapedOreRecipe(armorFluxBoots, new Object[] { "I I", "I I", 'I', plateFlux }));
-		}
+        /* Armor */
+        if (enableArmor) {
+            GameRegistry.addRecipe(new ShapedOreRecipe(armorFluxHelmet, new Object[] { "III", "I I", 'I', plateFlux }));
+            GameRegistry.addRecipe(new ShapedOreRecipe(armorFluxPlate, new Object[] { "I I", "III", "III", 'I', plateFlux }));
+            GameRegistry.addRecipe(new ShapedOreRecipe(armorFluxLegs, new Object[] { "III", "I I", "I I", 'I', plateFlux }));
+            GameRegistry.addRecipe(new ShapedOreRecipe(armorFluxBoots, new Object[] { "I I", "I I", 'I', plateFlux }));
+        }
 
-		/* Tools */
-		if (enableTool[0]) {
-			GameRegistry.addRecipe(new ShapedOreRecipe(toolFluxWrench, new Object[] { "I I", " R ", " I ", 'I', "ingotElectrumFlux", 'R', rodObsidianFlux }));
-		}
-		if (enableTool[1]) {
-			GameRegistry.addRecipe(new ShapedOreRecipe(toolFluxBattleWrench,
-					new Object[] { "I I", "III", " R ", 'I', "ingotElectrumFlux", 'R', rodObsidianFlux }));
-		}
-		if (enableTool[2]) {
-			GameRegistry.addRecipe(new ShapedOreRecipe(toolFluxSword, new Object[] { " I ", " I ", " R ", 'I', "ingotElectrumFlux", 'R', rodObsidianFlux }));
-		}
-		if (enableTool[3]) {
-			GameRegistry.addRecipe(new ShapedOreRecipe(toolFluxShovel, new Object[] { " I ", " R ", " R ", 'I', "ingotElectrumFlux", 'R', rodObsidianFlux }));
-		}
-		if (enableTool[4]) {
-			GameRegistry.addRecipe(new ShapedOreRecipe(toolFluxPickaxe, new Object[] { "III", " R ", " R ", 'I', "ingotElectrumFlux", 'R', rodObsidianFlux }));
-		}
-		if (enableTool[5]) {
-			GameRegistry.addRecipe(new ShapedOreRecipe(toolFluxAxe, new Object[] { "II ", "IR ", " R ", 'I', "ingotElectrumFlux", 'R', rodObsidianFlux }));
-		}
-		if (enableTool[6]) {
-			GameRegistry.addRecipe(new ShapedOreRecipe(toolFluxFishingRod, new Object[] { "  I", " IS", "R S", 'I', "ingotElectrumFlux", 'R', rodObsidian, 'S',
-					Items.string }));
-		}
-		if (enableTool[7]) {
-			GameRegistry.addRecipe(new ShapedOreRecipe(toolFluxSickle, new Object[] { " I ", "  I", "RI ", 'I', "ingotElectrumFlux", 'R', rodObsidianFlux }));
-		}
-		if (enableTool[8]) {
-			GameRegistry.addRecipe(new ShapedOreRecipe(toolFluxBow, new Object[] { " IS", "R S", " IS", 'I', "ingotElectrumFlux", 'R', rodObsidian, 'S',
-					Items.string }));
-		}
-		ItemHelper.addReverseStorageRecipe(ingotElectrumFlux, "blockElectrumFlux");
-		ItemHelper.addReverseStorageRecipe(gemCrystalFlux, "blockCrystalFlux");
+        /* Tools */
+        if (enableTool[0]) {
+            GameRegistry.addRecipe(new ShapedOreRecipe(toolFluxWrench, new Object[] { "I I", " R ", " I ", 'I', "ingotElectrumFlux", 'R', rodObsidianFlux }));
+        }
+        if (enableTool[1]) {
+            GameRegistry.addRecipe(new ShapedOreRecipe(toolFluxBattleWrench,
+                    new Object[] { "I I", "III", " R ", 'I', "ingotElectrumFlux", 'R', rodObsidianFlux }));
+        }
+        if (enableTool[2]) {
+            GameRegistry.addRecipe(new ShapedOreRecipe(toolFluxSword, new Object[] { " I ", " I ", " R ", 'I', "ingotElectrumFlux", 'R', rodObsidianFlux }));
+        }
+        if (enableTool[3]) {
+            GameRegistry.addRecipe(new ShapedOreRecipe(toolFluxShovel, new Object[] { " I ", " R ", " R ", 'I', "ingotElectrumFlux", 'R', rodObsidianFlux }));
+        }
+        if (enableTool[4]) {
+            GameRegistry.addRecipe(new ShapedOreRecipe(toolFluxPickaxe, new Object[] { "III", " R ", " R ", 'I', "ingotElectrumFlux", 'R', rodObsidianFlux }));
+        }
+        if (enableTool[5]) {
+            GameRegistry.addRecipe(new ShapedOreRecipe(toolFluxAxe, new Object[] { "II ", "IR ", " R ", 'I', "ingotElectrumFlux", 'R', rodObsidianFlux }));
+        }
+        if (enableTool[6]) {
+            GameRegistry.addRecipe(new ShapedOreRecipe(toolFluxFishingRod, new Object[] { "  I", " IS", "R S", 'I', "ingotElectrumFlux", 'R', rodObsidian, 'S',
+                    Items.string }));
+        }
+        if (enableTool[7]) {
+            GameRegistry.addRecipe(new ShapedOreRecipe(toolFluxSickle, new Object[] { " I ", "  I", "RI ", 'I', "ingotElectrumFlux", 'R', rodObsidianFlux }));
+        }
+        if (enableTool[8]) {
+            GameRegistry.addRecipe(new ShapedOreRecipe(toolFluxBow, new Object[] { " IS", "R S", " IS", 'I', "ingotElectrumFlux", 'R', rodObsidian, 'S',
+                    Items.string }));
+        }
+        ItemHelper.addReverseStorageRecipe(ingotElectrumFlux, "blockElectrumFlux");
+        ItemHelper.addReverseStorageRecipe(gemCrystalFlux, "blockCrystalFlux");
 
-		((IInitializer) blockStorage).postInit();
-	}
+        ((IInitializer) blockStorage).postInit();
+    }
 
-	public static boolean enableArmor = true;
-	public static int[] armorRFCapacity = new int[4];
-	public static int[] armorRFTransfer = new int[4];
+    public static boolean enableArmor = true;
+    public static int[] armorRFCapacity = new int[4];
+    public static int[] armorRFTransfer = new int[4];
 
-	public static boolean[] enableTool = new boolean[9];
-	public static int[] toolRFCapacity = new int[9];
-	public static int[] toolRFTransfer = new int[9];
-	public static int[] toolRFUsed = new int[9];
-	public static int[] toolRFCharged = new int[9];
+    public static boolean[] enableTool = new boolean[9];
+    public static int[] toolRFCapacity = new int[9];
+    public static int[] toolRFTransfer = new int[9];
+    public static int[] toolRFUsed = new int[9];
+    public static int[] toolRFCharged = new int[9];
 
-	public static final String[] toolNames = { "Wrench", "BattleWrench", "Sword", "Shovel", "Pickaxe", "Axe", "FishingRod", "Sickle", "Bow" };
+    public static final String[] toolNames = { "Wrench", "BattleWrench", "Sword", "Shovel", "Pickaxe", "Axe", "FishingRod", "Sickle", "Bow" };
 
-	public static final int TOOL_RF_CAPACITY = 160000;
-	public static final int TOOL_RF_TRANSFER = 1600;
-	public static final int TOOL_RF_USE = 200;
-	public static final int TOOL_RF_CHARGED = 800;
+    public static final int TOOL_RF_CAPACITY = 160000;
+    public static final int TOOL_RF_TRANSFER = 1600;
+    public static final int TOOL_RF_USE = 200;
+    public static final int TOOL_RF_CHARGED = 800;
 
-	static {
-		String category = "Equipment.Flux-Infused";
-		enableArmor = RedstoneArsenal.config.get(category, "Armor", true);
+    static {
+        String category = "Equipment.Flux-Infused";
+        enableArmor = RedstoneArsenal.config.get(category, "Armor", true);
 
-		// for (int i = 0; i < toolNames.length; i++) {
-		// category += ".Tool." + toolNames[i];
-		// enableTool[i] = RedstoneArsenal.config.get(category, "Recipe", true);
-		// toolRFCapacity[i] = RedstoneArsenal.config.get(category, "RF_Capacity", TOOL_RF_CAPACITY);
-		// toolRFCapacity[i] = RedstoneArsenal.config.get(category, "RF_Transfer", TOOL_RF_CAPACITY);
-		// toolRFCapacity[i] = RedstoneArsenal.config.get(category, "RF_OnUse", TOOL_RF_CAPACITY);
-		// toolRFCapacity[i] = RedstoneArsenal.config.get(category, "RF_ChargedUse", TOOL_RF_CAPACITY);
-		// }
+        // for (int i = 0; i < toolNames.length; i++) {
+        // category += ".Tool." + toolNames[i];
+        // enableTool[i] = RedstoneArsenal.config.get(category, "Recipe", true);
+        // toolRFCapacity[i] = RedstoneArsenal.config.get(category, "RF_Capacity", TOOL_RF_CAPACITY);
+        // toolRFCapacity[i] = RedstoneArsenal.config.get(category, "RF_Transfer", TOOL_RF_CAPACITY);
+        // toolRFCapacity[i] = RedstoneArsenal.config.get(category, "RF_OnUse", TOOL_RF_CAPACITY);
+        // toolRFCapacity[i] = RedstoneArsenal.config.get(category, "RF_ChargedUse", TOOL_RF_CAPACITY);
+        // }
 
-		category += ".Tool";
+        category += ".Tool";
 
-		enableTool[0] = RedstoneArsenal.config.get(category, "Wrench", true);
-		enableTool[1] = RedstoneArsenal.config.get(category, "BattleWrench", true);
-		enableTool[2] = RedstoneArsenal.config.get(category, "Sword", true);
-		enableTool[3] = RedstoneArsenal.config.get(category, "Shovel", true);
-		enableTool[4] = RedstoneArsenal.config.get(category, "Pickaxe", true);
-		enableTool[5] = RedstoneArsenal.config.get(category, "Axe", true);
-		enableTool[6] = RedstoneArsenal.config.get(category, "FishingRod", true);
-		enableTool[7] = RedstoneArsenal.config.get(category, "Sickle", true);
-		enableTool[8] = RedstoneArsenal.config.get(category, "Bow", true);
-	}
+        enableTool[0] = RedstoneArsenal.config.get(category, "Wrench", true);
+        enableTool[1] = RedstoneArsenal.config.get(category, "BattleWrench", true);
+        enableTool[2] = RedstoneArsenal.config.get(category, "Sword", true);
+        enableTool[3] = RedstoneArsenal.config.get(category, "Shovel", true);
+        enableTool[4] = RedstoneArsenal.config.get(category, "Pickaxe", true);
+        enableTool[5] = RedstoneArsenal.config.get(category, "Axe", true);
+        enableTool[6] = RedstoneArsenal.config.get(category, "FishingRod", true);
+        enableTool[7] = RedstoneArsenal.config.get(category, "Sickle", true);
+        enableTool[8] = RedstoneArsenal.config.get(category, "Bow", true);
+    }
 
-	public static Block blockStorage;
+    public static Block blockStorage;
 
-	public static ItemBase itemMaterial;
+    public static ItemBase itemMaterial;
 
-	public static ItemArmorRF itemHelmetFlux;
-	public static ItemArmorRF itemPlateFlux;
-	public static ItemArmorRF itemLegsFlux;
-	public static ItemArmorRF itemBootsFlux;
+    public static ItemArmorRF itemHelmetFlux;
+    public static ItemArmorRF itemPlateFlux;
+    public static ItemArmorRF itemLegsFlux;
+    public static ItemArmorRF itemBootsFlux;
 
-	public static Item itemWrenchFlux;
-	public static Item itemBattleWrenchFlux;
-	public static Item itemSwordFlux;
-	public static Item itemShovelFlux;
-	public static Item itemPickaxeFlux;
-	public static Item itemAxeFlux;
-	public static Item itemFishingRodFlux;
-	public static Item itemSickleFlux;
-	public static Item itemBowFlux;
+    public static Item itemWrenchFlux;
+    public static Item itemBattleWrenchFlux;
+    public static Item itemSwordFlux;
+    public static Item itemShovelFlux;
+    public static Item itemPickaxeFlux;
+    public static Item itemAxeFlux;
+    public static Item itemFishingRodFlux;
+    public static Item itemSickleFlux;
+    public static Item itemBowFlux;
 
-	public static ItemStack dustElectrumFlux;
-	public static ItemStack ingotElectrumFlux;
-	public static ItemStack nuggetElectrumFlux;
-	public static ItemStack gemCrystalFlux;
-	public static ItemStack plateFlux;
-	public static ItemStack rodObsidian;
-	public static ItemStack rodObsidianFlux;
+    public static ItemStack dustElectrumFlux;
+    public static ItemStack ingotElectrumFlux;
+    public static ItemStack nuggetElectrumFlux;
+    public static ItemStack gemCrystalFlux;
+    public static ItemStack plateFlux;
+    public static ItemStack rodObsidian;
+    public static ItemStack rodObsidianFlux;
 
-	public static ItemStack armorFluxHelmet;
-	public static ItemStack armorFluxPlate;
-	public static ItemStack armorFluxLegs;
-	public static ItemStack armorFluxBoots;
+    public static ItemStack armorFluxHelmet;
+    public static ItemStack armorFluxPlate;
+    public static ItemStack armorFluxLegs;
+    public static ItemStack armorFluxBoots;
 
-	public static ItemStack toolFluxWrench;
-	public static ItemStack toolFluxBattleWrench;
-	public static ItemStack toolFluxSword;
-	public static ItemStack toolFluxShovel;
-	public static ItemStack toolFluxPickaxe;
-	public static ItemStack toolFluxAxe;
-	public static ItemStack toolFluxFishingRod;
-	public static ItemStack toolFluxSickle;
-	public static ItemStack toolFluxBow;
+    public static ItemStack toolFluxWrench;
+    public static ItemStack toolFluxBattleWrench;
+    public static ItemStack toolFluxSword;
+    public static ItemStack toolFluxShovel;
+    public static ItemStack toolFluxPickaxe;
+    public static ItemStack toolFluxAxe;
+    public static ItemStack toolFluxFishingRod;
+    public static ItemStack toolFluxSickle;
+    public static ItemStack toolFluxBow;
 
-	public static final Item.ToolMaterial TOOL_MATERIAL_FLUX = EnumHelper.addToolMaterial("RA_FLUX", 3, 100, 8.0F, 0, 25);
-	public static final ItemArmor.ArmorMaterial ARMOR_MATERIAL_FLUX = EnumHelper.addArmorMaterial("RA_FLUX", 10, new int[] { 3, 8, 6, 3 }, 20);
-	public static final String[] TEXTURE_FLUX = { "redstonearsenal:textures/armor/" + "Flux_1.png", "redstonearsenal:textures/armor/" + "Flux_2.png" };
+    public static final Item.ToolMaterial TOOL_MATERIAL_FLUX = EnumHelper.addToolMaterial("RA_FLUX", 3, -1, 8.0F, 0, 25);
+    public static final ItemArmor.ArmorMaterial ARMOR_MATERIAL_FLUX = EnumHelper.addArmorMaterial("RA_FLUX", -1, new int[] { 3, 8, 6, 3 }, 20);
+    public static final String[] TEXTURE_FLUX = { "redstonearsenal:textures/armor/" + "Flux_1.png", "redstonearsenal:textures/armor/" + "Flux_2.png" };
 
-	public static final String ARMOR = "redstonearsenal.armor.";
-	public static final String TOOL = "redstonearsenal.tool.";
-	public static final String ARMOR_TEX_FLUX = "redstonearsenal:armor/ArmorFlux";
-	public static final String TOOL_TEX_FLUX = "redstonearsenal:tool/Flux";
+    public static final String ARMOR = "redstonearsenal.armor.";
+    public static final String TOOL = "redstonearsenal.tool.";
+    public static final String ARMOR_TEX_FLUX = "redstonearsenal:armor/ArmorFlux";
+    public static final String TOOL_TEX_FLUX = "redstonearsenal:tool/Flux";
 
 }
