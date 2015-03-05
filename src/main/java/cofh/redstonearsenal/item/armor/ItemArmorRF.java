@@ -37,7 +37,7 @@ public class ItemArmorRF extends ItemArmorAdv implements ISpecialArmor, IEnergyC
 		super(material, type);
 	}
 
-	ItemArmorRF setEnergyParams(int maxEnergy, int maxTransfer, int energyPerUse, int energyPerUseCharged) {
+	public ItemArmorRF setEnergyParams(int maxEnergy, int maxTransfer) {
 
 		this.maxEnergy = maxEnergy;
 		this.maxTransfer = maxTransfer;

@@ -63,7 +63,7 @@ public class ItemWrenchRF extends ItemShears implements IEnergyContainerItem, IT
 		setNoRepair();
 	}
 
-	ItemWrenchRF setEnergyParams(int maxEnergy, int maxTransfer, int energyPerUse, int energyPerUseCharged) {
+	public ItemWrenchRF setEnergyParams(int maxEnergy, int maxTransfer, int energyPerUse, int energyPerUseCharged) {
 
 		this.maxEnergy = maxEnergy;
 		this.maxTransfer = maxTransfer;

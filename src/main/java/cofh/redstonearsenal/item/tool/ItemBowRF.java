@@ -46,7 +46,7 @@ public class ItemBowRF extends ItemBowAdv implements IEmpowerableItem, IEnergyCo
 		setNoRepair();
 	}
 
-	ItemBowRF setEnergyParams(int maxEnergy, int maxTransfer, int energyPerUse, int energyPerUseCharged) {
+	public ItemBowRF setEnergyParams(int maxEnergy, int maxTransfer, int energyPerUse, int energyPerUseCharged) {
 
 		this.maxEnergy = maxEnergy;
 		this.maxTransfer = maxTransfer;

@@ -21,7 +21,6 @@ public class ItemSickleRF extends ItemToolRF {
 		super(toolMaterial);
 
 		damage = 5;
-		energyPerUseCharged = 1600;
 
 		effectiveMaterials.add(Material.leaves);
 		effectiveMaterials.add(Material.plants);

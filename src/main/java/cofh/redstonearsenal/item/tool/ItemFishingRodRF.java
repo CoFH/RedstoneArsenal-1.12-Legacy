@@ -44,7 +44,7 @@ public class ItemFishingRodRF extends ItemFishingRodAdv implements IEmpowerableI
 		setNoRepair();
 	}
 
-	ItemFishingRodRF setEnergyParams(int maxEnergy, int maxTransfer, int energyPerUse, int energyPerUseCharged) {
+	public ItemFishingRodRF setEnergyParams(int maxEnergy, int maxTransfer, int energyPerUse, int energyPerUseCharged) {
 
 		this.maxEnergy = maxEnergy;
 		this.maxTransfer = maxTransfer;

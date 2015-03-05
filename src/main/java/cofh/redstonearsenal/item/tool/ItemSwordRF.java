@@ -52,7 +52,7 @@ public class ItemSwordRF extends ItemSword implements IEmpowerableItem, IEnergyC
 		setNoRepair();
 	}
 
-	ItemSwordRF setEnergyParams(int maxEnergy, int maxTransfer, int energyPerUse, int energyPerUseCharged) {
+	public ItemSwordRF setEnergyParams(int maxEnergy, int maxTransfer, int energyPerUse, int energyPerUseCharged) {
 
 		this.maxEnergy = maxEnergy;
 		this.maxTransfer = maxTransfer;
