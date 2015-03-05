@@ -14,20 +14,20 @@ item.redstonearsenal.material.plateFlux.name=紅石裝甲防護板
 item.redstonearsenal.material.rodObsidian.name=黑曜石手柄
 item.redstonearsenal.material.rodObsidianFlux.name=充能黑曜石手柄
 
-item.redstonearsenal.armor.fluxHelmet.name=紅石充能頭盔
-item.redstonearsenal.armor.fluxPlate.name=紅石充能胸甲
-item.redstonearsenal.armor.fluxLegs.name=紅石充能護腿
-item.redstonearsenal.armor.fluxBoots.name=紅石充能靴子
+item.redstonearsenal.armor.fluxHelmet.name=充能紅石頭盔
+item.redstonearsenal.armor.fluxPlate.name=充能紅石胸甲
+item.redstonearsenal.armor.fluxLegs.name=充能紅石護腿
+item.redstonearsenal.armor.fluxBoots.name=充能紅石靴子
 
-item.redstonearsenal.tool.fluxWrench.name=紅石充能板手
-item.redstonearsenal.tool.fluxBattleWrench.name=紅石充能戰鬥板手
-item.redstonearsenal.tool.fluxSword.name=紅石充能劍
-item.redstonearsenal.tool.fluxShovel.name=紅石充能鏟
-item.redstonearsenal.tool.fluxPickaxe.name=紅石充能鎬
-item.redstonearsenal.tool.fluxAxe.name=紅石充能斧
-item.redstonearsenal.tool.fluxFishingRod.name=紅石充能釣魚竿
-item.redstonearsenal.tool.fluxSickle.name=紅石充能鐮刀
-item.redstonearsenal.tool.fluxBow.name=紅石充能弓
+item.redstonearsenal.tool.fluxWrench.name=充能紅石板手
+item.redstonearsenal.tool.fluxBattleWrench.name=充能紅石戰鬥板手
+item.redstonearsenal.tool.fluxSword.name=充能紅石劍
+item.redstonearsenal.tool.fluxShovel.name=充能紅石鏟
+item.redstonearsenal.tool.fluxPickaxe.name=充能紅石鎬
+item.redstonearsenal.tool.fluxAxe.name=充能紅石斧
+item.redstonearsenal.tool.fluxFishingRod.name=充能紅石釣魚竿
+item.redstonearsenal.tool.fluxSickle.name=充能紅石鐮刀
+item.redstonearsenal.tool.fluxBow.name=充能紅石弓
 
 itemGroup.redstonearsenal.creativeTab=紅石兵工廠
 
