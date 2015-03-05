@@ -39,11 +39,12 @@ public class ItemAxeRF extends ItemToolRF {
 			return false;
 		}
 
-		if (block.isWood(world, x, y, z) && isEmpowered(stack)) {
+		if (isEmpowered(stack) && (block.isWood(world, x, y, z) || canHarvestBlock(block, stack))) {
 			for (int i = x - 1; i <= x + 1; i++) {
 				for (int k = z - 1; k <= z + 1; k++) {
 					for (int j = y - 2; j <= y + 2; j++) {
-						if (world.getBlock(i, j, k).isWood(world, i, j, k)) {
+						block = world.getBlock(i, j, k);
+						if (block.isWood(world, i, j, k) || canHarvestBlock(block, stack)) {
 							harvestBlock(world, i, j, k, player);
 						}
 					}
