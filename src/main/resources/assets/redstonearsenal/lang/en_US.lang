@@ -12,7 +12,7 @@ item.redstonearsenal.material.nuggetElectrumFlux.name=Fluxed Electrum Nugget
 item.redstonearsenal.material.gemCrystalFlux.name=Flux Crystal
 item.redstonearsenal.material.plateFlux.name=Fluxed Armor Plating
 item.redstonearsenal.material.rodObsidian.name=Obsidian Rod
-item.redstonearsenal.material.rodObsidianFlux.name=Infused Obsidian Rod
+item.redstonearsenal.material.rodObsidianFlux.name=Flux-Infused Obsidian Rod
 
 item.redstonearsenal.armor.fluxHelmet.name=Flux-Infused Helm
 item.redstonearsenal.armor.fluxPlate.name=Flux-Infused Chestplate
