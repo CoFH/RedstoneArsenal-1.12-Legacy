@@ -120,15 +120,20 @@ public abstract class ItemToolRF extends ItemToolAdv implements IEmpowerableItem
 		EntityPlayer thePlayer = (EntityPlayer) player;
 		float fallingMult = (player.fallDistance > 0.0F && !player.onGround && !player.isOnLadder() && !player.isInWater()
 				&& !player.isPotionActive(Potion.blindness) && player.ridingEntity == null) ? 1.5F : 1.0F;
+		float potionDamage = 1.0f;
+
+		if (player.isPotionActive(Potion.damageBoost)) {
+			potionDamage += player.getActivePotionEffect(Potion.damageBoost).getAmplifier() * 1.3f;
+		}
 
 		if (thePlayer.capabilities.isCreativeMode || extractEnergy(stack, energyPerUse, false) == energyPerUse) {
 			int fluxDamage = isEmpowered(stack) ? 2 : 1;
 			float enchantDamage = damage + EnchantmentHelper.getEnchantmentModifierLiving(player, entity);
 
-			entity.attackEntityFrom(DamageHelper.causePlayerFluxDamage(thePlayer), fluxDamage);
-			entity.attackEntityFrom(DamageSource.causePlayerDamage(thePlayer), (fluxDamage + enchantDamage) * fallingMult);
+			entity.attackEntityFrom(DamageHelper.causePlayerFluxDamage(thePlayer), fluxDamage * potionDamage);
+			entity.attackEntityFrom(DamageSource.causePlayerDamage(thePlayer), (fluxDamage + enchantDamage) * fallingMult * potionDamage);
 		} else {
-			entity.attackEntityFrom(DamageSource.causePlayerDamage(thePlayer), 1 * fallingMult);
+			entity.attackEntityFrom(DamageSource.causePlayerDamage(thePlayer), 1 * fallingMult * potionDamage);
 		}
 		return true;
 	}
