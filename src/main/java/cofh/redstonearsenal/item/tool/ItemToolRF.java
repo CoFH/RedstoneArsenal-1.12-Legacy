@@ -304,7 +304,7 @@ public abstract class ItemToolRF extends ItemToolAdv implements IEmpowerableItem
 		if (a == b) {
 			return true;
 		}
-		if (a == null | b == null) {
+		if (a == null || b == null) {
 			return false;
 		}
 		a = (NBTTagCompound) a.copy();
