@@ -71,8 +71,8 @@ public class BlockStorage extends Block implements IInitializer {
 	@Override
 	public AxisAlignedBB getCollisionBoundingBoxFromPool(World world, int x, int y, int z) {
 
-		final float f = 0.0625F;
-		return AxisAlignedBB.getBoundingBox(x + f, y, z + f, x + 1 - f, y + 1 - f, z + 1 - f);
+		final double d = 1.0D / 256.0D;
+		return AxisAlignedBB.getBoundingBox(x + d, y, z + d, x + 1 - d, y + 1 - d, z + 1 - d);
 	}
 
 	@Override
