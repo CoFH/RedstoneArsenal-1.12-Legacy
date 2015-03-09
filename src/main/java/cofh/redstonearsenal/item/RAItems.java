@@ -3,7 +3,6 @@ package cofh.redstonearsenal.item;
 import cofh.api.core.IInitializer;
 import cofh.api.modhelpers.ThermalExpansionHelper;
 import cofh.core.item.ItemBase;
-import cofh.lib.util.helpers.EnergyHelper;
 import cofh.lib.util.helpers.ItemHelper;
 import cofh.lib.util.helpers.MathHelper;
 import cofh.redstonearsenal.RedstoneArsenal;
@@ -27,6 +26,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
@@ -34,6 +34,17 @@ import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 public class RAItems {
+
+	public static ItemStack setDefaultEnergyTag(ItemStack container, int energy) {
+
+		if (container.stackTagCompound == null) {
+			container.setTagCompound(new NBTTagCompound());
+		}
+		container.stackTagCompound.setInteger("Energy", energy);
+		container.stackTagCompound.setBoolean("Unbreakable", true);
+
+		return container;
+	}
 
 	public static void preInit() {
 
@@ -53,16 +64,16 @@ public class RAItems {
 		itemWrenchFlux = new ItemWrenchRF(TOOL_MATERIAL_FLUX).setEnergyParams(toolRFCapacity[0], toolRFTransfer[0], toolRFUsed[0], toolRFCharged[0])
 				.setUnlocalizedName(TOOL + "fluxWrench").setTextureName(TOOL_TEX_FLUX + "Wrench").setCreativeTab(RedstoneArsenal.tab);
 		itemBattleWrenchFlux = new ItemWrenchBattleRF(TOOL_MATERIAL_FLUX)
-		.setEnergyParams(toolRFCapacity[1], toolRFTransfer[1], toolRFUsed[1], toolRFCharged[1]).setUnlocalizedName(TOOL + "fluxBattleWrench")
-		.setTextureName(TOOL_TEX_FLUX + "BattleWrench").setCreativeTab(RedstoneArsenal.tab);
+				.setEnergyParams(toolRFCapacity[1], toolRFTransfer[1], toolRFUsed[1], toolRFCharged[1]).setUnlocalizedName(TOOL + "fluxBattleWrench")
+				.setTextureName(TOOL_TEX_FLUX + "BattleWrench").setCreativeTab(RedstoneArsenal.tab);
 		itemSwordFlux = new ItemSwordRF(TOOL_MATERIAL_FLUX).setEnergyParams(toolRFCapacity[2], toolRFTransfer[2], toolRFUsed[2], toolRFCharged[2])
 				.setUnlocalizedName(TOOL + "fluxSword").setTextureName(TOOL_TEX_FLUX + "Sword").setCreativeTab(RedstoneArsenal.tab);
 		itemShovelFlux = new ItemShovelRF(TOOL_MATERIAL_FLUX, harvestLevel)
-		.setEnergyParams(toolRFCapacity[3], toolRFTransfer[3], toolRFUsed[3], toolRFCharged[3]).setUnlocalizedName(TOOL + "fluxShovel")
-		.setTextureName(TOOL_TEX_FLUX + "Shovel").setCreativeTab(RedstoneArsenal.tab);
+				.setEnergyParams(toolRFCapacity[3], toolRFTransfer[3], toolRFUsed[3], toolRFCharged[3]).setUnlocalizedName(TOOL + "fluxShovel")
+				.setTextureName(TOOL_TEX_FLUX + "Shovel").setCreativeTab(RedstoneArsenal.tab);
 		itemPickaxeFlux = new ItemPickaxeRF(TOOL_MATERIAL_FLUX, harvestLevel)
-		.setEnergyParams(toolRFCapacity[4], toolRFTransfer[4], toolRFUsed[4], toolRFCharged[4]).setUnlocalizedName(TOOL + "fluxPickaxe")
-		.setTextureName(TOOL_TEX_FLUX + "Pickaxe").setCreativeTab(RedstoneArsenal.tab);
+				.setEnergyParams(toolRFCapacity[4], toolRFTransfer[4], toolRFUsed[4], toolRFCharged[4]).setUnlocalizedName(TOOL + "fluxPickaxe")
+				.setTextureName(TOOL_TEX_FLUX + "Pickaxe").setCreativeTab(RedstoneArsenal.tab);
 		itemAxeFlux = new ItemAxeRF(TOOL_MATERIAL_FLUX, harvestLevel).setEnergyParams(toolRFCapacity[5], toolRFTransfer[5], toolRFUsed[5], toolRFCharged[5])
 				.setUnlocalizedName(TOOL + "fluxAxe").setTextureName(TOOL_TEX_FLUX + "Axe").setCreativeTab(RedstoneArsenal.tab);
 		itemFishingRodFlux = new ItemFishingRodRF(TOOL_MATERIAL_FLUX).setEnergyParams(toolRFCapacity[6], toolRFTransfer[6], toolRFUsed[6], toolRFCharged[6])
@@ -109,10 +120,10 @@ public class RAItems {
 		rodObsidianFlux = itemMaterial.addItem(193, "rodObsidianFlux", 1);
 
 		/* Armor */
-		armorFluxHelmet = EnergyHelper.setDefaultEnergyTag(new ItemStack(itemHelmetFlux), 0);
-		armorFluxPlate = EnergyHelper.setDefaultEnergyTag(new ItemStack(itemPlateFlux), 0);
-		armorFluxLegs = EnergyHelper.setDefaultEnergyTag(new ItemStack(itemLegsFlux), 0);
-		armorFluxBoots = EnergyHelper.setDefaultEnergyTag(new ItemStack(itemBootsFlux), 0);
+		armorFluxHelmet = setDefaultEnergyTag(new ItemStack(itemHelmetFlux), 0);
+		armorFluxPlate = setDefaultEnergyTag(new ItemStack(itemPlateFlux), 0);
+		armorFluxLegs = setDefaultEnergyTag(new ItemStack(itemLegsFlux), 0);
+		armorFluxBoots = setDefaultEnergyTag(new ItemStack(itemBootsFlux), 0);
 
 		GameRegistry.registerCustomItemStack("armorFluxHelmet", armorFluxHelmet);
 		GameRegistry.registerCustomItemStack("armorFluxPlate", armorFluxPlate);
@@ -120,15 +131,15 @@ public class RAItems {
 		GameRegistry.registerCustomItemStack("armorFluxBoots", armorFluxBoots);
 
 		/* Tools */
-		toolFluxWrench = EnergyHelper.setDefaultEnergyTag(new ItemStack(itemWrenchFlux), 0);
-		toolFluxBattleWrench = EnergyHelper.setDefaultEnergyTag(new ItemStack(itemBattleWrenchFlux), 0);
-		toolFluxSword = EnergyHelper.setDefaultEnergyTag(new ItemStack(itemSwordFlux), 0);
-		toolFluxShovel = EnergyHelper.setDefaultEnergyTag(new ItemStack(itemShovelFlux), 0);
-		toolFluxPickaxe = EnergyHelper.setDefaultEnergyTag(new ItemStack(itemPickaxeFlux), 0);
-		toolFluxAxe = EnergyHelper.setDefaultEnergyTag(new ItemStack(itemAxeFlux), 0);
-		toolFluxSickle = EnergyHelper.setDefaultEnergyTag(new ItemStack(itemSickleFlux), 0);
-		toolFluxFishingRod = EnergyHelper.setDefaultEnergyTag(new ItemStack(itemFishingRodFlux), 0);
-		toolFluxBow = EnergyHelper.setDefaultEnergyTag(new ItemStack(itemBowFlux), 0);
+		toolFluxWrench = setDefaultEnergyTag(new ItemStack(itemWrenchFlux), 0);
+		toolFluxBattleWrench = setDefaultEnergyTag(new ItemStack(itemBattleWrenchFlux), 0);
+		toolFluxSword = setDefaultEnergyTag(new ItemStack(itemSwordFlux), 0);
+		toolFluxShovel = setDefaultEnergyTag(new ItemStack(itemShovelFlux), 0);
+		toolFluxPickaxe = setDefaultEnergyTag(new ItemStack(itemPickaxeFlux), 0);
+		toolFluxAxe = setDefaultEnergyTag(new ItemStack(itemAxeFlux), 0);
+		toolFluxSickle = setDefaultEnergyTag(new ItemStack(itemSickleFlux), 0);
+		toolFluxFishingRod = setDefaultEnergyTag(new ItemStack(itemFishingRodFlux), 0);
+		toolFluxBow = setDefaultEnergyTag(new ItemStack(itemBowFlux), 0);
 
 		GameRegistry.registerCustomItemStack("toolFluxWrench", toolFluxWrench);
 		GameRegistry.registerCustomItemStack("toolFluxBattleWrench", toolFluxBattleWrench);
@@ -157,7 +168,7 @@ public class RAItems {
 		GameRegistry.addRecipe(new ShapedOreRecipe(rodObsidianFlux, new Object[] { "  O", " B ", "O  ", 'B', rodObsidian, 'O', "gemCrystalFlux" }));
 		GameRegistry.addRecipe(new ShapedOreRecipe(rodObsidian, new Object[] { "  O", " B ", "O  ", 'B', Items.blaze_powder, 'O', "dustObsidian" }));
 		GameRegistry.addRecipe(new ShapedOreRecipe(plateFlux, new Object[] { "NNN", "GIG", "NNN", 'G', "gemCrystalFlux", 'I', "ingotElectrumFlux", 'N',
-		"nuggetElectrumFlux" }));
+				"nuggetElectrumFlux" }));
 
 		if (!Loader.isModLoaded("ThermalExpansion")) {
 			if (ItemHelper.oreNameExists("dustElectrum")) {
@@ -307,8 +318,8 @@ public class RAItems {
 	public static ItemStack toolFluxSickle;
 	public static ItemStack toolFluxBow;
 
-	public static final Item.ToolMaterial TOOL_MATERIAL_FLUX = EnumHelper.addToolMaterial("RA_FLUX", 3, -1, 8.0F, 0, 25);
-	public static final ItemArmor.ArmorMaterial ARMOR_MATERIAL_FLUX = EnumHelper.addArmorMaterial("RA_FLUX", -1, new int[] { 3, 8, 6, 3 }, 20);
+	public static final Item.ToolMaterial TOOL_MATERIAL_FLUX = EnumHelper.addToolMaterial("RA_FLUX", 3, 100, 8.0F, 0, 25);
+	public static final ItemArmor.ArmorMaterial ARMOR_MATERIAL_FLUX = EnumHelper.addArmorMaterial("RA_FLUX", 100, new int[] { 3, 8, 6, 3 }, 20);
 	public static final String[] TEXTURE_FLUX = { "redstonearsenal:textures/armor/" + "Flux_1.png", "redstonearsenal:textures/armor/" + "Flux_2.png" };
 
 	public static final String ARMOR = "redstonearsenal.armor.";
