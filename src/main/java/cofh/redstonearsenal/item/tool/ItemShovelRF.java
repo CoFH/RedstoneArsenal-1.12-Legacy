@@ -8,6 +8,7 @@ import cpw.mods.fml.common.eventhandler.Event.Result;
 import java.util.List;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
@@ -30,6 +31,12 @@ public class ItemShovelRF extends ItemToolRF {
 		energyPerUseCharged = 800;
 
 		effectiveBlocks.addAll(ItemSpade.field_150916_c);
+		effectiveMaterials.add(Material.ground);
+		effectiveMaterials.add(Material.grass);
+		effectiveMaterials.add(Material.sand);
+		effectiveMaterials.add(Material.snow);
+		effectiveMaterials.add(Material.craftedSnow);
+		effectiveMaterials.add(Material.clay);
 	}
 
 	public ItemShovelRF(Item.ToolMaterial toolMaterial, int harvestLevel) {

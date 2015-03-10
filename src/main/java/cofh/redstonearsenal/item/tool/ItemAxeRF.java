@@ -22,6 +22,8 @@ public class ItemAxeRF extends ItemToolRF {
 		effectiveMaterials.add(Material.wood);
 		effectiveMaterials.add(Material.plants);
 		effectiveMaterials.add(Material.vine);
+		effectiveMaterials.add(Material.cactus);
+		effectiveMaterials.add(Material.gourd);
 	}
 
 	public ItemAxeRF(Item.ToolMaterial toolMaterial, int harvestLevel) {

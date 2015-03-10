@@ -30,6 +30,10 @@ public class ItemPickaxeRF extends ItemToolRF {
 		effectiveMaterials.add(Material.iron);
 		effectiveMaterials.add(Material.anvil);
 		effectiveMaterials.add(Material.rock);
+		effectiveMaterials.add(Material.ice);
+		effectiveMaterials.add(Material.packedIce);
+		effectiveMaterials.add(Material.glass);
+		effectiveMaterials.add(Material.redstoneLight);
 	}
 
 	public ItemPickaxeRF(Item.ToolMaterial toolMaterial, int harvestLevel) {
