@@ -27,7 +27,7 @@ public class ItemArmorRF extends ItemArmorAdv implements ISpecialArmor, IEnergyC
 	public int maxEnergy = 400000;
 	public int maxTransfer = 2000;
 
-	public double absorbRatio = 0.8D;
+	public double absorbRatio = 0.9D;
 	public int energyPerDamage = 160;
 
 	public String[] textures = new String[2];
