@@ -337,6 +337,9 @@ public class ItemBowRF extends ItemBowAdv implements IEmpowerableItem, IEnergyCo
 		if (container.stackTagCompound == null) {
 			EnergyHelper.setDefaultEnergyTag(container, 0);
 		}
+		if (container.stackTagCompound.hasKey("Unbreakable")) {
+			container.stackTagCompound.removeTag("Unbreakable");
+		}
 		int stored = container.stackTagCompound.getInteger("Energy");
 		int extract = Math.min(maxExtract, stored);
 

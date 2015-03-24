@@ -231,6 +231,9 @@ public class ItemFishingRodRF extends ItemFishingRodAdv implements IEmpowerableI
 		if (container.stackTagCompound == null) {
 			EnergyHelper.setDefaultEnergyTag(container, 0);
 		}
+		if (container.stackTagCompound.hasKey("Unbreakable")) {
+			container.stackTagCompound.removeTag("Unbreakable");
+		}
 		int stored = container.stackTagCompound.getInteger("Energy");
 		int extract = Math.min(maxExtract, stored);
 
