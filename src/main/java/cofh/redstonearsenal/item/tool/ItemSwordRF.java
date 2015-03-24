@@ -7,6 +7,7 @@ import cofh.lib.util.helpers.DamageHelper;
 import cofh.lib.util.helpers.EnergyHelper;
 import cofh.lib.util.helpers.MathHelper;
 import cofh.lib.util.helpers.StringHelper;
+import cofh.redstonearsenal.core.RAProps;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 
@@ -213,6 +214,12 @@ public class ItemSwordRF extends ItemSword implements IEmpowerableItem, IEnergyC
 	}
 
 	@Override
+	public void setDamage(ItemStack stack, int damage) {
+
+		stack.setItemDamage(0);
+	}
+
+	@Override
 	public int getDisplayDamage(ItemStack stack) {
 
 		if (stack.stackTagCompound == null) {
@@ -230,7 +237,7 @@ public class ItemSwordRF extends ItemSword implements IEmpowerableItem, IEnergyC
 	@Override
 	public boolean showDurabilityBar(ItemStack stack) {
 
-		return stack.stackTagCompound == null || !stack.stackTagCompound.getBoolean("CreativeTab");
+		return !RAProps.showToolCharge ? false : stack.stackTagCompound == null || !stack.stackTagCompound.getBoolean("CreativeTab");
 	}
 
 	@Override

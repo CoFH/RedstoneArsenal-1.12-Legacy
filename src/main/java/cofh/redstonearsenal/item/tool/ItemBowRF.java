@@ -9,6 +9,7 @@ import cofh.lib.util.helpers.EnergyHelper;
 import cofh.lib.util.helpers.MathHelper;
 import cofh.lib.util.helpers.ServerHelper;
 import cofh.lib.util.helpers.StringHelper;
+import cofh.redstonearsenal.core.RAProps;
 
 import java.util.List;
 
@@ -214,6 +215,12 @@ public class ItemBowRF extends ItemBowAdv implements IEmpowerableItem, IEnergyCo
 	}
 
 	@Override
+	public void setDamage(ItemStack stack, int damage) {
+
+		stack.setItemDamage(0);
+	}
+
+	@Override
 	public int getDisplayDamage(ItemStack stack) {
 
 		if (stack.stackTagCompound == null) {
@@ -226,6 +233,12 @@ public class ItemBowRF extends ItemBowAdv implements IEmpowerableItem, IEnergyCo
 	public int getMaxDamage(ItemStack stack) {
 
 		return maxEnergy;
+	}
+
+	@Override
+	public boolean showDurabilityBar(ItemStack stack) {
+
+		return !RAProps.showToolCharge ? false : stack.stackTagCompound == null || !stack.stackTagCompound.getBoolean("CreativeTab");
 	}
 
 	@Override

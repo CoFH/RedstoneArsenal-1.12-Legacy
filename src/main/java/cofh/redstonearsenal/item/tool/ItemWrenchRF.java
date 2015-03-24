@@ -9,6 +9,7 @@ import cofh.lib.util.helpers.EnergyHelper;
 import cofh.lib.util.helpers.MathHelper;
 import cofh.lib.util.helpers.ServerHelper;
 import cofh.lib.util.helpers.StringHelper;
+import cofh.redstonearsenal.core.RAProps;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import cpw.mods.fml.common.eventhandler.Event.Result;
@@ -316,6 +317,12 @@ public class ItemWrenchRF extends ItemShears implements IEnergyContainerItem, IT
 	}
 
 	@Override
+	public void setDamage(ItemStack stack, int damage) {
+
+		stack.setItemDamage(0);
+	}
+
+	@Override
 	public int getDisplayDamage(ItemStack stack) {
 
 		if (stack.stackTagCompound == null) {
@@ -328,6 +335,12 @@ public class ItemWrenchRF extends ItemShears implements IEnergyContainerItem, IT
 	public int getMaxDamage(ItemStack stack) {
 
 		return maxEnergy;
+	}
+
+	@Override
+	public boolean showDurabilityBar(ItemStack stack) {
+
+		return !RAProps.showToolCharge ? false : stack.stackTagCompound == null || !stack.stackTagCompound.getBoolean("CreativeTab");
 	}
 
 	@Override

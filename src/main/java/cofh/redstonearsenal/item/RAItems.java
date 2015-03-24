@@ -3,10 +3,12 @@ package cofh.redstonearsenal.item;
 import cofh.api.core.IInitializer;
 import cofh.api.modhelpers.ThermalExpansionHelper;
 import cofh.core.item.ItemBase;
+import cofh.lib.util.helpers.EnergyHelper;
 import cofh.lib.util.helpers.ItemHelper;
 import cofh.lib.util.helpers.MathHelper;
 import cofh.redstonearsenal.RedstoneArsenal;
 import cofh.redstonearsenal.block.BlockStorage;
+import cofh.redstonearsenal.core.RAProps;
 import cofh.redstonearsenal.item.armor.ItemArmorRF;
 import cofh.redstonearsenal.item.tool.ItemAxeRF;
 import cofh.redstonearsenal.item.tool.ItemBowRF;
@@ -26,7 +28,6 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
@@ -35,19 +36,10 @@ import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 public class RAItems {
 
-	public static ItemStack setDefaultEnergyTag(ItemStack container, int energy) {
-
-		if (container.stackTagCompound == null) {
-			container.setTagCompound(new NBTTagCompound());
-		}
-		container.stackTagCompound.setInteger("Energy", energy);
-		container.stackTagCompound.setBoolean("Unbreakable", true);
-
-		return container;
-	}
-
 	public static void preInit() {
 
+		RAProps.showArmorCharge = RedstoneArsenal.config.get("Equipment.Flux-Infused.Armor", "ShowChargeBars", RAProps.showArmorCharge);
+		RAProps.showToolCharge = RedstoneArsenal.config.get("Equipment.Flux-Infused.Tool", "ShowChargeBars", RAProps.showToolCharge);
 		int harvestLevel = MathHelper.clampI(RedstoneArsenal.config.get("Equipment.Flux-Infused.Tool", "HarvestLevel", 4), 1, Integer.MAX_VALUE);
 
 		itemMaterial = (ItemBase) new ItemBase("redstonearsenal").setUnlocalizedName("material").setCreativeTab(RedstoneArsenal.tab);
@@ -120,10 +112,10 @@ public class RAItems {
 		rodObsidianFlux = itemMaterial.addItem(193, "rodObsidianFlux", 1);
 
 		/* Armor */
-		armorFluxHelmet = setDefaultEnergyTag(new ItemStack(itemHelmetFlux), 0);
-		armorFluxPlate = setDefaultEnergyTag(new ItemStack(itemPlateFlux), 0);
-		armorFluxLegs = setDefaultEnergyTag(new ItemStack(itemLegsFlux), 0);
-		armorFluxBoots = setDefaultEnergyTag(new ItemStack(itemBootsFlux), 0);
+		armorFluxHelmet = EnergyHelper.setDefaultEnergyTag(new ItemStack(itemHelmetFlux), 0);
+		armorFluxPlate = EnergyHelper.setDefaultEnergyTag(new ItemStack(itemPlateFlux), 0);
+		armorFluxLegs = EnergyHelper.setDefaultEnergyTag(new ItemStack(itemLegsFlux), 0);
+		armorFluxBoots = EnergyHelper.setDefaultEnergyTag(new ItemStack(itemBootsFlux), 0);
 
 		GameRegistry.registerCustomItemStack("armorFluxHelmet", armorFluxHelmet);
 		GameRegistry.registerCustomItemStack("armorFluxPlate", armorFluxPlate);
@@ -131,15 +123,15 @@ public class RAItems {
 		GameRegistry.registerCustomItemStack("armorFluxBoots", armorFluxBoots);
 
 		/* Tools */
-		toolFluxWrench = setDefaultEnergyTag(new ItemStack(itemWrenchFlux), 0);
-		toolFluxBattleWrench = setDefaultEnergyTag(new ItemStack(itemBattleWrenchFlux), 0);
-		toolFluxSword = setDefaultEnergyTag(new ItemStack(itemSwordFlux), 0);
-		toolFluxShovel = setDefaultEnergyTag(new ItemStack(itemShovelFlux), 0);
-		toolFluxPickaxe = setDefaultEnergyTag(new ItemStack(itemPickaxeFlux), 0);
-		toolFluxAxe = setDefaultEnergyTag(new ItemStack(itemAxeFlux), 0);
-		toolFluxSickle = setDefaultEnergyTag(new ItemStack(itemSickleFlux), 0);
-		toolFluxFishingRod = setDefaultEnergyTag(new ItemStack(itemFishingRodFlux), 0);
-		toolFluxBow = setDefaultEnergyTag(new ItemStack(itemBowFlux), 0);
+		toolFluxWrench = EnergyHelper.setDefaultEnergyTag(new ItemStack(itemWrenchFlux), 0);
+		toolFluxBattleWrench = EnergyHelper.setDefaultEnergyTag(new ItemStack(itemBattleWrenchFlux), 0);
+		toolFluxSword = EnergyHelper.setDefaultEnergyTag(new ItemStack(itemSwordFlux), 0);
+		toolFluxShovel = EnergyHelper.setDefaultEnergyTag(new ItemStack(itemShovelFlux), 0);
+		toolFluxPickaxe = EnergyHelper.setDefaultEnergyTag(new ItemStack(itemPickaxeFlux), 0);
+		toolFluxAxe = EnergyHelper.setDefaultEnergyTag(new ItemStack(itemAxeFlux), 0);
+		toolFluxSickle = EnergyHelper.setDefaultEnergyTag(new ItemStack(itemSickleFlux), 0);
+		toolFluxFishingRod = EnergyHelper.setDefaultEnergyTag(new ItemStack(itemFishingRodFlux), 0);
+		toolFluxBow = EnergyHelper.setDefaultEnergyTag(new ItemStack(itemBowFlux), 0);
 
 		GameRegistry.registerCustomItemStack("toolFluxWrench", toolFluxWrench);
 		GameRegistry.registerCustomItemStack("toolFluxBattleWrench", toolFluxBattleWrench);

@@ -5,6 +5,7 @@ import cofh.core.item.ItemArmorAdv;
 import cofh.lib.util.helpers.EnergyHelper;
 import cofh.lib.util.helpers.MathHelper;
 import cofh.lib.util.helpers.StringHelper;
+import cofh.redstonearsenal.core.RAProps;
 
 import java.util.List;
 
@@ -73,6 +74,12 @@ public class ItemArmorRF extends ItemArmorAdv implements ISpecialArmor, IEnergyC
 	}
 
 	@Override
+	public void setDamage(ItemStack stack, int damage) {
+
+		stack.setItemDamage(0);
+	}
+
+	@Override
 	public int getDisplayDamage(ItemStack stack) {
 
 		if (stack.stackTagCompound == null) {
@@ -85,6 +92,12 @@ public class ItemArmorRF extends ItemArmorAdv implements ISpecialArmor, IEnergyC
 	public int getMaxDamage(ItemStack stack) {
 
 		return maxEnergy;
+	}
+
+	@Override
+	public boolean showDurabilityBar(ItemStack stack) {
+
+		return !RAProps.showArmorCharge ? false : stack.stackTagCompound == null || !stack.stackTagCompound.getBoolean("CreativeTab");
 	}
 
 	@Override
