@@ -49,8 +49,9 @@ public class ItemSickleRF extends ItemToolRF {
 	@Override
 	protected boolean harvestBlock(World world, int x, int y, int z, EntityPlayer player) {
 
-		if (world.isAirBlock(x, y, z))
+		if (world.isAirBlock(x, y, z)) {
 			return false;
+		}
 		EntityPlayerMP playerMP = null;
 		if (player instanceof EntityPlayerMP) {
 			playerMP = (EntityPlayerMP) player;
@@ -60,32 +61,36 @@ public class ItemSickleRF extends ItemToolRF {
 		Block block = world.getBlock(x, y, z);
 		int meta = world.getBlockMetadata(x, y, z);
 		// only effective materials
-		if (!(getToolClasses(player.getCurrentEquippedItem()).contains(block.getHarvestTool(meta)) ||
-				canHarvestBlock(block, player.getCurrentEquippedItem())))
+		if (!(getToolClasses(player.getCurrentEquippedItem()).contains(block.getHarvestTool(meta)) || canHarvestBlock(block, player.getCurrentEquippedItem()))) {
 			return false;
+		}
 
-		if (!ForgeHooks.canHarvestBlock(block, player, meta))
+		if (!ForgeHooks.canHarvestBlock(block, player, meta)) {
 			return false;
+		}
 		// send the blockbreak event
 		BreakEvent event = null;
 		if (playerMP != null) {
 			event = ForgeHooks.onBlockBreakEvent(world, playerMP.theItemInWorldManager.getGameType(), playerMP, x, y, z);
-			if (event.isCanceled())
+			if (event.isCanceled()) {
 				return false;
+			}
 		}
 
 		if (player.capabilities.isCreativeMode) {
-			if (!world.isRemote)
+			if (!world.isRemote) {
 				block.onBlockHarvested(world, x, y, z, meta, player);
+			}
 
-			if (block.removedByPlayer(world, player, x, y, z, false))
+			if (block.removedByPlayer(world, player, x, y, z, false)) {
 				block.onBlockDestroyedByPlayer(world, x, y, z, meta);
+			}
 			// send update to client
 			if (!world.isRemote) {
 				playerMP.playerNetServerHandler.sendPacket(new S23PacketBlockChange(x, y, z, world));
 			} else {
 				Minecraft.getMinecraft().getNetHandler()
-							.addToSendQueue(new C07PacketPlayerDigging(2, x, y, z, Minecraft.getMinecraft().objectMouseOver.sideHit));
+						.addToSendQueue(new C07PacketPlayerDigging(2, x, y, z, Minecraft.getMinecraft().objectMouseOver.sideHit));
 			}
 			return true;
 		}
@@ -100,21 +105,21 @@ public class ItemSickleRF extends ItemToolRF {
 				if (block.equals(Blocks.vine)) {
 					CoreUtils.dropItemStackIntoWorldWithVelocity(new ItemStack(Blocks.vine), world, x, y, z);
 				}
-				if (event != null)
+				if (event != null) {
 					block.dropXpOnBlockBreak(world, x, y, z, event.getExpToDrop());
+				}
 			}
 			// always send block update to client
 			playerMP.playerNetServerHandler.sendPacket(new S23PacketBlockChange(x, y, z, world));
 		} else {
-			//PlayerControllerMP pcmp = Minecraft.getMinecraft().playerController;
+			// PlayerControllerMP pcmp = Minecraft.getMinecraft().playerController;
 			// clientside we do a "this block has been clicked on long enough to be broken" call. This should not send any new packets
 			// the code above, executed on the server, sends a block-updates that give us the correct state of the block we destroy.
 			// following code can be found in PlayerControllerMP.onPlayerDestroyBlock
 			if (block.removedByPlayer(world, player, x, y, z, true)) {
 				block.onBlockDestroyedByPlayer(world, x, y, z, meta);
 			}
-			Minecraft.getMinecraft().getNetHandler()
-						.addToSendQueue(new C07PacketPlayerDigging(2, x, y, z, Minecraft.getMinecraft().objectMouseOver.sideHit));
+			Minecraft.getMinecraft().getNetHandler().addToSendQueue(new C07PacketPlayerDigging(2, x, y, z, Minecraft.getMinecraft().objectMouseOver.sideHit));
 		}
 		return true;
 	}
