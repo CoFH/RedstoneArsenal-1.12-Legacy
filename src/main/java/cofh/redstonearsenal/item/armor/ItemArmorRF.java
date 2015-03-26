@@ -76,7 +76,7 @@ public class ItemArmorRF extends ItemArmorAdv implements ISpecialArmor, IEnergyC
 	@Override
 	public void setDamage(ItemStack stack, int damage) {
 
-		stack.setItemDamage(0);
+		super.setDamage(stack, 0);
 	}
 
 	@Override
