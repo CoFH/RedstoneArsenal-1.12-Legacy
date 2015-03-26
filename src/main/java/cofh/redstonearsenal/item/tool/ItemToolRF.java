@@ -173,7 +173,7 @@ public abstract class ItemToolRF extends ItemToolAdv implements IEmpowerableItem
 	@Override
 	public void setDamage(ItemStack stack, int damage) {
 
-		stack.setItemDamage(0);
+		super.setDamage(stack, 0);
 	}
 
 	@Override
