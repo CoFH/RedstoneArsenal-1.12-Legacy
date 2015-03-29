@@ -47,7 +47,7 @@ public class ItemWrenchBattleRF extends ItemSwordRF implements IToolHammer {
 	@Override
 	public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int hitSide, float hitX, float hitY, float hitZ) {
 
-		return true;
+		return ServerHelper.isClientWorld(world);
 	}
 
 	@Override
@@ -93,7 +93,6 @@ public class ItemWrenchBattleRF extends ItemSwordRF implements IToolHammer {
 			if (!player.capabilities.isCreativeMode) {
 				useEnergy(stack, false);
 			}
-			player.swingItem();
 			return ServerHelper.isServerWorld(world);
 		}
 		TileEntity tile = world.getTileEntity(x, y, z);
