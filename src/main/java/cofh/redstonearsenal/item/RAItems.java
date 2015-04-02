@@ -310,8 +310,8 @@ public class RAItems {
 	public static ItemStack toolFluxSickle;
 	public static ItemStack toolFluxBow;
 
-	public static final Item.ToolMaterial TOOL_MATERIAL_FLUX = EnumHelper.addToolMaterial("RA_FLUX", 3, 100, 8.0F, 0, 25);
-	public static final ItemArmor.ArmorMaterial ARMOR_MATERIAL_FLUX = EnumHelper.addArmorMaterial("RA_FLUX", 100, new int[] { 3, 8, 6, 3 }, 20);
+	public static final Item.ToolMaterial TOOL_MATERIAL_FLUX = EnumHelper.addToolMaterial("RA:FLUXELECTRUM", 3, 100, 8.0F, 0, 25);
+	public static final ItemArmor.ArmorMaterial ARMOR_MATERIAL_FLUX = EnumHelper.addArmorMaterial("RA:FLUXELECTRUM", 100, new int[] { 3, 8, 6, 3 }, 20);
 	public static final String[] TEXTURE_FLUX = { "redstonearsenal:textures/armor/" + "Flux_1.png", "redstonearsenal:textures/armor/" + "Flux_2.png" };
 
 	public static final String ARMOR = "redstonearsenal.armor.";
