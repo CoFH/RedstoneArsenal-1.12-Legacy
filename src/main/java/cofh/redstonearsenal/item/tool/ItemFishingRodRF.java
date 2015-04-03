@@ -3,6 +3,7 @@ package cofh.redstonearsenal.item.tool;
 import cofh.api.energy.IEnergyContainerItem;
 import cofh.api.item.IEmpowerableItem;
 import cofh.core.entity.EntityCoFHFishHook;
+import cofh.core.item.IEqualityOverrideItem;
 import cofh.core.item.tool.ItemFishingRodAdv;
 import cofh.core.util.CoreUtils;
 import cofh.core.util.KeyBindingEmpower;
@@ -22,12 +23,13 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 
 import org.lwjgl.input.Keyboard;
 
-public class ItemFishingRodRF extends ItemFishingRodAdv implements IEmpowerableItem, IEnergyContainerItem {
+public class ItemFishingRodRF extends ItemFishingRodAdv implements IEmpowerableItem, IEnergyContainerItem, IEqualityOverrideItem {
 
 	IIcon activeIcons[] = new IIcon[2];
 	IIcon drainedIcon;
@@ -261,6 +263,24 @@ public class ItemFishingRodRF extends ItemFishingRodAdv implements IEmpowerableI
 	public int getMaxEnergyStored(ItemStack container) {
 
 		return maxEnergy;
+	}
+
+	/* IEqualityOverrideItem */
+	@Override
+	public boolean isLastHeldItemEqual(ItemStack current, ItemStack previous) {
+
+		NBTTagCompound a = current.stackTagCompound, b = previous.stackTagCompound;
+		if (a == b) {
+			return true;
+		}
+		if (a == null || b == null) {
+			return false;
+		}
+		a = (NBTTagCompound) a.copy();
+		b = (NBTTagCompound) b.copy();
+		a.removeTag("Energy");
+		b.removeTag("Energy");
+		return a.equals(b);
 	}
 
 }

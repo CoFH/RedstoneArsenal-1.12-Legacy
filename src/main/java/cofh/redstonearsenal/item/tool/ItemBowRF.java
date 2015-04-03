@@ -3,6 +3,7 @@ package cofh.redstonearsenal.item.tool;
 import cofh.api.energy.IEnergyContainerItem;
 import cofh.api.item.IEmpowerableItem;
 import cofh.core.enchantment.CoFHEnchantment;
+import cofh.core.item.IEqualityOverrideItem;
 import cofh.core.item.tool.ItemBowAdv;
 import cofh.core.util.KeyBindingEmpower;
 import cofh.lib.util.helpers.EnergyHelper;
@@ -23,6 +24,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
@@ -31,7 +33,7 @@ import net.minecraftforge.event.entity.player.ArrowNockEvent;
 
 import org.lwjgl.input.Keyboard;
 
-public class ItemBowRF extends ItemBowAdv implements IEmpowerableItem, IEnergyContainerItem {
+public class ItemBowRF extends ItemBowAdv implements IEmpowerableItem, IEnergyContainerItem, IEqualityOverrideItem {
 
 	IIcon activeIcons[] = new IIcon[4];
 	IIcon drainedIcon;
@@ -364,6 +366,24 @@ public class ItemBowRF extends ItemBowAdv implements IEmpowerableItem, IEnergyCo
 	public int getMaxEnergyStored(ItemStack container) {
 
 		return maxEnergy;
+	}
+
+	/* IEqualityOverrideItem */
+	@Override
+	public boolean isLastHeldItemEqual(ItemStack current, ItemStack previous) {
+
+		NBTTagCompound a = current.stackTagCompound, b = previous.stackTagCompound;
+		if (a == b) {
+			return true;
+		}
+		if (a == null || b == null) {
+			return false;
+		}
+		a = (NBTTagCompound) a.copy();
+		b = (NBTTagCompound) b.copy();
+		a.removeTag("Energy");
+		b.removeTag("Energy");
+		return a.equals(b);
 	}
 
 }

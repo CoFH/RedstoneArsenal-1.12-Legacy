@@ -4,6 +4,7 @@ import cofh.api.block.IDismantleable;
 import cofh.api.energy.IEnergyContainerItem;
 import cofh.api.item.IToolHammer;
 import cofh.asm.relauncher.Implementable;
+import cofh.core.item.IEqualityOverrideItem;
 import cofh.lib.util.helpers.BlockHelper;
 import cofh.lib.util.helpers.EnergyHelper;
 import cofh.lib.util.helpers.MathHelper;
@@ -35,6 +36,7 @@ import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemShears;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.stats.StatList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
@@ -46,7 +48,7 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.Action;
 
 @Implementable({ "buildcraft.api.tools.IToolWrench", "mods.railcraft.api.core.items.IToolCrowbar" })
-public class ItemWrenchRF extends ItemShears implements IEnergyContainerItem, IToolHammer {
+public class ItemWrenchRF extends ItemShears implements IEnergyContainerItem, IToolHammer, IEqualityOverrideItem {
 
 	protected Item.ToolMaterial toolMaterial;
 
@@ -503,6 +505,24 @@ public class ItemWrenchRF extends ItemShears implements IEnergyContainerItem, IT
 		if (!player.capabilities.isCreativeMode) {
 			useEnergy(player.getCurrentEquippedItem(), false);
 		}
+	}
+
+	/* IEqualityOverrideItem */
+	@Override
+	public boolean isLastHeldItemEqual(ItemStack current, ItemStack previous) {
+
+		NBTTagCompound a = current.stackTagCompound, b = previous.stackTagCompound;
+		if (a == b) {
+			return true;
+		}
+		if (a == null || b == null) {
+			return false;
+		}
+		a = (NBTTagCompound) a.copy();
+		b = (NBTTagCompound) b.copy();
+		a.removeTag("Energy");
+		b.removeTag("Energy");
+		return a.equals(b);
 	}
 
 }
