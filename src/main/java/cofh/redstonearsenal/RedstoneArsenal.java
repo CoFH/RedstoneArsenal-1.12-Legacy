@@ -39,7 +39,7 @@ public class RedstoneArsenal extends BaseMod {
 
 	public static final Logger log = LogManager.getLogger(modId);
 	public static final ConfigHandler config = new ConfigHandler(version);
-	public static final CreativeTabs tab = new RACreativeTab();
+	public static CreativeTabs tab;
 
 	/* INIT SEQUENCE */
 	public RedstoneArsenal() {
@@ -53,6 +53,7 @@ public class RedstoneArsenal extends BaseMod {
 		UpdateManager.registerUpdater(new UpdateManager(this, releaseURL, CoFHProps.DOWNLOAD_URL));
 
 		config.setConfiguration(new Configuration(new File(CoFHProps.configDir, "/cofh/redstonearsenal/common.cfg"), true));
+		tab = new RACreativeTab();
 
 		RAItems.preInit();
 	}
