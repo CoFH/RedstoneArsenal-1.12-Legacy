@@ -95,7 +95,8 @@ public class ItemFishingRodRF extends ItemFishingRodAdv implements IEmpowerableI
 			world.playSoundAtEntity(player, "random.bow", 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
 
 			if (ServerHelper.isServerWorld(world)) {
-				world.spawnEntityInWorld(new EntityCoFHFishHook(world, player));
+				int modifier = isEmpowered(stack) ? 2 : 0;
+				world.spawnEntityInWorld(new EntityCoFHFishHook(world, player, modifier, modifier));
 			}
 		}
 		player.swingItem();
