@@ -5,7 +5,7 @@
         "description": "Behold the Redstone (Flux) Revolution - provides Flux-Infused Tools and Armor!",
         "version": "${version}",
         "credits": "Team CoFH",
-        "logoFile": "/assets/redstonearsenal/textures/logo.png",
+        "logoFile": "assets/redstonearsenal/textures/logo.png",
         "mcversion": "${mcversion}",
         "url": "http://www.teamcofh.com",
         "updateUrl": "",
