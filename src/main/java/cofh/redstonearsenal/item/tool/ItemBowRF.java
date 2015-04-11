@@ -132,7 +132,7 @@ public class ItemBowRF extends ItemBowAdv implements IEmpowerableItem, IEnergyCo
 			int enchantFire = EnchantmentHelper.getEnchantmentLevel(Enchantment.flame.effectId, stack);
 			int enchantMultishot = EnchantmentHelper.getEnchantmentLevel(CoFHEnchantment.multishot.effectId, stack);
 
-			EntityArrow arrow = new EntityArrow(world, player, drawStrength * arrowSpeedMultiplier * (empowered ? 1.5F : 1.2F));
+			EntityArrow arrow = new EntityArrow(world, player, drawStrength * arrowSpeedMultiplier);
 			double damage = arrow.getDamage() * arrowDamageMultiplier * (empowered ? 1.5F : 1.2F);
 			arrow.setDamage(damage);
 
@@ -159,7 +159,9 @@ public class ItemBowRF extends ItemBowAdv implements IEmpowerableItem, IEnergyCo
 				world.spawnEntityInWorld(arrow);
 			}
 			for (int i = 0; i < enchantMultishot; i++) {
-				arrow = new EntityArrow(world, player, drawStrength * arrowSpeedMultiplier * (empowered ? 1.5F : 1.2F));
+				arrow = new EntityArrow(world, player, drawStrength * arrowSpeedMultiplier);
+				arrow.setThrowableHeading(arrow.motionX, arrow.motionY, arrow.motionZ, 1.5f * drawStrength * arrowSpeedMultiplier, 3.0F);
+
 				arrow.setDamage(damage);
 
 				if (drawStrength == 1.0F) {
