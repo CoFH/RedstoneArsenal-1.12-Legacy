@@ -22,8 +22,7 @@ import net.minecraftforge.common.ISpecialArmor;
 
 public class ItemArmorRF extends ItemArmorAdv implements ISpecialArmor, IEnergyContainerItem {
 
-	public static final ArmorProperties UNBLOCKABLE = new ArmorProperties(0, 0.0D, 0);
-	public static final ArmorProperties FLUX = new ArmorProperties(0, 0.125D, Integer.MAX_VALUE);
+	public static final ArmorProperties FLUX = new ArmorProperties(0, 0.20D, Integer.MAX_VALUE);
 
 	public int maxEnergy = 400000;
 	public int maxTransfer = 2000;
@@ -149,7 +148,8 @@ public class ItemArmorRF extends ItemArmorAdv implements ISpecialArmor, IEnergyC
 		if (source.damageType.equals("flux")) {
 			return FLUX;
 		} else if (source.isUnblockable()) {
-			return UNBLOCKABLE;
+			int absorbMax = getEnergyPerDamage(armor) > 0 ? 25 * getEnergyStored(armor) / getEnergyPerDamage(armor) : 0;
+			return new ArmorProperties(0, absorbRatio * getArmorMaterial().getDamageReductionAmount(armorType) * 0.025, absorbMax);
 		}
 		int absorbMax = getEnergyPerDamage(armor) > 0 ? 25 * getEnergyStored(armor) / getEnergyPerDamage(armor) : 0;
 		return new ArmorProperties(0, absorbRatio * getArmorMaterial().getDamageReductionAmount(armorType) * 0.05, absorbMax);
