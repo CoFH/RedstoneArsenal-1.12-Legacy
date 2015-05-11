@@ -4,7 +4,6 @@ import cofh.api.energy.IEnergyContainerItem;
 import cofh.api.item.IEmpowerableItem;
 import cofh.core.item.IEqualityOverrideItem;
 import cofh.core.item.tool.ItemToolAdv;
-import cofh.core.util.KeyBindingEmpower;
 import cofh.lib.util.helpers.DamageHelper;
 import cofh.lib.util.helpers.EnergyHelper;
 import cofh.lib.util.helpers.MathHelper;
@@ -29,8 +28,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.IIcon;
-
-import org.lwjgl.input.Keyboard;
 
 public abstract class ItemToolRF extends ItemToolAdv implements IEmpowerableItem, IEnergyContainerItem, IEqualityOverrideItem {
 
@@ -154,15 +151,7 @@ public abstract class ItemToolRF extends ItemToolAdv implements IEmpowerableItem
 		list.add(StringHelper.localize("info.cofh.charge") + ": " + stack.stackTagCompound.getInteger("Energy") + " / " + maxEnergy + " RF");
 
 		list.add(StringHelper.ORANGE + getEnergyPerUse(stack) + " " + StringHelper.localize("info.redstonearsenal.tool.energyPerUse") + StringHelper.END);
-		if (isEmpowered(stack)) {
-			list.add(StringHelper.YELLOW + StringHelper.ITALIC + StringHelper.localize("info.cofh.press") + " "
-					+ Keyboard.getKeyName(KeyBindingEmpower.instance.getKey()) + " " + StringHelper.localize("info.redstonearsenal.tool.chargeOff")
-					+ StringHelper.END);
-		} else {
-			list.add(StringHelper.BRIGHT_BLUE + StringHelper.ITALIC + StringHelper.localize("info.cofh.press") + " "
-					+ Keyboard.getKeyName(KeyBindingEmpower.instance.getKey()) + " " + StringHelper.localize("info.redstonearsenal.tool.chargeOn")
-					+ StringHelper.END);
-		}
+		RAProps.addEmpoweredTip(this, stack, list);
 		if (getEnergyStored(stack) >= getEnergyPerUse(stack)) {
 			list.add("");
 			list.add(StringHelper.LIGHT_BLUE + "+" + damage + " " + StringHelper.localize("info.cofh.damageAttack") + StringHelper.END);

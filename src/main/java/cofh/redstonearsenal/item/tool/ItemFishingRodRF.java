@@ -6,7 +6,6 @@ import cofh.core.entity.EntityCoFHFishHook;
 import cofh.core.item.IEqualityOverrideItem;
 import cofh.core.item.tool.ItemFishingRodAdv;
 import cofh.core.util.CoreUtils;
-import cofh.core.util.KeyBindingEmpower;
 import cofh.lib.util.helpers.EnergyHelper;
 import cofh.lib.util.helpers.MathHelper;
 import cofh.lib.util.helpers.ServerHelper;
@@ -26,8 +25,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
-
-import org.lwjgl.input.Keyboard;
 
 public class ItemFishingRodRF extends ItemFishingRodAdv implements IEmpowerableItem, IEnergyContainerItem, IEqualityOverrideItem {
 
@@ -118,15 +115,7 @@ public class ItemFishingRodRF extends ItemFishingRodAdv implements IEmpowerableI
 		list.add(StringHelper.localize("info.cofh.charge") + ": " + stack.stackTagCompound.getInteger("Energy") + " / " + maxEnergy + " RF");
 
 		list.add(StringHelper.ORANGE + getEnergyPerUse(stack) + " " + StringHelper.localize("info.redstonearsenal.tool.energyPerUse") + StringHelper.END);
-		if (isEmpowered(stack)) {
-			list.add(StringHelper.YELLOW + StringHelper.ITALIC + StringHelper.localize("info.cofh.press") + " "
-					+ Keyboard.getKeyName(KeyBindingEmpower.instance.getKey()) + " " + StringHelper.localize("info.redstonearsenal.tool.chargeOff")
-					+ StringHelper.END);
-		} else {
-			list.add(StringHelper.BRIGHT_BLUE + StringHelper.ITALIC + StringHelper.localize("info.cofh.press") + " "
-					+ Keyboard.getKeyName(KeyBindingEmpower.instance.getKey()) + " " + StringHelper.localize("info.redstonearsenal.tool.chargeOn")
-					+ StringHelper.END);
-		}
+		RAProps.addEmpoweredTip(this, stack, list);
 	}
 
 	@Override

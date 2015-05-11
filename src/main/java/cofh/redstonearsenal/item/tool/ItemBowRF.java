@@ -5,7 +5,6 @@ import cofh.api.item.IEmpowerableItem;
 import cofh.core.enchantment.CoFHEnchantment;
 import cofh.core.item.IEqualityOverrideItem;
 import cofh.core.item.tool.ItemBowAdv;
-import cofh.core.util.KeyBindingEmpower;
 import cofh.lib.util.helpers.EnergyHelper;
 import cofh.lib.util.helpers.MathHelper;
 import cofh.lib.util.helpers.ServerHelper;
@@ -30,8 +29,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.ArrowLooseEvent;
 import net.minecraftforge.event.entity.player.ArrowNockEvent;
-
-import org.lwjgl.input.Keyboard;
 
 public class ItemBowRF extends ItemBowAdv implements IEmpowerableItem, IEnergyContainerItem, IEqualityOverrideItem {
 
@@ -204,15 +201,7 @@ public class ItemBowRF extends ItemBowAdv implements IEmpowerableItem, IEnergyCo
 		list.add(StringHelper.localize("info.cofh.charge") + ": " + stack.stackTagCompound.getInteger("Energy") + " / " + maxEnergy + " RF");
 
 		list.add(StringHelper.ORANGE + getEnergyPerUse(stack) + " " + StringHelper.localize("info.redstonearsenal.tool.energyPerUse") + StringHelper.END);
-		if (isEmpowered(stack)) {
-			list.add(StringHelper.YELLOW + StringHelper.ITALIC + StringHelper.localize("info.cofh.press") + " "
-					+ Keyboard.getKeyName(KeyBindingEmpower.instance.getKey()) + " " + StringHelper.localize("info.redstonearsenal.tool.chargeOff")
-					+ StringHelper.END);
-		} else {
-			list.add(StringHelper.BRIGHT_BLUE + StringHelper.ITALIC + StringHelper.localize("info.cofh.press") + " "
-					+ Keyboard.getKeyName(KeyBindingEmpower.instance.getKey()) + " " + StringHelper.localize("info.redstonearsenal.tool.chargeOn")
-					+ StringHelper.END);
-		}
+		RAProps.addEmpoweredTip(this, stack, list);
 	}
 
 	@Override
