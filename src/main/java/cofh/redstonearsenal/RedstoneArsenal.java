@@ -12,6 +12,7 @@ import cpw.mods.fml.common.Mod.CustomProperty;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
+import cpw.mods.fml.common.event.FMLLoadCompleteEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 
@@ -55,6 +56,8 @@ public class RedstoneArsenal extends BaseMod {
 		config.setConfiguration(new Configuration(new File(CoFHProps.configDir, "/cofh/redstonearsenal/common.cfg"), true));
 		tab = new RACreativeTab();
 
+		cleanConfig(true);
+
 		RAItems.preInit();
 	}
 
@@ -69,8 +72,14 @@ public class RedstoneArsenal extends BaseMod {
 	public void postInit(FMLPostInitializationEvent event) {
 
 		RAItems.postInit();
+	}
+
+	@EventHandler
+	public void loadComplete(FMLLoadCompleteEvent event) {
 
 		config.cleanUp(false, true);
+
+		log.info("Load Complete.");
 	}
 
 	void cleanConfig(boolean preInit) {
