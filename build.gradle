@@ -22,7 +22,7 @@ group = "redstonearsenal"
 archivesBaseName = "RedstoneArsenal"
 
 minecraft {
-    version = "1.7.10-10.13.0.1205"
+    version = "1.7.10-10.13.4.1448"
     runDir = "eclipse/assets"
 }
 

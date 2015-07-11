@@ -82,6 +82,7 @@
 				<available file="${lib.dir}/CoFHCore.jar" type="file"/>
 				<available file="${lib.dir}/Buildcraft.jar" type="file"/>
 				<available file="${lib.dir}/IC2.jar" type="file"/>
+				<available file="${lib.dir}/NEI.jar" type="file"/>
 				<available file="${lib.dir}/Railcraft.jar" type="file"/>
 			</and>
 		</condition>
@@ -102,6 +103,9 @@
 
 		<echo message="Downloading CCL..."/>
 		<get src="http://files.minecraftforge.net/maven/codechicken/CodeChickenLib/1.7.10-1.1.1.88/CodeChickenLib-1.7.10-1.1.1.88-dev.jar" dest="${download.dir}/codechickenlib.jar"/>
+
+		<echo message="Downloading NEI API... "/>
+		<get src="http://chickenbones.net/maven/codechicken/NotEnoughItems/1.7.10-1.0.2.15/NotEnoughItems-1.7.10-1.0.2.15-dev.jar" dest="${download.dir}/NEI.jar"/>
 
 		<echo message="Compiling IC2 API... "/>
 		<!-- Begin hack -->
@@ -160,6 +164,7 @@
 		<delete dir="${compile.dir}" failonerror="false"/>
 		<delete dir="${download.dir}/CoFHLib-master"/>
 		<!-- End hack -->
+
 		<echo message="Compiling CoFHCore... "/>
 		<!-- Begin hack -->
 		<delete dir="${compile.dir}" failonerror="false"/>
@@ -170,6 +175,7 @@
 			<include name="**/*.java"/>
 		      <classpath>
 				<fileset file="${download.dir}/codechickenlib.jar"/>
+				<fileset file="${download.dir}/NEI.jar"/>
 				<fileset file="${download.dir}/CoFHLib.jar"/>
 		      </classpath>
 		</javac>
@@ -184,16 +190,19 @@
 
 		<echo message="Extracting CoFHLib..."/>
 		<copy file="${download.dir}/CoFHLib.jar" todir="${lib.dir}"/>
-		
+
 		<echo message="Extracting CoFHCore..."/>
 		<copy file="${download.dir}/CoFHCore.jar" todir="${lib.dir}"/>
 		
 		<echo message="Extracting BuildCraft API..."/>
 		<copy file="${download.dir}/Buildcraft.jar" todir="${lib.dir}"/>
-		
+
 		<echo message="Extracting IC2 API... "/>
 		<copy file="${download.dir}/IC2.jar" todir="${lib.dir}"/>
-		
+
+		<echo message="Extracting NEI API... "/>
+		<copy file="${download.dir}/NEI.jar" todir="${lib.dir}"/>
+
 		<echo message="Extracting Railcraft API... " />
 		<copy file="${download.dir}/Railcraft.jar" todir="${lib.dir}"/>
 	</target>
