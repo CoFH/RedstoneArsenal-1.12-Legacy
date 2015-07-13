@@ -1,5 +1,7 @@
 package cofh.redstonearsenal.item;
 
+import static cofh.lib.util.helpers.ItemHelper.*;
+
 import cofh.api.core.IInitializer;
 import cofh.api.modhelpers.ThermalExpansionHelper;
 import cofh.core.item.ItemBase;
@@ -31,8 +33,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.oredict.ShapedOreRecipe;
-import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 public class RAItems {
 
@@ -157,66 +157,65 @@ public class RAItems {
 		ItemHelper.addStorageRecipe(ingotElectrumFlux, "nuggetElectrumFlux");
 		ItemHelper.addReverseStorageRecipe(nuggetElectrumFlux, "ingotElectrumFlux");
 
-		GameRegistry.addRecipe(new ShapedOreRecipe(rodObsidianFlux, new Object[] { "  O", " B ", "O  ", 'B', rodObsidian, 'O', "gemCrystalFlux" }));
-		GameRegistry.addRecipe(new ShapedOreRecipe(rodObsidian, new Object[] { "  O", " B ", "O  ", 'B', Items.blaze_powder, 'O', "dustObsidian" }));
-		GameRegistry.addRecipe(new ShapedOreRecipe(plateFlux, new Object[] { "NNN", "GIG", "NNN", 'G', "gemCrystalFlux", 'I', "ingotElectrumFlux", 'N',
+		GameRegistry.addRecipe(ShapedRecipe(rodObsidianFlux, new Object[] { "  O", " B ", "O  ", 'B', rodObsidian, 'O', "gemCrystalFlux" }));
+		GameRegistry.addRecipe(ShapedRecipe(rodObsidian, new Object[] { "  O", " B ", "O  ", 'B', Items.blaze_powder, 'O', "dustObsidian" }));
+		GameRegistry.addRecipe(ShapedRecipe(plateFlux, new Object[] { "NNN", "GIG", "NNN", 'G', "gemCrystalFlux", 'I', "ingotElectrumFlux", 'N',
 				"nuggetElectrumFlux" }));
 
 		if (!Loader.isModLoaded("ThermalExpansion")) {
 			if (ItemHelper.oreNameExists("dustElectrum")) {
-				GameRegistry.addRecipe(new ShapelessOreRecipe(dustElectrumFlux, new Object[] { "dustElectrum", "dustRedstone", "dustRedstone", "dustRedstone",
+				GameRegistry.addRecipe(ShapelessRecipe(dustElectrumFlux, new Object[] { "dustElectrum", "dustRedstone", "dustRedstone", "dustRedstone",
 						"dustRedstone", "dustRedstone" }));
 			} else {
-				GameRegistry.addRecipe(new ShapelessOreRecipe(dustElectrumFlux, new Object[] { "ingotGold", "blockRedstone" }));
+				GameRegistry.addRecipe(ShapelessRecipe(dustElectrumFlux, new Object[] { "ingotGold", "blockRedstone" }));
 			}
-			GameRegistry.addRecipe(new ShapelessOreRecipe(gemCrystalFlux, new Object[] { "gemDiamond", "dustRedstone", "dustRedstone", "dustRedstone",
-					"dustRedstone", "dustRedstone" }));
+			GameRegistry.addRecipe(ShapelessRecipe(gemCrystalFlux, new Object[] { "gemDiamond", "dustRedstone", "dustRedstone", "dustRedstone", "dustRedstone",
+					"dustRedstone" }));
 			GameRegistry.addSmelting(dustElectrumFlux, ingotElectrumFlux, 0.0F);
 		}
 		if (ItemHelper.oreNameExists("dustObsidian")) {
-			GameRegistry.addRecipe(new ShapedOreRecipe(rodObsidian, new Object[] { "  O", " B ", "O  ", 'B', Items.blaze_powder, 'O', "dustObsidian" }));
+			GameRegistry.addRecipe(ShapedRecipe(rodObsidian, new Object[] { "  O", " B ", "O  ", 'B', Items.blaze_powder, 'O', "dustObsidian" }));
 		} else {
-			GameRegistry.addRecipe(new ShapedOreRecipe(rodObsidian, new Object[] { "  O", " B ", "O  ", 'B', Items.blaze_powder, 'O', Blocks.obsidian }));
+			GameRegistry.addRecipe(ShapedRecipe(rodObsidian, new Object[] { "  O", " B ", "O  ", 'B', Items.blaze_powder, 'O', Blocks.obsidian }));
 		}
 
 		/* Armor */
 		if (enableArmor) {
-			GameRegistry.addRecipe(new ShapedOreRecipe(armorFluxHelmet, new Object[] { "III", "I I", 'I', plateFlux }));
-			GameRegistry.addRecipe(new ShapedOreRecipe(armorFluxPlate, new Object[] { "I I", "III", "III", 'I', plateFlux }));
-			GameRegistry.addRecipe(new ShapedOreRecipe(armorFluxLegs, new Object[] { "III", "I I", "I I", 'I', plateFlux }));
-			GameRegistry.addRecipe(new ShapedOreRecipe(armorFluxBoots, new Object[] { "I I", "I I", 'I', plateFlux }));
+			GameRegistry.addRecipe(ShapedRecipe(armorFluxHelmet, new Object[] { "III", "I I", 'I', plateFlux }));
+			GameRegistry.addRecipe(ShapedRecipe(armorFluxPlate, new Object[] { "I I", "III", "III", 'I', plateFlux }));
+			GameRegistry.addRecipe(ShapedRecipe(armorFluxLegs, new Object[] { "III", "I I", "I I", 'I', plateFlux }));
+			GameRegistry.addRecipe(ShapedRecipe(armorFluxBoots, new Object[] { "I I", "I I", 'I', plateFlux }));
 		}
 
 		/* Tools */
 		if (enableTool[0]) {
-			GameRegistry.addRecipe(new ShapedOreRecipe(toolFluxWrench, new Object[] { "I I", " R ", " I ", 'I', "ingotElectrumFlux", 'R', rodObsidianFlux }));
+			GameRegistry.addRecipe(ShapedRecipe(toolFluxWrench, new Object[] { "I I", " R ", " I ", 'I', "ingotElectrumFlux", 'R', rodObsidianFlux }));
 		}
 		if (enableTool[1]) {
-			GameRegistry.addRecipe(new ShapedOreRecipe(toolFluxBattleWrench,
-					new Object[] { "I I", "III", " R ", 'I', "ingotElectrumFlux", 'R', rodObsidianFlux }));
+			GameRegistry.addRecipe(ShapedRecipe(toolFluxBattleWrench, new Object[] { "I I", "III", " R ", 'I', "ingotElectrumFlux", 'R', rodObsidianFlux }));
 		}
 		if (enableTool[2]) {
-			GameRegistry.addRecipe(new ShapedOreRecipe(toolFluxSword, new Object[] { " I ", " I ", " R ", 'I', "ingotElectrumFlux", 'R', rodObsidianFlux }));
+			GameRegistry.addRecipe(ShapedRecipe(toolFluxSword, new Object[] { " I ", " I ", " R ", 'I', "ingotElectrumFlux", 'R', rodObsidianFlux }));
 		}
 		if (enableTool[3]) {
-			GameRegistry.addRecipe(new ShapedOreRecipe(toolFluxShovel, new Object[] { " I ", " R ", " R ", 'I', "ingotElectrumFlux", 'R', rodObsidianFlux }));
+			GameRegistry.addRecipe(ShapedRecipe(toolFluxShovel, new Object[] { " I ", " R ", " R ", 'I', "ingotElectrumFlux", 'R', rodObsidianFlux }));
 		}
 		if (enableTool[4]) {
-			GameRegistry.addRecipe(new ShapedOreRecipe(toolFluxPickaxe, new Object[] { "III", " R ", " R ", 'I', "ingotElectrumFlux", 'R', rodObsidianFlux }));
+			GameRegistry.addRecipe(ShapedRecipe(toolFluxPickaxe, new Object[] { "III", " R ", " R ", 'I', "ingotElectrumFlux", 'R', rodObsidianFlux }));
 		}
 		if (enableTool[5]) {
-			GameRegistry.addRecipe(new ShapedOreRecipe(toolFluxAxe, new Object[] { "II ", "IR ", " R ", 'I', "ingotElectrumFlux", 'R', rodObsidianFlux }));
+			GameRegistry.addRecipe(ShapedRecipe(toolFluxAxe, new Object[] { "II ", "IR ", " R ", 'I', "ingotElectrumFlux", 'R', rodObsidianFlux }));
 		}
 		if (enableTool[6]) {
-			GameRegistry.addRecipe(new ShapedOreRecipe(toolFluxFishingRod, new Object[] { "  I", " IS", "R S", 'I', "ingotElectrumFlux", 'R', rodObsidian, 'S',
+			GameRegistry.addRecipe(ShapedRecipe(toolFluxFishingRod, new Object[] { "  I", " IS", "R S", 'I', "ingotElectrumFlux", 'R', rodObsidian, 'S',
 					Items.string }));
 		}
 		if (enableTool[7]) {
-			GameRegistry.addRecipe(new ShapedOreRecipe(toolFluxSickle, new Object[] { " I ", "  I", "RI ", 'I', "ingotElectrumFlux", 'R', rodObsidianFlux }));
+			GameRegistry.addRecipe(ShapedRecipe(toolFluxSickle, new Object[] { " I ", "  I", "RI ", 'I', "ingotElectrumFlux", 'R', rodObsidianFlux }));
 		}
 		if (enableTool[8]) {
-			GameRegistry.addRecipe(new ShapedOreRecipe(toolFluxBow, new Object[] { " IS", "R S", " IS", 'I', "ingotElectrumFlux", 'R', rodObsidian, 'S',
-					Items.string }));
+			GameRegistry.addRecipe(ShapedRecipe(toolFluxBow,
+					new Object[] { " IS", "R S", " IS", 'I', "ingotElectrumFlux", 'R', rodObsidian, 'S', Items.string }));
 		}
 		ItemHelper.addReverseStorageRecipe(ingotElectrumFlux, "blockElectrumFlux");
 		ItemHelper.addReverseStorageRecipe(gemCrystalFlux, "blockCrystalFlux");
