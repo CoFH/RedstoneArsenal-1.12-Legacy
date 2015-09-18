@@ -79,7 +79,7 @@ public class RedstoneArsenal extends BaseMod {
 
 		config.cleanUp(false, true);
 
-		log.info("Load Complete.");
+		log.info("Redstone Arsenal: Load Complete.");
 	}
 
 	void cleanConfig(boolean preInit) {

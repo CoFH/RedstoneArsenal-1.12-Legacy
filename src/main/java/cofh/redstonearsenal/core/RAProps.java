@@ -21,12 +21,12 @@ public class RAProps {
 
 		if (item.isEmpowered(stack)) {
 			list.add(StringHelper.YELLOW + StringHelper.ITALIC + StringHelper.localize("info.cofh.press") + " "
-					+ StringHelper.getKeyName(KeyBindingEmpower.instance.getKey()) + " "
-					+ StringHelper.localize("info.redstonearsenal.tool.chargeOff") + StringHelper.END);
+					+ StringHelper.getKeyName(KeyBindingEmpower.instance.getKey()) + " " + StringHelper.localize("info.redstonearsenal.tool.chargeOff")
+					+ StringHelper.END);
 		} else {
 			list.add(StringHelper.BRIGHT_BLUE + StringHelper.ITALIC + StringHelper.localize("info.cofh.press") + " "
-					+ StringHelper.getKeyName(KeyBindingEmpower.instance.getKey()) + " "
-					+ StringHelper.localize("info.redstonearsenal.tool.chargeOn") + StringHelper.END);
+					+ StringHelper.getKeyName(KeyBindingEmpower.instance.getKey()) + " " + StringHelper.localize("info.redstonearsenal.tool.chargeOn")
+					+ StringHelper.END);
 		}
 	}
 

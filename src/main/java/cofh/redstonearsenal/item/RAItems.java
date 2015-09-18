@@ -214,8 +214,8 @@ public class RAItems {
 			GameRegistry.addRecipe(ShapedRecipe(toolFluxSickle, new Object[] { " I ", "  I", "RI ", 'I', "ingotElectrumFlux", 'R', rodObsidianFlux }));
 		}
 		if (enableTool[8]) {
-			GameRegistry.addRecipe(ShapedRecipe(toolFluxBow,
-					new Object[] { " IS", "R S", " IS", 'I', "ingotElectrumFlux", 'R', rodObsidian, 'S', Items.string }));
+			GameRegistry.addRecipe(ShapedRecipe(toolFluxBow, new Object[] { " IS", "R S", " IS", 'I', "ingotElectrumFlux", 'R', rodObsidianFlux, 'S',
+					Items.string }));
 		}
 		ItemHelper.addReverseStorageRecipe(ingotElectrumFlux, "blockElectrumFlux");
 		ItemHelper.addReverseStorageRecipe(gemCrystalFlux, "blockCrystalFlux");
