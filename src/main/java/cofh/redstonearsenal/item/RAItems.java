@@ -40,7 +40,7 @@ public class RAItems {
 
 		RAProps.showArmorCharge = RedstoneArsenal.config.get("Equipment.Flux-Infused.Armor", "ShowChargeBars", RAProps.showArmorCharge);
 		RAProps.showToolCharge = RedstoneArsenal.config.get("Equipment.Flux-Infused.Tool", "ShowChargeBars", RAProps.showToolCharge);
-		int harvestLevel = MathHelper.clampI(RedstoneArsenal.config.get("Equipment.Flux-Infused.Tool", "HarvestLevel", 4), 1, Integer.MAX_VALUE);
+		int harvestLevel = MathHelper.clamp(RedstoneArsenal.config.get("Equipment.Flux-Infused.Tool", "HarvestLevel", 4), 1, Integer.MAX_VALUE);
 
 		itemMaterial = (ItemBase) new ItemBase("redstonearsenal").setUnlocalizedName("material").setCreativeTab(RedstoneArsenal.tab);
 

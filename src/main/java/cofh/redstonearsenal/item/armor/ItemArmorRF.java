@@ -137,7 +137,7 @@ public class ItemArmorRF extends ItemArmorAdv implements ISpecialArmor, IEnergyC
 
 	protected int getEnergyPerDamage(ItemStack stack) {
 
-		int unbreakingLevel = MathHelper.clampI(EnchantmentHelper.getEnchantmentLevel(Enchantment.unbreaking.effectId, stack), 0, 4);
+		int unbreakingLevel = MathHelper.clamp(EnchantmentHelper.getEnchantmentLevel(Enchantment.unbreaking.effectId, stack), 0, 4);
 		return energyPerDamage * (5 - unbreakingLevel) / 5;
 	}
 

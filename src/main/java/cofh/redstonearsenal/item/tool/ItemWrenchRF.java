@@ -77,13 +77,13 @@ public class ItemWrenchRF extends ItemShears implements IEnergyContainerItem, IT
 
 	protected int useEnergy(ItemStack stack, boolean simulate) {
 
-		int unbreakingLevel = MathHelper.clampI(EnchantmentHelper.getEnchantmentLevel(Enchantment.unbreaking.effectId, stack), 0, 4);
+		int unbreakingLevel = MathHelper.clamp(EnchantmentHelper.getEnchantmentLevel(Enchantment.unbreaking.effectId, stack), 0, 4);
 		return extractEnergy(stack, energyPerUse * (5 - unbreakingLevel) / 5, simulate);
 	}
 
 	protected int getEnergyPerUse(ItemStack stack) {
 
-		int unbreakingLevel = MathHelper.clampI(EnchantmentHelper.getEnchantmentLevel(Enchantment.unbreaking.effectId, stack), 0, 4);
+		int unbreakingLevel = MathHelper.clamp(EnchantmentHelper.getEnchantmentLevel(Enchantment.unbreaking.effectId, stack), 0, 4);
 		return energyPerUse * (5 - unbreakingLevel) / 5;
 	}
 
