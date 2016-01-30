@@ -30,7 +30,7 @@ public class RedstoneArsenal extends BaseMod {
 
 	public static final String modId = "RedstoneArsenal";
 	public static final String modName = "Redstone Arsenal";
-	public static final String version = "1.7.10R1.1.2";
+	public static final String version = "1.7.10R1.1.3B1";
 	public static final String version_max = "1.7.10R1.2.0";
 	public static final String dependencies = CoFHCore.version_group + ";after:ThermalExpansion";
 	public static final String modGuiFactory = "cofh.redstonearsenal.gui.GuiConfigRAFactory";
