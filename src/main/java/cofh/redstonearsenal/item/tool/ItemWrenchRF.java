@@ -4,6 +4,7 @@ import cofh.api.block.IDismantleable;
 import cofh.api.energy.IEnergyContainerItem;
 import cofh.api.item.IToolHammer;
 import cofh.asm.relauncher.Implementable;
+import cofh.asm.relauncher.Substitutable;
 import cofh.core.item.IEqualityOverrideItem;
 import cofh.lib.util.helpers.BlockHelper;
 import cofh.lib.util.helpers.EnergyHelper;
@@ -159,6 +160,8 @@ public class ItemWrenchRF extends ItemShears implements IEnergyContainerItem, IT
 				useEnergy(stack, false);
 			}
 			return true;
+		} else if (handleIC2Tile(this, stack, player, world, x, y, z, hitSide)) {
+			return ServerHelper.isServerWorld(world);
 		}
 		if (BlockHelper.canRotate(block)) {
 			if (player.isSneaking()) {
@@ -178,6 +181,22 @@ public class ItemWrenchRF extends ItemShears implements IEnergyContainerItem, IT
 			}
 			return ServerHelper.isServerWorld(world);
 		}
+		return false;
+	}
+
+	static boolean returnFalse(IToolHammer tool, ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int hitSide) {
+
+		return false;
+	}
+
+	@Substitutable(method = "returnFalse", value = "ic2.api.tile.IWrenchable")
+	static boolean handleIC2Tile(IToolHammer tool, ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int hitSide) {
+
+		Block block = world.getBlock(x, y, z);
+		if (!block.hasTileEntity(world.getBlockMetadata(x, y, z))) {
+			return false;
+		}
+		boolean ret = false;
 		TileEntity tile = world.getTileEntity(x, y, z);
 
 		if (tile instanceof IWrenchable) {
@@ -190,6 +209,7 @@ public class ItemWrenchRF extends ItemShears implements IEnergyContainerItem, IT
 				if (ServerHelper.isServerWorld(world)) {
 					wrenchable.setFacing((short) hitSide);
 				}
+				ret = true;
 			} else if (wrenchable.wrenchCanRemove(player)) {
 				ItemStack dropBlock = wrenchable.getWrenchDrop(player);
 
@@ -213,14 +233,14 @@ public class ItemWrenchRF extends ItemShears implements IEnergyContainerItem, IT
 							world.spawnEntityInWorld(entity);
 						}
 					}
+					ret = true;
 				}
 			}
-			if (!player.capabilities.isCreativeMode) {
-				useEnergy(stack, false);
-			}
-			return ServerHelper.isServerWorld(world);
 		}
-		return false;
+		if (ret) {
+			tool.toolUsed(stack, player, x, y, z);
+		}
+		return ret;
 	}
 
 	@Override
@@ -235,7 +255,7 @@ public class ItemWrenchRF extends ItemShears implements IEnergyContainerItem, IT
 			IShearable target = (IShearable) entity;
 			if (target.isShearable(stack, entity.worldObj, (int) entity.posX, (int) entity.posY, (int) entity.posZ)) {
 				ArrayList<ItemStack> drops = target.onSheared(stack, entity.worldObj, (int) entity.posX, (int) entity.posY, (int) entity.posZ,
-						EnchantmentHelper.getEnchantmentLevel(Enchantment.fortune.effectId, stack));
+					EnchantmentHelper.getEnchantmentLevel(Enchantment.fortune.effectId, stack));
 
 				for (ItemStack drop : drops) {
 					EntityItem ent = entity.entityDropItem(drop, 1.0F);
@@ -267,7 +287,7 @@ public class ItemWrenchRF extends ItemShears implements IEnergyContainerItem, IT
 			IShearable target = (IShearable) block;
 			if (target.isShearable(stack, player.worldObj, x, y, z)) {
 				ArrayList<ItemStack> drops = target.onSheared(stack, player.worldObj, x, y, z,
-						EnchantmentHelper.getEnchantmentLevel(Enchantment.fortune.effectId, stack));
+					EnchantmentHelper.getEnchantmentLevel(Enchantment.fortune.effectId, stack));
 
 				for (ItemStack drop : drops) {
 					float f = 0.7F;

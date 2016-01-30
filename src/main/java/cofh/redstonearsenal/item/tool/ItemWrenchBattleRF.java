@@ -7,19 +7,13 @@ import cofh.lib.util.helpers.BlockHelper;
 import cofh.lib.util.helpers.ServerHelper;
 import cpw.mods.fml.common.eventhandler.Event.Result;
 
-import ic2.api.tile.IWrenchable;
-
-import java.util.List;
-
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.item.EntityMinecart;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -77,6 +71,8 @@ public class ItemWrenchBattleRF extends ItemSwordRF implements IToolHammer {
 				useEnergy(stack, false);
 			}
 			return true;
+		} else if (ItemWrenchRF.handleIC2Tile(this, stack, player, world, x, y, z, hitSide)) {
+			return ServerHelper.isServerWorld(world);
 		}
 		if (BlockHelper.canRotate(block)) {
 			if (player.isSneaking()) {
@@ -91,48 +87,6 @@ public class ItemWrenchBattleRF extends ItemSwordRF implements IToolHammer {
 			}
 			return ServerHelper.isServerWorld(world);
 		} else if (!player.isSneaking() && block.rotateBlock(world, x, y, z, ForgeDirection.getOrientation(hitSide))) {
-			if (!player.capabilities.isCreativeMode) {
-				useEnergy(stack, false);
-			}
-			return ServerHelper.isServerWorld(world);
-		}
-		TileEntity tile = world.getTileEntity(x, y, z);
-
-		if (tile instanceof IWrenchable) {
-			IWrenchable wrenchable = (IWrenchable) tile;
-
-			if (player.isSneaking()) {
-				hitSide = BlockHelper.SIDE_OPPOSITE[hitSide];
-			}
-			if (wrenchable.wrenchCanSetFacing(player, hitSide)) {
-				if (ServerHelper.isServerWorld(world)) {
-					wrenchable.setFacing((short) hitSide);
-				}
-			} else if (wrenchable.wrenchCanRemove(player)) {
-				ItemStack dropBlock = wrenchable.getWrenchDrop(player);
-
-				if (dropBlock != null) {
-					world.setBlockToAir(x, y, z);
-					if (ServerHelper.isServerWorld(world)) {
-						List<ItemStack> drops = block.getDrops(world, x, y, z, world.getBlockMetadata(x, y, z), 0);
-
-						if (drops.isEmpty()) {
-							drops.add(dropBlock);
-						} else {
-							drops.set(0, dropBlock);
-						}
-						for (ItemStack drop : drops) {
-							float f = 0.7F;
-							double x2 = world.rand.nextFloat() * f + (1.0F - f) * 0.5D;
-							double y2 = world.rand.nextFloat() * f + (1.0F - f) * 0.5D;
-							double z2 = world.rand.nextFloat() * f + (1.0F - f) * 0.5D;
-							EntityItem entity = new EntityItem(world, x + x2, y + y2, z + z2, drop);
-							entity.delayBeforeCanPickup = 10;
-							world.spawnEntityInWorld(entity);
-						}
-					}
-				}
-			}
 			if (!player.capabilities.isCreativeMode) {
 				useEnergy(stack, false);
 			}

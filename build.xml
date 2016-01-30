@@ -242,7 +242,6 @@
 			<jar destfile="${dist.dir}/${build.name}${build.full}@{build}.jar"
 				compress="true" level="9" basedir="${classes.dir}">
 				<zipfileset src="${lib.dir}/Buildcraft.jar"/>
-				<zipfileset src="${lib.dir}/IC2.jar"/>
 				<zipfileset src="${lib.dir}/Railcraft.jar"/>
 			</jar>
 		</sequential>
