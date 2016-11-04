@@ -1,50 +1,131 @@
 buildscript {
-	repositories {
-		jcenter()
-		maven {
-			name = "forge"
-			url = "http://files.minecraftforge.net/maven"
-		}
-	}
-	dependencies {
-		classpath "net.minecraftforge.gradle:ForgeGradle:2.2-SNAPSHOT"
-	}
+    repositories {
+        jcenter()
+        maven {
+            name = "forge"
+            url = "http://files.minecraftforge.net/maven"
+        }
+    }
+    dependencies {
+        classpath 'net.minecraftforge.gradle:ForgeGradle:2.2-SNAPSHOT'
+    }
 }
 
-apply plugin: "net.minecraftforge.gradle.forge"
+apply plugin: 'net.minecraftforge.gradle.forge'
+apply plugin: 'maven'
 
-version = "1.10.2R1.0.0"
 group = "redstonearsenal"
 archivesBaseName = "RedstoneArsenal"
-sourceCompatibility = targetCompatibility = "1.8"
 
-minecraft {
-	version = "1.10.2-12.18.2.2114"
-	runDir = "run"
-	mappings = "stable_26"
-	useDepAts = false
+// Define properties file
+ext.configFile = file "build.properties"
+
+configFile.withReader {
+    // Load config.  It shall from now be referenced as simply config or project.config
+    def prop = new Properties()
+    prop.load(it)
+    project.ext.config = new ConfigSlurper().parse prop
 }
 
 repositories {
-	mavenCentral()
+    maven {
+        name = "ChickenBones repo"
+        url = "http://chickenbones.net/maven/"
+    }
+    maven {
+        name = "CoFH Maven"
+        url = "http://jenkins.podgeweb.com:1616/maven/"
+    }
+    maven {
+        name = "JEI Maven."
+        url = "http://dvs1.progwml6.com/files/maven"
+    }
 }
 
-processResources
-{
-    // this will ensure that this task is redone when the versions change.
-    inputs.property "version", project.version
-    inputs.property "mcversion", project.minecraft.version
+dependencies {
+    compile "codechicken:CodeChickenLib:${config.mc_version}-${config.ccl_version}:deobf"
+    compile "cofh:CoFHCore:${config.mc_version}-${config.cofhcore_version}:deobf"
+}
 
-    // replace stuff in mcmod.info, nothing else
+version = "${project.config.mod_version}." + (System.getenv("BUILD_NUMBER") ?: "1")
+
+println config.mc_version + "-" + config.forge_version
+// Setup the forge minecraft plugin data. Specify the preferred forge/minecraft version here
+minecraft {
+    version = config.mc_version + "-" + config.forge_version
+    mappings = config.mappings
+    runDir = "run"
+    makeObfSourceJar = false
+}
+
+processResources {
+    inputs.property "version", project.version
+    inputs.property "mc_version", project.config.mc_version
+
     from(sourceSets.main.resources.srcDirs) {
         include 'mcmod.info'
-                
-        // replace version and mcversion
-        expand 'version':project.version, 'mcversion':project.minecraft.version
+        expand 'version': project.version, 'mc_version': project.config.mc_version
     }
-        
-    // copy everything else, thats not the mcmod.info
-    from(sourceSets.main.resources.srcDirs) {
-        exclude 'mcmod.info'
+    rename '(.+_at.cfg)', 'META-INF/$1'
+}
+
+version = "${project.minecraft.version}-${project.version}"
+//def commonManifest = {
+    a//ttributes 'FMLAT': 'te_at.cfg'
+//}
+
+jar {
+    classifier = 'universal'
+    //manifest commonManifest
+}
+
+task deobfJar(type: Jar) {
+    from sourceSets.main.output
+    classifier = 'deobf'
+    //manifest commonManifest
+}
+
+task srcJar(type: Jar) {
+    from sourceSets.main.allSource
+    classifier = 'sources'
+    //manifest commonManifest
+}
+
+// Tell the artifact system about our extra jars
+artifacts {
+    archives deobfJar
+    archives srcJar
+}
+
+// Configure an upload task.
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            if (project.hasProperty("local_maven")) {
+                repository(url: "file://${local_maven}")
+                pom {
+                    groupId = project.group
+                    // Force the maven upload to use the <mcversion>-<version> syntax preferred at files
+                    artifactId = project.archivesBaseName
+                    project {
+                        name project.archivesBaseName
+                        packaging 'jar'
+                        description 'RedstoneArsenal'
+                        url 'https://github.com/TheCBProject/RedstoneArsenal'
+
+                        scm {
+                            url 'https://github.com/TheCBProject/RedstoneArsenal'
+                            connection 'scm:git:git://github.com/TheCBProject/RedstoneArsenal.git'
+                            developerConnection 'scm:git:git@github.com:TheCBProject/RedstoneArsenal.git'
+                        }
+
+                        issueManagement {
+                            system 'github'
+                            url 'https://github.com/TheCBProject/RedstoneArsenal/issues'
+                        }
+                    }
+                }
+            }
+        }
     }
 }
