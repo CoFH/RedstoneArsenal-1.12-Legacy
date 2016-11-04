@@ -1,9 +1,5 @@
 package cofh.redstonearsenal;
 
-import java.io.File;
-
-import org.apache.logging.log4j.*;
-
 import cofh.CoFHCore;
 import cofh.core.CoFHProps;
 import cofh.core.util.ConfigHandler;
@@ -14,8 +10,18 @@ import cofh.redstonearsenal.item.RAItems;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.Mod.*;
-import net.minecraftforge.fml.common.event.*;
+import net.minecraftforge.fml.common.Mod.CustomProperty;
+import net.minecraftforge.fml.common.Mod.EventHandler;
+import net.minecraftforge.fml.common.Mod.Instance;
+import net.minecraftforge.fml.common.SidedProxy;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLLoadCompleteEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import java.io.File;
 
 @Mod(modid = RedstoneArsenal.modId, name = RedstoneArsenal.modName, version = RedstoneArsenal.version, dependencies = RedstoneArsenal.dependencies, guiFactory = RedstoneArsenal.modGuiFactory, customProperties = @CustomProperty(k = "cofhversion", v = "true"))
 public class RedstoneArsenal extends BaseMod {
@@ -32,6 +38,9 @@ public class RedstoneArsenal extends BaseMod {
 
 	@Instance("RedstoneArsenal")
 	public static RedstoneArsenal instance;
+
+	@SidedProxy(clientSide = "cofh.redstonearsenal.client.ClientProxy", serverSide = "cofh.redstonearsenal.CommonProxy")
+	public static CommonProxy proxy;
 
 	public static final Logger log = LogManager.getLogger(modId);
 	public static final ConfigHandler config = new ConfigHandler(version);
@@ -50,6 +59,7 @@ public class RedstoneArsenal extends BaseMod {
 		cleanConfig(true);
 		tab = new RACreativeTab();
 		RAItems.preInit();
+		proxy.preInit();
 	}
 
 	@EventHandler

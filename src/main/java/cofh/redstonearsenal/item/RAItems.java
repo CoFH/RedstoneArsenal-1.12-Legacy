@@ -1,25 +1,36 @@
 package cofh.redstonearsenal.item;
 
-import static cofh.lib.util.helpers.ItemHelper.*;
-
 import codechicken.lib.item.ItemStackRegistry;
 import cofh.api.modhelpers.ThermalExpansionHelper;
-import cofh.lib.util.helpers.*;
+import cofh.lib.util.helpers.EnergyHelper;
+import cofh.lib.util.helpers.ItemHelper;
+import cofh.lib.util.helpers.MathHelper;
 import cofh.redstonearsenal.RedstoneArsenal;
 import cofh.redstonearsenal.block.BlockStorage;
+import cofh.redstonearsenal.block.ItemBlockFlux;
 import cofh.redstonearsenal.core.RAProps;
 import cofh.redstonearsenal.item.armor.ItemArmorRF;
 import cofh.redstonearsenal.item.tool.*;
-import net.minecraft.init.*;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraft.item.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemArmor;
+import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.util.EnumHelper;
-import net.minecraftforge.fluids.*;
-import net.minecraftforge.fml.common.*;
+import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
+
+import static cofh.lib.util.helpers.ItemHelper.ShapedRecipe;
+import static cofh.lib.util.helpers.ItemHelper.ShapelessRecipe;
 
 public class RAItems {
 
@@ -69,8 +80,9 @@ public class RAItems {
 		}
 	}
 
-	public static BlockStorage blockElectrumFlux;
-	public static BlockStorage blockCrystalFlux;
+	public static BlockStorage blockFlux;
+	public static ItemStack blockElectrumFlux;
+	public static ItemStack blockCrystalFlux;
 
 	public static ItemArmorRF itemHelmetFlux;
 	public static ItemArmorRF itemPlateFlux;
@@ -167,31 +179,18 @@ public class RAItems {
 		itemSickleFlux = new ItemSickleRF(TOOL_MATERIAL_FLUX, "flux_sickle").setEnergyParams(toolRFCapacity[7], toolRFTransfer[7], toolRFUsed[7], toolRFCharged[7]);
 		itemBowFlux = new ItemBowRF(TOOL_MATERIAL_FLUX, "flux_bow").setEnergyParams(toolRFCapacity[8], toolRFTransfer[8], toolRFUsed[8], toolRFCharged[8]);
 
-		if (FMLCommonHandler.instance().getSide() == Side.CLIENT) {
-			((GenericItem) dustElectrumFlux).initModel();
-			((GenericItem) ingotElectrumFlux).initModel();
-			((GenericItem) nuggetElectrumFlux).initModel();
-			((GenericItem) gemCrystalFlux).initModel();
-			((GenericItem) plateFlux).initModel();
-			((GenericItem) rodObsidian).initModel();
-			((GenericItem) rodObsidianFlux).initModel();
+		blockFlux = new BlockStorage();
+		blockFlux.setRegistryName("block_flux");
+		blockFlux.preInit();
+		ItemBlock itemBlockFlux = new ItemBlockFlux(blockFlux);
+		itemBlockFlux.setRegistryName(blockFlux.getRegistryName());
+		GameRegistry.register(blockFlux);
+		GameRegistry.register(itemBlockFlux);
 
-			((ItemWrenchRF) itemWrenchFlux).initModel();
-			((ItemWrenchBattleRF) itemBattleWrenchFlux).initModel();
-			((ItemSwordRF) itemSwordFlux).initModel();
-			((ItemShovelRF) itemShovelFlux).initModel();
-			((ItemPickaxeRF) itemPickaxeFlux).initModel();
-			((ItemAxeRF) itemAxeFlux).initModel();
-			((ItemFishingRodRF) itemFishingRodFlux).initModel();
-			((ItemSickleRF) itemSickleFlux).initModel();
-			((ItemBowRF) itemBowFlux).initModel();
-
-		}
-
-		blockElectrumFlux = new BlockStorage("electrum_flux");
-		blockElectrumFlux.preInit();
-		blockCrystalFlux = new BlockStorage("crystal_flux");
-		blockCrystalFlux.preInit();
+		blockElectrumFlux = new ItemStack(blockFlux, 1, 0);
+		blockCrystalFlux = new ItemStack(blockFlux, 1, 1);
+		ItemHelper.registerWithHandlers("block_electrum_flux", blockElectrumFlux);
+		ItemHelper.registerWithHandlers("block_crystal_flux", blockCrystalFlux);
 	}
 
 	public static void initialize() {
@@ -254,109 +253,89 @@ public class RAItems {
 		ItemHelper.addStorageRecipe(materialIngotElectrumFlux, "nuggetElectrumFlux");
 		ItemHelper.addReverseStorageRecipe(materialNuggetElectrumFlux, "ingotElectrumFlux");
 
-		GameRegistry.addRecipe(ShapedRecipe(rodObsidianFlux, new Object[] {
-				"  O", " B ", "O  ", 'B', rodObsidian, 'O', "gemCrystalFlux"
-		}));
-		GameRegistry.addRecipe(ShapedRecipe(rodObsidian, new Object[] {
-				"  O", " B ", "O  ", 'B', Items.BLAZE_POWDER, 'O', "dustObsidian"
-		}));
-		GameRegistry.addRecipe(ShapedRecipe(plateFlux, new Object[] {
-				"NNN", "GIG", "NNN", 'G', "gemCrystalFlux", 'I', "ingotElectrumFlux", 'N', "nuggetElectrumFlux"
-		}));
+		GameRegistry.addRecipe(ShapedRecipe(rodObsidianFlux, "  O", " B ", "O  ", 'B', rodObsidian, 'O', "gemCrystalFlux"));
+		GameRegistry.addRecipe(ShapedRecipe(rodObsidian, "  O", " B ", "O  ", 'B', Items.BLAZE_POWDER, 'O', "dustObsidian"));
+		GameRegistry.addRecipe(ShapedRecipe(plateFlux, "NNN", "GIG", "NNN", 'G', "gemCrystalFlux", 'I', "ingotElectrumFlux", 'N', "nuggetElectrumFlux"));
 
 		if (!Loader.isModLoaded("ThermalExpansion")) {
 			if (ItemHelper.oreNameExists("dustElectrum")) {
-				GameRegistry.addRecipe(ShapelessRecipe(dustElectrumFlux, new Object[] {
-						"dustElectrum", "dustRedstone", "dustRedstone", "dustRedstone", "dustRedstone", "dustRedstone"
-				}));
+				GameRegistry.addRecipe(ShapelessRecipe(dustElectrumFlux, "dustElectrum", "dustRedstone", "dustRedstone", "dustRedstone", "dustRedstone", "dustRedstone"));
 			}
 			else {
-				GameRegistry.addRecipe(ShapelessRecipe(dustElectrumFlux, new Object[] {
-						"ingotGold", "blockRedstone"
-				}));
+				GameRegistry.addRecipe(ShapelessRecipe(dustElectrumFlux, "ingotGold", "blockRedstone"));
 			}
-			GameRegistry.addRecipe(ShapelessRecipe(gemCrystalFlux, new Object[] {
-					"gemDiamond", "dustRedstone", "dustRedstone", "dustRedstone", "dustRedstone", "dustRedstone"
-			}));
+			GameRegistry.addRecipe(ShapelessRecipe(gemCrystalFlux, "gemDiamond", "dustRedstone", "dustRedstone", "dustRedstone", "dustRedstone", "dustRedstone"));
 			GameRegistry.addSmelting(materialDustElectrumFlux, materialIngotElectrumFlux, 0.0F);
 		}
 		if (ItemHelper.oreNameExists("dustObsidian")) {
-			GameRegistry.addRecipe(ShapedRecipe(rodObsidian, new Object[] {
-					"  O", " B ", "O  ", 'B', Items.BLAZE_POWDER, 'O', "dustObsidian"
-			}));
+			GameRegistry.addRecipe(ShapedRecipe(rodObsidian, "  O", " B ", "O  ", 'B', Items.BLAZE_POWDER, 'O', "dustObsidian"));
 		}
 		else {
-			GameRegistry.addRecipe(ShapedRecipe(rodObsidian, new Object[] {
-					"  O", " B ", "O  ", 'B', Items.BLAZE_POWDER, 'O', Blocks.OBSIDIAN
-			}));
+			GameRegistry.addRecipe(ShapedRecipe(rodObsidian, "  O", " B ", "O  ", 'B', Items.BLAZE_POWDER, 'O', Blocks.OBSIDIAN));
 		}
 
 		/* Armor */
 		if (enableArmor) {
-			GameRegistry.addRecipe(ShapedRecipe(armorFluxHelmet, new Object[] {
-					"III", "I I", 'I', plateFlux
-			}));
-			GameRegistry.addRecipe(ShapedRecipe(armorFluxPlate, new Object[] {
-					"I I", "III", "III", 'I', plateFlux
-			}));
-			GameRegistry.addRecipe(ShapedRecipe(armorFluxLegs, new Object[] {
-					"III", "I I", "I I", 'I', plateFlux
-			}));
-			GameRegistry.addRecipe(ShapedRecipe(armorFluxBoots, new Object[] {
-					"I I", "I I", 'I', plateFlux
-			}));
+			GameRegistry.addRecipe(ShapedRecipe(armorFluxHelmet, "III", "I I", 'I', plateFlux));
+			GameRegistry.addRecipe(ShapedRecipe(armorFluxPlate, "I I", "III", "III", 'I', plateFlux));
+			GameRegistry.addRecipe(ShapedRecipe(armorFluxLegs, "III", "I I", "I I", 'I', plateFlux));
+			GameRegistry.addRecipe(ShapedRecipe(armorFluxBoots, "I I", "I I", 'I', plateFlux));
 		}
 
 		/* Tools */
 		if (enableTool[0]) {
-			GameRegistry.addRecipe(ShapedRecipe(toolFluxWrench, new Object[] {
-					"I I", " R ", " I ", 'I', "ingotElectrumFlux", 'R', rodObsidianFlux
-			}));
+			GameRegistry.addRecipe(ShapedRecipe(toolFluxWrench, "I I", " R ", " I ", 'I', "ingotElectrumFlux", 'R', rodObsidianFlux));
 		}
 		if (enableTool[1]) {
-			GameRegistry.addRecipe(ShapedRecipe(toolFluxBattleWrench, new Object[] {
-					"I I", "III", " R ", 'I', "ingotElectrumFlux", 'R', rodObsidianFlux
-			}));
+			GameRegistry.addRecipe(ShapedRecipe(toolFluxBattleWrench, "I I", "III", " R ", 'I', "ingotElectrumFlux", 'R', rodObsidianFlux));
 		}
 		if (enableTool[2]) {
-			GameRegistry.addRecipe(ShapedRecipe(toolFluxSword, new Object[] {
-					" I ", " I ", " R ", 'I', "ingotElectrumFlux", 'R', rodObsidianFlux
-			}));
+			GameRegistry.addRecipe(ShapedRecipe(toolFluxSword, " I ", " I ", " R ", 'I', "ingotElectrumFlux", 'R', rodObsidianFlux));
 		}
 		if (enableTool[3]) {
-			GameRegistry.addRecipe(ShapedRecipe(toolFluxShovel, new Object[] {
-					" I ", " R ", " R ", 'I', "ingotElectrumFlux", 'R', rodObsidianFlux
-			}));
+			GameRegistry.addRecipe(ShapedRecipe(toolFluxShovel, " I ", " R ", " R ", 'I', "ingotElectrumFlux", 'R', rodObsidianFlux));
 		}
 		if (enableTool[4]) {
-			GameRegistry.addRecipe(ShapedRecipe(toolFluxPickaxe, new Object[] {
-					"III", " R ", " R ", 'I', "ingotElectrumFlux", 'R', rodObsidianFlux
-			}));
+			GameRegistry.addRecipe(ShapedRecipe(toolFluxPickaxe, "III", " R ", " R ", 'I', "ingotElectrumFlux", 'R', rodObsidianFlux));
 		}
 		if (enableTool[5]) {
-			GameRegistry.addRecipe(ShapedRecipe(toolFluxAxe, new Object[] {
-					"II ", "IR ", " R ", 'I', "ingotElectrumFlux", 'R', rodObsidianFlux
-			}));
+			GameRegistry.addRecipe(ShapedRecipe(toolFluxAxe, "II ", "IR ", " R ", 'I', "ingotElectrumFlux", 'R', rodObsidianFlux));
 		}
 		if (enableTool[6]) {
-			GameRegistry.addRecipe(ShapedRecipe(toolFluxFishingRod, new Object[] {
-					"  I", " IS", "R S", 'I', "ingotElectrumFlux", 'R', rodObsidian, 'S', Items.STRING
-			}));
+			GameRegistry.addRecipe(ShapedRecipe(toolFluxFishingRod, "  I", " IS", "R S", 'I', "ingotElectrumFlux", 'R', rodObsidian, 'S', Items.STRING));
 		}
 		if (enableTool[7]) {
-			GameRegistry.addRecipe(ShapedRecipe(toolFluxSickle, new Object[] {
-					" I ", "  I", "RI ", 'I', "ingotElectrumFlux", 'R', rodObsidianFlux
-			}));
+			GameRegistry.addRecipe(ShapedRecipe(toolFluxSickle, " I ", "  I", "RI ", 'I', "ingotElectrumFlux", 'R', rodObsidianFlux));
 		}
 		if (enableTool[8]) {
-			GameRegistry.addRecipe(ShapedRecipe(toolFluxBow, new Object[] {
-					" IS", "R S", " IS", 'I', "ingotElectrumFlux", 'R', rodObsidianFlux, 'S', Items.STRING
-			}));
+			GameRegistry.addRecipe(ShapedRecipe(toolFluxBow, " IS", "R S", " IS", 'I', "ingotElectrumFlux", 'R', rodObsidianFlux, 'S', Items.STRING));
 		}
-		ItemHelper.addStorageRecipe(new ItemStack(blockElectrumFlux), "ingotElectrumFlux");
-		ItemHelper.addStorageRecipe(new ItemStack(blockCrystalFlux), "gemCrystalFlux");
-		ItemHelper.addReverseStorageRecipe(materialIngotElectrumFlux, new ItemStack(blockElectrumFlux));
-		ItemHelper.addReverseStorageRecipe(materialGemCrystalFlux, new ItemStack(blockCrystalFlux));
+		ItemHelper.addStorageRecipe(blockElectrumFlux, "ingotElectrumFlux");
+		ItemHelper.addStorageRecipe(blockCrystalFlux, "gemCrystalFlux");
+		ItemHelper.addReverseStorageRecipe(materialIngotElectrumFlux, blockElectrumFlux);
+		ItemHelper.addReverseStorageRecipe(materialGemCrystalFlux, blockCrystalFlux);
 	}
 
+	@SideOnly(Side.CLIENT)
+	public static void initModels(){
+		blockFlux.initModels();
+
+		((GenericItem) dustElectrumFlux).initModel();
+		((GenericItem) ingotElectrumFlux).initModel();
+		((GenericItem) nuggetElectrumFlux).initModel();
+		((GenericItem) gemCrystalFlux).initModel();
+		((GenericItem) plateFlux).initModel();
+		((GenericItem) rodObsidian).initModel();
+		((GenericItem) rodObsidianFlux).initModel();
+
+		((ItemWrenchRF) itemWrenchFlux).initModel();
+		((ItemWrenchBattleRF) itemBattleWrenchFlux).initModel();
+		((ItemSwordRF) itemSwordFlux).initModel();
+		((ItemShovelRF) itemShovelFlux).initModel();
+		((ItemPickaxeRF) itemPickaxeFlux).initModel();
+		((ItemAxeRF) itemAxeFlux).initModel();
+		((ItemFishingRodRF) itemFishingRodFlux).initModel();
+		((ItemSickleRF) itemSickleFlux).initModel();
+		((ItemBowRF) itemBowFlux).initModel();
+	}
 }

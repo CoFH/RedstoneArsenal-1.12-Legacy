@@ -1,172 +1,162 @@
 package cofh.redstonearsenal.block;
 
-import javax.annotation.Nullable;
-
 import cofh.api.core.IInitializer;
 import cofh.lib.util.helpers.DamageHelper;
 import cofh.lib.util.helpers.EnergyHelper;
-import cofh.lib.util.helpers.ItemHelper;
 import cofh.lib.util.helpers.ServerHelper;
-import cofh.lib.util.helpers.StringHelper;
 import cofh.redstonearsenal.RedstoneArsenal;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.PropertyEnum;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
-import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nullable;
+import java.util.List;
+import java.util.Locale;
+
+//todo Perhaps this should be changed to BlockFlux?
 public class BlockStorage extends Block implements IInitializer {
 
-	static boolean enableDamage[] = new boolean[2];
-	static boolean enableDamageCharge[] = new boolean[2];
-	static double damage[] = new double[2];
-	static int charge[] = new int[2];
-	String name;
+    public static final PropertyEnum<Types> TYPES = PropertyEnum.create("type", Types.class);
 
-	@Override
-	public boolean initialize() {
-		return true;
-	}
+    static boolean enableDamage[] = new boolean[2];
+    static boolean enableDamageCharge[] = new boolean[2];
+    static double damage[] = new double[2];
+    static int charge[] = new int[2];
 
-	@Override
-	public boolean postInit() {
-		return true;
-	}
+    public BlockStorage() {
+        super(Material.IRON);
+        this.setHardness(25.0F);
+        this.setResistance(120.0F);
+        this.setSoundType(SoundType.METAL);
+        this.setCreativeTab(RedstoneArsenal.tab);
+        this.setUnlocalizedName("redstonearsenal.storage");
+        this.setHarvestLevel("pickaxe", 2);
+    }
 
-	public BlockStorage(final String name) {
-		super(Material.IRON);
-		this.name = name;
-		setHardness(25.0F);
-		setResistance(120.0F);
-		setSoundType(SoundType.METAL);
-		setCreativeTab(RedstoneArsenal.tab);
-		setUnlocalizedName(name);
-		setRegistryName(name);
-		setHarvestLevel("pickaxe", 2);
-		GameRegistry.register(this);
-		GameRegistry.register(new ItemBlock(this) {
-			@Override
-			public String getItemStackDisplayName(ItemStack item) {
+    //region Blockstate
 
-				return StringHelper.localize(getUnlocalizedName(item));
-			}
+    @Override
+    public int getMetaFromState(IBlockState state) {
+        return state.getValue(TYPES).meta();
+    }
 
-			@Override
-			public String getUnlocalizedName(ItemStack item) {
+    @Override
+    public IBlockState getStateFromMeta(int meta) {
+        return getDefaultState().withProperty(TYPES, Types.fromMeta(meta));
+    }
 
-				return "tile.redstonearsenal.storage." + name + ".name";
-			}
+    @Override
+    protected BlockStateContainer createBlockState() {
+        return new BlockStateContainer(this, TYPES);
+    }
 
-			@Override
-			public EnumRarity getRarity(ItemStack stack) {
+    @Override
+    public void getSubBlocks(Item itemIn, CreativeTabs tab, List<ItemStack> list) {
+        list.add(new ItemStack(itemIn, 1, 0));
+        list.add(new ItemStack(itemIn, 1, 1));
+    }
 
-				return EnumRarity.UNCOMMON;
-			}
-		}, getRegistryName());
-	}
+    //endregion
 
-	@Override
-	public int damageDropped(IBlockState state) {
-		return state.getBlock().getMetaFromState(state);
-	}
+    @Override
+    public boolean initialize() {
+        return true;
+    }
 
-	@Override
-	public boolean canCreatureSpawn(IBlockState state, IBlockAccess world, BlockPos pos, net.minecraft.entity.EntityLiving.SpawnPlacementType type) {
-		return false;
-	}
+    @Override
+    public boolean postInit() {
+        return true;
+    }
 
-	@Override
-	public boolean isBeaconBase(IBlockAccess worldObj, BlockPos pos, BlockPos beacon) {
-		return true;
-	}
+    @Override
+    public int damageDropped(IBlockState state) {
+        return state.getBlock().getMetaFromState(state);
+    }
 
-	@Override
-	public int getLightValue(IBlockState state, IBlockAccess world, BlockPos pos) {
-		return 7;
-	}
+    @Override
+    public boolean canCreatureSpawn(IBlockState state, IBlockAccess world, BlockPos pos, net.minecraft.entity.EntityLiving.SpawnPlacementType type) {
+        return false;
+    }
 
-	@Override
-	@Deprecated
-	@Nullable
-	public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, World worldIn, BlockPos pos) {
-		return new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.95D, 1.0D);
-	}
+    @Override
+    public boolean isBeaconBase(IBlockAccess worldObj, BlockPos pos, BlockPos beacon) {
+        return true;
+    }
 
-	@Override
-	public void onEntityCollidedWithBlock(World world, BlockPos pos, IBlockState state, Entity entity) {
-		if (ServerHelper.isClientWorld(world) || entity instanceof EntityItem) {
-			return;
-		}
-		double fluxDamage = 0;
-		int chargeRate = 0;
+    @Override
+    public int getLightValue(IBlockState state, IBlockAccess world, BlockPos pos) {
+        return 7;
+    }
 
-		switch (state.getBlock().getMetaFromState(state)) {
-		case 0:
-			if (enableDamage[0]) {
-				fluxDamage = damage[0];
+    @Override
+    @Deprecated
+    @Nullable
+    public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, World worldIn, BlockPos pos) {
+        return new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.99D, 1.0D);
+    }
 
-				if (enableDamageCharge[0]) {
-					chargeRate = charge[0];
-				}
-			}
-			break;
-		case 1:
-			if (enableDamage[1]) {
-				fluxDamage = damage[1];
+    @Override
+    public void onEntityCollidedWithBlock(World world, BlockPos pos, IBlockState state, Entity entity) {
+        if (ServerHelper.isClientWorld(world) || entity instanceof EntityItem) {
+            return;
+        }
+        double fluxDamage = 0;
+        int chargeRate = 0;
 
-				if (enableDamageCharge[1]) {
-					chargeRate = charge[1];
-				}
-			}
-			break;
-		}
-		if (fluxDamage > 0) {
-			entity.attackEntityFrom(DamageHelper.flux, (float) fluxDamage);
+        if (state.getValue(TYPES) == Types.FLUX_ELECTRUM) {
+            if (enableDamage[0]) {
+                fluxDamage = damage[0];
 
-			if (entity instanceof EntityPlayerMP) {
-				EntityPlayerMP player = (EntityPlayerMP) entity;
-				if (chargeRate > 0 && EnergyHelper.isPlayerHoldingEnergyContainerItem(player)) {
-					EnergyHelper.insertEnergyIntoHeldContainer(player, (int) (chargeRate * fluxDamage), false);
-				}
-			}
-		}
-	}
+                if (enableDamageCharge[0]) {
+                    chargeRate = charge[0];
+                }
+            }
+        }
+        else {
+            if (enableDamage[1]) {
+                fluxDamage = damage[1];
 
-	/* IInitializer */
-	@Override
-	public boolean preInit() {
-		initPre();
-		ItemHelper.registerWithHandlers("block_" + name, new ItemStack(this));
-		if (FMLCommonHandler.instance().getSide() == Side.CLIENT) {
-			initModel();
-		}
-		return true;
-	}
+                if (enableDamageCharge[1]) {
+                    chargeRate = charge[1];
+                }
+            }
+        }
 
-	@SideOnly(Side.CLIENT)
-	private void initModel() {
-		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(RedstoneArsenal.modId + ":" + name, "inventory"));
-	}
+        if (fluxDamage > 0) {
+            entity.attackEntityFrom(DamageHelper.flux, (float) fluxDamage);
 
-	private void initPre() {
-		String comment;
-		String category;
+            if (entity instanceof EntityPlayerMP) {
+                EntityPlayerMP player = (EntityPlayerMP) entity;
+                if (chargeRate > 0 && EnergyHelper.isPlayerHoldingEnergyContainerItem(player)) {
+                    EnergyHelper.insertEnergyIntoHeldContainer(player, (int) (chargeRate * fluxDamage), false);
+                }
+            }
+        }
+    }
+
+    /* IInitializer */
+    @Override
+    public boolean preInit() {
+        String comment;
+        String category;
 
         category = "Storage.FluxedElectrum";
 
@@ -195,6 +185,40 @@ public class BlockStorage extends Block implements IInitializer {
 
         comment = "Base rate of flux charge per tick while entities are in contact with this block; multiplied by damage dealt by the block.";
         charge[1] = RedstoneArsenal.config.get(category, "Charge.Amount", 50, comment);
-	}
 
+        return true;
+    }
+
+    @SideOnly(Side.CLIENT)
+    public void initModels() {
+        ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(RedstoneArsenal.modId + ":block_flux", "type=flux_electrum"));
+        ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 1, new ModelResourceLocation(RedstoneArsenal.modId + ":block_flux", "type=flux_crystal"));
+    }
+
+    public enum Types implements IStringSerializable {
+        FLUX_ELECTRUM,
+        FLUX_CRYSTAL;
+
+        @Override
+        public String getName() {
+            return name().toLowerCase(Locale.US);
+        }
+
+        public int meta() {
+            return ordinal();
+        }
+
+        public static Types fromMeta(int meta) {
+            try {
+                return values()[meta];
+            } catch (IndexOutOfBoundsException e){
+                throw new RuntimeException("Someone has requested an invalid metadata for a block inside ThermalExpansion.", e);
+            }
+        }
+
+        public static int meta(Types type) {
+            return type.ordinal();
+        }
+
+    }
 }

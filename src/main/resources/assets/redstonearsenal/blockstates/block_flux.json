@@ -1,0 +1,15 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "cube_all",
+    "transform": "forge:default-block"
+  },
+  "variants": {
+    "type": {
+      "flux_electrum": {"textures": {"all": "redstonearsenal:blocks/electrum_flux"}},
+      "flux_crystal": {"textures": {"all": "redstonearsenal:blocks/crystal_flux"}}
+    },
+    "normal": [{}],
+    "inventory": [{}]
+  }
+}
