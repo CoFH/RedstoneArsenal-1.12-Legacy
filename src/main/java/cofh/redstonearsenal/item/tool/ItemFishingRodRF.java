@@ -24,6 +24,8 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.*;
 
+import javax.annotation.Nullable;
+
 public class ItemFishingRodRF extends ItemFishingRodAdv implements IEmpowerableItem, IEnergyContainerItem, IEqualityOverrideItem {
 
 	public int maxEnergy = 160000;
@@ -44,10 +46,30 @@ public class ItemFishingRodRF extends ItemFishingRodAdv implements IEmpowerableI
 		setMaxDamage(toolMaterial.getMaxUses());
 		setNoRepair();
 
-		addPropertyOverride(new ResourceLocation(name + "_empowered"), (stack, world, entity) -> getEnergyStored(stack) > 0 && isEmpowered(stack) && !isCastState(stack, entity) ? 1F : 0F);
-		addPropertyOverride(new ResourceLocation(name + "_active"), (stack, world, entity) -> getEnergyStored(stack) > 0 && !isEmpowered(stack) && !isCastState(stack, entity) ? 1F : 0F);
-		addPropertyOverride(new ResourceLocation(name + "_empowered_cast"), (stack, world, entity) -> getEnergyStored(stack) > 0 && isEmpowered(stack) && isCastState(stack, entity) ? 1F : 0F);
-		addPropertyOverride(new ResourceLocation(name + "_active_cast"), (stack, world, entity) -> getEnergyStored(stack) > 0 && !isEmpowered(stack) && isCastState(stack, entity) ? 1F : 0F);
+		addPropertyOverride(new ResourceLocation(name + "_empowered"), new IItemPropertyGetter() {
+            @Override
+            public float apply(ItemStack stack, @Nullable World world, @Nullable EntityLivingBase entity) {
+                return ItemFishingRodRF.this.getEnergyStored(stack) > 0 && ItemFishingRodRF.this.isEmpowered(stack) && !ItemFishingRodRF.this.isCastState(stack, entity) ? 1F : 0F;
+            }
+        });
+		addPropertyOverride(new ResourceLocation(name + "_active"), new IItemPropertyGetter() {
+            @Override
+            public float apply(ItemStack stack, @Nullable World world, @Nullable EntityLivingBase entity) {
+                return ItemFishingRodRF.this.getEnergyStored(stack) > 0 && !ItemFishingRodRF.this.isEmpowered(stack) && !ItemFishingRodRF.this.isCastState(stack, entity) ? 1F : 0F;
+            }
+        });
+		addPropertyOverride(new ResourceLocation(name + "_empowered_cast"), new IItemPropertyGetter() {
+            @Override
+            public float apply(ItemStack stack, @Nullable World world, @Nullable EntityLivingBase entity) {
+                return ItemFishingRodRF.this.getEnergyStored(stack) > 0 && ItemFishingRodRF.this.isEmpowered(stack) && ItemFishingRodRF.this.isCastState(stack, entity) ? 1F : 0F;
+            }
+        });
+		addPropertyOverride(new ResourceLocation(name + "_active_cast"), new IItemPropertyGetter() {
+            @Override
+            public float apply(ItemStack stack, @Nullable World world, @Nullable EntityLivingBase entity) {
+                return ItemFishingRodRF.this.getEnergyStored(stack) > 0 && !ItemFishingRodRF.this.isEmpowered(stack) && ItemFishingRodRF.this.isCastState(stack, entity) ? 1F : 0F;
+            }
+        });
 	}
 
 	public ItemFishingRodRF setEnergyParams(int maxEnergy, int maxTransfer, int energyPerUse, int energyPerUseCharged) {

@@ -10,6 +10,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.*;
@@ -20,6 +21,8 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.*;
+
+import javax.annotation.Nullable;
 
 public class ItemPickaxeRF extends ItemToolRF {
 
@@ -47,8 +50,18 @@ public class ItemPickaxeRF extends ItemToolRF {
 		energyPerUseCharged = 800;
 		effectiveBlocksCharged.addAll(EFFECTIVE_ON_BLOCKS);
 		effectiveMaterials.addAll(EFFECTIVE_ON_MATERIALS);
-		addPropertyOverride(new ResourceLocation(name + "_empowered"), (stack, world, entity) -> getEnergyStored(stack) > 0 && isEmpowered(stack) ? 1F : 0F);
-		addPropertyOverride(new ResourceLocation(name + "_active"), (stack, world, entity) -> getEnergyStored(stack) > 0 && !isEmpowered(stack) ? 1F : 0F);
+		addPropertyOverride(new ResourceLocation(name + "_empowered"), new IItemPropertyGetter() {
+            @Override
+            public float apply(ItemStack stack, @Nullable World world, @Nullable EntityLivingBase entity) {
+                return ItemPickaxeRF.this.getEnergyStored(stack) > 0 && ItemPickaxeRF.this.isEmpowered(stack) ? 1F : 0F;
+            }
+        });
+		addPropertyOverride(new ResourceLocation(name + "_active"), new IItemPropertyGetter() {
+            @Override
+            public float apply(ItemStack stack, @Nullable World world, @Nullable EntityLivingBase entity) {
+                return ItemPickaxeRF.this.getEnergyStored(stack) > 0 && !ItemPickaxeRF.this.isEmpowered(stack) ? 1F : 0F;
+            }
+        });
 	}
 
 	public ItemPickaxeRF(Item.ToolMaterial toolMaterial, int harvestLevel, String nameIn) {

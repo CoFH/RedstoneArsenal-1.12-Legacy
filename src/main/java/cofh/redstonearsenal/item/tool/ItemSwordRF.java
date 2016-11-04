@@ -28,6 +28,8 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.*;
 
+import javax.annotation.Nullable;
+
 public class ItemSwordRF extends ItemSword implements IEmpowerableItem, IEnergyContainerItem, IEqualityOverrideItem {
 
 	// IIcon activeIcon;
@@ -52,8 +54,18 @@ public class ItemSwordRF extends ItemSword implements IEmpowerableItem, IEnergyC
 		setRegistryName(name);
 		GameRegistry.register(this);
 		setCreativeTab(RedstoneArsenal.tab);
-		addPropertyOverride(new ResourceLocation(name + "_empowered"), (stack, world, entity) -> (getEnergyStored(stack) > 0 && isEmpowered(stack)) || isCreativeTab(stack) ? 1F : 0F);
-		addPropertyOverride(new ResourceLocation(name + "_active"), (stack, world, entity) -> getEnergyStored(stack) > 0 && !isEmpowered(stack) ? 1F : 0F);
+		addPropertyOverride(new ResourceLocation(name + "_empowered"), new IItemPropertyGetter() {
+            @Override
+            public float apply(ItemStack stack, @Nullable World world, @Nullable EntityLivingBase entity) {
+                return (ItemSwordRF.this.getEnergyStored(stack) > 0 && ItemSwordRF.this.isEmpowered(stack)) || ItemSwordRF.this.isCreativeTab(stack) ? 1F : 0F;
+            }
+        });
+		addPropertyOverride(new ResourceLocation(name + "_active"), new IItemPropertyGetter() {
+            @Override
+            public float apply(ItemStack stack, @Nullable World world, @Nullable EntityLivingBase entity) {
+                return ItemSwordRF.this.getEnergyStored(stack) > 0 && !ItemSwordRF.this.isEmpowered(stack) ? 1F : 0F;
+            }
+        });
 	}
 
 	public ItemSwordRF setEnergyParams(int maxEnergy, int maxTransfer, int energyPerUse, int energyPerUseCharged) {

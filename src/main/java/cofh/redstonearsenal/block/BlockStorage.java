@@ -49,7 +49,7 @@ public class BlockStorage extends Block implements IInitializer {
 		return true;
 	}
 
-	public BlockStorage(String name) {
+	public BlockStorage(final String name) {
 		super(Material.IRON);
 		this.name = name;
 		setHardness(25.0F);
@@ -167,38 +167,34 @@ public class BlockStorage extends Block implements IInitializer {
 	private void initPre() {
 		String comment;
 		String category;
-		switch (name) {
-		case "electrum_flux":
-			category = "Storage.FluxedElectrum";
 
-			comment = "Set to false to prevent this block from damaging entities.";
-			enableDamage[0] = RedstoneArsenal.config.get(category, "Damage.Enable", true, comment);
+        category = "Storage.FluxedElectrum";
 
-			comment = "Set to false to prevent this block from charging held items.";
-			enableDamageCharge[0] = RedstoneArsenal.config.get(category, "Charge.Enable", true, comment);
+        comment = "Set to false to prevent this block from damaging entities.";
+        enableDamage[0] = RedstoneArsenal.config.get(category, "Damage.Enable", true, comment);
 
-			comment = "Base damage dealt to entities for touching this block.";
-			damage[0] = RedstoneArsenal.config.get(category, "Damage.Amount", 0.5D, comment);
+        comment = "Set to false to prevent this block from charging held items.";
+        enableDamageCharge[0] = RedstoneArsenal.config.get(category, "Charge.Enable", true, comment);
 
-			comment = "Base rate of flux charge per tick while entities are in contact with this block; multiplied by damage dealt by the block.";
-			charge[0] = RedstoneArsenal.config.get(category, "Charge.Amount", 50, comment);
-			break;
-		case "crystal_flux":
-			category = "Storage.FluxedCrystal";
+        comment = "Base damage dealt to entities for touching this block.";
+        damage[0] = RedstoneArsenal.config.get(category, "Damage.Amount", 0.5D, comment);
 
-			comment = "Set to false to prevent this block from damaging entities.";
-			enableDamage[1] = RedstoneArsenal.config.get(category, "Damage.Enable", true, comment);
+        comment = "Base rate of flux charge per tick while entities are in contact with this block; multiplied by damage dealt by the block.";
+        charge[0] = RedstoneArsenal.config.get(category, "Charge.Amount", 50, comment);
 
-			comment = "Set to false to prevent this block from charging held items.";
-			enableDamageCharge[1] = RedstoneArsenal.config.get(category, "Charge.Enable", true, comment);
+        category = "Storage.FluxedCrystal";
 
-			comment = "Base damage dealt to entities for touching this block.";
-			damage[1] = RedstoneArsenal.config.get(category, "Damage.Amount", 1.0D, comment);
+        comment = "Set to false to prevent this block from damaging entities.";
+        enableDamage[1] = RedstoneArsenal.config.get(category, "Damage.Enable", true, comment);
 
-			comment = "Base rate of flux charge per tick while entities are in contact with this block; multiplied by damage dealt by the block.";
-			charge[1] = RedstoneArsenal.config.get(category, "Charge.Amount", 50, comment);
-			break;
-		}
+        comment = "Set to false to prevent this block from charging held items.";
+        enableDamageCharge[1] = RedstoneArsenal.config.get(category, "Charge.Enable", true, comment);
+
+        comment = "Base damage dealt to entities for touching this block.";
+        damage[1] = RedstoneArsenal.config.get(category, "Damage.Amount", 1.0D, comment);
+
+        comment = "Base rate of flux charge per tick while entities are in contact with this block; multiplied by damage dealt by the block.";
+        charge[1] = RedstoneArsenal.config.get(category, "Charge.Amount", 50, comment);
 	}
 
 }

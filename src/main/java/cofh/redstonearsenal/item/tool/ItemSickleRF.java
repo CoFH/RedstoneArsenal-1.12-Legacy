@@ -8,6 +8,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.*;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.*;
@@ -21,6 +22,8 @@ import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.*;
 import scala.actors.threadpool.Arrays;
+
+import javax.annotation.Nullable;
 
 public class ItemSickleRF extends ItemToolRF {
 
@@ -45,8 +48,18 @@ public class ItemSickleRF extends ItemToolRF {
 		effectiveMaterials.add(Material.PLANTS);
 		effectiveMaterials.add(Material.VINE);
 		effectiveMaterials.add(Material.WEB);
-		addPropertyOverride(new ResourceLocation(name + "_empowered"), (stack, world, entity) -> getEnergyStored(stack) > 0 && isEmpowered(stack) ? 1F : 0F);
-		addPropertyOverride(new ResourceLocation(name + "_active"), (stack, world, entity) -> getEnergyStored(stack) > 0 && !isEmpowered(stack) ? 1F : 0F);
+		addPropertyOverride(new ResourceLocation(name + "_empowered"), new IItemPropertyGetter() {
+            @Override
+            public float apply(ItemStack stack, @Nullable World world, @Nullable EntityLivingBase entity) {
+                return ItemSickleRF.this.getEnergyStored(stack) > 0 && ItemSickleRF.this.isEmpowered(stack) ? 1F : 0F;
+            }
+        });
+		addPropertyOverride(new ResourceLocation(name + "_active"), new IItemPropertyGetter() {
+            @Override
+            public float apply(ItemStack stack, @Nullable World world, @Nullable EntityLivingBase entity) {
+                return ItemSickleRF.this.getEnergyStored(stack) > 0 && !ItemSickleRF.this.isEmpowered(stack) ? 1F : 0F;
+            }
+        });
 	}
 
 	public ItemSickleRF setRadius(int radius) {

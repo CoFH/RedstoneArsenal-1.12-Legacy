@@ -9,6 +9,7 @@ import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.*;
@@ -21,6 +22,8 @@ import net.minecraftforge.event.entity.player.UseHoeEvent;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.*;
+
+import javax.annotation.Nullable;
 
 public class ItemShovelRF extends ItemToolRF {
 
@@ -47,8 +50,18 @@ public class ItemShovelRF extends ItemToolRF {
 		effectiveMaterials.add(Material.SNOW);
 		effectiveMaterials.add(Material.CRAFTED_SNOW);
 		effectiveMaterials.add(Material.CLAY);
-		addPropertyOverride(new ResourceLocation(name + "_empowered"), (stack, world, entity) -> getEnergyStored(stack) > 0 && isEmpowered(stack) ? 1F : 0F);
-		addPropertyOverride(new ResourceLocation(name + "_active"), (stack, world, entity) -> getEnergyStored(stack) > 0 && !isEmpowered(stack) ? 1F : 0F);
+		addPropertyOverride(new ResourceLocation(name + "_empowered"), new IItemPropertyGetter() {
+            @Override
+            public float apply(ItemStack stack, @Nullable World world, @Nullable EntityLivingBase entity) {
+                return ItemShovelRF.this.getEnergyStored(stack) > 0 && ItemShovelRF.this.isEmpowered(stack) ? 1F : 0F;
+            }
+        });
+		addPropertyOverride(new ResourceLocation(name + "_active"), new IItemPropertyGetter() {
+            @Override
+            public float apply(ItemStack stack, @Nullable World world, @Nullable EntityLivingBase entity) {
+                return ItemShovelRF.this.getEnergyStored(stack) > 0 && !ItemShovelRF.this.isEmpowered(stack) ? 1F : 0F;
+            }
+        });
 	}
 
 	public ItemShovelRF(Item.ToolMaterial toolMaterial, int harvestLevel, String nameIn) {

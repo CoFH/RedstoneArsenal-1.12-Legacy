@@ -22,6 +22,8 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import net.minecraftforge.fml.relauncher.*;
 
+import javax.annotation.Nullable;
+
 @Implementable({
 		"buildcraft.api.tools.IToolWrench", "mods.railcraft.api.core.items.IToolCrowbar"
 })
@@ -38,8 +40,18 @@ public class ItemWrenchBattleRF extends ItemSwordRF implements IToolHammer {
 		setHarvestLevel("wrench", 1);
 		setMaxDamage(toolMaterial.getMaxUses());
 		setCreativeTab(RedstoneArsenal.tab);
-		addPropertyOverride(new ResourceLocation(name + "_empowered"), (stack, world, entity) -> getEnergyStored(stack) > 0 && isEmpowered(stack) ? 1F : 0F);
-		addPropertyOverride(new ResourceLocation(name + "_active"), (stack, world, entity) -> getEnergyStored(stack) > 0 && !isEmpowered(stack) ? 1F : 0F);
+		addPropertyOverride(new ResourceLocation(name + "_empowered"), new IItemPropertyGetter() {
+            @Override
+            public float apply(ItemStack stack, @Nullable World world, @Nullable EntityLivingBase entity) {
+                return ItemWrenchBattleRF.this.getEnergyStored(stack) > 0 && ItemWrenchBattleRF.this.isEmpowered(stack) ? 1F : 0F;
+            }
+        });
+		addPropertyOverride(new ResourceLocation(name + "_active"), new IItemPropertyGetter() {
+            @Override
+            public float apply(ItemStack stack, @Nullable World world, @Nullable EntityLivingBase entity) {
+                return ItemWrenchBattleRF.this.getEnergyStored(stack) > 0 && !ItemWrenchBattleRF.this.isEmpowered(stack) ? 1F : 0F;
+            }
+        });
 	}
 
 	@Override

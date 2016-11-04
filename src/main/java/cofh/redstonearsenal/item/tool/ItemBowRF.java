@@ -28,6 +28,8 @@ import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.*;
 
+import javax.annotation.Nullable;
+
 public class ItemBowRF extends ItemBowAdv implements IEmpowerableItem, IEnergyContainerItem, IEqualityOverrideItem {
 
 	public int maxEnergy = 160000;
@@ -47,14 +49,54 @@ public class ItemBowRF extends ItemBowAdv implements IEmpowerableItem, IEnergyCo
 		setArrowDamage(1.5F);
 		setCreativeTab(RedstoneArsenal.tab);
 		setNoRepair();
-		addPropertyOverride(new ResourceLocation(name + "_empowered"), (stack, world, entity) -> getEnergyStored(stack) > 0 && isEmpowered(stack) && !isPulling(stack, entity) ? 1F : 0F);
-		addPropertyOverride(new ResourceLocation(name + "_empowered_0"), (stack, world, entity) -> getEnergyStored(stack) > 0 && isEmpowered(stack) && isPulling(stack, entity) && getPullStage(stack, entity) == 0 ? 1F : 0F);
-		addPropertyOverride(new ResourceLocation(name + "_empowered_1"), (stack, world, entity) -> getEnergyStored(stack) > 0 && isEmpowered(stack) && isPulling(stack, entity) && getPullStage(stack, entity) == 1 ? 1F : 0F);
-		addPropertyOverride(new ResourceLocation(name + "_empowered_2"), (stack, world, entity) -> getEnergyStored(stack) > 0 && isEmpowered(stack) && isPulling(stack, entity) && getPullStage(stack, entity) == 2 ? 1F : 0F);
-		addPropertyOverride(new ResourceLocation(name + "_active"), (stack, world, entity) -> getEnergyStored(stack) > 0 && !isEmpowered(stack) && !isPulling(stack, entity) ? 1F : 0F);
-		addPropertyOverride(new ResourceLocation(name + "_active_0"), (stack, world, entity) -> getEnergyStored(stack) > 0 && !isEmpowered(stack) && isPulling(stack, entity) && getPullStage(stack, entity) == 0 ? 1F : 0F);
-		addPropertyOverride(new ResourceLocation(name + "_active_1"), (stack, world, entity) -> getEnergyStored(stack) > 0 && !isEmpowered(stack) && isPulling(stack, entity) && getPullStage(stack, entity) == 1 ? 1F : 0F);
-		addPropertyOverride(new ResourceLocation(name + "_active_2"), (stack, world, entity) -> getEnergyStored(stack) > 0 && !isEmpowered(stack) && isPulling(stack, entity) && getPullStage(stack, entity) == 2 ? 1F : 0F);
+		addPropertyOverride(new ResourceLocation(name + "_empowered"), new IItemPropertyGetter() {
+            @Override
+            public float apply(ItemStack stack, @Nullable World world, @Nullable EntityLivingBase entity) {
+                return ItemBowRF.this.getEnergyStored(stack) > 0 && ItemBowRF.this.isEmpowered(stack) && !ItemBowRF.this.isPulling(stack, entity) ? 1F : 0F;
+            }
+        });
+		addPropertyOverride(new ResourceLocation(name + "_empowered_0"), new IItemPropertyGetter() {
+            @Override
+            public float apply(ItemStack stack, @Nullable World world, @Nullable EntityLivingBase entity) {
+                return ItemBowRF.this.getEnergyStored(stack) > 0 && ItemBowRF.this.isEmpowered(stack) && ItemBowRF.this.isPulling(stack, entity) && ItemBowRF.this.getPullStage(stack, entity) == 0 ? 1F : 0F;
+            }
+        });
+		addPropertyOverride(new ResourceLocation(name + "_empowered_1"), new IItemPropertyGetter() {
+            @Override
+            public float apply(ItemStack stack, @Nullable World world, @Nullable EntityLivingBase entity) {
+                return ItemBowRF.this.getEnergyStored(stack) > 0 && ItemBowRF.this.isEmpowered(stack) && ItemBowRF.this.isPulling(stack, entity) && ItemBowRF.this.getPullStage(stack, entity) == 1 ? 1F : 0F;
+            }
+        });
+		addPropertyOverride(new ResourceLocation(name + "_empowered_2"), new IItemPropertyGetter() {
+            @Override
+            public float apply(ItemStack stack, @Nullable World world, @Nullable EntityLivingBase entity) {
+                return ItemBowRF.this.getEnergyStored(stack) > 0 && ItemBowRF.this.isEmpowered(stack) && ItemBowRF.this.isPulling(stack, entity) && ItemBowRF.this.getPullStage(stack, entity) == 2 ? 1F : 0F;
+            }
+        });
+		addPropertyOverride(new ResourceLocation(name + "_active"), new IItemPropertyGetter() {
+            @Override
+            public float apply(ItemStack stack, @Nullable World world, @Nullable EntityLivingBase entity) {
+                return ItemBowRF.this.getEnergyStored(stack) > 0 && !ItemBowRF.this.isEmpowered(stack) && !ItemBowRF.this.isPulling(stack, entity) ? 1F : 0F;
+            }
+        });
+		addPropertyOverride(new ResourceLocation(name + "_active_0"), new IItemPropertyGetter() {
+            @Override
+            public float apply(ItemStack stack, @Nullable World world, @Nullable EntityLivingBase entity) {
+                return ItemBowRF.this.getEnergyStored(stack) > 0 && !ItemBowRF.this.isEmpowered(stack) && ItemBowRF.this.isPulling(stack, entity) && ItemBowRF.this.getPullStage(stack, entity) == 0 ? 1F : 0F;
+            }
+        });
+		addPropertyOverride(new ResourceLocation(name + "_active_1"), new IItemPropertyGetter() {
+            @Override
+            public float apply(ItemStack stack, @Nullable World world, @Nullable EntityLivingBase entity) {
+                return ItemBowRF.this.getEnergyStored(stack) > 0 && !ItemBowRF.this.isEmpowered(stack) && ItemBowRF.this.isPulling(stack, entity) && ItemBowRF.this.getPullStage(stack, entity) == 1 ? 1F : 0F;
+            }
+        });
+		addPropertyOverride(new ResourceLocation(name + "_active_2"), new IItemPropertyGetter() {
+            @Override
+            public float apply(ItemStack stack, @Nullable World world, @Nullable EntityLivingBase entity) {
+                return ItemBowRF.this.getEnergyStored(stack) > 0 && !ItemBowRF.this.isEmpowered(stack) && ItemBowRF.this.isPulling(stack, entity) && ItemBowRF.this.getPullStage(stack, entity) == 2 ? 1F : 0F;
+            }
+        });
 	}
 
 	public ItemBowRF setEnergyParams(int maxEnergy, int maxTransfer, int energyPerUse, int energyPerUseCharged) {

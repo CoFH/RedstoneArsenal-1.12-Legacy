@@ -39,6 +39,8 @@ import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.*;
 
+import javax.annotation.Nullable;
+
 @Implementable({
 		"buildcraft.api.tools.IToolWrench", "mods.railcraft.api.core.items.IToolCrowbar"
 })
@@ -63,7 +65,12 @@ public class ItemWrenchRF extends ItemShears implements IEnergyContainerItem, IT
 		setMaxDamage(toolMaterial.getMaxUses());
 		setNoRepair();
 		setHarvestLevel("wrench", 1);
-		addPropertyOverride(new ResourceLocation("flux_wrench_empowered"), (stack, world, entity) -> getEnergyStored(stack) > 0 ? 1F : 0F);
+		addPropertyOverride(new ResourceLocation("flux_wrench_empowered"), new IItemPropertyGetter() {
+            @Override
+            public float apply(ItemStack stack, @Nullable World world, @Nullable EntityLivingBase entity) {
+                return ItemWrenchRF.this.getEnergyStored(stack) > 0 ? 1F : 0F;
+            }
+        });
 	}
 
 	public ItemWrenchRF setEnergyParams(int maxEnergy, int maxTransfer, int energyPerUse, int energyPerUseCharged) {
