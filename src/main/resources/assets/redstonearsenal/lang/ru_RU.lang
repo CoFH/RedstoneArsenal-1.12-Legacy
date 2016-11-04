@@ -6,30 +6,30 @@ info.redstonearsenal.tool.energyPerUse=RF за использование
 info.redstonearsenal.tool.shovel=Также работает как мотыга.
 info.redstonearsenal.tool.wrench=Также работает как ножницы.
 
-item.redstonearsenal.material.dustElectrumFlux.name=Флаксовая электрумовая смесь
-item.redstonearsenal.material.ingotElectrumFlux.name=Флаксовый электрумовый слиток
-item.redstonearsenal.material.nuggetElectrumFlux.name=Флаксовый электрумовый самородок
-item.redstonearsenal.material.gemCrystalFlux.name=Флаксовый кристалл
-item.redstonearsenal.material.plateFlux.name=Флаксовая бронепластина
-item.redstonearsenal.material.rodObsidian.name=Обсидиановый стержень
-item.redstonearsenal.material.rodObsidianFlux.name=Наполненный флаксом обсидиановый стержень
+item.dust_electrum_flux.name=Флаксовая электрумовая смесь
+item.ingot_electrum_flux.name=Флаксовый электрумовый слиток
+item.nugget_electrum_flux.name=Флаксовый электрумовый самородок
+item.gem_crystal_flux.name=Флаксовый кристалл
+item.plate_flux.name=Флаксовая бронепластина
+item.rod_obsidian.name=Обсидиановый стержень
+item.rod_obsidian_flux.name=Наполненный флаксом обсидиановый стержень
 
-item.redstonearsenal.armor.fluxHelmet.name=Наполненный флаксом шлем
-item.redstonearsenal.armor.fluxPlate.name=Наполненная флаксом кираса
-item.redstonearsenal.armor.fluxLegs.name=Наполненные флаксом поножи
-item.redstonearsenal.armor.fluxBoots.name=Наполненные флаксом ботинки
+item.flux_helmet.name=Наполненный флаксом шлем
+item.flux_chestplate.name=Наполненная флаксом кираса
+item.flux_leggings.name=Наполненные флаксом поножи
+item.flux_boots.name=Наполненные флаксом ботинки
 
-item.redstonearsenal.tool.fluxWrench.name=Наполненный флаксом гаечный ключ
-item.redstonearsenal.tool.fluxBattleWrench.name=Наполненный флаксом боевой гаечный ключ
-item.redstonearsenal.tool.fluxSword.name=Наполненный флаксом меч
-item.redstonearsenal.tool.fluxShovel.name=Наполненная флаксом лопата
-item.redstonearsenal.tool.fluxPickaxe.name=Наполненная флаксом кирка
-item.redstonearsenal.tool.fluxAxe.name=Наполненный флаксом топор
-item.redstonearsenal.tool.fluxFishingRod.name=Наполненная флаксом удочка
-item.redstonearsenal.tool.fluxSickle.name=Наполненный флаксом серп
-item.redstonearsenal.tool.fluxBow.name=Наполненный флаксом лук
+item.flux_wrench.name=Наполненный флаксом гаечный ключ
+item.flux_battle_wrench.name=Наполненный флаксом боевой гаечный ключ
+item.flux_sword.name=Наполненный флаксом меч
+item.flux_shovel.name=Наполненная флаксом лопата
+item.flux_pickaxe.name=Наполненная флаксом кирка
+item.flux_axe.name=Наполненный флаксом топор
+item.flux_fishing_rod.name=Наполненная флаксом удочка
+item.flux_sickle.name=Наполненный флаксом серп
+item.flux_bow.name=Наполненный флаксом лук
 
 itemGroup.redstonearsenal.creativeTab=Redstone Arsenal
 
-tile.redstonearsenal.storage.electrumFlux.name=Флаксовый электрумовый блок
-tile.redstonearsenal.storage.crystalFlux.name=Блок флаксового кристалла
+tile.redstonearsenal.storage.electrum_flux.name=Флаксовый электрумовый блок
+tile.redstonearsenal.storage.crystal_flux.name=Блок флаксового кристалла

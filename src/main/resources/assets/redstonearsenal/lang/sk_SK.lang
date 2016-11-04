@@ -6,30 +6,30 @@ info.redstonearsenal.tool.energyPerUse=RF na operáciu
 info.redstonearsenal.tool.shovel=Tiež funguje ako motyka.
 info.redstonearsenal.tool.wrench=Tiež funguje ako nožnice.
 
-item.redstonearsenal.material.dustElectrumFlux.name=Zmes fluxového elektra
-item.redstonearsenal.material.ingotElectrumFlux.name=Fluxovo-elektrový ingot
-item.redstonearsenal.material.nuggetElectrumFlux.name=Fluxovo-elektrový ingot
-item.redstonearsenal.material.gemCrystalFlux.name=Fluxový kryštál
-item.redstonearsenal.material.plateFlux.name=Fluxové pokovovanie
-item.redstonearsenal.material.rodObsidian.name=Obsidiánová tyč
-item.redstonearsenal.material.rodObsidianFlux.name=Fluxovo-obsidiánová tyč
+item.dust_electrum_flux.name=Zmes fluxového elektra
+item.ingot_electrum_flux.name=Fluxovo-elektrový ingot
+item.nugget_electrum_flux.name=Fluxovo-elektrový ingot
+item.gem_crystal_flux.name=Fluxový kryštál
+item.plate_flux.name=Fluxové pokovovanie
+item.rod_obsidian.name=Obsidiánová tyč
+item.rod_obsidian_flux.name=Fluxovo-obsidiánová tyč
 
-item.redstonearsenal.armor.fluxHelmet.name=Fluxová prilba
-item.redstonearsenal.armor.fluxPlate.name=Fluxové brnenie
-item.redstonearsenal.armor.fluxLegs.name=Fluxové nohavice
-item.redstonearsenal.armor.fluxBoots.name=Fluxové topánky
+item.flux_helmet.name=Fluxová prilba
+item.flux_chestplate.name=Fluxové brnenie
+item.flux_leggings.name=Fluxové nohavice
+item.flux_boots.name=Fluxové topánky
 
-item.redstonearsenal.tool.fluxWrench.name=Fluxový multi-kľúč
-item.redstonearsenal.tool.fluxBattleWrench.name=Fluxový bojový multi-kľúč
-item.redstonearsenal.tool.fluxSword.name=Fluxový meč
-item.redstonearsenal.tool.fluxShovel.name=Fluxová lopata
-item.redstonearsenal.tool.fluxPickaxe.name=Fluxový krompáč
-item.redstonearsenal.tool.fluxAxe.name=Fluxová sekera
-item.redstonearsenal.tool.fluxFishingRod.name=Fluxová udica
-item.redstonearsenal.tool.fluxSickle.name=Fluxový kosák
-item.redstonearsenal.tool.fluxBow.name=Fluxový luk
+item.flux_wrench.name=Fluxový multi-kľúč
+item.flux_battle_wrench.name=Fluxový bojový multi-kľúč
+item.flux_sword.name=Fluxový meč
+item.flux_shovel.name=Fluxová lopata
+item.flux_pickaxe.name=Fluxový krompáč
+item.flux_axe.name=Fluxová sekera
+item.flux_fishing_rod.name=Fluxová udica
+item.flux_sickle.name=Fluxový kosák
+item.flux_bow.name=Fluxový luk
 
 itemGroup.redstonearsenal.creativeTab=Redstone Arsenal
 
-tile.redstonearsenal.storage.electrumFlux.name=Fluxovo-elektrová kocka
-tile.redstonearsenal.storage.crystalFlux.name=Kocka z fluxových kryštálov
+tile.redstonearsenal.storage.electrum_flux.name=Fluxovo-elektrová kocka
+tile.redstonearsenal.storage.crystal_flux.name=Kocka z fluxových kryštálov

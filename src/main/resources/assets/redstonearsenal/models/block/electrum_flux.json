@@ -1,0 +1,6 @@
+{
+	"parent": "minecraft:block/cube_all",
+    "textures": {
+        "all": "redstonearsenal:blocks/electrum_flux"
+    }
+}

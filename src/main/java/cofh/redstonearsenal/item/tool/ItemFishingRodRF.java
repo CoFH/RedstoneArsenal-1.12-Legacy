@@ -1,47 +1,53 @@
 package cofh.redstonearsenal.item.tool;
 
+import java.util.List;
+
 import cofh.api.energy.IEnergyContainerItem;
 import cofh.api.item.IEmpowerableItem;
 import cofh.core.entity.EntityCoFHFishHook;
 import cofh.core.item.IEqualityOverrideItem;
 import cofh.core.item.tool.ItemFishingRodAdv;
-import cofh.core.util.CoreUtils;
-import cofh.lib.util.helpers.EnergyHelper;
-import cofh.lib.util.helpers.MathHelper;
-import cofh.lib.util.helpers.ServerHelper;
-import cofh.lib.util.helpers.StringHelper;
+import cofh.lib.util.helpers.*;
+import cofh.redstonearsenal.RedstoneArsenal;
 import cofh.redstonearsenal.core.RAProps;
-
-import java.util.List;
-
-import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.EnumRarity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import net.minecraft.init.*;
+import net.minecraft.item.*;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.IIcon;
+import net.minecraft.util.*;
 import net.minecraft.world.World;
+import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.relauncher.*;
 
 public class ItemFishingRodRF extends ItemFishingRodAdv implements IEmpowerableItem, IEnergyContainerItem, IEqualityOverrideItem {
-
-	IIcon activeIcons[] = new IIcon[2];
-	IIcon drainedIcon;
 
 	public int maxEnergy = 160000;
 	public int maxTransfer = 1600;
 	public int energyPerUse = 200;
 	public int energyPerUseCharged = 800;
 
-	public ItemFishingRodRF(ToolMaterial toolMaterial) {
+	private static String name;
 
+	public ItemFishingRodRF(ToolMaterial toolMaterial, String nameIn) {
 		super(toolMaterial);
+		name = nameIn;
+		setUnlocalizedName(name);
+		setRegistryName(name);
+		GameRegistry.register(this);
+		setCreativeTab(RedstoneArsenal.tab);
 		this.toolMaterial = toolMaterial;
 		setMaxDamage(toolMaterial.getMaxUses());
 		setNoRepair();
+
+		addPropertyOverride(new ResourceLocation(name + "_empowered"), (stack, world, entity) -> getEnergyStored(stack) > 0 && isEmpowered(stack) && !isCastState(stack, entity) ? 1F : 0F);
+		addPropertyOverride(new ResourceLocation(name + "_active"), (stack, world, entity) -> getEnergyStored(stack) > 0 && !isEmpowered(stack) && !isCastState(stack, entity) ? 1F : 0F);
+		addPropertyOverride(new ResourceLocation(name + "_empowered_cast"), (stack, world, entity) -> getEnergyStored(stack) > 0 && isEmpowered(stack) && isCastState(stack, entity) ? 1F : 0F);
+		addPropertyOverride(new ResourceLocation(name + "_active_cast"), (stack, world, entity) -> getEnergyStored(stack) > 0 && !isEmpowered(stack) && isCastState(stack, entity) ? 1F : 0F);
 	}
 
 	public ItemFishingRodRF setEnergyParams(int maxEnergy, int maxTransfer, int energyPerUse, int energyPerUseCharged) {
@@ -54,54 +60,63 @@ public class ItemFishingRodRF extends ItemFishingRodAdv implements IEmpowerableI
 		return this;
 	}
 
+	@SideOnly(Side.CLIENT)
+	public void initModel() {
+		ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation(RedstoneArsenal.modId + ":" + name, "inventory"));
+	}
+
+	private boolean isCastState(ItemStack stack, EntityLivingBase entityIn) {
+		return (entityIn != null && entityIn.getHeldItemMainhand() == stack && entityIn instanceof EntityPlayer && ((EntityPlayer) entityIn).fishEntity != null);
+	}
+
 	protected void useEnergy(ItemStack stack) {
 
-		int unbreakingLevel = MathHelper.clamp(EnchantmentHelper.getEnchantmentLevel(Enchantment.unbreaking.effectId, stack), 0, 4);
+		int unbreakingLevel = MathHelper.clamp(EnchantmentHelper.getEnchantmentLevel(Enchantments.UNBREAKING, stack), 0, 4);
 		extractEnergy(stack, isEmpowered(stack) ? energyPerUseCharged * (5 - unbreakingLevel) / 5 : energyPerUse * (5 - unbreakingLevel) / 5, false);
 	}
 
 	protected int getEnergyPerUse(ItemStack stack) {
 
-		int unbreakingLevel = MathHelper.clamp(EnchantmentHelper.getEnchantmentLevel(Enchantment.unbreaking.effectId, stack), 0, 4);
+		int unbreakingLevel = MathHelper.clamp(EnchantmentHelper.getEnchantmentLevel(Enchantments.UNBREAKING, stack), 0, 4);
 		return (isEmpowered(stack) ? energyPerUseCharged : energyPerUse) * (5 - unbreakingLevel) / 5;
 	}
 
 	@Override
 	public EnumRarity getRarity(ItemStack stack) {
 
-		return EnumRarity.uncommon;
+		return EnumRarity.UNCOMMON;
 	}
 
 	@Override
-	public void getSubItems(Item item, CreativeTabs tab, List list) {
+	public void getSubItems(Item item, CreativeTabs tab, List<ItemStack> list) {
 
 		list.add(EnergyHelper.setDefaultEnergyTag(new ItemStack(item, 1, 0), 0));
 		list.add(EnergyHelper.setDefaultEnergyTag(new ItemStack(item, 1, 0), maxEnergy));
 	}
 
 	@Override
-	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
-
+	public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand) {
 		if (!player.capabilities.isCreativeMode && getEnergyStored(stack) < getEnergyPerUse(stack)) {
-			return stack;
+			return new ActionResult<ItemStack>(EnumActionResult.PASS, stack);
 		}
 		if (player.fishEntity != null) {
-			int i = player.fishEntity.func_146034_e();
+			player.fishEntity.handleHookRetraction();
 			useEnergy(stack);
-		} else {
-			world.playSoundAtEntity(player, "random.bow", 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
+		}
+		else {
+			player.worldObj.playSound((EntityPlayer) null, player.getPosition(), SoundEvents.ENTITY_BOBBER_THROW, SoundCategory.PLAYERS, 0.1F, 0.5F * ((player.worldObj.rand.nextFloat() - player.worldObj.rand.nextFloat()) * 0.7F + 2F));
 
 			if (ServerHelper.isServerWorld(world)) {
 				int modifier = isEmpowered(stack) ? 3 : 1;
 				world.spawnEntityInWorld(new EntityCoFHFishHook(world, player, modifier, modifier));
 			}
 		}
-		player.swingItem();
-		return stack;
+		player.swingArm(EnumHand.MAIN_HAND);
+		return new ActionResult<ItemStack>(EnumActionResult.PASS, stack);
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean check) {
+	public void addInformation(ItemStack stack, EntityPlayer player, List<String> list, boolean check) {
 
 		if (StringHelper.displayShiftForDetail && !StringHelper.isShiftKeyDown()) {
 			list.add(StringHelper.shiftForDetails());
@@ -109,10 +124,10 @@ public class ItemFishingRodRF extends ItemFishingRodAdv implements IEmpowerableI
 		if (!StringHelper.isShiftKeyDown()) {
 			return;
 		}
-		if (stack.stackTagCompound == null) {
+		if (stack.getTagCompound() == null) {
 			EnergyHelper.setDefaultEnergyTag(stack, 0);
 		}
-		list.add(StringHelper.localize("info.cofh.charge") + ": " + stack.stackTagCompound.getInteger("Energy") + " / " + maxEnergy + " RF");
+		list.add(StringHelper.localize("info.cofh.charge") + ": " + stack.getTagCompound().getInteger("Energy") + " / " + maxEnergy + " RF");
 
 		list.add(StringHelper.ORANGE + getEnergyPerUse(stack) + " " + StringHelper.localize("info.redstonearsenal.tool.energyPerUse") + StringHelper.END);
 		RAProps.addEmpoweredTip(this, stack, list);
@@ -125,24 +140,24 @@ public class ItemFishingRodRF extends ItemFishingRodAdv implements IEmpowerableI
 	}
 
 	@Override
-	public int getDisplayDamage(ItemStack stack) {
+	public double getDurabilityForDisplay(ItemStack stack) {
 
-		if (stack.stackTagCompound == null) {
+		if (stack.getTagCompound() == null) {
 			EnergyHelper.setDefaultEnergyTag(stack, 0);
 		}
-		return maxEnergy - stack.stackTagCompound.getInteger("Energy");
+		return 1D - (double) stack.getTagCompound().getInteger("Energy") / (double) maxEnergy;
 	}
 
 	@Override
 	public int getMaxDamage(ItemStack stack) {
 
-		return maxEnergy;
+		return 0;
 	}
 
 	@Override
 	public boolean showDurabilityBar(ItemStack stack) {
 
-		return !RAProps.showToolCharge ? false : stack.stackTagCompound == null || !stack.stackTagCompound.getBoolean("CreativeTab");
+		return !RAProps.showToolCharge ? false : stack.getTagCompound() == null || !stack.getTagCompound().getBoolean("CreativeTab");
 	}
 
 	@Override
@@ -151,42 +166,21 @@ public class ItemFishingRodRF extends ItemFishingRodAdv implements IEmpowerableI
 		return true;
 	}
 
-	@Override
-	public IIcon getIcon(ItemStack stack, int pass) {
-
-		EntityPlayer player = CoreUtils.getClientPlayer();
-
-		if (player.inventory.getCurrentItem() == stack && player.fishEntity != null) {
-			return isEmpowered(stack) ? this.activeIcons[1] : this.normalIcons[1];
-		}
-		return isEmpowered(stack) ? this.activeIcons[0] : getEnergyStored(stack) <= 0 ? this.drainedIcon : this.normalIcons[0];
-	}
-
-	@Override
-	public void registerIcons(IIconRegister ir) {
-
-		super.registerIcons(ir);
-
-		this.drainedIcon = ir.registerIcon(this.getIconString() + "_Drained");
-		this.activeIcons[0] = ir.registerIcon(this.getIconString() + "_Uncast_Active");
-		this.activeIcons[1] = ir.registerIcon(this.getIconString() + "_Cast_Active");
-	}
-
 	/* IEmpowerableItem */
 	@Override
 	public boolean isEmpowered(ItemStack stack) {
 
-		return stack.stackTagCompound == null ? false : stack.stackTagCompound.getBoolean("Empowered");
+		return stack.getTagCompound() == null ? false : stack.getTagCompound().getBoolean("Empowered");
 	}
 
 	@Override
 	public boolean setEmpoweredState(ItemStack stack, boolean state) {
 
 		if (getEnergyStored(stack) > 0) {
-			stack.stackTagCompound.setBoolean("Empowered", state);
+			stack.getTagCompound().setBoolean("Empowered", state);
 			return true;
 		}
-		stack.stackTagCompound.setBoolean("Empowered", false);
+		stack.getTagCompound().setBoolean("Empowered", false);
 		return false;
 	}
 
@@ -194,9 +188,10 @@ public class ItemFishingRodRF extends ItemFishingRodAdv implements IEmpowerableI
 	public void onStateChange(EntityPlayer player, ItemStack stack) {
 
 		if (isEmpowered(stack)) {
-			player.worldObj.playSoundAtEntity(player, "ambient.weather.thunder", 0.4F, 1.0F);
-		} else {
-			player.worldObj.playSoundAtEntity(player, "random.orb", 0.2F, 0.6F);
+			player.worldObj.playSound((EntityPlayer) null, player.getPosition(), SoundEvents.ENTITY_LIGHTNING_THUNDER, SoundCategory.PLAYERS, 0.1F, 0.5F * ((player.worldObj.rand.nextFloat() - player.worldObj.rand.nextFloat()) * 0.7F + 2F));
+		}
+		else {
+			player.worldObj.playSound((EntityPlayer) null, player.getPosition(), SoundEvents.ENTITY_EXPERIENCE_ORB_TOUCH, SoundCategory.PLAYERS, 0.1F, 0.5F * ((player.worldObj.rand.nextFloat() - player.worldObj.rand.nextFloat()) * 0.7F + 2F));
 		}
 	}
 
@@ -204,15 +199,15 @@ public class ItemFishingRodRF extends ItemFishingRodAdv implements IEmpowerableI
 	@Override
 	public int receiveEnergy(ItemStack container, int maxReceive, boolean simulate) {
 
-		if (container.stackTagCompound == null) {
+		if (container.getTagCompound() == null) {
 			EnergyHelper.setDefaultEnergyTag(container, 0);
 		}
-		int stored = container.stackTagCompound.getInteger("Energy");
+		int stored = container.getTagCompound().getInteger("Energy");
 		int receive = Math.min(maxReceive, Math.min(maxEnergy - stored, maxTransfer));
 
 		if (!simulate) {
 			stored += receive;
-			container.stackTagCompound.setInteger("Energy", stored);
+			container.getTagCompound().setInteger("Energy", stored);
 		}
 		return receive;
 	}
@@ -220,18 +215,18 @@ public class ItemFishingRodRF extends ItemFishingRodAdv implements IEmpowerableI
 	@Override
 	public int extractEnergy(ItemStack container, int maxExtract, boolean simulate) {
 
-		if (container.stackTagCompound == null) {
+		if (container.getTagCompound() == null) {
 			EnergyHelper.setDefaultEnergyTag(container, 0);
 		}
-		if (container.stackTagCompound.hasKey("Unbreakable")) {
-			container.stackTagCompound.removeTag("Unbreakable");
+		if (container.getTagCompound().hasKey("Unbreakable")) {
+			container.getTagCompound().removeTag("Unbreakable");
 		}
-		int stored = container.stackTagCompound.getInteger("Energy");
+		int stored = container.getTagCompound().getInteger("Energy");
 		int extract = Math.min(maxExtract, stored);
 
 		if (!simulate) {
 			stored -= extract;
-			container.stackTagCompound.setInteger("Energy", stored);
+			container.getTagCompound().setInteger("Energy", stored);
 
 			if (stored == 0) {
 				setEmpoweredState(container, false);
@@ -243,10 +238,10 @@ public class ItemFishingRodRF extends ItemFishingRodAdv implements IEmpowerableI
 	@Override
 	public int getEnergyStored(ItemStack container) {
 
-		if (container.stackTagCompound == null) {
+		if (container.getTagCompound() == null) {
 			EnergyHelper.setDefaultEnergyTag(container, 0);
 		}
-		return container.stackTagCompound.getInteger("Energy");
+		return container.getTagCompound().getInteger("Energy");
 	}
 
 	@Override
@@ -259,15 +254,15 @@ public class ItemFishingRodRF extends ItemFishingRodAdv implements IEmpowerableI
 	@Override
 	public boolean isLastHeldItemEqual(ItemStack current, ItemStack previous) {
 
-		NBTTagCompound a = current.stackTagCompound, b = previous.stackTagCompound;
+		NBTTagCompound a = current.getTagCompound(), b = previous.getTagCompound();
 		if (a == b) {
 			return true;
 		}
 		if (a == null || b == null) {
 			return false;
 		}
-		a = (NBTTagCompound) a.copy();
-		b = (NBTTagCompound) b.copy();
+		a = a.copy();
+		b = b.copy();
 		a.removeTag("Energy");
 		b.removeTag("Energy");
 		return a.equals(b);

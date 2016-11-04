@@ -1,42 +1,37 @@
 package cofh.redstonearsenal.item.tool;
 
+import java.util.List;
+
+import com.google.common.collect.*;
+
 import cofh.api.energy.IEnergyContainerItem;
 import cofh.api.item.IEmpowerableItem;
 import cofh.core.item.IEqualityOverrideItem;
-import cofh.lib.util.helpers.DamageHelper;
-import cofh.lib.util.helpers.EnergyHelper;
-import cofh.lib.util.helpers.MathHelper;
-import cofh.lib.util.helpers.StringHelper;
+import cofh.lib.util.helpers.*;
+import cofh.redstonearsenal.RedstoneArsenal;
 import cofh.redstonearsenal.core.RAProps;
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.Multimap;
-
-import java.util.List;
-
-import net.minecraft.block.Block;
-import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.monster.EntityMob;
+import net.minecraft.entity.*;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.EnumRarity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemSword;
+import net.minecraft.init.*;
+import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.*;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.potion.Potion;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.IIcon;
+import net.minecraft.util.*;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.relauncher.*;
 
 public class ItemSwordRF extends ItemSword implements IEmpowerableItem, IEnergyContainerItem, IEqualityOverrideItem {
 
-	IIcon activeIcon;
-	IIcon drainedIcon;
+	// IIcon activeIcon;
+	// IIcon drainedIcon;
 
 	public int maxEnergy = 160000;
 	public int maxTransfer = 1600;
@@ -46,10 +41,19 @@ public class ItemSwordRF extends ItemSword implements IEmpowerableItem, IEnergyC
 	public int damage = 8;
 	public int damageCharged = 4;
 
-	public ItemSwordRF(Item.ToolMaterial toolMaterial) {
+	private static String name;
+
+	public ItemSwordRF(Item.ToolMaterial toolMaterial, String nameIn) {
 
 		super(toolMaterial);
+		name = nameIn;
 		setNoRepair();
+		setUnlocalizedName(name);
+		setRegistryName(name);
+		GameRegistry.register(this);
+		setCreativeTab(RedstoneArsenal.tab);
+		addPropertyOverride(new ResourceLocation(name + "_empowered"), (stack, world, entity) -> (getEnergyStored(stack) > 0 && isEmpowered(stack)) || isCreativeTab(stack) ? 1F : 0F);
+		addPropertyOverride(new ResourceLocation(name + "_active"), (stack, world, entity) -> getEnergyStored(stack) > 0 && !isEmpowered(stack) ? 1F : 0F);
 	}
 
 	public ItemSwordRF setEnergyParams(int maxEnergy, int maxTransfer, int energyPerUse, int energyPerUseCharged) {
@@ -62,15 +66,20 @@ public class ItemSwordRF extends ItemSword implements IEmpowerableItem, IEnergyC
 		return this;
 	}
 
+	@SideOnly(Side.CLIENT)
+	public void initModel() {
+		ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation(RedstoneArsenal.modId + ":" + name, "inventory"));
+	}
+
 	protected int useEnergy(ItemStack stack, boolean simulate) {
 
-		int unbreakingLevel = MathHelper.clamp(EnchantmentHelper.getEnchantmentLevel(Enchantment.unbreaking.effectId, stack), 0, 4);
+		int unbreakingLevel = MathHelper.clamp(EnchantmentHelper.getEnchantmentLevel(Enchantments.UNBREAKING, stack), 0, 4);
 		return extractEnergy(stack, isEmpowered(stack) ? energyPerUseCharged * (5 - unbreakingLevel) / 5 : energyPerUse * (5 - unbreakingLevel) / 5, simulate);
 	}
 
 	protected int getEnergyPerUse(ItemStack stack) {
 
-		int unbreakingLevel = MathHelper.clamp(EnchantmentHelper.getEnchantmentLevel(Enchantment.unbreaking.effectId, stack), 0, 4);
+		int unbreakingLevel = MathHelper.clamp(EnchantmentHelper.getEnchantmentLevel(Enchantments.UNBREAKING, stack), 0, 4);
 		return (isEmpowered(stack) ? energyPerUseCharged : energyPerUse) * (5 - unbreakingLevel) / 5;
 	}
 
@@ -83,21 +92,14 @@ public class ItemSwordRF extends ItemSword implements IEmpowerableItem, IEnergyC
 	@Override
 	public EnumRarity getRarity(ItemStack stack) {
 
-		return EnumRarity.uncommon;
+		return EnumRarity.UNCOMMON;
 	}
 
 	@Override
-	public void getSubItems(Item item, CreativeTabs tab, List list) {
+	public void getSubItems(Item item, CreativeTabs tab, List<ItemStack> list) {
 
 		list.add(EnergyHelper.setDefaultEnergyTag(new ItemStack(item, 1, 0), 0));
 		list.add(EnergyHelper.setDefaultEnergyTag(new ItemStack(item, 1, 0), maxEnergy));
-	}
-
-	@Override
-	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
-
-		player.setItemInUse(stack, this.getMaxItemUseDuration(stack));
-		return stack;
 	}
 
 	@Override
@@ -107,30 +109,30 @@ public class ItemSwordRF extends ItemSword implements IEmpowerableItem, IEnergyC
 			stack.setItemDamage(0);
 		}
 		EntityPlayer thePlayer = (EntityPlayer) player;
-		float fallingMult = (player.fallDistance > 0.0F && !player.onGround && !player.isOnLadder() && !player.isInWater()
-				&& !player.isPotionActive(Potion.blindness) && player.ridingEntity == null) ? 1.5F : 1.0F;
+		float fallingMult = (player.fallDistance > 0.0F && !player.onGround && !player.isOnLadder() && !player.isInWater() && !player.isPotionActive(MobEffects.BLINDNESS) && player.getRidingEntity() == null) ? 1.5F : 1.0F;
 		float potionDamage = 1.0f;
 
-		if (player.isPotionActive(Potion.damageBoost)) {
-			potionDamage += player.getActivePotionEffect(Potion.damageBoost).getAmplifier() * 1.3f;
+		if (player.isPotionActive(MobEffects.INSTANT_DAMAGE)) {
+			potionDamage += player.getActivePotionEffect(MobEffects.INSTANT_DAMAGE).getAmplifier() * 1.3f;
 		}
 
 		if (thePlayer.capabilities.isCreativeMode || useEnergy(stack, false) == getEnergyPerUse(stack)) {
 			float fluxDamage = isEmpowered(stack) ? damageCharged : 1;
-			float enchantDamage = damage + EnchantmentHelper.getEnchantmentModifierLiving(player, entity);
+			float enchantDamage = damage + EnchantmentHelper.getEnchantmentModifierDamage(player.getArmorInventoryList(), DamageSource.generic);
 
 			entity.attackEntityFrom(DamageHelper.causePlayerFluxDamage(thePlayer), fluxDamage * potionDamage);
 			entity.attackEntityFrom(DamageSource.causePlayerDamage(thePlayer), (fluxDamage + enchantDamage) * fallingMult * potionDamage);
-		} else {
+		}
+		else {
 			entity.attackEntityFrom(DamageSource.causePlayerDamage(thePlayer), 1 * fallingMult * potionDamage);
 		}
 		return true;
 	}
 
 	@Override
-	public boolean onBlockDestroyed(ItemStack stack, World world, Block block, int x, int y, int z, EntityLivingBase entity) {
+	public boolean onBlockDestroyed(ItemStack stack, World world, IBlockState state, BlockPos pos, EntityLivingBase entityLivingy) {
 
-		if (block.getBlockHardness(world, x, y, z) != 0.0D) {
+		if (state.getBlockHardness(world, pos) != 0.0D) {
 			extractEnergy(stack, energyPerUse, false);
 		}
 		return true;
@@ -138,23 +140,28 @@ public class ItemSwordRF extends ItemSword implements IEmpowerableItem, IEnergyC
 
 	@Override
 	public void onUpdate(ItemStack stack, World world, Entity entity, int slot, boolean isCurrentItem) {
-
-		if (!isEmpowered(stack) || !isCurrentItem) {
-			return;
-		}
-		if (entity instanceof EntityPlayer) {
-			if (((EntityPlayer) entity).isBlocking()) {
-
-				AxisAlignedBB axisalignedbb = entity.boundingBox.expand(2.0D, 1.0D, 2.0D);
-				List<EntityMob> list = entity.worldObj.getEntitiesWithinAABB(EntityMob.class, axisalignedbb);
-
-				for (Entity mob : list) {
-					pushEntityAway(mob, entity);
-				}
-			}
+		if (stack.getItemDamage() > 0) {
+			stack.setItemDamage(0);
 		}
 	}
 
+	/*
+	 * Commented out for now since sword blocking isn't a thing in 1.10, I would
+	 * recommend a check here for if a shield is in the offhand and actively
+	 * blocking
+	 *
+	 * @Override public void onUpdate(ItemStack stack, World world, Entity
+	 * entity, int slot, boolean isCurrentItem) {
+	 *
+	 * if (!isEmpowered(stack) || !isCurrentItem) { return; } if (entity
+	 * instanceof EntityPlayer) { if (((EntityPlayer) entity).isBlocking()) {
+	 *
+	 * AxisAlignedBB axisalignedbb = entity.boundingBox.expand(2.0D, 1.0D,
+	 * 2.0D); List<EntityMob> list =
+	 * entity.worldObj.getEntitiesWithinAABB(EntityMob.class, axisalignedbb);
+	 *
+	 * for (Entity mob : list) { pushEntityAway(mob, entity); } } } }
+	 */
 	protected void pushEntityAway(Entity entity, Entity player) {
 
 		double d0 = player.posX - entity.posX;
@@ -181,7 +188,7 @@ public class ItemSwordRF extends ItemSword implements IEmpowerableItem, IEnergyC
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean check) {
+	public void addInformation(ItemStack stack, EntityPlayer player, List<String> list, boolean check) {
 
 		if (StringHelper.displayShiftForDetail && !StringHelper.isShiftKeyDown()) {
 			list.add(StringHelper.shiftForDetails());
@@ -189,18 +196,17 @@ public class ItemSwordRF extends ItemSword implements IEmpowerableItem, IEnergyC
 		if (!StringHelper.isShiftKeyDown()) {
 			return;
 		}
-		if (stack.stackTagCompound == null) {
+		if (stack.getTagCompound() == null) {
 			EnergyHelper.setDefaultEnergyTag(stack, 0);
 		}
-		list.add(StringHelper.localize("info.cofh.charge") + ": " + stack.stackTagCompound.getInteger("Energy") + " / " + maxEnergy + " RF");
+		list.add(StringHelper.localize("info.cofh.charge") + ": " + stack.getTagCompound().getInteger("Energy") + " / " + maxEnergy + " RF");
 
 		list.add(StringHelper.ORANGE + getEnergyPerUse(stack) + " " + StringHelper.localize("info.redstonearsenal.tool.energyPerUse") + StringHelper.END);
 		RAProps.addEmpoweredTip(this, stack, list);
 		if (getEnergyStored(stack) >= getEnergyPerUse(stack)) {
 			list.add("");
 			list.add(StringHelper.LIGHT_BLUE + "+" + damage + " " + StringHelper.localize("info.cofh.damageAttack") + StringHelper.END);
-			list.add(StringHelper.BRIGHT_GREEN + "+" + (isEmpowered(stack) ? damageCharged : 1) + " " + StringHelper.localize("info.cofh.damageFlux")
-					+ StringHelper.END);
+			list.add(StringHelper.BRIGHT_GREEN + "+" + (isEmpowered(stack) ? damageCharged : 1) + " " + StringHelper.localize("info.cofh.damageFlux") + StringHelper.END);
 		}
 	}
 
@@ -211,24 +217,24 @@ public class ItemSwordRF extends ItemSword implements IEmpowerableItem, IEnergyC
 	}
 
 	@Override
-	public int getDisplayDamage(ItemStack stack) {
+	public double getDurabilityForDisplay(ItemStack stack) {
 
-		if (stack.stackTagCompound == null) {
+		if (stack.getTagCompound() == null) {
 			EnergyHelper.setDefaultEnergyTag(stack, 0);
 		}
-		return maxEnergy - stack.stackTagCompound.getInteger("Energy");
+		return 1D - (double) stack.getTagCompound().getInteger("Energy") / (double) maxEnergy;
 	}
 
 	@Override
 	public int getMaxDamage(ItemStack stack) {
 
-		return maxEnergy;
+		return 0;
 	}
 
 	@Override
 	public boolean showDurabilityBar(ItemStack stack) {
 
-		return !RAProps.showToolCharge ? false : stack.stackTagCompound == null || !stack.stackTagCompound.getBoolean("CreativeTab");
+		return !RAProps.showToolCharge ? false : stack.getTagCompound() == null || !stack.getTagCompound().getBoolean("CreativeTab");
 	}
 
 	@Override
@@ -238,46 +244,24 @@ public class ItemSwordRF extends ItemSword implements IEmpowerableItem, IEnergyC
 	}
 
 	@Override
-	public Multimap getItemAttributeModifiers() {
-
+	public Multimap<String, AttributeModifier> getAttributeModifiers(EntityEquipmentSlot slot, ItemStack stack) {
 		return HashMultimap.create();
-	}
-
-	@Override
-	public IIcon getIconIndex(ItemStack stack) {
-
-		return getIcon(stack, 0);
-	}
-
-	@Override
-	public IIcon getIcon(ItemStack stack, int pass) {
-
-		return isEmpowered(stack) ? this.activeIcon : getEnergyStored(stack) <= 0 ? this.drainedIcon : this.itemIcon;
-	}
-
-	@Override
-	public void registerIcons(IIconRegister ir) {
-
-		this.itemIcon = ir.registerIcon(this.getIconString());
-		this.activeIcon = ir.registerIcon(this.getIconString() + "_Active");
-		this.drainedIcon = ir.registerIcon(this.getIconString() + "_Drained");
 	}
 
 	/* IEmpowerableItem */
 	@Override
 	public boolean isEmpowered(ItemStack stack) {
-
-		return stack.stackTagCompound == null ? false : stack.stackTagCompound.getBoolean("Empowered");
+		return stack.getTagCompound() == null ? false : stack.getTagCompound().getBoolean("Empowered");
 	}
 
 	@Override
 	public boolean setEmpoweredState(ItemStack stack, boolean state) {
 
 		if (getEnergyStored(stack) > 0) {
-			stack.stackTagCompound.setBoolean("Empowered", state);
+			stack.getTagCompound().setBoolean("Empowered", state);
 			return true;
 		}
-		stack.stackTagCompound.setBoolean("Empowered", false);
+		stack.getTagCompound().setBoolean("Empowered", false);
 		return false;
 	}
 
@@ -285,9 +269,10 @@ public class ItemSwordRF extends ItemSword implements IEmpowerableItem, IEnergyC
 	public void onStateChange(EntityPlayer player, ItemStack stack) {
 
 		if (isEmpowered(stack)) {
-			player.worldObj.playSoundAtEntity(player, "ambient.weather.thunder", 0.4F, 1.0F);
-		} else {
-			player.worldObj.playSoundAtEntity(player, "random.orb", 0.2F, 0.6F);
+			player.worldObj.playSound((EntityPlayer) null, player.getPosition(), SoundEvents.ENTITY_LIGHTNING_THUNDER, SoundCategory.PLAYERS, 0.1F, 0.5F * ((player.worldObj.rand.nextFloat() - player.worldObj.rand.nextFloat()) * 0.7F + 2F));
+		}
+		else {
+			player.worldObj.playSound((EntityPlayer) null, player.getPosition(), SoundEvents.ENTITY_EXPERIENCE_ORB_TOUCH, SoundCategory.PLAYERS, 0.1F, 0.5F * ((player.worldObj.rand.nextFloat() - player.worldObj.rand.nextFloat()) * 0.7F + 2F));
 		}
 	}
 
@@ -295,15 +280,15 @@ public class ItemSwordRF extends ItemSword implements IEmpowerableItem, IEnergyC
 	@Override
 	public int receiveEnergy(ItemStack container, int maxReceive, boolean simulate) {
 
-		if (container.stackTagCompound == null) {
+		if (container.getTagCompound() == null) {
 			EnergyHelper.setDefaultEnergyTag(container, 0);
 		}
-		int stored = container.stackTagCompound.getInteger("Energy");
+		int stored = container.getTagCompound().getInteger("Energy");
 		int receive = Math.min(maxReceive, Math.min(maxEnergy - stored, maxTransfer));
 
 		if (!simulate) {
 			stored += receive;
-			container.stackTagCompound.setInteger("Energy", stored);
+			container.getTagCompound().setInteger("Energy", stored);
 		}
 		return receive;
 	}
@@ -311,18 +296,18 @@ public class ItemSwordRF extends ItemSword implements IEmpowerableItem, IEnergyC
 	@Override
 	public int extractEnergy(ItemStack container, int maxExtract, boolean simulate) {
 
-		if (container.stackTagCompound == null) {
+		if (container.getTagCompound() == null) {
 			EnergyHelper.setDefaultEnergyTag(container, 0);
 		}
-		if (container.stackTagCompound.hasKey("Unbreakable")) {
-			container.stackTagCompound.removeTag("Unbreakable");
+		if (container.getTagCompound().hasKey("Unbreakable")) {
+			container.getTagCompound().removeTag("Unbreakable");
 		}
-		int stored = container.stackTagCompound.getInteger("Energy");
+		int stored = container.getTagCompound().getInteger("Energy");
 		int extract = Math.min(maxExtract, stored);
 
 		if (!simulate) {
 			stored -= extract;
-			container.stackTagCompound.setInteger("Energy", stored);
+			container.getTagCompound().setInteger("Energy", stored);
 
 			if (stored == 0) {
 				setEmpoweredState(container, false);
@@ -334,10 +319,10 @@ public class ItemSwordRF extends ItemSword implements IEmpowerableItem, IEnergyC
 	@Override
 	public int getEnergyStored(ItemStack container) {
 
-		if (container.stackTagCompound == null) {
+		if (container.getTagCompound() == null) {
 			EnergyHelper.setDefaultEnergyTag(container, 0);
 		}
-		return container.stackTagCompound.getInteger("Energy");
+		return container.getTagCompound().getInteger("Energy");
 	}
 
 	@Override
@@ -350,18 +335,22 @@ public class ItemSwordRF extends ItemSword implements IEmpowerableItem, IEnergyC
 	@Override
 	public boolean isLastHeldItemEqual(ItemStack current, ItemStack previous) {
 
-		NBTTagCompound a = current.stackTagCompound, b = previous.stackTagCompound;
+		NBTTagCompound a = current.getTagCompound(), b = previous.getTagCompound();
 		if (a == b) {
 			return true;
 		}
 		if (a == null || b == null) {
 			return false;
 		}
-		a = (NBTTagCompound) a.copy();
-		b = (NBTTagCompound) b.copy();
+		a = a.copy();
+		b = b.copy();
 		a.removeTag("Energy");
 		b.removeTag("Energy");
 		return a.equals(b);
+	}
+
+	public boolean isCreativeTab(ItemStack stack) {
+		return stack.getTagCompound() == null ? false : stack.getTagCompound().getBoolean("CreativeTab");
 	}
 
 }

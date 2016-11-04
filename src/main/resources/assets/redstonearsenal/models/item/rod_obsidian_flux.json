@@ -1,0 +1,6 @@
+{
+  "parent": "item/handheld",
+    "textures": {
+        "layer0": "redstonearsenal:items/material/rod_obsidian_flux"
+    }
+}

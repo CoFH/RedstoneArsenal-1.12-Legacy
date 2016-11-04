@@ -1,0 +1,39 @@
+{
+  "parent": "item/handheld_rod",
+    "textures": {
+        "layer0": "redstonearsenal:items/tool/flux_fishing_rod"
+    },
+    "display": {
+        "firstperson": {
+            "rotation": [ 0, -135, 25 ],
+            "translation": [ 5, 4, 2 ],
+            "scale": [ 5, 5, 5 ]
+        }
+    },
+	"overrides": [
+        {
+            "predicate": {
+                "flux_fishing_rod_empowered": 1.0
+            },
+			"model": "redstonearsenal:item/flux_fishing_rod_empowered"
+        },
+		{
+            "predicate": {
+                "flux_fishing_rod_active": 1.0
+            },
+			"model": "redstonearsenal:item/flux_fishing_rod_active"
+        },
+		{
+            "predicate": {
+                "flux_fishing_rod_empowered_cast": 1.0
+            },
+			"model": "redstonearsenal:item/flux_fishing_rod_empowered_cast"
+        },
+		{
+            "predicate": {
+                "flux_fishing_rod_active_cast": 1.0
+            },
+			"model": "redstonearsenal:item/flux_fishing_rod_active_cast"
+        }
+    ]
+}

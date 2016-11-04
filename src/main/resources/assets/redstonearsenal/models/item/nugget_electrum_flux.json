@@ -1,0 +1,6 @@
+{
+  "parent": "item/handheld",
+    "textures": {
+        "layer0": "redstonearsenal:items/material/nugget_electrum_flux"
+    }
+}

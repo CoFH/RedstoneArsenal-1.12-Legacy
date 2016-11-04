@@ -1,0 +1,6 @@
+{
+  "parent": "item/handheld",
+    "textures": {
+        "layer0": "redstonearsenal:items/armor/flux_boots"
+    }
+}

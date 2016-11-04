@@ -1,24 +1,25 @@
 package cofh.redstonearsenal.item.armor;
 
-import cofh.api.energy.IEnergyContainerItem;
-import cofh.core.item.ItemArmorAdv;
-import cofh.lib.util.helpers.EnergyHelper;
-import cofh.lib.util.helpers.MathHelper;
-import cofh.lib.util.helpers.StringHelper;
-import cofh.redstonearsenal.core.RAProps;
-
 import java.util.List;
 
+import cofh.api.energy.IEnergyContainerItem;
+import cofh.core.item.ItemArmorAdv;
+import cofh.lib.util.helpers.*;
+import cofh.redstonearsenal.RedstoneArsenal;
+import cofh.redstonearsenal.core.RAProps;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.EnumRarity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import net.minecraft.init.Enchantments;
+import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.*;
 import net.minecraft.util.DamageSource;
+import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.ISpecialArmor;
+import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.relauncher.*;
 
 public class ItemArmorRF extends ItemArmorAdv implements ISpecialArmor, IEnergyContainerItem {
 
@@ -32,13 +33,23 @@ public class ItemArmorRF extends ItemArmorAdv implements ISpecialArmor, IEnergyC
 
 	public String[] textures = new String[2];
 
-	public ItemArmorRF(ArmorMaterial material, int type) {
+	private static String name;
 
+	public ItemArmorRF(ArmorMaterial material, EntityEquipmentSlot type, String nameIn) {
 		super(material, type);
+		name = nameIn;
+		setUnlocalizedName(name);
+		setRegistryName(name);
+		GameRegistry.register(this);
+		setCreativeTab(RedstoneArsenal.tab);
+	}
+
+	@SideOnly(Side.CLIENT)
+	public void initModel() {
+		ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation(RedstoneArsenal.modId + ":" + name, "inventory"));
 	}
 
 	public ItemArmorRF setEnergyParams(int maxEnergy, int maxTransfer) {
-
 		this.maxEnergy = maxEnergy;
 		this.maxTransfer = maxTransfer;
 
@@ -47,97 +58,63 @@ public class ItemArmorRF extends ItemArmorAdv implements ISpecialArmor, IEnergyC
 
 	@Override
 	public boolean getIsRepairable(ItemStack itemToRepair, ItemStack stack) {
-
 		return false;
 	}
 
 	@Override
 	public EnumRarity getRarity(ItemStack stack) {
-
-		return EnumRarity.uncommon;
+		return EnumRarity.UNCOMMON;
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean check) {
-
+	public void addInformation(ItemStack stack, EntityPlayer player, List<String> list, boolean check) {
 		if (StringHelper.displayShiftForDetail && !StringHelper.isShiftKeyDown()) {
 			list.add(StringHelper.shiftForDetails());
 		}
 		if (!StringHelper.isShiftKeyDown()) {
 			return;
 		}
-		if (stack.stackTagCompound == null) {
+		if (stack.getTagCompound() == null) {
 			EnergyHelper.setDefaultEnergyTag(stack, 0);
 		}
-		list.add(StringHelper.localize("info.cofh.charge") + ": " + stack.stackTagCompound.getInteger("Energy") + " / " + maxEnergy + " RF");
+		list.add(StringHelper.localize("info.cofh.charge") + ": " + stack.getTagCompound().getInteger("Energy") + " / " + maxEnergy + " RF");
 	}
 
 	@Override
-	public void setDamage(ItemStack stack, int damage) {
-
-		super.setDamage(stack, 0);
-	}
-
-	@Override
-	public int getDisplayDamage(ItemStack stack) {
-
-		if (stack.stackTagCompound == null) {
+	public double getDurabilityForDisplay(ItemStack stack) {
+		if (stack.getTagCompound() == null) {
 			EnergyHelper.setDefaultEnergyTag(stack, 0);
 		}
-		return maxEnergy - stack.stackTagCompound.getInteger("Energy");
+		return 1D - (double) stack.getTagCompound().getInteger("Energy") / (double) maxEnergy;
 	}
 
 	@Override
 	public int getMaxDamage(ItemStack stack) {
-
-		return maxEnergy;
+		return 0;
 	}
 
 	@Override
 	public boolean showDurabilityBar(ItemStack stack) {
-
-		return !RAProps.showArmorCharge ? false : stack.stackTagCompound == null || !stack.stackTagCompound.getBoolean("CreativeTab");
+		return !RAProps.showArmorCharge ? false : stack.getTagCompound() == null || !stack.getTagCompound().getBoolean("CreativeTab");
 	}
 
 	@Override
 	public boolean isDamaged(ItemStack stack) {
-
 		return true;
 	}
 
 	@Override
-	public void getSubItems(Item item, CreativeTabs tab, List list) {
-
+	public void getSubItems(Item item, CreativeTabs tab, List<ItemStack> list) {
 		list.add(EnergyHelper.setDefaultEnergyTag(new ItemStack(item, 1, 0), 0));
 		list.add(EnergyHelper.setDefaultEnergyTag(new ItemStack(item, 1, 0), maxEnergy));
 	}
 
 	protected int getBaseAbsorption() {
-
 		return 20;
 	}
 
-	/**
-	 * Returns a % that each piece absorbs, set sums to 100.
-	 */
-	protected int getAbsorptionRatio() {
-
-		switch (armorType) {
-		case 0:
-			return 15;
-		case 1:
-			return 40;
-		case 2:
-			return 30;
-		case 3:
-			return 15;
-		}
-		return 0;
-	}
-
 	protected int getEnergyPerDamage(ItemStack stack) {
-
-		int unbreakingLevel = MathHelper.clamp(EnchantmentHelper.getEnchantmentLevel(Enchantment.unbreaking.effectId, stack), 0, 4);
+		int unbreakingLevel = MathHelper.clamp(EnchantmentHelper.getEnchantmentLevel(Enchantments.UNBREAKING, stack), 0, 4);
 		return energyPerDamage * (5 - unbreakingLevel) / 5;
 	}
 
@@ -147,7 +124,8 @@ public class ItemArmorRF extends ItemArmorAdv implements ISpecialArmor, IEnergyC
 
 		if (source.damageType.equals("flux")) {
 			return FLUX;
-		} else if (source.isUnblockable()) {
+		}
+		else if (source.isUnblockable()) {
 			int absorbMax = getEnergyPerDamage(armor) > 0 ? 25 * getEnergyStored(armor) / getEnergyPerDamage(armor) : 0;
 			return new ArmorProperties(0, absorbRatio * getArmorMaterial().getDamageReductionAmount(armorType) * 0.025, absorbMax);
 		}
@@ -158,20 +136,19 @@ public class ItemArmorRF extends ItemArmorAdv implements ISpecialArmor, IEnergyC
 
 	@Override
 	public int getArmorDisplay(EntityPlayer player, ItemStack armor, int slot) {
-
 		if (getEnergyStored(armor) >= getEnergyPerDamage(armor)) {
-			return Math.min(getBaseAbsorption(), 20) * getAbsorptionRatio() / 100;
+			return getArmorMaterial().getDamageReductionAmount(armorType);
 		}
 		return 0;
 	}
 
 	@Override
 	public void damageArmor(EntityLivingBase entity, ItemStack armor, DamageSource source, int damage, int slot) {
-
 		if (source.damageType.equals("flux")) {
 			boolean p = source.getEntity() == null;
 			receiveEnergy(armor, damage * (p ? energyPerDamage / 2 : getEnergyPerDamage(armor)), false);
-		} else {
+		}
+		else {
 			extractEnergy(armor, damage * getEnergyPerDamage(armor), false);
 		}
 	}
@@ -179,48 +156,44 @@ public class ItemArmorRF extends ItemArmorAdv implements ISpecialArmor, IEnergyC
 	/* IEnergyContainerItem */
 	@Override
 	public int receiveEnergy(ItemStack container, int maxReceive, boolean simulate) {
-
-		if (container.stackTagCompound == null) {
+		if (container.getTagCompound() == null) {
 			EnergyHelper.setDefaultEnergyTag(container, 0);
 		}
-		int stored = container.stackTagCompound.getInteger("Energy");
+		int stored = container.getTagCompound().getInteger("Energy");
 		int receive = Math.min(maxReceive, Math.min(maxEnergy - stored, maxTransfer));
 
 		if (!simulate) {
 			stored += receive;
-			container.stackTagCompound.setInteger("Energy", stored);
+			container.getTagCompound().setInteger("Energy", stored);
 		}
 		return receive;
 	}
 
 	@Override
 	public int extractEnergy(ItemStack container, int maxExtract, boolean simulate) {
-
-		if (container.stackTagCompound == null) {
+		if (container.getTagCompound() == null) {
 			EnergyHelper.setDefaultEnergyTag(container, 0);
 		}
-		int stored = container.stackTagCompound.getInteger("Energy");
+		int stored = container.getTagCompound().getInteger("Energy");
 		int extract = Math.min(maxExtract, stored);
 
 		if (!simulate) {
 			stored -= extract;
-			container.stackTagCompound.setInteger("Energy", stored);
+			container.getTagCompound().setInteger("Energy", stored);
 		}
 		return extract;
 	}
 
 	@Override
 	public int getEnergyStored(ItemStack container) {
-
-		if (container.stackTagCompound == null) {
+		if (container.getTagCompound() == null) {
 			EnergyHelper.setDefaultEnergyTag(container, 0);
 		}
-		return container.stackTagCompound.getInteger("Energy");
+		return container.getTagCompound().getInteger("Energy");
 	}
 
 	@Override
 	public int getMaxEnergyStored(ItemStack container) {
-
 		return maxEnergy;
 	}
 

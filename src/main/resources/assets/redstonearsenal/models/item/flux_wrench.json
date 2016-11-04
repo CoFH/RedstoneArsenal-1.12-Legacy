@@ -1,0 +1,14 @@
+{
+  "parent": "item/handheld",
+    "textures": {
+        "layer0": "redstonearsenal:items/tool/flux_wrench"
+    },
+	"overrides": [
+        {
+            "predicate": {
+                "flux_wrench_empowered": 1.0
+            },
+			"model": "redstonearsenal:item/flux_wrench_empowered"
+        }
+    ]
+}

@@ -1,0 +1,56 @@
+{
+  "parent": "item/handheld",
+    "textures": {
+        "layer0": "redstonearsenal:items/tool/flux_bow"
+    },
+	"overrides": [
+        {
+            "predicate": {
+                "flux_bow_empowered": 1.0
+            },
+			"model": "redstonearsenal:item/flux_bow_empowered"
+        },
+		{
+            "predicate": {
+                "flux_bow_empowered_0": 1.0
+            },
+			"model": "redstonearsenal:item/flux_bow_empowered_0"
+        },
+		{
+            "predicate": {
+                "flux_bow_empowered_1": 1.0
+            },
+			"model": "redstonearsenal:item/flux_bow_empowered_1"
+        },
+		{
+            "predicate": {
+                "flux_bow_empowered_2": 1.0
+            },
+			"model": "redstonearsenal:item/flux_bow_empowered_2"
+        },
+		{
+            "predicate": {
+                "flux_bow_active": 1.0
+            },
+			"model": "redstonearsenal:item/flux_bow_active"
+        },
+		{
+            "predicate": {
+                "flux_bow_active_0": 1.0
+            },
+			"model": "redstonearsenal:item/flux_bow_active_0"
+        },
+		{
+            "predicate": {
+                "flux_bow_active_1": 1.0
+            },
+			"model": "redstonearsenal:item/flux_bow_active_1"
+        },
+		{
+            "predicate": {
+                "flux_bow_active_2": 1.0
+            },
+			"model": "redstonearsenal:item/flux_bow_active_2"
+        }
+    ]
+}

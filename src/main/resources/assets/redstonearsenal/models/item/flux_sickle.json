@@ -1,0 +1,20 @@
+{
+  "parent": "item/handheld",
+    "textures": {
+        "layer0": "redstonearsenal:items/tool/flux_sickle"
+    },
+	"overrides": [
+        {
+            "predicate": {
+                "flux_sickle_empowered": 1.0
+            },
+			"model": "redstonearsenal:item/flux_sickle_empowered"
+        },
+		{
+            "predicate": {
+                "flux_sickle_active": 1.0
+            },
+			"model": "redstonearsenal:item/flux_sickle_active"
+        }
+    ]
+}

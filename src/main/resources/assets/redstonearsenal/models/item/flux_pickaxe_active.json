@@ -1,0 +1,6 @@
+{
+  "parent": "item/handheld",
+    "textures": {
+        "layer0": "redstonearsenal:items/tool/flux_pickaxe_active"
+    }
+}

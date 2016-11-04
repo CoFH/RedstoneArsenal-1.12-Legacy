@@ -6,30 +6,30 @@ info.redstonearsenal.tool.energyPerUse=1회당 사용 RF
 info.redstonearsenal.tool.shovel=괭이겸용
 info.redstonearsenal.tool.wrench=가위겸용
 
-item.redstonearsenal.material.dustElectrumFlux.name=플럭스 일렉트럼 가루
-item.redstonearsenal.material.ingotElectrumFlux.name=플럭스 일렉트럼 주괴
-item.redstonearsenal.material.nuggetElectrumFlux.name=플럭스 일렉트럼 조각
-item.redstonearsenal.material.gemCrystalFlux.name=플럭스 수정
-item.redstonearsenal.material.plateFlux.name=플럭스 장갑판
-item.redstonearsenal.material.rodObsidian.name=흑요석 막대
-item.redstonearsenal.material.rodObsidianFlux.name=주입된 흑요석 막대
+item.dust_electrum_flux.name=플럭스 일렉트럼 가루
+item.ingot_electrum_flux.name=플럭스 일렉트럼 주괴
+item.nugget_electrum_flux.name=플럭스 일렉트럼 조각
+item.gem_crystal_flux.name=플럭스 수정
+item.plate_flux.name=플럭스 장갑판
+item.rod_obsidian.name=흑요석 막대
+item.rod_obsidian_flux.name=주입된 흑요석 막대
 
-item.redstonearsenal.armor.fluxHelmet.name=플럭스가 주입된 핼멧
-item.redstonearsenal.armor.fluxPlate.name=플럭스가 주입된 갑옷
-item.redstonearsenal.armor.fluxLegs.name=플럭스가 주입된 레깅스
-item.redstonearsenal.armor.fluxBoots.name=플럭스가 주입된 부츠
+item.flux_helmet.name=플럭스가 주입된 핼멧
+item.flux_chestplate.name=플럭스가 주입된 갑옷
+item.flux_leggings.name=플럭스가 주입된 레깅스
+item.flux_boots.name=플럭스가 주입된 부츠
 
-item.redstonearsenal.tool.fluxWrench.name=플럭스가 주입된 만능렌치
-item.redstonearsenal.tool.fluxBattleWrench.name=플럭스가 주입된 전투렌치 
-item.redstonearsenal.tool.fluxSword.name=플럭스가 주입된 검
-item.redstonearsenal.tool.fluxShovel.name=플럭스가 주입된 삽
-item.redstonearsenal.tool.fluxPickaxe.name=플럭스가 주입된 곡괭이
-item.redstonearsenal.tool.fluxAxe.name=플럭스가 주입된 도끼
-item.redstonearsenal.tool.fluxFishingRod.name=플럭스가 주입된 낚시대
-item.redstonearsenal.tool.fluxSickle.name=플럭스가 주입된 낫
-item.redstonearsenal.tool.fluxBow.name=플럭스가 주입된 활
+item.flux_wrench.name=플럭스가 주입된 만능렌치
+item.flux_battle_wrench.name=플럭스가 주입된 전투렌치 
+item.flux_sword.name=플럭스가 주입된 검
+item.flux_shovel.name=플럭스가 주입된 삽
+item.flux_pickaxe.name=플럭스가 주입된 곡괭이
+item.flux_axe.name=플럭스가 주입된 도끼
+item.flux_fishing_rod.name=플럭스가 주입된 낚시대
+item.flux_sickle.name=플럭스가 주입된 낫
+item.flux_bow.name=플럭스가 주입된 활
 
 itemGroup.redstonearsenal.creativeTab=레드스톤 아스널[Redstone Arsenal]
 
-tile.redstonearsenal.storage.electrumFlux.name=플럭스 일렉트럼 블럭
-tile.redstonearsenal.storage.crystalFlux.name=플럭스 수정 블럭
+tile.redstonearsenal.storage.electrum_flux.name=플럭스 일렉트럼 블럭
+tile.redstonearsenal.storage.crystal_flux.name=플럭스 수정 블럭

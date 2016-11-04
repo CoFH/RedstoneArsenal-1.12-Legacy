@@ -7,6 +7,7 @@
 .project
 .metadata
 bin/
+libs/
 eclipse/
 tmp/
 *.tmp
