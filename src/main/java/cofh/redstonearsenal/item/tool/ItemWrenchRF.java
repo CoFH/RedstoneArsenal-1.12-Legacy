@@ -140,7 +140,7 @@ public class ItemWrenchRF extends ItemShears implements IEnergyContainerItem, IT
 
 	@Override
 	public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		return ServerHelper.isClientWorld(world) ? EnumActionResult.SUCCESS : EnumActionResult.FAIL;
+		return ServerHelper.isClientWorld(world) ? EnumActionResult.SUCCESS : EnumActionResult.PASS;
 	}
 
 	@Override
@@ -154,17 +154,17 @@ public class ItemWrenchRF extends ItemShears implements IEnergyContainerItem, IT
 			stack.setItemDamage(0);
 		}
 		if (!player.capabilities.isCreativeMode && getEnergyStored(stack) < getEnergyPerUse(stack)) {
-			return EnumActionResult.FAIL;
+			return EnumActionResult.PASS;
 		}
 		IBlockState state = world.getBlockState(pos);
 		Block block = state.getBlock();
 
 		if (block == null) {
-			return EnumActionResult.FAIL;
+			return EnumActionResult.PASS;
 		}
 		PlayerInteractEvent.RightClickBlock event = new PlayerInteractEvent.RightClickBlock(player, hand, stack, pos, side, new Vec3d(hitX, hitY, hitZ));
 		if (MinecraftForge.EVENT_BUS.post(event) || event.getResult() == Result.DENY || event.getUseItem() == Result.DENY || event.getUseBlock() == Result.DENY) {
-			return EnumActionResult.FAIL;
+			return EnumActionResult.PASS;
 		}
 		if (ServerHelper.isServerWorld(world) && player.isSneaking() && block instanceof IDismantleable && ((IDismantleable) block).canDismantle(player, world, pos)) {
 			((IDismantleable) block).dismantleBlock(player, world, pos, false);
@@ -175,7 +175,7 @@ public class ItemWrenchRF extends ItemShears implements IEnergyContainerItem, IT
 			return EnumActionResult.SUCCESS;
 		}
 		else if (handleIC2Tile(this, stack, player, world, x, y, z, side.ordinal())) {
-			return ServerHelper.isServerWorld(world) ? EnumActionResult.SUCCESS : EnumActionResult.FAIL;
+			return ServerHelper.isServerWorld(world) ? EnumActionResult.SUCCESS : EnumActionResult.PASS;
 		}
 		SoundType soundType = block.getSoundType(state, world, pos, player);
 		if (BlockHelper.canRotate(block)) {
@@ -190,15 +190,15 @@ public class ItemWrenchRF extends ItemShears implements IEnergyContainerItem, IT
 			if (!player.capabilities.isCreativeMode) {
 				useEnergy(stack, false);
 			}
-			return ServerHelper.isServerWorld(world) ? EnumActionResult.SUCCESS : EnumActionResult.FAIL;
+			return ServerHelper.isServerWorld(world) ? EnumActionResult.SUCCESS : EnumActionResult.PASS;
 		}
 		else if (!player.isSneaking() && block.rotateBlock(world, pos, EnumFacing.getFacingFromVector(hitX, hitY, hitZ))) {
 			if (!player.capabilities.isCreativeMode) {
 				useEnergy(stack, false);
 			}
-			return ServerHelper.isServerWorld(world) ? EnumActionResult.SUCCESS : EnumActionResult.FAIL;
+			return ServerHelper.isServerWorld(world) ? EnumActionResult.SUCCESS : EnumActionResult.PASS;
 		}
-		return EnumActionResult.FAIL;
+		return EnumActionResult.PASS;
 	}
 
 	static boolean returnFalse(IToolHammer tool, ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int hitSide) {
@@ -218,8 +218,8 @@ public class ItemWrenchRF extends ItemShears implements IEnergyContainerItem, IT
 		boolean ret = false;
 		TileEntity tile = world.getTileEntity(pos);
 
-		if (tile instanceof IWrenchable) {
-			IWrenchable wrenchable = (IWrenchable) tile;
+		if (block instanceof IWrenchable) {
+			IWrenchable wrenchable = (IWrenchable) block;
 
 			if (player.isSneaking()) {
 				hitSide = BlockHelper.SIDE_OPPOSITE[hitSide];

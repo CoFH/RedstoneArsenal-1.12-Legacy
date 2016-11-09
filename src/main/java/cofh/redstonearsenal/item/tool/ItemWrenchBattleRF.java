@@ -71,7 +71,7 @@ public class ItemWrenchBattleRF extends ItemSwordRF implements IToolHammer {
 	@Override
 	public EnumActionResult onItemUse(ItemStack stack, EntityPlayer playerIn, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 
-		return ServerHelper.isClientWorld(world) ? EnumActionResult.SUCCESS : EnumActionResult.SUCCESS;
+		return ServerHelper.isClientWorld(world) ? EnumActionResult.SUCCESS : EnumActionResult.PASS;
 	}
 
 	@Override
@@ -81,7 +81,7 @@ public class ItemWrenchBattleRF extends ItemSwordRF implements IToolHammer {
 			stack.setItemDamage(0);
 		}
 		if (!player.capabilities.isCreativeMode && getEnergyStored(stack) < getEnergyPerUse(stack)) {
-			return EnumActionResult.FAIL;
+			return EnumActionResult.PASS;
 		}
 		IBlockState state = world.getBlockState(pos);
 		Block block = state.getBlock();
@@ -91,11 +91,11 @@ public class ItemWrenchBattleRF extends ItemSwordRF implements IToolHammer {
 		int z = pos.getZ();
 
 		if (block == Blocks.AIR) {
-			return EnumActionResult.FAIL;
+			return EnumActionResult.PASS;
 		}
 		PlayerInteractEvent.RightClickBlock event = new PlayerInteractEvent.RightClickBlock(player, hand, stack, pos, side, new Vec3d(hitX, hitY, hitZ));
 		if (MinecraftForge.EVENT_BUS.post(event) || event.getResult() == Result.DENY || event.getUseBlock() == Result.DENY || event.getUseItem() == Result.DENY) {
-			return EnumActionResult.FAIL;
+			return EnumActionResult.PASS;
 		}
 		if (ServerHelper.isServerWorld(world) && player.isSneaking() && block instanceof IDismantleable && ((IDismantleable) block).canDismantle(player, world, pos)) {
 			((IDismantleable) block).dismantleBlock(player, world, pos, false);
@@ -106,7 +106,7 @@ public class ItemWrenchBattleRF extends ItemSwordRF implements IToolHammer {
 			return EnumActionResult.SUCCESS;
 		}
 		else if (ItemWrenchRF.handleIC2Tile(this, stack, player, world, x, y, z, side.ordinal())) {
-			return ServerHelper.isServerWorld(world) ? EnumActionResult.SUCCESS : EnumActionResult.FAIL;
+			return ServerHelper.isServerWorld(world) ? EnumActionResult.SUCCESS : EnumActionResult.PASS;
 		}
 		if (BlockHelper.canRotate(block)) {
 			if (player.isSneaking()) {
@@ -120,15 +120,15 @@ public class ItemWrenchBattleRF extends ItemSwordRF implements IToolHammer {
 			if (!player.capabilities.isCreativeMode) {
 				useEnergy(stack, false);
 			}
-			return ServerHelper.isServerWorld(world) ? EnumActionResult.PASS : EnumActionResult.FAIL;
+			return ServerHelper.isServerWorld(world) ? EnumActionResult.SUCCESS  : EnumActionResult.PASS;
 		}
 		else if (!player.isSneaking() && block.rotateBlock(world, pos, side)) {
 			if (!player.capabilities.isCreativeMode) {
 				useEnergy(stack, false);
 			}
-			return ServerHelper.isServerWorld(world) ? EnumActionResult.SUCCESS : EnumActionResult.FAIL;
+			return ServerHelper.isServerWorld(world) ? EnumActionResult.SUCCESS : EnumActionResult.PASS;
 		}
-		return EnumActionResult.FAIL;
+		return EnumActionResult.PASS;
 	}
 
 	@Override
