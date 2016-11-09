@@ -224,26 +224,16 @@ public class ItemWrenchRF extends ItemShears implements IEnergyContainerItem, IT
 			if (player.isSneaking()) {
 				hitSide = BlockHelper.SIDE_OPPOSITE[hitSide];
 			}
-			if (wrenchable.wrenchCanSetFacing(player, hitSide)) {
-				if (ServerHelper.isServerWorld(world)) {
-					wrenchable.setFacing((short) hitSide);
-				}
+			if (wrenchable.setFacing(world, pos, EnumFacing.VALUES[hitSide], player)) {
 				ret = true;
 			}
-			else if (wrenchable.wrenchCanRemove(player)) {
-				ItemStack dropBlock = wrenchable.getWrenchDrop(player);
+			else if (wrenchable.wrenchCanRemove(world, pos, player)) {
+                int fortune = EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, stack);
+                List<ItemStack> drops = wrenchable.getWrenchDrops(world, pos, state, tile, player, fortune);
 
-				if (dropBlock != null) {
+				if (!drops.isEmpty()) {
 					world.setBlockToAir(new BlockPos(x, y, z));
 					if (ServerHelper.isServerWorld(world)) {
-						List<ItemStack> drops = block.getDrops(world, pos, state, 0);
-
-						if (drops.isEmpty()) {
-							drops.add(dropBlock);
-						}
-						else {
-							drops.set(0, dropBlock);
-						}
 						for (ItemStack drop : drops) {
 							float f = 0.7F;
 							double x2 = world.rand.nextFloat() * f + (1.0F - f) * 0.5D;
