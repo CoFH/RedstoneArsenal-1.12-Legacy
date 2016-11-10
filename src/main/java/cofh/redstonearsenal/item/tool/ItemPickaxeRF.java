@@ -50,13 +50,13 @@ public class ItemPickaxeRF extends ItemToolRF {
 		energyPerUseCharged = 800;
 		effectiveBlocksCharged.addAll(EFFECTIVE_ON_BLOCKS);
 		effectiveMaterials.addAll(EFFECTIVE_ON_MATERIALS);
-		addPropertyOverride(new ResourceLocation(name + "_empowered"), new IItemPropertyGetter() {
+		addPropertyOverride(new ResourceLocation("flux_pickaxe_empowered"), new IItemPropertyGetter() {
             @Override
             public float apply(ItemStack stack, @Nullable World world, @Nullable EntityLivingBase entity) {
                 return ItemPickaxeRF.this.getEnergyStored(stack) > 0 && ItemPickaxeRF.this.isEmpowered(stack) ? 1F : 0F;
             }
         });
-		addPropertyOverride(new ResourceLocation(name + "_active"), new IItemPropertyGetter() {
+		addPropertyOverride(new ResourceLocation("flux_pickaxe_active"), new IItemPropertyGetter() {
             @Override
             public float apply(ItemStack stack, @Nullable World world, @Nullable EntityLivingBase entity) {
                 return ItemPickaxeRF.this.getEnergyStored(stack) > 0 && !ItemPickaxeRF.this.isEmpowered(stack) ? 1F : 0F;
@@ -67,12 +67,6 @@ public class ItemPickaxeRF extends ItemToolRF {
 	public ItemPickaxeRF(Item.ToolMaterial toolMaterial, int harvestLevel, String nameIn) {
 		this(toolMaterial, nameIn);
 		this.harvestLevel = harvestLevel;
-	}
-
-	@SideOnly(Side.CLIENT)
-	@Override
-	public void initModel() {
-		ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation(RedstoneArsenal.modId + ":" + name, "inventory"));
 	}
 
 	@Override

@@ -1,12 +1,11 @@
-package cofh.redstonearsenal.client;
+package cofh.redstonearsenal.core;
 
-import cofh.redstonearsenal.CommonProxy;
 import cofh.redstonearsenal.item.RAItems;
 
 /**
  * Created by brandon3055 on 5/11/2016.
  */
-public class ClientProxy extends CommonProxy {
+public class ProxyClient extends Proxy {
 
     @Override
     public void preInit() {

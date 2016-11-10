@@ -29,12 +29,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
 import java.util.List;
-import java.util.Locale;
 
 //todo Perhaps this should be changed to BlockFlux?
 public class BlockStorage extends Block implements IInitializer {
 
-    public static final PropertyEnum<Types> TYPES = PropertyEnum.create("type", Types.class);
+    public static final PropertyEnum<Type> TYPES = PropertyEnum.create("type", Type.class);
 
     static boolean enableDamage[] = new boolean[2];
     static boolean enableDamageCharge[] = new boolean[2];
@@ -55,12 +54,12 @@ public class BlockStorage extends Block implements IInitializer {
 
     @Override
     public int getMetaFromState(IBlockState state) {
-        return state.getValue(TYPES).meta();
+        return state.getValue(TYPES).getMetadata();
     }
 
     @Override
     public IBlockState getStateFromMeta(int meta) {
-        return getDefaultState().withProperty(TYPES, Types.fromMeta(meta));
+        return getDefaultState().withProperty(TYPES, Type.byMetadata(meta));
     }
 
     @Override
@@ -121,7 +120,7 @@ public class BlockStorage extends Block implements IInitializer {
         double fluxDamage = 0;
         int chargeRate = 0;
 
-        if (state.getValue(TYPES) == Types.FLUX_ELECTRUM) {
+        if (state.getValue(TYPES) == Type.FLUX_ELECTRUM) {
             if (enableDamage[0]) {
                 fluxDamage = damage[0];
 
@@ -195,30 +194,34 @@ public class BlockStorage extends Block implements IInitializer {
         ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 1, new ModelResourceLocation(RedstoneArsenal.modId + ":block_flux", "type=flux_crystal"));
     }
 
-    public enum Types implements IStringSerializable {
-        FLUX_ELECTRUM,
-        FLUX_CRYSTAL;
+    public enum Type implements IStringSerializable {
+        FLUX_ELECTRUM("electrumFlux"),
+        FLUX_CRYSTAL("crystalFlux");
+
+        private final String unlocalizedName;
+
+        Type(String unlocalizedName) {
+            this.unlocalizedName = unlocalizedName;
+        }
 
         @Override
         public String getName() {
-            return name().toLowerCase(Locale.US);
+            return name().toLowerCase();
         }
 
-        public int meta() {
+        public String getUnlocalizedName() {
+            return unlocalizedName;
+        }
+
+        public int getMetadata() {
             return ordinal();
         }
 
-        public static Types fromMeta(int meta) {
-            try {
-                return values()[meta];
-            } catch (IndexOutOfBoundsException e){
-                throw new RuntimeException("Someone has requested an invalid metadata for a block inside ThermalExpansion.", e);
+        public static Type byMetadata(int metadata) {
+            if (metadata >= 0 && metadata < values().length) {
+                return Type.values()[metadata];
             }
+            return FLUX_ELECTRUM;
         }
-
-        public static int meta(Types type) {
-            return type.ordinal();
-        }
-
     }
 }

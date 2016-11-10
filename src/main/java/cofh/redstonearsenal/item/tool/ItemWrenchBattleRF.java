@@ -40,24 +40,18 @@ public class ItemWrenchBattleRF extends ItemSwordRF implements IToolHammer {
 		setHarvestLevel("wrench", 1);
 		setMaxDamage(toolMaterial.getMaxUses());
 		setCreativeTab(RedstoneArsenal.tab);
-		addPropertyOverride(new ResourceLocation(name + "_empowered"), new IItemPropertyGetter() {
+		addPropertyOverride(new ResourceLocation("flux_battle_wrench_empowered"), new IItemPropertyGetter() {
             @Override
             public float apply(ItemStack stack, @Nullable World world, @Nullable EntityLivingBase entity) {
                 return ItemWrenchBattleRF.this.getEnergyStored(stack) > 0 && ItemWrenchBattleRF.this.isEmpowered(stack) ? 1F : 0F;
             }
         });
-		addPropertyOverride(new ResourceLocation(name + "_active"), new IItemPropertyGetter() {
+		addPropertyOverride(new ResourceLocation("flux_battle_wrench_active"), new IItemPropertyGetter() {
             @Override
             public float apply(ItemStack stack, @Nullable World world, @Nullable EntityLivingBase entity) {
                 return ItemWrenchBattleRF.this.getEnergyStored(stack) > 0 && !ItemWrenchBattleRF.this.isEmpowered(stack) ? 1F : 0F;
             }
         });
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void initModel() {
-		ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation(RedstoneArsenal.modId + ":" + name, "inventory"));
 	}
 
 	@Override

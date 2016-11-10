@@ -50,49 +50,49 @@ public class ItemBowRF extends ItemBowAdv implements IEmpowerableItem, IEnergyCo
 		setArrowDamage(1.5F);
 		setCreativeTab(RedstoneArsenal.tab);
 		setNoRepair();
-		addPropertyOverride(new ResourceLocation(name + "_empowered"), new IItemPropertyGetter() {
+		addPropertyOverride(new ResourceLocation("flux_bow_empowered"), new IItemPropertyGetter() {
             @Override
             public float apply(ItemStack stack, @Nullable World world, @Nullable EntityLivingBase entity) {
                 return ItemBowRF.this.getEnergyStored(stack) > 0 && ItemBowRF.this.isEmpowered(stack) && !ItemBowRF.this.isPulling(stack, entity) ? 1F : 0F;
             }
         });
-		addPropertyOverride(new ResourceLocation(name + "_empowered_0"), new IItemPropertyGetter() {
+		addPropertyOverride(new ResourceLocation("flux_bow_empowered_0"), new IItemPropertyGetter() {
             @Override
             public float apply(ItemStack stack, @Nullable World world, @Nullable EntityLivingBase entity) {
                 return ItemBowRF.this.getEnergyStored(stack) > 0 && ItemBowRF.this.isEmpowered(stack) && ItemBowRF.this.isPulling(stack, entity) && ItemBowRF.this.getPullStage(stack, entity) == 0 ? 1F : 0F;
             }
         });
-		addPropertyOverride(new ResourceLocation(name + "_empowered_1"), new IItemPropertyGetter() {
+		addPropertyOverride(new ResourceLocation("flux_bow_empowered_1"), new IItemPropertyGetter() {
             @Override
             public float apply(ItemStack stack, @Nullable World world, @Nullable EntityLivingBase entity) {
                 return ItemBowRF.this.getEnergyStored(stack) > 0 && ItemBowRF.this.isEmpowered(stack) && ItemBowRF.this.isPulling(stack, entity) && ItemBowRF.this.getPullStage(stack, entity) == 1 ? 1F : 0F;
             }
         });
-		addPropertyOverride(new ResourceLocation(name + "_empowered_2"), new IItemPropertyGetter() {
+		addPropertyOverride(new ResourceLocation("flux_bow_empowered_2"), new IItemPropertyGetter() {
             @Override
             public float apply(ItemStack stack, @Nullable World world, @Nullable EntityLivingBase entity) {
                 return ItemBowRF.this.getEnergyStored(stack) > 0 && ItemBowRF.this.isEmpowered(stack) && ItemBowRF.this.isPulling(stack, entity) && ItemBowRF.this.getPullStage(stack, entity) == 2 ? 1F : 0F;
             }
         });
-		addPropertyOverride(new ResourceLocation(name + "_active"), new IItemPropertyGetter() {
+		addPropertyOverride(new ResourceLocation("flux_bow_active"), new IItemPropertyGetter() {
             @Override
             public float apply(ItemStack stack, @Nullable World world, @Nullable EntityLivingBase entity) {
                 return ItemBowRF.this.getEnergyStored(stack) > 0 && !ItemBowRF.this.isEmpowered(stack) && !ItemBowRF.this.isPulling(stack, entity) ? 1F : 0F;
             }
         });
-		addPropertyOverride(new ResourceLocation(name + "_active_0"), new IItemPropertyGetter() {
+		addPropertyOverride(new ResourceLocation("flux_bow_active_0"), new IItemPropertyGetter() {
             @Override
             public float apply(ItemStack stack, @Nullable World world, @Nullable EntityLivingBase entity) {
                 return ItemBowRF.this.getEnergyStored(stack) > 0 && !ItemBowRF.this.isEmpowered(stack) && ItemBowRF.this.isPulling(stack, entity) && ItemBowRF.this.getPullStage(stack, entity) == 0 ? 1F : 0F;
             }
         });
-		addPropertyOverride(new ResourceLocation(name + "_active_1"), new IItemPropertyGetter() {
+		addPropertyOverride(new ResourceLocation("flux_bow_active_1"), new IItemPropertyGetter() {
             @Override
             public float apply(ItemStack stack, @Nullable World world, @Nullable EntityLivingBase entity) {
                 return ItemBowRF.this.getEnergyStored(stack) > 0 && !ItemBowRF.this.isEmpowered(stack) && ItemBowRF.this.isPulling(stack, entity) && ItemBowRF.this.getPullStage(stack, entity) == 1 ? 1F : 0F;
             }
         });
-		addPropertyOverride(new ResourceLocation(name + "_active_2"), new IItemPropertyGetter() {
+		addPropertyOverride(new ResourceLocation("flux_bow_active_2"), new IItemPropertyGetter() {
             @Override
             public float apply(ItemStack stack, @Nullable World world, @Nullable EntityLivingBase entity) {
                 return ItemBowRF.this.getEnergyStored(stack) > 0 && !ItemBowRF.this.isEmpowered(stack) && ItemBowRF.this.isPulling(stack, entity) && ItemBowRF.this.getPullStage(stack, entity) == 2 ? 1F : 0F;
@@ -110,7 +110,7 @@ public class ItemBowRF extends ItemBowAdv implements IEmpowerableItem, IEnergyCo
 	}
 
 	@SideOnly(Side.CLIENT)
-	public void initModel() {
+	public void initModel(String name) {
 		ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation(RedstoneArsenal.modId + ":" + name, "inventory"));
 	}
 

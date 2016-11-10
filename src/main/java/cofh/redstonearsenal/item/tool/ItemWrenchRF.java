@@ -83,7 +83,7 @@ public class ItemWrenchRF extends ItemShears implements IEnergyContainerItem, IT
 	}
 
 	@SideOnly(Side.CLIENT)
-	public void initModel() {
+	public void initModel(String name) {
 		ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation(RedstoneArsenal.modId + ":" + name, "inventory"));
 	}
 

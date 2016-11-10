@@ -54,13 +54,13 @@ public class ItemSwordRF extends ItemSword implements IEmpowerableItem, IEnergyC
 		setRegistryName(name);
 		GameRegistry.register(this);
 		setCreativeTab(RedstoneArsenal.tab);
-		addPropertyOverride(new ResourceLocation(name + "_empowered"), new IItemPropertyGetter() {
+		addPropertyOverride(new ResourceLocation("flux_sword_empowered"), new IItemPropertyGetter() {
             @Override
             public float apply(ItemStack stack, @Nullable World world, @Nullable EntityLivingBase entity) {
                 return (ItemSwordRF.this.getEnergyStored(stack) > 0 && ItemSwordRF.this.isEmpowered(stack)) || ItemSwordRF.this.isCreativeTab(stack) ? 1F : 0F;
             }
         });
-		addPropertyOverride(new ResourceLocation(name + "_active"), new IItemPropertyGetter() {
+		addPropertyOverride(new ResourceLocation("flux_sword_active"), new IItemPropertyGetter() {
             @Override
             public float apply(ItemStack stack, @Nullable World world, @Nullable EntityLivingBase entity) {
                 return ItemSwordRF.this.getEnergyStored(stack) > 0 && !ItemSwordRF.this.isEmpowered(stack) ? 1F : 0F;
@@ -79,7 +79,7 @@ public class ItemSwordRF extends ItemSword implements IEmpowerableItem, IEnergyC
 	}
 
 	@SideOnly(Side.CLIENT)
-	public void initModel() {
+	public void initModel(String name) {
 		ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation(RedstoneArsenal.modId + ":" + name, "inventory"));
 	}
 

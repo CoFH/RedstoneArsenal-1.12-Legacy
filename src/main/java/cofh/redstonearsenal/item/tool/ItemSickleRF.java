@@ -48,13 +48,13 @@ public class ItemSickleRF extends ItemToolRF {
 		effectiveMaterials.add(Material.PLANTS);
 		effectiveMaterials.add(Material.VINE);
 		effectiveMaterials.add(Material.WEB);
-		addPropertyOverride(new ResourceLocation(name + "_empowered"), new IItemPropertyGetter() {
+		addPropertyOverride(new ResourceLocation("flux_sickle_empowered"), new IItemPropertyGetter() {
             @Override
             public float apply(ItemStack stack, @Nullable World world, @Nullable EntityLivingBase entity) {
                 return ItemSickleRF.this.getEnergyStored(stack) > 0 && ItemSickleRF.this.isEmpowered(stack) ? 1F : 0F;
             }
         });
-		addPropertyOverride(new ResourceLocation(name + "_active"), new IItemPropertyGetter() {
+		addPropertyOverride(new ResourceLocation("flux_sickle_active"), new IItemPropertyGetter() {
             @Override
             public float apply(ItemStack stack, @Nullable World world, @Nullable EntityLivingBase entity) {
                 return ItemSickleRF.this.getEnergyStored(stack) > 0 && !ItemSickleRF.this.isEmpowered(stack) ? 1F : 0F;
@@ -66,12 +66,6 @@ public class ItemSickleRF extends ItemToolRF {
 
 		this.radius = radius;
 		return this;
-	}
-
-	@SideOnly(Side.CLIENT)
-	@Override
-	public void initModel() {
-		ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation(RedstoneArsenal.modId + ":" + name, "inventory"));
 	}
 
 	@Override

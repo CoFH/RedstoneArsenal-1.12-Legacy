@@ -46,25 +46,25 @@ public class ItemFishingRodRF extends ItemFishingRodAdv implements IEmpowerableI
 		setMaxDamage(toolMaterial.getMaxUses());
 		setNoRepair();
 
-		addPropertyOverride(new ResourceLocation(name + "_empowered"), new IItemPropertyGetter() {
+		addPropertyOverride(new ResourceLocation("flux_fishing_rod_empowered"), new IItemPropertyGetter() {
             @Override
             public float apply(ItemStack stack, @Nullable World world, @Nullable EntityLivingBase entity) {
                 return ItemFishingRodRF.this.getEnergyStored(stack) > 0 && ItemFishingRodRF.this.isEmpowered(stack) && !ItemFishingRodRF.this.isCastState(stack, entity) ? 1F : 0F;
             }
         });
-		addPropertyOverride(new ResourceLocation(name + "_active"), new IItemPropertyGetter() {
+		addPropertyOverride(new ResourceLocation("flux_fishing_rod_active"), new IItemPropertyGetter() {
             @Override
             public float apply(ItemStack stack, @Nullable World world, @Nullable EntityLivingBase entity) {
                 return ItemFishingRodRF.this.getEnergyStored(stack) > 0 && !ItemFishingRodRF.this.isEmpowered(stack) && !ItemFishingRodRF.this.isCastState(stack, entity) ? 1F : 0F;
             }
         });
-		addPropertyOverride(new ResourceLocation(name + "_empowered_cast"), new IItemPropertyGetter() {
+		addPropertyOverride(new ResourceLocation("flux_fishing_rod_empowered_cast"), new IItemPropertyGetter() {
             @Override
             public float apply(ItemStack stack, @Nullable World world, @Nullable EntityLivingBase entity) {
                 return ItemFishingRodRF.this.getEnergyStored(stack) > 0 && ItemFishingRodRF.this.isEmpowered(stack) && ItemFishingRodRF.this.isCastState(stack, entity) ? 1F : 0F;
             }
         });
-		addPropertyOverride(new ResourceLocation(name + "_active_cast"), new IItemPropertyGetter() {
+		addPropertyOverride(new ResourceLocation("flux_fishing_rod_active_cast"), new IItemPropertyGetter() {
             @Override
             public float apply(ItemStack stack, @Nullable World world, @Nullable EntityLivingBase entity) {
                 return ItemFishingRodRF.this.getEnergyStored(stack) > 0 && !ItemFishingRodRF.this.isEmpowered(stack) && ItemFishingRodRF.this.isCastState(stack, entity) ? 1F : 0F;
@@ -83,7 +83,7 @@ public class ItemFishingRodRF extends ItemFishingRodAdv implements IEmpowerableI
 	}
 
 	@SideOnly(Side.CLIENT)
-	public void initModel() {
+	public void initModel(String name) {
 		ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation(RedstoneArsenal.modId + ":" + name, "inventory"));
 	}
 

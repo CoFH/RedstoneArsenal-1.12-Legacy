@@ -5,6 +5,7 @@ import cofh.core.CoFHProps;
 import cofh.core.util.ConfigHandler;
 import cofh.mod.BaseMod;
 import cofh.mod.updater.UpdateManager;
+import cofh.redstonearsenal.core.Proxy;
 import cofh.redstonearsenal.gui.RACreativeTab;
 import cofh.redstonearsenal.item.RAItems;
 import net.minecraft.creativetab.CreativeTabs;
@@ -39,8 +40,8 @@ public class RedstoneArsenal extends BaseMod {
 	@Instance("RedstoneArsenal")
 	public static RedstoneArsenal instance;
 
-	@SidedProxy(clientSide = "cofh.redstonearsenal.client.ClientProxy", serverSide = "cofh.redstonearsenal.CommonProxy")
-	public static CommonProxy proxy;
+	@SidedProxy(clientSide = "cofh.redstonearsenal.core.ProxyClient", serverSide = "cofh.redstonearsenal.core.Proxy")
+	public static Proxy proxy;
 
 	public static final Logger log = LogManager.getLogger(modId);
 	public static final ConfigHandler config = new ConfigHandler(version);

@@ -144,13 +144,13 @@ public class RAItems {
 		RAProps.showToolCharge = RedstoneArsenal.config.get("Equipment.Flux-Infused.Tool", "ShowChargeBars", RAProps.showToolCharge);
 		int harvestLevel = MathHelper.clamp(RedstoneArsenal.config.get("Equipment.Flux-Infused.Tool", "HarvestLevel", 4), 1, Integer.MAX_VALUE);
 
-		dustElectrumFlux = new GenericItem("dust_electrum_flux");
-		ingotElectrumFlux = new GenericItem("ingot_electrum_flux");
-		nuggetElectrumFlux = new GenericItem("nugget_electrum_flux");
-		gemCrystalFlux = new GenericItem("gem_crystal_flux");
-		plateFlux = new GenericItem("plate_flux");
-		rodObsidian = new GenericItem("rod_obsidian");
-		rodObsidianFlux = new GenericItem("rod_obsidian_flux");
+		dustElectrumFlux = new GenericItem(MATERIAL + "dustElectrumFlux");
+		ingotElectrumFlux = new GenericItem(MATERIAL + "ingotElectrumFlux");
+		nuggetElectrumFlux = new GenericItem(MATERIAL + "nuggetElectrumFlux");
+		gemCrystalFlux = new GenericItem(MATERIAL + "gemCrystalFlux");
+		plateFlux = new GenericItem(MATERIAL + "plateFlux");
+		rodObsidian = new GenericItem(MATERIAL + "rodObsidian");
+		rodObsidianFlux = new GenericItem(MATERIAL + "rodObsidianFlux");
 
 		materialDustElectrumFlux = new ItemStack(dustElectrumFlux);
 		materialIngotElectrumFlux = new ItemStack(ingotElectrumFlux);
@@ -160,27 +160,23 @@ public class RAItems {
 		materialRodObsidian = new ItemStack(rodObsidian);
 		materialRodObsidianFlux = new ItemStack(rodObsidianFlux);
 
-		itemHelmetFlux = (ItemArmorRF) new ItemArmorRF(ARMOR_MATERIAL_FLUX, EntityEquipmentSlot.HEAD, "flux_helmet").setEnergyParams(armorRFCapacity, armorRFTransfer).setArmorTextures(TEXTURE_FLUX);
-		itemHelmetFlux.initModel();
-		itemPlateFlux = (ItemArmorRF) new ItemArmorRF(ARMOR_MATERIAL_FLUX, EntityEquipmentSlot.CHEST, "flux_chestplate").setEnergyParams(armorRFCapacity, armorRFTransfer).setArmorTextures(TEXTURE_FLUX);
-		itemPlateFlux.initModel();
-		itemLegsFlux = (ItemArmorRF) new ItemArmorRF(ARMOR_MATERIAL_FLUX, EntityEquipmentSlot.LEGS, "flux_leggings").setEnergyParams(armorRFCapacity, armorRFTransfer).setArmorTextures(TEXTURE_FLUX);
-		itemLegsFlux.initModel();
-		itemBootsFlux = (ItemArmorRF) new ItemArmorRF(ARMOR_MATERIAL_FLUX, EntityEquipmentSlot.FEET, "flux_boots").setEnergyParams(armorRFCapacity, armorRFTransfer).setArmorTextures(TEXTURE_FLUX);
-		itemBootsFlux.initModel();
+		itemHelmetFlux = (ItemArmorRF) new ItemArmorRF(ARMOR_MATERIAL_FLUX, EntityEquipmentSlot.HEAD, ARMOR + "fluxHelmet").setEnergyParams(armorRFCapacity, armorRFTransfer).setArmorTextures(TEXTURE_FLUX);
+		itemPlateFlux = (ItemArmorRF) new ItemArmorRF(ARMOR_MATERIAL_FLUX, EntityEquipmentSlot.CHEST, ARMOR + "fluxPlate").setEnergyParams(armorRFCapacity, armorRFTransfer).setArmorTextures(TEXTURE_FLUX);
+		itemLegsFlux = (ItemArmorRF) new ItemArmorRF(ARMOR_MATERIAL_FLUX, EntityEquipmentSlot.LEGS, ARMOR + "fluxLegs").setEnergyParams(armorRFCapacity, armorRFTransfer).setArmorTextures(TEXTURE_FLUX);
+		itemBootsFlux = (ItemArmorRF) new ItemArmorRF(ARMOR_MATERIAL_FLUX, EntityEquipmentSlot.FEET, ARMOR + "fluxBoots").setEnergyParams(armorRFCapacity, armorRFTransfer).setArmorTextures(TEXTURE_FLUX);
 
-		itemWrenchFlux = new ItemWrenchRF(TOOL_MATERIAL_FLUX, "flux_wrench").setEnergyParams(toolRFCapacity[0], toolRFTransfer[0], toolRFUsed[0], toolRFCharged[0]);
-		itemBattleWrenchFlux = new ItemWrenchBattleRF(TOOL_MATERIAL_FLUX, "flux_battle_wrench").setEnergyParams(toolRFCapacity[1], toolRFTransfer[1], toolRFUsed[1], toolRFCharged[1]);
-		itemSwordFlux = new ItemSwordRF(TOOL_MATERIAL_FLUX, "flux_sword").setEnergyParams(toolRFCapacity[2], toolRFTransfer[2], toolRFUsed[2], toolRFCharged[2]);
-		itemShovelFlux = new ItemShovelRF(TOOL_MATERIAL_FLUX, harvestLevel, "flux_shovel").setEnergyParams(toolRFCapacity[3], toolRFTransfer[3], toolRFUsed[3], toolRFCharged[3]);
-		itemPickaxeFlux = new ItemPickaxeRF(TOOL_MATERIAL_FLUX, harvestLevel, "flux_pickaxe").setEnergyParams(toolRFCapacity[4], toolRFTransfer[4], toolRFUsed[4], toolRFCharged[4]);
-		itemAxeFlux = new ItemAxeRF(TOOL_MATERIAL_FLUX, harvestLevel, "flux_axe").setEnergyParams(toolRFCapacity[5], toolRFTransfer[5], toolRFUsed[5], toolRFCharged[5]);
-		itemFishingRodFlux = new ItemFishingRodRF(TOOL_MATERIAL_FLUX, "flux_fishing_rod").setEnergyParams(toolRFCapacity[6], toolRFTransfer[6], toolRFUsed[6], toolRFCharged[6]);
-		itemSickleFlux = new ItemSickleRF(TOOL_MATERIAL_FLUX, "flux_sickle").setEnergyParams(toolRFCapacity[7], toolRFTransfer[7], toolRFUsed[7], toolRFCharged[7]);
-		itemBowFlux = new ItemBowRF(TOOL_MATERIAL_FLUX, "flux_bow").setEnergyParams(toolRFCapacity[8], toolRFTransfer[8], toolRFUsed[8], toolRFCharged[8]);
+		itemWrenchFlux = new ItemWrenchRF(TOOL_MATERIAL_FLUX, TOOL + "fluxWrench").setEnergyParams(toolRFCapacity[0], toolRFTransfer[0], toolRFUsed[0], toolRFCharged[0]);
+		itemBattleWrenchFlux = new ItemWrenchBattleRF(TOOL_MATERIAL_FLUX, TOOL + "fluxBattleWrench").setEnergyParams(toolRFCapacity[1], toolRFTransfer[1], toolRFUsed[1], toolRFCharged[1]);
+		itemSwordFlux = new ItemSwordRF(TOOL_MATERIAL_FLUX, TOOL + "fluxSword").setEnergyParams(toolRFCapacity[2], toolRFTransfer[2], toolRFUsed[2], toolRFCharged[2]);
+		itemShovelFlux = new ItemShovelRF(TOOL_MATERIAL_FLUX, harvestLevel, TOOL + "fluxShovel").setEnergyParams(toolRFCapacity[3], toolRFTransfer[3], toolRFUsed[3], toolRFCharged[3]);
+		itemPickaxeFlux = new ItemPickaxeRF(TOOL_MATERIAL_FLUX, harvestLevel, TOOL + "fluxPickaxe").setEnergyParams(toolRFCapacity[4], toolRFTransfer[4], toolRFUsed[4], toolRFCharged[4]);
+		itemAxeFlux = new ItemAxeRF(TOOL_MATERIAL_FLUX, harvestLevel, TOOL + "fluxAxe").setEnergyParams(toolRFCapacity[5], toolRFTransfer[5], toolRFUsed[5], toolRFCharged[5]);
+		itemFishingRodFlux = new ItemFishingRodRF(TOOL_MATERIAL_FLUX, TOOL + "fluxFishingRod").setEnergyParams(toolRFCapacity[6], toolRFTransfer[6], toolRFUsed[6], toolRFCharged[6]);
+		itemSickleFlux = new ItemSickleRF(TOOL_MATERIAL_FLUX, TOOL + "fluxSickle").setEnergyParams(toolRFCapacity[7], toolRFTransfer[7], toolRFUsed[7], toolRFCharged[7]);
+		itemBowFlux = new ItemBowRF(TOOL_MATERIAL_FLUX, TOOL + "fluxBow").setEnergyParams(toolRFCapacity[8], toolRFTransfer[8], toolRFUsed[8], toolRFCharged[8]);
 
 		blockFlux = new BlockStorage();
-		blockFlux.setRegistryName("block_flux");
+		blockFlux.setRegistryName("blockFlux");
 		blockFlux.preInit();
 		ItemBlock itemBlockFlux = new ItemBlockFlux(blockFlux);
 		itemBlockFlux.setRegistryName(blockFlux.getRegistryName());
@@ -189,8 +185,8 @@ public class RAItems {
 
 		blockElectrumFlux = new ItemStack(blockFlux, 1, 0);
 		blockCrystalFlux = new ItemStack(blockFlux, 1, 1);
-		ItemHelper.registerWithHandlers("block_electrum_flux", blockElectrumFlux);
-		ItemHelper.registerWithHandlers("block_crystal_flux", blockCrystalFlux);
+		ItemHelper.registerWithHandlers("blockElectrumFlux", blockElectrumFlux);
+		ItemHelper.registerWithHandlers("blockCrystalFlux", blockCrystalFlux);
 	}
 
 	public static void initialize() {
@@ -320,22 +316,31 @@ public class RAItems {
 	public static void initModels(){
 		blockFlux.initModels();
 
-		((GenericItem) dustElectrumFlux).initModel();
-		((GenericItem) ingotElectrumFlux).initModel();
-		((GenericItem) nuggetElectrumFlux).initModel();
-		((GenericItem) gemCrystalFlux).initModel();
-		((GenericItem) plateFlux).initModel();
-		((GenericItem) rodObsidian).initModel();
-		((GenericItem) rodObsidianFlux).initModel();
+        itemHelmetFlux.initModel("flux_helmet");
+        itemPlateFlux.initModel("flux_chestplate");
+        itemLegsFlux.initModel("flux_leggings");
+        itemBootsFlux.initModel("flux_boots");
 
-		((ItemWrenchRF) itemWrenchFlux).initModel();
-		((ItemWrenchBattleRF) itemBattleWrenchFlux).initModel();
-		((ItemSwordRF) itemSwordFlux).initModel();
-		((ItemShovelRF) itemShovelFlux).initModel();
-		((ItemPickaxeRF) itemPickaxeFlux).initModel();
-		((ItemAxeRF) itemAxeFlux).initModel();
-		((ItemFishingRodRF) itemFishingRodFlux).initModel();
-		((ItemSickleRF) itemSickleFlux).initModel();
-		((ItemBowRF) itemBowFlux).initModel();
+        ((GenericItem) dustElectrumFlux).initModel("dust_electrum_flux");
+		((GenericItem) ingotElectrumFlux).initModel("ingot_electrum_flux");
+		((GenericItem) nuggetElectrumFlux).initModel("nugget_electrum_flux");
+		((GenericItem) gemCrystalFlux).initModel("gem_crystal_flux");
+		((GenericItem) plateFlux).initModel("plate_flux");
+		((GenericItem) rodObsidian).initModel("rod_obsidian");
+		((GenericItem) rodObsidianFlux).initModel("rod_obsidian_flux");
+
+		((ItemWrenchRF) itemWrenchFlux).initModel("flux_wrench");
+		((ItemWrenchBattleRF) itemBattleWrenchFlux).initModel("flux_battle_wrench");
+		((ItemSwordRF) itemSwordFlux).initModel("flux_sword");
+		((ItemShovelRF) itemShovelFlux).initModel("flux_shovel");
+		((ItemPickaxeRF) itemPickaxeFlux).initModel("flux_pickaxe");
+		((ItemAxeRF) itemAxeFlux).initModel("flux_axe");
+		((ItemFishingRodRF) itemFishingRodFlux).initModel("flux_fishing_rod");
+		((ItemSickleRF) itemSickleFlux).initModel("flux_sickle");
+		((ItemBowRF) itemBowFlux).initModel("flux_bow");
 	}
+
+    public static final String MATERIAL = "redstonearsenal.material.";
+    public static final String ARMOR = "redstonearsenal.armor.";
+    public static final String TOOL = "redstonearsenal.tool.";
 }

@@ -6,30 +6,30 @@ info.redstonearsenal.tool.energyPerUse=RF/次使用
 info.redstonearsenal.tool.shovel=具有鋤頭的功能
 info.redstonearsenal.tool.wrench=具有剪刀的功能
 
-item.dust_electrum_flux.name=紅石琥珀金粉
-item.ingot_electrum_flux.name=紅石琥珀金錠
-item.nugget_electrum_flux.name=紅石琥珀金粒
-item.gem_crystal_flux.name=紅石水晶
-item.plate_flux.name=紅石裝甲防護板
-item.rod_obsidian.name=黑曜石手柄
-item.rod_obsidian_flux.name=充能黑曜石手柄
+item.redstonearsenal.material.dustElectrumFlux.name=紅石琥珀金粉
+item.redstonearsenal.material.ingotElectrumFlux.name=紅石琥珀金錠
+item.redstonearsenal.material.nuggetElectrumFlux.name=紅石琥珀金粒
+item.redstonearsenal.material.gemCrystalFlux.name=紅石水晶
+item.redstonearsenal.material.plateFlux.name=紅石裝甲防護板
+item.redstonearsenal.material.rodObsidian.name=黑曜石手柄
+item.redstonearsenal.material.rodObsidianFlux.name=充能黑曜石手柄
 
-item.flux_helmet.name=充能紅石頭盔
-item.flux_chestplate.name=充能紅石胸甲
-item.flux_leggings.name=充能紅石護腿
-item.flux_boots.name=充能紅石靴子
+item.redstonearsenal.armor.fluxHelmet.name=充能紅石頭盔
+item.redstonearsenal.armor.fluxPlate.name=充能紅石胸甲
+item.redstonearsenal.armor.fluxLegs.name=充能紅石護腿
+item.redstonearsenal.armor.fluxBoots.name=充能紅石靴子
 
-item.flux_wrench.name=充能紅石板手
-item.flux_battle_wrench.name=充能紅石戰鬥板手
-item.flux_sword.name=充能紅石劍
-item.flux_shovel.name=充能紅石鏟
-item.flux_pickaxe.name=充能紅石鎬
-item.flux_axe.name=充能紅石斧
-item.flux_fishing_rod.name=充能紅石釣魚竿
-item.flux_sickle.name=充能紅石鐮刀
-item.flux_bow.name=充能紅石弓
+item.redstonearsenal.tool.fluxWrench.name=充能紅石板手
+item.redstonearsenal.tool.fluxBattleWrench.name=充能紅石戰鬥板手
+item.redstonearsenal.tool.fluxSword.name=充能紅石劍
+item.redstonearsenal.tool.fluxShovel.name=充能紅石鏟
+item.redstonearsenal.tool.fluxPickaxe.name=充能紅石鎬
+item.redstonearsenal.tool.fluxAxe.name=充能紅石斧
+item.redstonearsenal.tool.fluxFishingRod.name=充能紅石釣魚竿
+item.redstonearsenal.tool.fluxSickle.name=充能紅石鐮刀
+item.redstonearsenal.tool.fluxBow.name=充能紅石弓
 
 itemGroup.redstonearsenal.creativeTab=紅石兵工廠
 
-tile.redstonearsenal.storage.electrum_flux.name=紅石琥珀金塊
-tile.redstonearsenal.storage.crystal_flux.name=紅石水晶塊
+tile.redstonearsenal.storage.electrumFlux.name=紅石琥珀金塊
+tile.redstonearsenal.storage.crystalFlux.name=紅石水晶塊

@@ -16,7 +16,7 @@ public class ItemBlockFlux extends ItemBlock {
 
     @Override
     public String getUnlocalizedName(ItemStack stack) {
-        return super.getUnlocalizedName(stack) + (stack.getItemDamage() == 0 ? ".electrum_flux" : ".crystal_flux");
+        return super.getUnlocalizedName(stack) + "." + (BlockStorage.Type.byMetadata(stack.getMetadata()).getUnlocalizedName());
     }
 
     @Override

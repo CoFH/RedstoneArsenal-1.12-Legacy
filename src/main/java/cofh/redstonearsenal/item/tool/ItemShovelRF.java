@@ -50,13 +50,13 @@ public class ItemShovelRF extends ItemToolRF {
 		effectiveMaterials.add(Material.SNOW);
 		effectiveMaterials.add(Material.CRAFTED_SNOW);
 		effectiveMaterials.add(Material.CLAY);
-		addPropertyOverride(new ResourceLocation(name + "_empowered"), new IItemPropertyGetter() {
+		addPropertyOverride(new ResourceLocation("flux_shovel_empowered"), new IItemPropertyGetter() {
             @Override
             public float apply(ItemStack stack, @Nullable World world, @Nullable EntityLivingBase entity) {
                 return ItemShovelRF.this.getEnergyStored(stack) > 0 && ItemShovelRF.this.isEmpowered(stack) ? 1F : 0F;
             }
         });
-		addPropertyOverride(new ResourceLocation(name + "_active"), new IItemPropertyGetter() {
+		addPropertyOverride(new ResourceLocation("flux_shovel_active"), new IItemPropertyGetter() {
             @Override
             public float apply(ItemStack stack, @Nullable World world, @Nullable EntityLivingBase entity) {
                 return ItemShovelRF.this.getEnergyStored(stack) > 0 && !ItemShovelRF.this.isEmpowered(stack) ? 1F : 0F;
@@ -68,12 +68,6 @@ public class ItemShovelRF extends ItemToolRF {
 
 		this(toolMaterial, nameIn);
 		this.harvestLevel = harvestLevel;
-	}
-
-	@SideOnly(Side.CLIENT)
-	@Override
-	public void initModel() {
-		ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation(RedstoneArsenal.modId + ":" + name, "inventory"));
 	}
 
 	@Override

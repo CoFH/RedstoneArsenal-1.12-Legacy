@@ -6,29 +6,23 @@ info.redstonearsenal.tool.energyPerUse=FR por Uso
 info.redstonearsenal.tool.shovel=Además sirve como Azada.
 info.redstonearsenal.tool.wrench=Además sirve como Tijeras.
 
-item.dust_electrum_flux.name=Mixtura de Electro Fluyente
-item.ingot_electrum_flux.name=Lingote de Electro Fluyente
-item.nugget_electrum_flux.name=Pepita de Electro Fluyente
-item.gem_crystal_flux.name=Cristal Fluyente
-item.rod_obsidian.name=Barra de Obsidiana
-item.rod_obsidian_flux.name=Barra Infusa de Obsidiana
+item.redstonearsenal.material.dustElectrumFlux.name=Mixtura de Electro Fluyente
+item.redstonearsenal.material.ingotElectrumFlux.name=Lingote de Electro Fluyente
+item.redstonearsenal.material.nuggetElectrumFlux.name=Pepita de Electro Fluyente
+item.redstonearsenal.material.gemCrystalFlux.name=Cristal Fluyente
+item.redstonearsenal.material.rodObsidian.name=Barra de Obsidiana
+item.redstonearsenal.material.rodObsidianFlux.name=Barra Infusa de Obsidiana
 
-item.flux_helmet.name=Flux-Infused Helm
-item.flux_chestplate.name=Flux-Infused Chestplate
-item.flux_leggings.name=Flux-Infused Leggings
-item.flux_boots.name=Flux-Infused Boots
-
-item.flux_wrench.name=OmniLlave Flujo-Infusa
-item.flux_battle_wrench.name=LlaveBattalla Flujo-Infusa
-item.flux_sword.name=Espada Flujo-Infusa
-item.flux_shovel.name=Pala Flujo-Infusa
-item.flux_pickaxe.name=Pico Flujo-Infuso
-item.flux_axe.name=Hacha Flujo-Infusa
-item.flux_fishing_rod.name=Fishing Rod Flujo-Infusa
-item.flux_sickle.name=Hoz Flujo-Infusa
-item.flux_bow.name=Arco Flujo-Infuso
+item.redstonearsenal.tool.wrench.name=OmniLlave Flujo-Infusa
+item.redstonearsenal.tool.battleWrench.name=LlaveBattalla Flujo-Infusa
+item.redstonearsenal.tool.sword.name=Espada Flujo-Infusa
+item.redstonearsenal.tool.shovel.name=Pala Flujo-Infusa
+item.redstonearsenal.tool.pickaxe.name=Pico Flujo-Infuso
+item.redstonearsenal.tool.axe.name=Hacha Flujo-Infusa
+item.redstonearsenal.tool.sickle.name=Hoz Flujo-Infusa
+item.redstonearsenal.tool.bow.name=Arco Flujo-Infuso
 
 itemGroup.redstonearsenal.creativeTab=Arsenal de Redstone
 
-tile.redstonearsenal.storage.electrum_flux.name=Bloque de Electro Fluyente
-tile.redstonearsenal.storage.crystal_flux.name=Bloque de Cristal Fluyente
+tile.redstonearsenal.storage.electrumFlux.name=Bloque de Electro Fluyente
+tile.redstonearsenal.storage.crystalFlux.name=Bloque de Cristal Fluyente
