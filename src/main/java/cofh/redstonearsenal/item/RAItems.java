@@ -132,8 +132,8 @@ public class RAItems {
 
 	public static final Item.ToolMaterial TOOL_MATERIAL_FLUX = EnumHelper.addToolMaterial("RA:FLUXELECTRUM", 3, 100, 8.0F, 0, 25);
 	public static final ItemArmor.ArmorMaterial ARMOR_MATERIAL_FLUX = EnumHelper.addArmorMaterial("RA:FLUXELECTRUM", "flux_armor", 100, new int[] {
-			3, 8, 6, 3
-	}, 20, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 0.5F);
+			3, 6, 8, 3
+	}, 20, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 2F);
 	public static final String[] TEXTURE_FLUX = {
 			"redstonearsenal:textures/armor/flux_armor_layer_1.png", "redstonearsenal:textures/armor/flux_armor_layer_2.png"
 	};

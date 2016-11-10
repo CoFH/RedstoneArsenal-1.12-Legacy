@@ -109,13 +109,6 @@ public abstract class ItemToolRF extends ItemToolAdv implements IEmpowerableItem
 		list.add(EnergyHelper.setDefaultEnergyTag(new ItemStack(item), maxEnergy));
 	}
 
-	/*
-	 * @Override public float getDigSpeed(ItemStack stack, Block block, int
-	 * meta) {
-	 *
-	 * if (getEnergyStored(stack) < energyPerUse) { return 1.0F; } return
-	 * super.getDigSpeed(stack, block, meta); }
-	 */
 	@Override
 	public boolean hitEntity(ItemStack stack, EntityLivingBase entity, EntityLivingBase player) {
 		EntityPlayer thePlayer = (EntityPlayer) player;
