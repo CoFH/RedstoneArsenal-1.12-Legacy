@@ -222,7 +222,13 @@ public class ItemSwordRF extends ItemSword implements IEmpowerableItem, IEnergyC
 		}
 	}
 
-	@Override
+    @Override
+    public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
+        return super.shouldCauseReequipAnimation(oldStack, newStack, slotChanged)
+                && !(oldStack.isItemEqual(newStack) && getEnergyStored(oldStack) < getEnergyStored(newStack));
+    }
+
+    @Override
 	public void setDamage(ItemStack stack, int damage) {
 
 		super.setDamage(stack, 0);

@@ -149,7 +149,13 @@ public abstract class ItemToolRF extends ItemToolAdv implements IEmpowerableItem
 		}
 	}
 
-	@Override
+    @Override
+    public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
+        return super.shouldCauseReequipAnimation(oldStack, newStack, slotChanged)
+                && !(oldStack.isItemEqual(newStack) && getEnergyStored(oldStack) < getEnergyStored(newStack));
+    }
+
+    @Override
 	public double getDurabilityForDisplay(ItemStack stack) {
 		if (stack.getTagCompound() == null) {
 			EnergyHelper.setDefaultEnergyTag(stack, 0);
