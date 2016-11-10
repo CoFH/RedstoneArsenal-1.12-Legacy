@@ -39,7 +39,7 @@ public class ItemPickaxeRF extends ItemToolRF {
 	private static String name;
 
 	public ItemPickaxeRF(Item.ToolMaterial toolMaterial, String nameIn) {
-		super(toolMaterial, nameIn);
+		super(toolMaterial, nameIn, -2.7F);
 		name = nameIn;
 		setUnlocalizedName(name);
 		setRegistryName(name);

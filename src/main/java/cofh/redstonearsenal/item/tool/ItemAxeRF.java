@@ -38,7 +38,7 @@ public class ItemAxeRF extends ItemToolRF {
 
 	public ItemAxeRF(Item.ToolMaterial toolMaterial, String nameIn) {
 
-		super(toolMaterial, nameIn);
+		super(toolMaterial, nameIn, -2.8F);
 		name = nameIn;
 		setUnlocalizedName(name);
 		setRegistryName(name);

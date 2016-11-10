@@ -36,7 +36,7 @@ public class ItemSickleRF extends ItemToolRF {
 
 	public ItemSickleRF(Item.ToolMaterial toolMaterial, String nameIn) {
 
-		super(toolMaterial, nameIn);
+		super(toolMaterial, nameIn, -2.2F);
 		name = nameIn;
 		setUnlocalizedName(name);
 		setRegistryName(name);

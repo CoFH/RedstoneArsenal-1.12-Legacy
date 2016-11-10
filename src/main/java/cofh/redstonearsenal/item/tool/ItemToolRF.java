@@ -40,11 +40,15 @@ public abstract class ItemToolRF extends ItemToolAdv implements IEmpowerableItem
 
 	private static String name;
 
+	public ItemToolRF(Item.ToolMaterial toolMaterial, String nameIn, float attackSpeed) {
+        super(0, attackSpeed, toolMaterial);
+        name = nameIn;
+        setNoRepair();
+        setMaxStackSize(1);
+    }
+
 	public ItemToolRF(Item.ToolMaterial toolMaterial, String nameIn) {
-		super(0, toolMaterial);
-		name = nameIn;
-		setNoRepair();
-		setMaxStackSize(1);
+	    this(toolMaterial, nameIn, -2.9F);
 	}
 
 	public ItemToolRF(Item.ToolMaterial toolMaterial, int harvestLevel, String nameIn) {
@@ -178,11 +182,6 @@ public abstract class ItemToolRF extends ItemToolAdv implements IEmpowerableItem
 		return !RAProps.showToolCharge ? false : stack.getTagCompound() == null || !stack.getTagCompound().getBoolean("CreativeTab");
 	}
 
-	@Override
-	public Multimap<String, AttributeModifier> getAttributeModifiers(EntityEquipmentSlot slot, ItemStack stack) {
-		return HashMultimap.create();
-	}
-
 	/* IEmpowerableItem */
 	@Override
 	public boolean isEmpowered(ItemStack stack) {
@@ -202,10 +201,10 @@ public abstract class ItemToolRF extends ItemToolAdv implements IEmpowerableItem
 	@Override
 	public void onStateChange(EntityPlayer player, ItemStack stack) {
 		if (isEmpowered(stack)) {
-			player.worldObj.playSound((EntityPlayer) null, player.getPosition(), SoundEvents.ENTITY_LIGHTNING_THUNDER, SoundCategory.PLAYERS, 0.1F, 0.5F * ((player.worldObj.rand.nextFloat() - player.worldObj.rand.nextFloat()) * 0.7F + 2F));
+			player.worldObj.playSound(null, player.getPosition(), SoundEvents.ENTITY_LIGHTNING_THUNDER, SoundCategory.PLAYERS, 0.1F, 0.5F * ((player.worldObj.rand.nextFloat() - player.worldObj.rand.nextFloat()) * 0.7F + 2F));
 		}
 		else {
-			player.worldObj.playSound((EntityPlayer) null, player.getPosition(), SoundEvents.ENTITY_EXPERIENCE_ORB_TOUCH, SoundCategory.PLAYERS, 0.1F, 0.5F * ((player.worldObj.rand.nextFloat() - player.worldObj.rand.nextFloat()) * 0.7F + 2F));
+			player.worldObj.playSound(null, player.getPosition(), SoundEvents.ENTITY_EXPERIENCE_ORB_TOUCH, SoundCategory.PLAYERS, 0.1F, 0.5F * ((player.worldObj.rand.nextFloat() - player.worldObj.rand.nextFloat()) * 0.7F + 2F));
 		}
 	}
 
