@@ -11,6 +11,7 @@ import cofh.core.item.tool.ItemToolAdv;
 import cofh.lib.util.helpers.*;
 import cofh.redstonearsenal.RedstoneArsenal;
 import cofh.redstonearsenal.core.RAProps;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -75,7 +76,15 @@ public abstract class ItemToolRF extends ItemToolAdv implements IEmpowerableItem
 		return efficiencyOnProperMaterial;
 	}
 
-	protected int useEnergy(ItemStack stack, boolean simulate) {
+    @Override
+    public float getStrVsBlock(ItemStack stack, IBlockState state) {
+        if (getEnergyStored(stack) < energyPerUse) {
+            return 1.0F;
+        }
+        return super.getStrVsBlock(stack, state);
+    }
+
+    protected int useEnergy(ItemStack stack, boolean simulate) {
 		int unbreakingLevel = MathHelper.clamp(EnchantmentHelper.getEnchantmentLevel(Enchantments.UNBREAKING, stack), 0, 4);
 		return extractEnergy(stack, isEmpowered(stack) ? energyPerUseCharged * (5 - unbreakingLevel) / 5 : energyPerUse * (5 - unbreakingLevel) / 5, simulate);
 	}
@@ -152,7 +161,7 @@ public abstract class ItemToolRF extends ItemToolAdv implements IEmpowerableItem
     @Override
     public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
         return super.shouldCauseReequipAnimation(oldStack, newStack, slotChanged)
-                && !(oldStack.isItemEqual(newStack) && getEnergyStored(oldStack) < getEnergyStored(newStack));
+                && !(!slotChanged && oldStack.isItemEqual(newStack) && getEnergyStored(oldStack) < getEnergyStored(newStack));
     }
 
     @Override
