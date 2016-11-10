@@ -192,7 +192,7 @@ public class ItemWrenchRF extends ItemShears implements IEnergyContainerItem, IT
 			}
 			return ServerHelper.isServerWorld(world) ? EnumActionResult.SUCCESS : EnumActionResult.PASS;
 		}
-		else if (!player.isSneaking() && block.rotateBlock(world, pos, EnumFacing.getFacingFromVector(hitX, hitY, hitZ))) {
+		else if (!player.isSneaking() && block.rotateBlock(world, pos, side)) {
 			if (!player.capabilities.isCreativeMode) {
 				useEnergy(stack, false);
 			}
@@ -385,7 +385,9 @@ public class ItemWrenchRF extends ItemShears implements IEnergyContainerItem, IT
 	@Override
 	public Multimap<String, AttributeModifier> getAttributeModifiers(EntityEquipmentSlot slot, ItemStack stack) {
 		Multimap<String, AttributeModifier> multimap = HashMultimap.create();
-		multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getAttributeUnlocalizedName(), new AttributeModifier(Item.ATTACK_DAMAGE_MODIFIER, "Tool modifier", 1, 0));
+		if (slot == EntityEquipmentSlot.MAINHAND) {
+            multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getAttributeUnlocalizedName(), new AttributeModifier(Item.ATTACK_DAMAGE_MODIFIER, "Tool modifier", 1, 0));
+        }
 		return multimap;
 	}
 
