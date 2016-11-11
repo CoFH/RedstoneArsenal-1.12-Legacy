@@ -16,6 +16,7 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.*;
@@ -109,27 +110,47 @@ public abstract class ItemToolRF extends ItemToolAdv implements IEmpowerableItem
 		list.add(EnergyHelper.setDefaultEnergyTag(new ItemStack(item), maxEnergy));
 	}
 
-	@Override
+    @Override
+    public Multimap<String, AttributeModifier> getAttributeModifiers(EntityEquipmentSlot slot, ItemStack stack) {
+
+        Multimap<String, AttributeModifier> multimap = HashMultimap.create();
+
+        if (slot == EntityEquipmentSlot.MAINHAND) {
+            multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getAttributeUnlocalizedName(), new AttributeModifier(ATTACK_SPEED_MODIFIER, "Tool modifier", (double)this.attackSpeed, 0));
+
+            if (extractEnergy(stack, energyPerUse, true) == energyPerUse) {
+                int fluxDamage = isEmpowered(stack) ? 2 : 1;
+                multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getAttributeUnlocalizedName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Tool modifier", fluxDamage + damage, 0));
+            }
+            else {
+                multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getAttributeUnlocalizedName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Tool modifier", 1, 0));
+            }
+        }
+
+        return multimap;
+    }
+
+    @Override
 	public boolean hitEntity(ItemStack stack, EntityLivingBase entity, EntityLivingBase player) {
-		EntityPlayer thePlayer = (EntityPlayer) player;
-		float fallingMult = (player.fallDistance > 0.0F && !player.onGround && !player.isOnLadder() && !player.isInWater() && !player.isPotionActive(MobEffects.BLINDNESS) && player.getRidingEntity() == null) ? 1.5F : 1.0F;
-		float potionDamage = 1.0f;
 
-		if (player.isPotionActive(MobEffects.INSTANT_DAMAGE)) {
-			potionDamage += player.getActivePotionEffect(MobEffects.INSTANT_DAMAGE).getAmplifier() * 1.3f;
-		}
+        if (stack.getItemDamage() > 0) {
+            stack.setItemDamage(0);
+        }
 
-		if (thePlayer.capabilities.isCreativeMode || extractEnergy(stack, energyPerUse, false) == energyPerUse) {
-			int fluxDamage = isEmpowered(stack) ? 2 : 1;
-			float enchantDamage = damage + EnchantmentHelper.getEnchantmentModifierDamage(player.getArmorInventoryList(), DamageSource.generic);
+        EntityPlayer thePlayer = (EntityPlayer) player;
 
-			entity.attackEntityFrom(DamageHelper.causePlayerFluxDamage(thePlayer), fluxDamage * potionDamage);
-			entity.attackEntityFrom(DamageSource.causePlayerDamage(thePlayer), (fluxDamage + enchantDamage) * fallingMult * potionDamage);
-		}
-		else {
-			entity.attackEntityFrom(DamageSource.causePlayerDamage(thePlayer), 1 * fallingMult * potionDamage);
-		}
-		return true;
+        if (thePlayer.capabilities.isCreativeMode || extractEnergy(stack, energyPerUse, false) == energyPerUse) {
+            int fluxDamage = isEmpowered(stack) ? 2 : 1;
+
+            float potionDamage = 1.0f;
+            if (player.isPotionActive(MobEffects.STRENGTH)) {
+                potionDamage += player.getActivePotionEffect(MobEffects.STRENGTH).getAmplifier() * 1.3f;
+            }
+
+            entity.attackEntityFrom(DamageHelper.causePlayerFluxDamage(thePlayer), fluxDamage * potionDamage);
+        }
+
+        return true;
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -149,8 +170,9 @@ public abstract class ItemToolRF extends ItemToolAdv implements IEmpowerableItem
 		list.add(StringHelper.ORANGE + getEnergyPerUse(stack) + " " + StringHelper.localize("info.redstonearsenal.tool.energyPerUse") + StringHelper.END);
 		RAProps.addEmpoweredTip(this, stack, list);
 		if (getEnergyStored(stack) >= getEnergyPerUse(stack)) {
+            int adjustedDamage = (int) (damage + playerIn.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getBaseValue());
 			list.add("");
-			list.add(StringHelper.LIGHT_BLUE + "+" + damage + " " + StringHelper.localize("info.cofh.damageAttack") + StringHelper.END);
+			list.add(StringHelper.LIGHT_BLUE + "+" + adjustedDamage + " " + StringHelper.localize("info.cofh.damageAttack") + StringHelper.END);
 			list.add(StringHelper.BRIGHT_GREEN + "+" + (isEmpowered(stack) ? 2 : 1) + " " + StringHelper.localize("info.cofh.damageFlux") + StringHelper.END);
 		}
 	}

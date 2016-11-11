@@ -114,31 +114,47 @@ public class ItemSwordRF extends ItemSword implements IEmpowerableItem, IEnergyC
 		list.add(EnergyHelper.setDefaultEnergyTag(new ItemStack(item, 1, 0), maxEnergy));
 	}
 
-	@Override
+    @Override
+    public Multimap<String, AttributeModifier> getAttributeModifiers(EntityEquipmentSlot slot, ItemStack stack) {
+
+        Multimap<String, AttributeModifier> multimap = HashMultimap.create();
+
+        if (slot == EntityEquipmentSlot.MAINHAND) {
+            multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getAttributeUnlocalizedName(), new AttributeModifier(ATTACK_SPEED_MODIFIER, "Tool modifier", -2.2D, 0));
+
+            if (useEnergy(stack, true) == getEnergyPerUse(stack)) {
+                int fluxDamage = isEmpowered(stack) ? damageCharged : 1;
+                multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getAttributeUnlocalizedName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Tool modifier", fluxDamage + damage, 0));
+            }
+            else {
+                multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getAttributeUnlocalizedName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Tool modifier", 1, 0));
+            }
+        }
+
+        return multimap;
+    }
+
+    @Override
 	public boolean hitEntity(ItemStack stack, EntityLivingBase entity, EntityLivingBase player) {
 
-		if (stack.getItemDamage() > 0) {
-			stack.setItemDamage(0);
-		}
-		EntityPlayer thePlayer = (EntityPlayer) player;
-		float fallingMult = (player.fallDistance > 0.0F && !player.onGround && !player.isOnLadder() && !player.isInWater() && !player.isPotionActive(MobEffects.BLINDNESS) && player.getRidingEntity() == null) ? 1.5F : 1.0F;
-		float potionDamage = 1.0f;
+        if (stack.getItemDamage() > 0) {
+            stack.setItemDamage(0);
+        }
 
-		if (player.isPotionActive(MobEffects.INSTANT_DAMAGE)) {
-			potionDamage += player.getActivePotionEffect(MobEffects.INSTANT_DAMAGE).getAmplifier() * 1.3f;
-		}
+        EntityPlayer thePlayer = (EntityPlayer) player;
 
-		if (thePlayer.capabilities.isCreativeMode || useEnergy(stack, false) == getEnergyPerUse(stack)) {
-			float fluxDamage = isEmpowered(stack) ? damageCharged : 1;
-			float enchantDamage = damage + EnchantmentHelper.getEnchantmentModifierDamage(player.getArmorInventoryList(), DamageSource.generic);
+        if (thePlayer.capabilities.isCreativeMode || useEnergy(stack, false) == getEnergyPerUse(stack)) {
+            int fluxDamage = isEmpowered(stack) ? 2 : 1;
 
-			entity.attackEntityFrom(DamageHelper.causePlayerFluxDamage(thePlayer), fluxDamage * potionDamage);
-			entity.attackEntityFrom(DamageSource.causePlayerDamage(thePlayer), (fluxDamage + enchantDamage) * fallingMult * potionDamage);
-		}
-		else {
-			entity.attackEntityFrom(DamageSource.causePlayerDamage(thePlayer), 1 * fallingMult * potionDamage);
-		}
-		return true;
+            float potionDamage = 1.0f;
+            if (player.isPotionActive(MobEffects.STRENGTH)) {
+                potionDamage += player.getActivePotionEffect(MobEffects.STRENGTH).getAmplifier() * 1.3f;
+            }
+
+            entity.attackEntityFrom(DamageHelper.causePlayerFluxDamage(thePlayer), fluxDamage * potionDamage);
+        }
+
+        return true;
 	}
 
 	@Override
@@ -200,19 +216,6 @@ public class ItemSwordRF extends ItemSword implements IEmpowerableItem, IEnergyC
 	}
 
     @Override
-    public Multimap<String, AttributeModifier> getItemAttributeModifiers(EntityEquipmentSlot equipmentSlot) {
-        Multimap<String, AttributeModifier> multimap = super.getItemAttributeModifiers(equipmentSlot);
-
-        if (equipmentSlot == EntityEquipmentSlot.MAINHAND)
-        {
-            multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getAttributeUnlocalizedName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", 3.0D + getDamageVsEntity(), 0));
-            multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getAttributeUnlocalizedName(), new AttributeModifier(ATTACK_SPEED_MODIFIER, "Weapon modifier", -2.2D, 0));
-        }
-
-        return multimap;
-    }
-
-    @Override
 	public void addInformation(ItemStack stack, EntityPlayer player, List<String> list, boolean check) {
 
 		if (StringHelper.displayShiftForDetail && !StringHelper.isShiftKeyDown()) {
@@ -229,8 +232,9 @@ public class ItemSwordRF extends ItemSword implements IEmpowerableItem, IEnergyC
 		list.add(StringHelper.ORANGE + getEnergyPerUse(stack) + " " + StringHelper.localize("info.redstonearsenal.tool.energyPerUse") + StringHelper.END);
 		RAProps.addEmpoweredTip(this, stack, list);
 		if (getEnergyStored(stack) >= getEnergyPerUse(stack)) {
+            int adjustedDamage = (int) (damage + player.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getBaseValue());
 			list.add("");
-			list.add(StringHelper.LIGHT_BLUE + "+" + damage + " " + StringHelper.localize("info.cofh.damageAttack") + StringHelper.END);
+			list.add(StringHelper.LIGHT_BLUE + "+" + adjustedDamage + " " + StringHelper.localize("info.cofh.damageAttack") + StringHelper.END);
 			list.add(StringHelper.BRIGHT_GREEN + "+" + (isEmpowered(stack) ? damageCharged : 1) + " " + StringHelper.localize("info.cofh.damageFlux") + StringHelper.END);
 		}
 	}

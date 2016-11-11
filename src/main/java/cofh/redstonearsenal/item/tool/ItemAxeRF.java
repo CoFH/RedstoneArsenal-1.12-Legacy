@@ -45,7 +45,7 @@ public class ItemAxeRF extends ItemToolRF {
 		GameRegistry.register(this);
 		setCreativeTab(RedstoneArsenal.tab);
 		addToolClass("axe");
-		damage = 5;
+		damage = 8;
 		energyPerUseCharged = 1600;
 
 		effectiveMaterials.addAll(EFFECTIVE_ON_MATERIALS);
