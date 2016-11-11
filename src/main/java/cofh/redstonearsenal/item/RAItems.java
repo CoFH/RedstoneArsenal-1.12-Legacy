@@ -176,7 +176,7 @@ public class RAItems {
 		itemBowFlux = new ItemBowRF(TOOL_MATERIAL_FLUX, TOOL + "fluxBow").setEnergyParams(toolRFCapacity[8], toolRFTransfer[8], toolRFUsed[8], toolRFCharged[8]);
 
 		blockFlux = new BlockStorage();
-		blockFlux.setRegistryName("blockFlux");
+		blockFlux.setRegistryName("block_flux");
 		blockFlux.preInit();
 		ItemBlock itemBlockFlux = new ItemBlockFlux(blockFlux);
 		itemBlockFlux.setRegistryName(blockFlux.getRegistryName());

@@ -30,8 +30,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import javax.annotation.Nullable;
 import java.util.List;
 
-//todo Perhaps this should be changed to BlockFlux?
 public class BlockStorage extends Block implements IInitializer {
+
+    private static final double INSET = 1.0D / 256.0D;
+    public static final AxisAlignedBB AABB = new AxisAlignedBB(INSET, INSET, INSET, 1.0D - INSET, 1.0D - INSET, 1.0D - INSET);
 
     public static final PropertyEnum<Type> TYPES = PropertyEnum.create("type", Type.class);
 
@@ -109,7 +111,7 @@ public class BlockStorage extends Block implements IInitializer {
     @Deprecated
     @Nullable
     public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, World worldIn, BlockPos pos) {
-        return new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.99D, 1.0D);
+        return AABB;
     }
 
     @Override
