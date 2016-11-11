@@ -144,7 +144,7 @@ public class ItemSwordRF extends ItemSword implements IEmpowerableItem, IEnergyC
         EntityPlayer thePlayer = (EntityPlayer) player;
 
         if (thePlayer.capabilities.isCreativeMode || useEnergy(stack, false) == getEnergyPerUse(stack)) {
-            int fluxDamage = isEmpowered(stack) ? 2 : 1;
+            int fluxDamage = isEmpowered(stack) ? damageCharged : 1;
 
             float potionDamage = 1.0f;
             if (player.isPotionActive(MobEffects.STRENGTH)) {
