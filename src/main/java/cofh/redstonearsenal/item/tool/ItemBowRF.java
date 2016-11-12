@@ -5,10 +5,12 @@ import cofh.api.item.IEmpowerableItem;
 import cofh.core.item.IEqualityOverrideItem;
 import cofh.core.item.tool.ItemBowAdv;
 import cofh.lib.util.helpers.EnergyHelper;
+import cofh.lib.util.helpers.ItemHelper;
 import cofh.lib.util.helpers.MathHelper;
 import cofh.lib.util.helpers.StringHelper;
 import cofh.redstonearsenal.RedstoneArsenal;
 import cofh.redstonearsenal.core.RAProps;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -131,10 +133,12 @@ public class ItemBowRF extends ItemBowAdv implements IEmpowerableItem, IEnergyCo
 		return entityIn != null && entityIn.isHandActive() && entityIn.getActiveItemStack() == stack;
 	}
 
+	@SideOnly(Side.CLIENT)
 	@Override
     public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
         return super.shouldCauseReequipAnimation(oldStack, newStack, slotChanged) &&
-                !(!slotChanged && oldStack.isItemEqual(newStack) && getEnergyStored(oldStack) < getEnergyStored(newStack));
+                (slotChanged || isPulling(newStack, Minecraft.getMinecraft().thePlayer)
+                        || !ItemHelper.areItemStacksEqualIgnoreTags(oldStack, newStack, "Energy"));
     }
 
     protected int getEnergyPerUse(ItemStack stack) {

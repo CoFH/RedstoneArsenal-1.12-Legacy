@@ -10,6 +10,7 @@ import cofh.core.item.tool.ItemFishingRodAdv;
 import cofh.lib.util.helpers.*;
 import cofh.redstonearsenal.RedstoneArsenal;
 import cofh.redstonearsenal.core.RAProps;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -137,10 +138,12 @@ public class ItemFishingRodRF extends ItemFishingRodAdv implements IEmpowerableI
 		return new ActionResult<ItemStack>(EnumActionResult.PASS, stack);
 	}
 
-    @Override
+    @SideOnly(Side.CLIENT)
+	@Override
     public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
         return super.shouldCauseReequipAnimation(oldStack, newStack, slotChanged)
-                && !(!slotChanged && oldStack.isItemEqual(newStack) && getEnergyStored(oldStack) < getEnergyStored(newStack));
+                && (slotChanged || (isCastState(newStack, Minecraft.getMinecraft().thePlayer))
+                || !ItemHelper.areItemStacksEqualIgnoreTags(oldStack, newStack, "Energy"));
     }
 
     @Override
