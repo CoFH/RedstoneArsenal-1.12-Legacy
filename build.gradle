@@ -40,16 +40,11 @@ repositories {
         name = "JEI Maven."
         url = "http://dvs1.progwml6.com/files/maven"
     }
-    maven {
-        name = "IC2 Maven"
-        url = "http://maven.ic2.player.to"
-    }
 }
 
 dependencies {
     compile "codechicken:CodeChickenLib:${config.mc_version}-${config.ccl_version}:deobf"
     compile "cofh:CoFHCore:${config.mc_version}-${config.cofhcore_version}:deobf"
-    compile "net.industrial-craft:industrialcraft-2:${config.ic2_version}:dev"
 }
 
 version = "${project.config.mod_version}." + (System.getenv("BUILD_NUMBER") ?: "1")
