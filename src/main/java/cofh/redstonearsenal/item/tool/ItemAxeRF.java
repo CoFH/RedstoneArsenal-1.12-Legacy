@@ -1,5 +1,6 @@
 package cofh.redstonearsenal.item.tool;
 
+import java.util.Arrays;
 import java.util.Set;
 
 import com.google.common.collect.Sets;
@@ -20,7 +21,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.*;
-import scala.actors.threadpool.Arrays;
 
 import javax.annotation.Nullable;
 
