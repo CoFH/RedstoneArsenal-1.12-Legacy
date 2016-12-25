@@ -166,7 +166,7 @@ public class ItemWrenchBattleRF extends ItemSwordRF implements IToolHammer {
 
 	/* IToolHammer */
 	@Override
-	public boolean isUsable(ItemStack item, EntityLivingBase user, int x, int y, int z) {
+	public boolean isUsable(ItemStack item, EntityLivingBase user, BlockPos pos) {
 		if (user instanceof EntityPlayer) {
 			if (((EntityPlayer) user).capabilities.isCreativeMode) {
 				return true;
@@ -176,7 +176,7 @@ public class ItemWrenchBattleRF extends ItemSwordRF implements IToolHammer {
 	}
 
 	@Override
-	public void toolUsed(ItemStack item, EntityLivingBase user, int x, int y, int z) {
+	public void toolUsed(ItemStack item, EntityLivingBase user, BlockPos pos) {
 		if (user instanceof EntityPlayer) {
 			EntityPlayer player = (EntityPlayer) user;
 			if (!player.capabilities.isCreativeMode) {

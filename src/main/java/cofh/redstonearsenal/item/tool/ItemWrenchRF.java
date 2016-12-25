@@ -250,7 +250,7 @@ public class ItemWrenchRF extends ItemShears implements IEnergyContainerItem, IT
 			}
 		}
 		if (ret) {
-			tool.toolUsed(stack, player, x, y, z);
+			tool.toolUsed(stack, player, pos);
 		}
 		return ret;
 	}
@@ -490,7 +490,7 @@ public class ItemWrenchRF extends ItemShears implements IEnergyContainerItem, IT
 
 	/* IToolHammer */
 	@Override
-	public boolean isUsable(ItemStack item, EntityLivingBase user, int x, int y, int z) {
+	public boolean isUsable(ItemStack item, EntityLivingBase user, BlockPos pos) {
 
 		if (user instanceof EntityPlayer) {
 			if (((EntityPlayer) user).capabilities.isCreativeMode) {
@@ -501,7 +501,7 @@ public class ItemWrenchRF extends ItemShears implements IEnergyContainerItem, IT
 	}
 
 	@Override
-	public void toolUsed(ItemStack item, EntityLivingBase user, int x, int y, int z) {
+	public void toolUsed(ItemStack item, EntityLivingBase user, BlockPos pos) {
 
 		if (user instanceof EntityPlayer) {
 			EntityPlayer player = (EntityPlayer) user;
