@@ -29,7 +29,7 @@ import javax.annotation.Nullable;
 })
 public class ItemWrenchBattleRF extends ItemSwordRF implements IToolHammer {
 
-	private static String name;
+	private String name;
 
 	public ItemWrenchBattleRF(Item.ToolMaterial toolMaterial, String nameIn) {
 

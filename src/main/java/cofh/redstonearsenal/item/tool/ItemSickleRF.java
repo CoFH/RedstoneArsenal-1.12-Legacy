@@ -27,12 +27,12 @@ import java.util.Arrays;
 
 public class ItemSickleRF extends ItemToolRF {
 
-	private THashSet<Block> EFFECTIVE_ON_BLOCKS = new THashSet<Block>(Arrays.asList(new Block[] {
+	private static THashSet<Block> EFFECTIVE_ON_BLOCKS = new THashSet<Block>(Arrays.asList(new Block[] {
 			Blocks.WEB, Blocks.VINE, Blocks.LEAVES, Blocks.LEAVES2
 	}));
 
 	public int radius = 3;
-	private static String name;
+	private String name;
 
 	public ItemSickleRF(Item.ToolMaterial toolMaterial, String nameIn) {
 

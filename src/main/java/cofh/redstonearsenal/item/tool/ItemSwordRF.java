@@ -43,7 +43,7 @@ public class ItemSwordRF extends ItemSword implements IEmpowerableItem, IEnergyC
 	public int damage = 8;
 	public int damageCharged = 4;
 
-	private static String name;
+	private String name;
 
 	public ItemSwordRF(Item.ToolMaterial toolMaterial, String nameIn) {
 

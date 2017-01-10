@@ -33,7 +33,7 @@ public class ItemArmorRF extends ItemArmorAdv implements ISpecialArmor, IEnergyC
 
 	public String[] textures = new String[2];
 
-	private static String name;
+	private String name;
 
 	public ItemArmorRF(ArmorMaterial material, EntityEquipmentSlot type, String nameIn) {
 		super(material, type);

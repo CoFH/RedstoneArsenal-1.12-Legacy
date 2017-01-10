@@ -30,11 +30,9 @@ public class ItemAxeRF extends ItemToolRF {
 			Blocks.PLANKS, Blocks.BOOKSHELF, Blocks.LOG, Blocks.LOG2, Blocks.CHEST, Blocks.PUMPKIN, Blocks.LIT_PUMPKIN, Blocks.MELON_BLOCK, Blocks.LADDER, Blocks.WOODEN_BUTTON, Blocks.WOODEN_PRESSURE_PLATE
 	}));
 
-	private Set<Material> EFFECTIVE_ON_MATERIALS = Sets.newHashSet(new Material[] {
-			Material.WOOD, Material.PLANTS, Material.VINE, Material.CACTUS, Material.GOURD
-	});
+	private static Set<Material> EFFECTIVE_ON_MATERIALS = Sets.newHashSet(Material.WOOD, Material.PLANTS, Material.VINE, Material.CACTUS, Material.GOURD);
 
-	private static String name;
+	private String name;
 
 	public ItemAxeRF(Item.ToolMaterial toolMaterial, String nameIn) {
 

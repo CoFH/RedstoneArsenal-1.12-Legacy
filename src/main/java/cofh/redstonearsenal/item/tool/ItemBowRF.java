@@ -40,7 +40,7 @@ public class ItemBowRF extends ItemBowAdv implements IEmpowerableItem, IEnergyCo
 	public int energyPerUse = 200;
 	public int energyPerUseCharged = 800;
 
-	private static String name;
+	private String name;
 
 	public ItemBowRF(Item.ToolMaterial toolMaterial, String nameIn) {
 		super(toolMaterial);

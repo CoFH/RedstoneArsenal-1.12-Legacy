@@ -34,7 +34,7 @@ public class ItemFishingRodRF extends ItemFishingRodAdv implements IEmpowerableI
 	public int energyPerUse = 200;
 	public int energyPerUseCharged = 800;
 
-	private static String name;
+	private String name;
 
 	public ItemFishingRodRF(ToolMaterial toolMaterial, String nameIn) {
 		super(toolMaterial);

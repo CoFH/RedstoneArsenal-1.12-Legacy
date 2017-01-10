@@ -39,7 +39,7 @@ public abstract class ItemToolRF extends ItemToolAdv implements IEmpowerableItem
 
 	int damage = 0;
 
-	private static String name;
+	private String name;
 
 	public ItemToolRF(Item.ToolMaterial toolMaterial, String nameIn, float attackSpeed) {
         super(0, attackSpeed, toolMaterial);

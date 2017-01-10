@@ -51,7 +51,7 @@ public class ItemWrenchRF extends ItemShears implements IEnergyContainerItem, IT
 	public int maxEnergy = 160000;
 	public int maxTransfer = 1600;
 	public int energyPerUse = 200;
-	private static String name;
+	private String name;
 
 	public ItemWrenchRF(Item.ToolMaterial toolMaterial, String nameIn) {
 

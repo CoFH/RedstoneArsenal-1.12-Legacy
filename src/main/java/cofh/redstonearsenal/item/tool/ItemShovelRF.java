@@ -29,7 +29,7 @@ public class ItemShovelRF extends ItemToolRF {
 
 	int range = 5;
 
-	private static String name;
+	private String name;
 
 	public ItemShovelRF(Item.ToolMaterial toolMaterial, String nameIn) {
 
