@@ -166,8 +166,8 @@ public class ItemWrenchRF extends ItemShears implements IEnergyContainerItem, IT
 		if (MinecraftForge.EVENT_BUS.post(event) || event.getResult() == Result.DENY || event.getUseItem() == Result.DENY || event.getUseBlock() == Result.DENY) {
 			return EnumActionResult.PASS;
 		}
-		if (ServerHelper.isServerWorld(world) && player.isSneaking() && block instanceof IDismantleable && ((IDismantleable) block).canDismantle(player, world, pos)) {
-			((IDismantleable) block).dismantleBlock(player, world, pos, false);
+		if (ServerHelper.isServerWorld(world) && player.isSneaking() && block instanceof IDismantleable && ((IDismantleable) block).canDismantle(world, pos, state, player)) {
+            ((IDismantleable) block).dismantleBlock(world, pos, state, player, false);
 
 			if (!player.capabilities.isCreativeMode) {
 				useEnergy(stack, false);
@@ -488,29 +488,46 @@ public class ItemWrenchRF extends ItemShears implements IEnergyContainerItem, IT
 		player.swingArm(EnumHand.MAIN_HAND);
 	}
 
-	/* IToolHammer */
-	@Override
-	public boolean isUsable(ItemStack item, EntityLivingBase user, BlockPos pos) {
+    /* IToolHammer */
+    @Override
+    public boolean isUsable(ItemStack item, EntityLivingBase user, BlockPos pos) {
+        if (user instanceof EntityPlayer) {
+            if (((EntityPlayer) user).capabilities.isCreativeMode) {
+                return true;
+            }
+        }
+        return getEnergyStored(item) >= getEnergyPerUse(item);
+    }
 
-		if (user instanceof EntityPlayer) {
-			if (((EntityPlayer) user).capabilities.isCreativeMode) {
-				return true;
-			}
-		}
-		return getEnergyStored(item) >= getEnergyPerUse(item);
-	}
+    @Override
+    public boolean isUsable(ItemStack item, EntityLivingBase user, Entity entity) {
+        if (user instanceof EntityPlayer) {
+            if (((EntityPlayer) user).capabilities.isCreativeMode) {
+                return true;
+            }
+        }
+        return getEnergyStored(item) >= getEnergyPerUse(item);
+    }
 
-	@Override
-	public void toolUsed(ItemStack item, EntityLivingBase user, BlockPos pos) {
+    @Override
+    public void toolUsed(ItemStack item, EntityLivingBase user, BlockPos pos) {
+        if (user instanceof EntityPlayer) {
+            EntityPlayer player = (EntityPlayer) user;
+            if (!player.capabilities.isCreativeMode) {
+                useEnergy(player.getHeldItemMainhand(), false);
+            }
+        }
+    }
 
-		if (user instanceof EntityPlayer) {
-			EntityPlayer player = (EntityPlayer) user;
-
-			if (!player.capabilities.isCreativeMode) {
-				useEnergy(player.getHeldItemMainhand(), false);
-			}
-		}
-	}
+    @Override
+    public void toolUsed(ItemStack item, EntityLivingBase user, Entity entity) {
+        if (user instanceof EntityPlayer) {
+            EntityPlayer player = (EntityPlayer) user;
+            if (!player.capabilities.isCreativeMode) {
+                useEnergy(player.getHeldItemMainhand(), false);
+            }
+        }
+    }
 
 	/* IToolWrench */
 	public boolean canWrench(EntityPlayer player, int x, int y, int z) {

@@ -1,7 +1,6 @@
 package cofh.redstonearsenal.item;
 
 import codechicken.lib.item.ItemStackRegistry;
-import cofh.api.modhelpers.ThermalExpansionHelper;
 import cofh.lib.util.helpers.EnergyHelper;
 import cofh.lib.util.helpers.ItemHelper;
 import cofh.lib.util.helpers.MathHelper;
@@ -237,11 +236,11 @@ public class RAItems {
 		ItemStackRegistry.registerCustomItemStack("toolFluxSickle", toolFluxSickle);
 		ItemStackRegistry.registerCustomItemStack("toolFluxBow", toolFluxBow);
 
-		if (Loader.isModLoaded("ThermalExpansion")) {
-			ThermalExpansionHelper.addTransposerFill(8000, new ItemStack(Items.DIAMOND), materialGemCrystalFlux, new FluidStack(FluidRegistry.getFluid("redstone"), 200), false);
-			ThermalExpansionHelper.addTransposerFill(4000, new ItemStack(Item.REGISTRY.getObject(new ResourceLocation("ThermalFoundation", "dustElectrum")), 1, 1), materialDustElectrumFlux, new FluidStack(FluidRegistry.getFluid("redstone"), 200), false);
-			ThermalExpansionHelper.addSmelterBlastOre("ElectrumFlux");
-		}
+//		if (Loader.isModLoaded("ThermalExpansion")) {
+//			ThermalExpansionHelper.addTransposerFill(8000, new ItemStack(Items.DIAMOND), materialGemCrystalFlux, new FluidStack(FluidRegistry.getFluid("redstone"), 200), false);
+//			ThermalExpansionHelper.addTransposerFill(4000, new ItemStack(Item.REGISTRY.getObject(new ResourceLocation("ThermalFoundation", "dustElectrum")), 1, 1), materialDustElectrumFlux, new FluidStack(FluidRegistry.getFluid("redstone"), 200), false);
+//			ThermalExpansionHelper.addSmelterBlastOre("ElectrumFlux");
+//		}
 	}
 
 	public static void postInit() {
