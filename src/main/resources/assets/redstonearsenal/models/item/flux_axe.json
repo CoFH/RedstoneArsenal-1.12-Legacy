@@ -1,20 +1,20 @@
 {
-  "parent": "item/handheld",
-    "textures": {
-        "layer0": "redstonearsenal:items/tool/flux_axe"
-    },
+	"parent": "item/handheld",
+	"textures": {
+		"layer0": "redstonearsenal:items/tool/flux_axe"
+	},
 	"overrides": [
-        {
-            "predicate": {
-                "flux_axe_empowered": 1.0
-            },
-			"model": "redstonearsenal:item/flux_axe_empowered"
-        },
 		{
-            "predicate": {
-                "flux_axe_active": 1.0
-            },
+			"predicate": {
+				"flux_axe_empowered": 1.0
+			},
+			"model": "redstonearsenal:item/flux_axe_empowered"
+		},
+		{
+			"predicate": {
+				"flux_axe_active": 1.0
+			},
 			"model": "redstonearsenal:item/flux_axe_active"
-        }
-    ]
+		}
+	]
 }

@@ -1,10 +1,29 @@
 package cofh.redstonearsenal.core;
 
-/**
- * Created by brandon3055 on 5/11/2016.
- */
+import cofh.api.core.IModelRegister;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+
 public class Proxy {
 
-    public void preInit() {}
+	/* INIT */
+	public void preInit(FMLPreInitializationEvent event) {
+
+	}
+
+	public void initialize(FMLInitializationEvent event) {
+
+	}
+
+	public void postInit(FMLPostInitializationEvent event) {
+
+	}
+
+	/* HELPERS */
+	public boolean addIModelRegister(IModelRegister modelRegister) {
+
+		return false;
+	}
 
 }

@@ -1,20 +1,20 @@
 {
-  "parent": "item/handheld",
-    "textures": {
-        "layer0": "redstonearsenal:items/tool/flux_sword"
-    },
+	"parent": "item/handheld",
+	"textures": {
+		"layer0": "redstonearsenal:items/tool/flux_sword"
+	},
 	"overrides": [
-        {
-            "predicate": {
-                "flux_sword_empowered": 1.0
-            },
-			"model": "redstonearsenal:item/flux_sword_empowered"
-        },
 		{
-            "predicate": {
-                "flux_sword_active": 1.0
-            },
+			"predicate": {
+				"flux_sword_empowered": 1.0
+			},
+			"model": "redstonearsenal:item/flux_sword_empowered"
+		},
+		{
+			"predicate": {
+				"flux_sword_active": 1.0
+			},
 			"model": "redstonearsenal:item/flux_sword_active"
-        }
-    ]
+		}
+	]
 }

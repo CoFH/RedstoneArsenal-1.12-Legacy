@@ -71,7 +71,7 @@ processResources {
 
 version = "${project.minecraft.version}-${project.version}"
 //def commonManifest = {
-    //attributes 'FMLAT': 'te_at.cfg'
+//attributes 'FMLAT': 'te_at.cfg'
 //}
 
 jar {

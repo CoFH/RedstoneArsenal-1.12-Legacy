@@ -1,6 +1,6 @@
 {
-  "parent": "item/handheld",
-    "textures": {
-        "layer0": "redstonearsenal:items/tool/flux_battle_wrench_active"
-    }
+	"parent": "item/handheld",
+	"textures": {
+		"layer0": "redstonearsenal:items/tool/flux_battle_wrench_active"
+	}
 }

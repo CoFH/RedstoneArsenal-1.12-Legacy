@@ -1,20 +1,20 @@
 {
-  "parent": "item/handheld",
-    "textures": {
-        "layer0": "redstonearsenal:items/tool/flux_pickaxe"
-    },
+	"parent": "item/handheld",
+	"textures": {
+		"layer0": "redstonearsenal:items/tool/flux_pickaxe"
+	},
 	"overrides": [
-        {
-            "predicate": {
-                "flux_pickaxe_empowered": 1.0
-            },
-			"model": "redstonearsenal:item/flux_pickaxe_empowered"
-        },
 		{
-            "predicate": {
-                "flux_pickaxe_active": 1.0
-            },
+			"predicate": {
+				"flux_pickaxe_empowered": 1.0
+			},
+			"model": "redstonearsenal:item/flux_pickaxe_empowered"
+		},
+		{
+			"predicate": {
+				"flux_pickaxe_active": 1.0
+			},
 			"model": "redstonearsenal:item/flux_pickaxe_active"
-        }
-    ]
+		}
+	]
 }

@@ -1,6 +1,6 @@
 {
-  "parent": "item/handheld",
-    "textures": {
-        "layer0": "redstonearsenal:items/tool/flux_bow_empowered_2"
-    }
+	"parent": "item/bow",
+	"textures": {
+		"layer0": "redstonearsenal:items/tool/flux_bow_empowered_2"
+	}
 }

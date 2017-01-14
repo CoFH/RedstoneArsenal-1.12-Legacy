@@ -1,16 +1,43 @@
 package cofh.redstonearsenal.core;
 
-import cofh.redstonearsenal.item.RAItems;
+import cofh.api.core.IModelRegister;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
-/**
- * Created by brandon3055 on 5/11/2016.
- */
+import java.util.ArrayList;
+
 public class ProxyClient extends Proxy {
 
-    @Override
-    public void preInit() {
-        super.preInit();
+	/* INIT */
+	@Override
+	public void preInit(FMLPreInitializationEvent event) {
 
-        RAItems.initModels();
-    }
+		super.preInit(event);
+
+		for (int i = 0; i < modelList.size(); i++) {
+			modelList.get(i).registerModels();
+		}
+	}
+
+	@Override
+	public void initialize(FMLInitializationEvent event) {
+
+		super.initialize(event);
+	}
+
+	@Override
+	public void postInit(FMLPostInitializationEvent event) {
+
+		super.postInit(event);
+	}
+
+	/* HELPERS */
+	public boolean addIModelRegister(IModelRegister modelRegister) {
+
+		return modelList.add(modelRegister);
+	}
+
+	private static ArrayList<IModelRegister> modelList = new ArrayList<IModelRegister>();
+
 }

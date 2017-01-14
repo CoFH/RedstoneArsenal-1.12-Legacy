@@ -1,0 +1,43 @@
+package cofh.redstonearsenal.gui;
+
+import cofh.redstonearsenal.item.ItemMaterial;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+
+public class CreativeTabRA extends CreativeTabs {
+
+	public CreativeTabRA() {
+
+		super("RedstoneArsenal");
+	}
+
+	@Override
+	@SideOnly (Side.CLIENT)
+	public ItemStack getIconItemStack() {
+
+		return ItemMaterial.dustElectrumFlux;
+
+		//		ItemStack iconStack = new ItemStack(RAEquipment.ToolSet.FLUX.itemSword);
+		//		iconStack.setTagCompound(new NBTTagCompound());
+		//		iconStack.getTagCompound().setBoolean("CreativeTab", true);
+		//		return iconStack;
+	}
+
+	@Override
+	@SideOnly (Side.CLIENT)
+	public Item getTabIconItem() {
+
+		return getIconItemStack().getItem();
+	}
+
+	@Override
+	@SideOnly (Side.CLIENT)
+	public String getTabLabel() {
+
+		return "redstonearsenal.creativeTab";
+	}
+
+}
