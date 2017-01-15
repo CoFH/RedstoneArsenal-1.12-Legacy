@@ -4,7 +4,7 @@ import cofh.CoFHCore;
 import cofh.core.CoFHProps;
 import cofh.core.util.ConfigHandler;
 import cofh.redstonearsenal.block.RABlocks;
-import cofh.redstonearsenal.core.Proxy;
+import cofh.redstonearsenal.proxy.Proxy;
 import cofh.redstonearsenal.gui.CreativeTabRA;
 import cofh.redstonearsenal.item.RAEquipment;
 import cofh.redstonearsenal.item.RAItems;
@@ -37,7 +37,7 @@ public class RedstoneArsenal {
 	@Instance (MOD_ID)
 	public static RedstoneArsenal instance;
 
-	@SidedProxy (clientSide = "cofh.redstonearsenal.core.ProxyClient", serverSide = "cofh.redstonearsenal.core.Proxy")
+	@SidedProxy (clientSide = "cofh.redstonearsenal.proxy.ProxyClient", serverSide = "cofh.redstonearsenal.proxy.Proxy")
 	public static Proxy proxy;
 
 	public static final Logger LOG = LogManager.getLogger(MOD_ID);
