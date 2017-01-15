@@ -7,10 +7,8 @@ import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.IItemPropertyGetter;
 import net.minecraft.item.ItemSpade;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.*;
@@ -20,7 +18,6 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.UseHoeEvent;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 public class ItemShovelRF extends ItemToolRF {
@@ -42,21 +39,6 @@ public class ItemShovelRF extends ItemToolRF {
 		effectiveMaterials.add(Material.SNOW);
 		effectiveMaterials.add(Material.CRAFTED_SNOW);
 		effectiveMaterials.add(Material.CLAY);
-
-		addPropertyOverride(new ResourceLocation("flux_shovel_empowered"), new IItemPropertyGetter() {
-			@Override
-			public float apply(ItemStack stack, @Nullable World world, @Nullable EntityLivingBase entity) {
-
-				return ItemShovelRF.this.getEnergyStored(stack) > 0 && ItemShovelRF.this.isEmpowered(stack) ? 1F : 0F;
-			}
-		});
-		addPropertyOverride(new ResourceLocation("flux_shovel_active"), new IItemPropertyGetter() {
-			@Override
-			public float apply(ItemStack stack, @Nullable World world, @Nullable EntityLivingBase entity) {
-
-				return ItemShovelRF.this.getEnergyStored(stack) > 0 && !ItemShovelRF.this.isEmpowered(stack) ? 1F : 0F;
-			}
-		});
 	}
 
 	protected boolean hoeBlock(World world, int x, int y, int z, int hitSide, EntityPlayer player) {

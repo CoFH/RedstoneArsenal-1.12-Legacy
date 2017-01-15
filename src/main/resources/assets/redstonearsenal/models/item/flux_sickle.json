@@ -6,15 +6,15 @@
 	"overrides": [
 		{
 			"predicate": {
-				"flux_sickle_empowered": 1.0
+				"active": 1.0
 			},
-			"model": "redstonearsenal:item/flux_sickle_empowered"
+			"model": "redstonearsenal:item/flux_sickle_active"
 		},
 		{
 			"predicate": {
-				"flux_sickle_active": 1.0
+				"empowered": 1.0
 			},
-			"model": "redstonearsenal:item/flux_sickle_active"
+			"model": "redstonearsenal:item/flux_sickle_empowered"
 		}
 	]
 }

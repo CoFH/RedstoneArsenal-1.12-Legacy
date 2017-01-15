@@ -1,5 +1,5 @@
 {
-	"parent": "item/handheld",
+	"parent": "redstonearsenal:item/flux_axe",
 	"textures": {
 		"layer0": "redstonearsenal:items/tool/flux_axe_active"
 	}

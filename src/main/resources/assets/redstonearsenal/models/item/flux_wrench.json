@@ -6,9 +6,9 @@
 	"overrides": [
 		{
 			"predicate": {
-				"flux_wrench_empowered": 1.0
+				"active": 1.0
 			},
-			"model": "redstonearsenal:item/flux_wrench_empowered"
+			"model": "redstonearsenal:item/flux_wrench_active"
 		}
 	]
 }

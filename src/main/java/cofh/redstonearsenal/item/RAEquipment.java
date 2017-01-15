@@ -83,7 +83,7 @@ public class RAEquipment {
 
 		ArmorSet(String name, ArmorMaterial material) {
 
-			this.name = name;
+			this.name = name.toLowerCase(Locale.US);
 			ARMOR_MATERIAL = material;
 		}
 
@@ -97,13 +97,11 @@ public class RAEquipment {
 
 		protected void preInit() {
 
-			final String NAME = StringHelper.titleCase(name);
-			final String ARMOR = "redstonearsenal.armor." + name.toLowerCase(Locale.US);
-
+			final String ARMOR = "redstonearsenal.armor." + name;
 			final String PATH_ARMOR = "redstonearsenal:textures/armor/";
-			final String[] TEXTURE = { PATH_ARMOR + NAME.toLowerCase() + "_1.png", PATH_ARMOR + NAME.toLowerCase() + "_2.png" };
+			final String[] TEXTURE = { PATH_ARMOR + name + "_1.png", PATH_ARMOR + name + "_2.png" };
 
-			String category = "Equipment." + NAME + ".Armor";
+			String category = "Armor." + StringHelper.titleCase(name);
 
 			enable = RedstoneArsenal.CONFIG.getConfiguration().get(category, "Armor", true).getBoolean(true);
 
@@ -112,25 +110,25 @@ public class RAEquipment {
 			/* HELMET */
 			itemHelmet.setArmorTextures(TEXTURE).setUnlocalizedName(ARMOR + "Helmet").setCreativeTab(RedstoneArsenal.tab);
 			itemHelmet.setShowInCreative(enable);
-			itemHelmet.setRegistryName("armor.helmet" + NAME);
+			itemHelmet.setRegistryName("armor.helmet_" + name);
 			GameRegistry.register(itemHelmet);
 
 			/* PLATE */
 			itemPlate.setArmorTextures(TEXTURE).setUnlocalizedName(ARMOR + "Plate").setCreativeTab(RedstoneArsenal.tab);
 			itemPlate.setShowInCreative(enable);
-			itemPlate.setRegistryName("armor.plate" + NAME);
+			itemPlate.setRegistryName("armor.plate_" + name);
 			GameRegistry.register(itemPlate);
 
 			/* LEGS */
 			itemLegs.setArmorTextures(TEXTURE).setUnlocalizedName(ARMOR + "Legs").setCreativeTab(RedstoneArsenal.tab);
 			itemLegs.setShowInCreative(enable);
-			itemLegs.setRegistryName("armor.legs" + NAME);
+			itemLegs.setRegistryName("armor.legs_" + name);
 			GameRegistry.register(itemLegs);
 
 			/* BOOTS */
 			itemBoots.setArmorTextures(TEXTURE).setUnlocalizedName(ARMOR + "Boots").setCreativeTab(RedstoneArsenal.tab);
 			itemBoots.setShowInCreative(enable);
-			itemBoots.setRegistryName("armor.boots" + NAME);
+			itemBoots.setRegistryName("armor.boots_" + name);
 			GameRegistry.register(itemBoots);
 
 			/* REFERENCES */
@@ -171,12 +169,12 @@ public class RAEquipment {
 		private final ToolMaterial TOOL_MATERIAL;
 
 		/* BOW */
-		private float arrowSpeed = 1.0F;
-		private float arrowDamage = 1.0F;
+		private float arrowDamage = 1.5F;
+		private float arrowSpeed = 3.0F;
 
 		/* FISHING ROD */
-		private int luckModifier = 0;
-		private int speedModifier = 0;
+		private int luckModifier = 1;
+		private int speedModifier = 1;
 
 		/* TOOLS */
 		public ItemWrenchRF itemWrench;
@@ -189,6 +187,7 @@ public class RAEquipment {
 		public ItemFishingRodRF itemFishingRod;
 		public ItemSickleRF itemSickle;
 		public ItemHammerRF itemHammer;
+		public ItemShieldRF itemShield;
 
 		public ItemStack toolWrench;
 		public ItemStack toolBattleWrench;
@@ -200,12 +199,13 @@ public class RAEquipment {
 		public ItemStack toolFishingRod;
 		public ItemStack toolSickle;
 		public ItemStack toolHammer;
+		public ItemStack toolShield;
 
-		public boolean[] enable = new boolean[10];
+		public boolean[] enable = new boolean[11];
 
 		ToolSet(String name, ToolMaterial material) {
 
-			this.name = name;
+			this.name = name.toLowerCase(Locale.US);
 			TOOL_MATERIAL = material;
 		}
 
@@ -221,14 +221,14 @@ public class RAEquipment {
 			itemFishingRod = new ItemFishingRodRF(TOOL_MATERIAL);
 			itemSickle = new ItemSickleRF(TOOL_MATERIAL);
 			itemHammer = new ItemHammerRF(TOOL_MATERIAL);
+			itemShield = new ItemShieldRF(TOOL_MATERIAL);
 		}
 
 		protected void preInit() {
 
-			final String NAME = StringHelper.titleCase(name);
-			final String TOOL = "redstonearsenal.tool." + name.toLowerCase(Locale.US);
+			final String TOOL = "redstonearsenal.tool." + name;
 
-			String category = "Equipment." + NAME + ".Tools";
+			String category = "Equipment." + StringHelper.titleCase(name);
 
 			enable[0] = RedstoneArsenal.CONFIG.getConfiguration().get(category, "Wrench", true).getBoolean(true);
 			enable[1] = RedstoneArsenal.CONFIG.getConfiguration().get(category, "BattleWrench", true).getBoolean(true);
@@ -240,68 +240,78 @@ public class RAEquipment {
 			enable[7] = RedstoneArsenal.CONFIG.getConfiguration().get(category, "FishingRod", true).getBoolean(true);
 			enable[8] = RedstoneArsenal.CONFIG.getConfiguration().get(category, "Sickle", true).getBoolean(true);
 			enable[9] = RedstoneArsenal.CONFIG.getConfiguration().get(category, "Hammer", true).getBoolean(true);
+			enable[10] = RedstoneArsenal.CONFIG.getConfiguration().get(category, "Shield", true).getBoolean(true);
 
 			create();
 
 			/* WRENCH */
 			itemWrench.setUnlocalizedName(TOOL + "Wrench").setCreativeTab(RedstoneArsenal.tab);
 			itemWrench.setShowInCreative(enable[0]);
-			itemWrench.setRegistryName("tool.wrench" + NAME);
+			itemWrench.setRegistryName("tool.wrench_" + name);
 			GameRegistry.register(itemWrench);
 
 			/* BATTLEWRENCH */
 			itemBattleWrench.setUnlocalizedName(TOOL + "BattleWrench").setCreativeTab(RedstoneArsenal.tab);
 			itemBattleWrench.setShowInCreative(enable[1]);
-			itemBattleWrench.setRegistryName("tool.battlewrench" + NAME);
+			itemBattleWrench.setRegistryName("tool.battlewrench_" + name);
 			GameRegistry.register(itemBattleWrench);
 
 			/* SWORD */
 			itemSword.setUnlocalizedName(TOOL + "Sword").setCreativeTab(RedstoneArsenal.tab);
 			itemSword.setShowInCreative(enable[2]);
-			itemSword.setRegistryName("tool.sword" + NAME);
+			itemSword.setRegistryName("tool.sword_" + name);
 			GameRegistry.register(itemSword);
 
 			/* SHOVEL */
 			itemShovel.setUnlocalizedName(TOOL + "Shovel").setCreativeTab(RedstoneArsenal.tab);
 			itemShovel.setShowInCreative(enable[3]);
-			itemShovel.setRegistryName("tool.shovel" + NAME);
+			itemShovel.setRegistryName("tool.shovel_" + name);
 			GameRegistry.register(itemShovel);
 
 			/* PICKAXE */
 			itemPickaxe.setUnlocalizedName(TOOL + "Pickaxe").setCreativeTab(RedstoneArsenal.tab);
 			itemPickaxe.setShowInCreative(enable[4]);
-			itemPickaxe.setRegistryName("tool.pickaxe" + NAME);
+			itemPickaxe.setRegistryName("tool.pickaxe_" + name);
 			GameRegistry.register(itemPickaxe);
 
 			/* AXE */
 			itemAxe.setUnlocalizedName(TOOL + "Axe").setCreativeTab(RedstoneArsenal.tab);
 			itemAxe.setShowInCreative(enable[5]);
-			itemAxe.setRegistryName("tool.axe" + NAME);
+			itemAxe.setRegistryName("tool.axe_" + name);
 			GameRegistry.register(itemAxe);
 
 			/* BOW */
 			itemBow.setUnlocalizedName(TOOL + "Bow").setCreativeTab(RedstoneArsenal.tab);
+			itemBow.setArrowDamage(arrowDamage).setArrowSpeed(arrowSpeed);
 			itemBow.setShowInCreative(enable[6]);
-			itemBow.setRegistryName("tool.bow" + NAME);
+			itemBow.setRegistryName("tool.bow_" + name);
 			GameRegistry.register(itemBow);
 
 			/* FISHING ROD */
 			itemFishingRod.setUnlocalizedName(TOOL + "FishingRod").setCreativeTab(RedstoneArsenal.tab);
+			itemFishingRod.setLuckModifier(luckModifier).setSpeedModifier(speedModifier);
 			itemFishingRod.setShowInCreative(enable[7]);
-			itemFishingRod.setRegistryName("tool.fishingRod" + NAME);
+			itemFishingRod.setRegistryName("tool.fishing_rod_" + name);
 			GameRegistry.register(itemFishingRod);
 
 			/* SICKLE */
 			itemSickle.setUnlocalizedName(TOOL + "Sickle").setCreativeTab(RedstoneArsenal.tab);
 			itemSickle.setShowInCreative(enable[8]);
-			itemSickle.setRegistryName("tool.sickle" + NAME);
+			itemSickle.setRegistryName("tool.sickle_" + name);
 			GameRegistry.register(itemSickle);
 
 			/* HAMMER */
 			itemHammer.setUnlocalizedName(TOOL + "Hammer").setCreativeTab(RedstoneArsenal.tab);
 			itemHammer.setShowInCreative(enable[9]);
-			itemHammer.setRegistryName("tool.hammer" + NAME);
+			itemHammer.setRegistryName("tool.hammer_" + name);
 			GameRegistry.register(itemHammer);
+
+			/* SHIELD */
+			itemShield.setUnlocalizedName(TOOL + "Shield").setCreativeTab(RedstoneArsenal.tab);
+			itemShield.setShowInCreative(enable[10]);
+			itemShield.setRegistryName("tool.shield_" + name);
+			GameRegistry.register(itemShield);
+
 
 			/* REFERENCES */
 			toolWrench = EnergyHelper.setDefaultEnergyTag(new ItemStack(itemWrench), 0);
@@ -314,6 +324,7 @@ public class RAEquipment {
 			toolFishingRod = EnergyHelper.setDefaultEnergyTag(new ItemStack(itemFishingRod), 0);
 			toolSickle = EnergyHelper.setDefaultEnergyTag(new ItemStack(itemSickle), 0);
 			toolHammer = EnergyHelper.setDefaultEnergyTag(new ItemStack(itemHammer), 0);
+			toolShield = EnergyHelper.setDefaultEnergyTag(new ItemStack(itemShield), 0);
 		}
 
 		protected void postInit() {
@@ -348,6 +359,9 @@ public class RAEquipment {
 			if (enable[9]) {
 				GameRegistry.addRecipe(ShapedRecipe(toolHammer, "III", "IRI", " R ", 'I', "ingotElectrumFlux", 'R', ItemMaterial.rodObsidianFlux));
 			}
+			if (enable[10]) {
+				GameRegistry.addRecipe(ShapedRecipe(toolShield, "IRI", "III", " I ", 'I', "ingotElectrumFlux", 'R', "gemCrystalFlux"));
+			}
 		}
 
 		/* IModelRegister */
@@ -365,6 +379,7 @@ public class RAEquipment {
 			itemFishingRod.registerModel(name + "_fishing_rod");
 			itemSickle.registerModel(name + "_sickle");
 			itemHammer.registerModel(name + "_hammer");
+			itemShield.registerModel(name + "_shield");
 		}
 	}
 

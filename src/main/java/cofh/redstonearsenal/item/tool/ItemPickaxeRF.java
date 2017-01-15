@@ -4,18 +4,13 @@ import gnu.trove.set.hash.THashSet;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.IItemPropertyGetter;
 import net.minecraft.item.ItemPickaxe;
 import net.minecraft.item.ItemSpade;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
-
-import javax.annotation.Nullable;
 
 public class ItemPickaxeRF extends ItemToolRF {
 
@@ -39,21 +34,6 @@ public class ItemPickaxeRF extends ItemToolRF {
 		effectiveMaterials.add(Material.PACKED_ICE);
 		effectiveMaterials.add(Material.GLASS);
 		effectiveMaterials.add(Material.REDSTONE_LIGHT);
-
-		addPropertyOverride(new ResourceLocation("flux_pickaxe_empowered"), new IItemPropertyGetter() {
-			@Override
-			public float apply(ItemStack stack, @Nullable World world, @Nullable EntityLivingBase entity) {
-
-				return ItemPickaxeRF.this.getEnergyStored(stack) > 0 && ItemPickaxeRF.this.isEmpowered(stack) ? 1F : 0F;
-			}
-		});
-		addPropertyOverride(new ResourceLocation("flux_pickaxe_active"), new IItemPropertyGetter() {
-			@Override
-			public float apply(ItemStack stack, @Nullable World world, @Nullable EntityLivingBase entity) {
-
-				return ItemPickaxeRF.this.getEnergyStored(stack) > 0 && !ItemPickaxeRF.this.isEmpowered(stack) ? 1F : 0F;
-			}
-		});
 	}
 
 	@Override

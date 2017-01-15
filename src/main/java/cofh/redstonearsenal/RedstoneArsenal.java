@@ -12,7 +12,6 @@ import cofh.thermalfoundation.ThermalFoundation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.Mod.CustomProperty;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -23,7 +22,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 
-@Mod (modid = RedstoneArsenal.MOD_ID, name = RedstoneArsenal.MOD_NAME, version = RedstoneArsenal.VERSION, dependencies = RedstoneArsenal.DEPENDENCIES, guiFactory = RedstoneArsenal.MOD_GUI_FACTORY, customProperties = @CustomProperty (k = "cofhversion", v = "true"))
+@Mod (modid = RedstoneArsenal.MOD_ID, name = RedstoneArsenal.MOD_NAME, version = RedstoneArsenal.VERSION, dependencies = RedstoneArsenal.DEPENDENCIES, guiFactory = RedstoneArsenal.MOD_GUI_FACTORY)
 public class RedstoneArsenal {
 
 	public static final String MOD_ID = "redstonearsenal";
@@ -34,7 +33,6 @@ public class RedstoneArsenal {
 	public static final String MOD_GUI_FACTORY = "cofh.redstonearsenal.gui.GuiConfigRAFactory";
 
 	public static final String VERSION_GROUP = "required-after:" + MOD_ID + "@[" + VERSION + "," + VERSION_MAX + ");";
-	public static final String RELEASE_URL = "https://raw.github.com/CoFH/Version/master/" + MOD_ID;
 
 	@Instance (MOD_ID)
 	public static RedstoneArsenal instance;

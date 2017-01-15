@@ -30,6 +30,7 @@ item.redstonearsenal.tool.fluxBow.name=Flux-Infused Bow
 item.redstonearsenal.tool.fluxFishingRod.name=Flux-Infused Fishing Rod
 item.redstonearsenal.tool.fluxSickle.name=Flux-Infused Sickle
 item.redstonearsenal.tool.fluxHammer.name=Flux-Infused Hammer
+item.redstonearsenal.tool.fluxShield.name=Flux-Infused Shield
 
 itemGroup.redstonearsenal.creativeTab=Redstone Arsenal
 

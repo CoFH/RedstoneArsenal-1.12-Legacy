@@ -12,9 +12,11 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityMinecart;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.IItemPropertyGetter;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.*;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.IBlockAccess;
@@ -22,8 +24,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
-
-import javax.annotation.Nullable;
 
 @Implementable ({ "buildcraft.api.tools.IToolWrench", "mods.railcraft.api.core.items.IToolCrowbar" })
 public class ItemBattleWrenchRF extends ItemSwordRF implements IToolHammer {
@@ -34,21 +34,6 @@ public class ItemBattleWrenchRF extends ItemSwordRF implements IToolHammer {
 		setHarvestLevel("wrench", 1);
 		damage = 6;
 		damageCharged = 3;
-
-		addPropertyOverride(new ResourceLocation("flux_battle_wrench_empowered"), new IItemPropertyGetter() {
-			@Override
-			public float apply(ItemStack stack, @Nullable World world, @Nullable EntityLivingBase entity) {
-
-				return ItemBattleWrenchRF.this.getEnergyStored(stack) > 0 && ItemBattleWrenchRF.this.isEmpowered(stack) ? 1F : 0F;
-			}
-		});
-		addPropertyOverride(new ResourceLocation("flux_battle_wrench_active"), new IItemPropertyGetter() {
-			@Override
-			public float apply(ItemStack stack, @Nullable World world, @Nullable EntityLivingBase entity) {
-
-				return ItemBattleWrenchRF.this.getEnergyStored(stack) > 0 && !ItemBattleWrenchRF.this.isEmpowered(stack) ? 1F : 0F;
-			}
-		});
 	}
 
 	@Override

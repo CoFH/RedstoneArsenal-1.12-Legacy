@@ -1,5 +1,5 @@
 {
-	"parent": "item/handheld",
+	"parent": "redstonearsenal:item/flux_shovel",
 	"textures": {
 		"layer0": "redstonearsenal:items/tool/flux_shovel_empowered"
 	}

@@ -1,0 +1,6 @@
+{
+	"parent": "redstonearsenal:item/flux_hammer",
+	"textures": {
+		"layer0": "redstonearsenal:items/tool/flux_hammer_active"
+	}
+}

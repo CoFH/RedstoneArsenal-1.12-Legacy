@@ -6,15 +6,15 @@
 	"overrides": [
 		{
 			"predicate": {
-				"flux_shovel_empowered": 1.0
+				"active": 1.0
 			},
-			"model": "redstonearsenal:item/flux_shovel_empowered"
+			"model": "redstonearsenal:item/flux_shovel_active"
 		},
 		{
 			"predicate": {
-				"flux_shovel_active": 1.0
+				"empowered": 1.0
 			},
-			"model": "redstonearsenal:item/flux_shovel_active"
+			"model": "redstonearsenal:item/flux_shovel_empowered"
 		}
 	]
 }

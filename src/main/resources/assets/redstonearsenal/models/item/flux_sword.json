@@ -6,15 +6,15 @@
 	"overrides": [
 		{
 			"predicate": {
-				"flux_sword_empowered": 1.0
+				"active": 1.0
 			},
-			"model": "redstonearsenal:item/flux_sword_empowered"
+			"model": "redstonearsenal:item/flux_sword_active"
 		},
 		{
 			"predicate": {
-				"flux_sword_active": 1.0
+				"empowered": 1.0
 			},
-			"model": "redstonearsenal:item/flux_sword_active"
+			"model": "redstonearsenal:item/flux_sword_empowered"
 		}
 	]
 }

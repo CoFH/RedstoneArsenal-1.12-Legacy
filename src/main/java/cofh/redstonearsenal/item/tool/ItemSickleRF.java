@@ -5,20 +5,15 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.IItemPropertyGetter;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.client.CPacketPlayerDigging;
 import net.minecraft.network.play.server.SPacketBlockChange;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
-
-import javax.annotation.Nullable;
 
 public class ItemSickleRF extends ItemToolRF {
 
@@ -39,21 +34,6 @@ public class ItemSickleRF extends ItemToolRF {
 		effectiveMaterials.add(Material.PLANTS);
 		effectiveMaterials.add(Material.VINE);
 		effectiveMaterials.add(Material.WEB);
-
-		addPropertyOverride(new ResourceLocation("flux_sickle_empowered"), new IItemPropertyGetter() {
-			@Override
-			public float apply(ItemStack stack, @Nullable World world, @Nullable EntityLivingBase entity) {
-
-				return ItemSickleRF.this.getEnergyStored(stack) > 0 && ItemSickleRF.this.isEmpowered(stack) ? 1F : 0F;
-			}
-		});
-		addPropertyOverride(new ResourceLocation("flux_sickle_active"), new IItemPropertyGetter() {
-			@Override
-			public float apply(ItemStack stack, @Nullable World world, @Nullable EntityLivingBase entity) {
-
-				return ItemSickleRF.this.getEnergyStored(stack) > 0 && !ItemSickleRF.this.isEmpowered(stack) ? 1F : 0F;
-			}
-		});
 	}
 
 	public ItemSickleRF setRadius(int radius) {

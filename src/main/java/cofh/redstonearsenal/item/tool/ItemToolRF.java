@@ -23,15 +23,18 @@ import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.EnumRarity;
+import net.minecraft.item.IItemPropertyGetter;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public abstract class ItemToolRF extends ItemToolAdv implements IMultiModeItem, IEnergyContainerItem, IEqualityOverrideItem {
@@ -48,6 +51,21 @@ public abstract class ItemToolRF extends ItemToolAdv implements IMultiModeItem, 
 
 		super(baseDamage, attackSpeed, toolMaterial);
 		setNoRepair();
+
+		addPropertyOverride(new ResourceLocation("active"), new IItemPropertyGetter() {
+			@Override
+			public float apply(ItemStack stack, @Nullable World world, @Nullable EntityLivingBase entity) {
+
+				return ItemToolRF.this.getEnergyStored(stack) > 0 && !ItemToolRF.this.isEmpowered(stack) ? 1F : 0F;
+			}
+		});
+		addPropertyOverride(new ResourceLocation("empowered"), new IItemPropertyGetter() {
+			@Override
+			public float apply(ItemStack stack, @Nullable World world, @Nullable EntityLivingBase entity) {
+
+				return ItemToolRF.this.isEmpowered(stack) ? 1F : 0F;
+			}
+		});
 	}
 
 	public ItemToolRF(float attackSpeed, ToolMaterial toolMaterial) {
@@ -67,7 +85,7 @@ public abstract class ItemToolRF extends ItemToolAdv implements IMultiModeItem, 
 
 	protected boolean isEmpowered(ItemStack stack) {
 
-		return getMode(stack) == 1;
+		return getMode(stack) == 1 && getEnergyStored(stack) > energyPerUseCharged;
 	}
 
 	protected int getEnergyPerUse(ItemStack stack) {

@@ -43,69 +43,20 @@ public class ItemBowRF extends ItemBowAdv implements IMultiModeItem, IEnergyCont
 	public ItemBowRF(Item.ToolMaterial toolMaterial) {
 
 		super(toolMaterial);
-
-		this.toolMaterial = toolMaterial;
-		setMaxDamage(toolMaterial.getMaxUses());
-
 		setNoRepair();
 
-		setArrowDamage(1.5F);
-		setArrowSpeed(3.0F);
-
-		addPropertyOverride(new ResourceLocation("flux_bow_empowered"), new IItemPropertyGetter() {
+		addPropertyOverride(new ResourceLocation("active"), new IItemPropertyGetter() {
 			@Override
 			public float apply(ItemStack stack, @Nullable World world, @Nullable EntityLivingBase entity) {
 
-				return ItemBowRF.this.getEnergyStored(stack) > 0 && ItemBowRF.this.isEmpowered(stack) && !ItemBowRF.this.isPulling(stack, entity) ? 1F : 0F;
+				return ItemBowRF.this.getEnergyStored(stack) > 0 && !ItemBowRF.this.isEmpowered(stack) ? 1F : 0F;
 			}
 		});
-		addPropertyOverride(new ResourceLocation("flux_bow_empowered_0"), new IItemPropertyGetter() {
+		addPropertyOverride(new ResourceLocation("empowered"), new IItemPropertyGetter() {
 			@Override
 			public float apply(ItemStack stack, @Nullable World world, @Nullable EntityLivingBase entity) {
 
-				return ItemBowRF.this.getEnergyStored(stack) > 0 && ItemBowRF.this.isEmpowered(stack) && ItemBowRF.this.isPulling(stack, entity) && ItemBowRF.this.getPullStage(stack, entity) == 0 ? 1F : 0F;
-			}
-		});
-		addPropertyOverride(new ResourceLocation("flux_bow_empowered_1"), new IItemPropertyGetter() {
-			@Override
-			public float apply(ItemStack stack, @Nullable World world, @Nullable EntityLivingBase entity) {
-
-				return ItemBowRF.this.getEnergyStored(stack) > 0 && ItemBowRF.this.isEmpowered(stack) && ItemBowRF.this.isPulling(stack, entity) && ItemBowRF.this.getPullStage(stack, entity) == 1 ? 1F : 0F;
-			}
-		});
-		addPropertyOverride(new ResourceLocation("flux_bow_empowered_2"), new IItemPropertyGetter() {
-			@Override
-			public float apply(ItemStack stack, @Nullable World world, @Nullable EntityLivingBase entity) {
-
-				return ItemBowRF.this.getEnergyStored(stack) > 0 && ItemBowRF.this.isEmpowered(stack) && ItemBowRF.this.isPulling(stack, entity) && ItemBowRF.this.getPullStage(stack, entity) == 2 ? 1F : 0F;
-			}
-		});
-		addPropertyOverride(new ResourceLocation("flux_bow_active"), new IItemPropertyGetter() {
-			@Override
-			public float apply(ItemStack stack, @Nullable World world, @Nullable EntityLivingBase entity) {
-
-				return ItemBowRF.this.getEnergyStored(stack) > 0 && !ItemBowRF.this.isEmpowered(stack) && !ItemBowRF.this.isPulling(stack, entity) ? 1F : 0F;
-			}
-		});
-		addPropertyOverride(new ResourceLocation("flux_bow_active_0"), new IItemPropertyGetter() {
-			@Override
-			public float apply(ItemStack stack, @Nullable World world, @Nullable EntityLivingBase entity) {
-
-				return ItemBowRF.this.getEnergyStored(stack) > 0 && !ItemBowRF.this.isEmpowered(stack) && ItemBowRF.this.isPulling(stack, entity) && ItemBowRF.this.getPullStage(stack, entity) == 0 ? 1F : 0F;
-			}
-		});
-		addPropertyOverride(new ResourceLocation("flux_bow_active_1"), new IItemPropertyGetter() {
-			@Override
-			public float apply(ItemStack stack, @Nullable World world, @Nullable EntityLivingBase entity) {
-
-				return ItemBowRF.this.getEnergyStored(stack) > 0 && !ItemBowRF.this.isEmpowered(stack) && ItemBowRF.this.isPulling(stack, entity) && ItemBowRF.this.getPullStage(stack, entity) == 1 ? 1F : 0F;
-			}
-		});
-		addPropertyOverride(new ResourceLocation("flux_bow_active_2"), new IItemPropertyGetter() {
-			@Override
-			public float apply(ItemStack stack, @Nullable World world, @Nullable EntityLivingBase entity) {
-
-				return ItemBowRF.this.getEnergyStored(stack) > 0 && !ItemBowRF.this.isEmpowered(stack) && ItemBowRF.this.isPulling(stack, entity) && ItemBowRF.this.getPullStage(stack, entity) == 2 ? 1F : 0F;
+				return ItemBowRF.this.isEmpowered(stack) ? 1F : 0F;
 			}
 		});
 	}
@@ -122,30 +73,13 @@ public class ItemBowRF extends ItemBowAdv implements IMultiModeItem, IEnergyCont
 
 	protected boolean isEmpowered(ItemStack stack) {
 
-		return getMode(stack) == 1;
-	}
-
-	protected boolean isPulling(ItemStack stack, EntityLivingBase entity) {
-
-		return entity != null && entity.isHandActive() && entity.getActiveItemStack() == stack;
+		return getMode(stack) == 1 && getEnergyStored(stack) > energyPerUseCharged;
 	}
 
 	protected int getEnergyPerUse(ItemStack stack) {
 
 		int unbreakingLevel = MathHelper.clamp(EnchantmentHelper.getEnchantmentLevel(Enchantments.UNBREAKING, stack), 0, 4);
 		return (isEmpowered(stack) ? energyPerUseCharged : energyPerUse) * (5 - unbreakingLevel) / 5;
-	}
-
-	protected int getPullStage(ItemStack stack, EntityLivingBase entityIn) {
-
-		float useTime = (stack.getMaxItemUseDuration() - entityIn.getItemInUseCount()) / 20.0F;
-		if (useTime < 0.65F) {
-			return 0;
-		} else if (useTime >= 0.65F && useTime < 0.9F) {
-			return 1;
-		} else {
-			return 2;
-		}
 	}
 
 	@Override
@@ -198,6 +132,12 @@ public class ItemBowRF extends ItemBowAdv implements IMultiModeItem, IEnergyCont
 	}
 
 	@Override
+	public boolean getIsRepairable(ItemStack itemToRepair, ItemStack stack) {
+
+		return false;
+	}
+
+	@Override
 	public boolean isDamaged(ItemStack stack) {
 
 		return true;
@@ -236,7 +176,6 @@ public class ItemBowRF extends ItemBowAdv implements IMultiModeItem, IEnergyCont
 		return isEmpowered(stack) ? EnumRarity.RARE : EnumRarity.UNCOMMON;
 	}
 
-	@SuppressWarnings ({ "unchecked", "rawtypes" })
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand) {
 

@@ -66,11 +66,11 @@ public class ItemWrenchRF extends ItemShears implements IEnergyContainerItem, IT
 
 		this.toolMaterial = toolMaterial;
 		setMaxDamage(toolMaterial.getMaxUses());
-
 		setNoRepair();
+
 		setHarvestLevel("wrench", 1);
 
-		addPropertyOverride(new ResourceLocation("flux_wrench_empowered"), new IItemPropertyGetter() {
+		addPropertyOverride(new ResourceLocation("active"), new IItemPropertyGetter() {
 			@Override
 			public float apply(ItemStack stack, @Nullable World world, @Nullable EntityLivingBase entity) {
 
@@ -79,7 +79,7 @@ public class ItemWrenchRF extends ItemShears implements IEnergyContainerItem, IT
 		});
 	}
 
-	public ItemWrenchRF setEnergyParams(int maxEnergy, int maxTransfer, int energyPerUse, int energyPerUseCharged) {
+	public ItemWrenchRF setEnergyParams(int maxEnergy, int maxTransfer, int energyPerUse) {
 
 		this.maxEnergy = maxEnergy;
 		this.maxTransfer = maxTransfer;

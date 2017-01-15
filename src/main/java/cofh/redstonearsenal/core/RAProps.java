@@ -1,7 +1,7 @@
 package cofh.redstonearsenal.core;
 
 import cofh.api.item.IMultiModeItem;
-import cofh.core.util.KeyBindingEmpower;
+import cofh.core.util.KeyBindingMultiMode;
 import cofh.lib.util.helpers.StringHelper;
 import net.minecraft.item.ItemStack;
 
@@ -19,9 +19,9 @@ public class RAProps {
 	public static void addEmpoweredTip(IMultiModeItem item, ItemStack stack, List<String> list) {
 
 		if (item.getMode(stack) == 1) {
-			list.add(StringHelper.YELLOW + StringHelper.ITALIC + StringHelper.localize("info.cofh.press") + " " + StringHelper.getKeyName(KeyBindingEmpower.instance.getKey()) + " " + StringHelper.localize("info.redstonearsenal.tool.chargeOff") + StringHelper.END);
+			list.add(StringHelper.YELLOW + StringHelper.ITALIC + StringHelper.localize("info.cofh.press") + " " + StringHelper.getKeyName(KeyBindingMultiMode.instance.getKey()) + " " + StringHelper.localize("info.redstonearsenal.tool.chargeOff") + StringHelper.END);
 		} else {
-			list.add(StringHelper.BRIGHT_BLUE + StringHelper.ITALIC + StringHelper.localize("info.cofh.press") + " " + StringHelper.getKeyName(KeyBindingEmpower.instance.getKey()) + " " + StringHelper.localize("info.redstonearsenal.tool.chargeOn") + StringHelper.END);
+			list.add(StringHelper.BRIGHT_BLUE + StringHelper.ITALIC + StringHelper.localize("info.cofh.press") + " " + StringHelper.getKeyName(KeyBindingMultiMode.instance.getKey()) + " " + StringHelper.localize("info.redstonearsenal.tool.chargeOn") + StringHelper.END);
 		}
 	}
 

@@ -40,38 +40,20 @@ public class ItemFishingRodRF extends ItemFishingRodAdv implements IMultiModeIte
 	public ItemFishingRodRF(ToolMaterial toolMaterial) {
 
 		super(toolMaterial);
-
-		this.toolMaterial = toolMaterial;
-		setMaxDamage(toolMaterial.getMaxUses());
-
 		setNoRepair();
 
-		addPropertyOverride(new ResourceLocation("flux_fishing_rod_empowered"), new IItemPropertyGetter() {
+		addPropertyOverride(new ResourceLocation("active"), new IItemPropertyGetter() {
 			@Override
 			public float apply(ItemStack stack, @Nullable World world, @Nullable EntityLivingBase entity) {
 
-				return ItemFishingRodRF.this.getEnergyStored(stack) > 0 && ItemFishingRodRF.this.isEmpowered(stack) && !ItemFishingRodRF.this.isCastState(stack, entity) ? 1F : 0F;
+				return ItemFishingRodRF.this.getEnergyStored(stack) > 0 && !ItemFishingRodRF.this.isEmpowered(stack) ? 1F : 0F;
 			}
 		});
-		addPropertyOverride(new ResourceLocation("flux_fishing_rod_active"), new IItemPropertyGetter() {
+		addPropertyOverride(new ResourceLocation("empowered"), new IItemPropertyGetter() {
 			@Override
 			public float apply(ItemStack stack, @Nullable World world, @Nullable EntityLivingBase entity) {
 
-				return ItemFishingRodRF.this.getEnergyStored(stack) > 0 && !ItemFishingRodRF.this.isEmpowered(stack) && !ItemFishingRodRF.this.isCastState(stack, entity) ? 1F : 0F;
-			}
-		});
-		addPropertyOverride(new ResourceLocation("flux_fishing_rod_empowered_cast"), new IItemPropertyGetter() {
-			@Override
-			public float apply(ItemStack stack, @Nullable World world, @Nullable EntityLivingBase entity) {
-
-				return ItemFishingRodRF.this.getEnergyStored(stack) > 0 && ItemFishingRodRF.this.isEmpowered(stack) && ItemFishingRodRF.this.isCastState(stack, entity) ? 1F : 0F;
-			}
-		});
-		addPropertyOverride(new ResourceLocation("flux_fishing_rod_active_cast"), new IItemPropertyGetter() {
-			@Override
-			public float apply(ItemStack stack, @Nullable World world, @Nullable EntityLivingBase entity) {
-
-				return ItemFishingRodRF.this.getEnergyStored(stack) > 0 && !ItemFishingRodRF.this.isEmpowered(stack) && ItemFishingRodRF.this.isCastState(stack, entity) ? 1F : 0F;
+				return ItemFishingRodRF.this.isEmpowered(stack) ? 1F : 0F;
 			}
 		});
 	}
@@ -93,7 +75,7 @@ public class ItemFishingRodRF extends ItemFishingRodAdv implements IMultiModeIte
 
 	protected boolean isEmpowered(ItemStack stack) {
 
-		return getMode(stack) == 1;
+		return getMode(stack) == 1 && getEnergyStored(stack) > energyPerUseCharged;
 	}
 
 	protected int getEnergyPerUse(ItemStack stack) {
@@ -140,6 +122,12 @@ public class ItemFishingRodRF extends ItemFishingRodAdv implements IMultiModeIte
 	}
 
 	@Override
+	public boolean getIsRepairable(ItemStack itemToRepair, ItemStack stack) {
+
+		return false;
+	}
+
+	@Override
 	public boolean isDamaged(ItemStack stack) {
 
 		return true;
@@ -182,17 +170,21 @@ public class ItemFishingRodRF extends ItemFishingRodAdv implements IMultiModeIte
 	public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand) {
 
 		if (!player.capabilities.isCreativeMode && getEnergyStored(stack) < getEnergyPerUse(stack)) {
-			return new ActionResult<ItemStack>(EnumActionResult.PASS, stack);
+			return new ActionResult<ItemStack>(EnumActionResult.FAIL, stack);
 		}
 		if (player.fishEntity != null) {
 			player.fishEntity.handleHookRetraction();
 			useEnergy(stack, false);
 		} else {
-			player.worldObj.playSound((EntityPlayer) null, player.getPosition(), SoundEvents.ENTITY_BOBBER_THROW, SoundCategory.PLAYERS, 0.1F, 0.5F * ((player.worldObj.rand.nextFloat() - player.worldObj.rand.nextFloat()) * 0.7F + 2F));
+			world.playSound(null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_BOBBER_THROW, SoundCategory.NEUTRAL, 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
 
 			if (ServerHelper.isServerWorld(world)) {
-				int modifier = isEmpowered(stack) ? 3 : 1;
-				world.spawnEntityInWorld(new EntityCoFHFishHook(world, player, modifier, modifier));
+				if (isEmpowered(stack)) {
+					world.spawnEntityInWorld(new EntityCoFHFishHook(world, player, luckModifier + 2, speedModifier + 2));
+				} else {
+					world.spawnEntityInWorld(new EntityCoFHFishHook(world, player, luckModifier, speedModifier));
+				}
+
 			}
 		}
 		player.swingArm(EnumHand.MAIN_HAND);

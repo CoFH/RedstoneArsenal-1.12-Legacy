@@ -6,15 +6,15 @@
 	"overrides": [
 		{
 			"predicate": {
-				"flux_pickaxe_empowered": 1.0
+				"active": 1.0
 			},
-			"model": "redstonearsenal:item/flux_pickaxe_empowered"
+			"model": "redstonearsenal:item/flux_pickaxe_active"
 		},
 		{
 			"predicate": {
-				"flux_pickaxe_active": 1.0
+				"empowered": 1.0
 			},
-			"model": "redstonearsenal:item/flux_pickaxe_active"
+			"model": "redstonearsenal:item/flux_pickaxe_empowered"
 		}
 	]
 }
