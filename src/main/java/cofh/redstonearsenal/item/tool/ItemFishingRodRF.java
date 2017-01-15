@@ -6,9 +6,7 @@ import cofh.core.entity.EntityCoFHFishHook;
 import cofh.core.item.IEqualityOverrideItem;
 import cofh.core.item.tool.ItemFishingRodAdv;
 import cofh.lib.util.helpers.*;
-import cofh.redstonearsenal.RedstoneArsenal;
 import cofh.redstonearsenal.core.RAProps;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
@@ -22,9 +20,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.*;
 import net.minecraft.world.World;
-import net.minecraftforge.client.model.ModelLoader;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -189,12 +184,6 @@ public class ItemFishingRodRF extends ItemFishingRodAdv implements IMultiModeIte
 		}
 		player.swingArm(EnumHand.MAIN_HAND);
 		return new ActionResult<ItemStack>(EnumActionResult.PASS, stack);
-	}
-
-	@SideOnly (Side.CLIENT)
-	public void registerModel(String name) {
-
-		ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation(RedstoneArsenal.MOD_ID + ":" + name, "inventory"));
 	}
 
 	/* IMultiModeItem */

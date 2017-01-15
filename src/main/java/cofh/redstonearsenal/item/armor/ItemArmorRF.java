@@ -6,9 +6,7 @@ import cofh.lib.util.helpers.EnergyHelper;
 import cofh.lib.util.helpers.ItemHelper;
 import cofh.lib.util.helpers.MathHelper;
 import cofh.lib.util.helpers.StringHelper;
-import cofh.redstonearsenal.RedstoneArsenal;
 import cofh.redstonearsenal.core.RAProps;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
@@ -19,10 +17,7 @@ import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
-import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.ISpecialArmor;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
@@ -120,12 +115,6 @@ public class ItemArmorRF extends ItemArmorAdv implements ISpecialArmor, IEnergyC
 	public EnumRarity getRarity(ItemStack stack) {
 
 		return EnumRarity.UNCOMMON;
-	}
-
-	@SideOnly (Side.CLIENT)
-	public void registerModel(String name) {
-
-		ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation(RedstoneArsenal.MOD_ID + ":" + name, "inventory"));
 	}
 
 	/* ISpecialArmor */

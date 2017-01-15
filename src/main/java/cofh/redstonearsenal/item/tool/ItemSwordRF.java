@@ -4,12 +4,10 @@ import cofh.api.energy.IEnergyContainerItem;
 import cofh.api.item.IMultiModeItem;
 import cofh.core.item.IEqualityOverrideItem;
 import cofh.lib.util.helpers.*;
-import cofh.redstonearsenal.RedstoneArsenal;
 import cofh.redstonearsenal.core.RAProps;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
@@ -27,9 +25,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.client.model.ModelLoader;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -243,12 +238,6 @@ public class ItemSwordRF extends ItemSword implements IMultiModeItem, IEnergyCon
 		}
 
 		return multimap;
-	}
-
-	@SideOnly (Side.CLIENT)
-	public void registerModel(String name) {
-
-		ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation(RedstoneArsenal.MOD_ID + ":" + name, "inventory"));
 	}
 
 	/* IMultiModeItem */

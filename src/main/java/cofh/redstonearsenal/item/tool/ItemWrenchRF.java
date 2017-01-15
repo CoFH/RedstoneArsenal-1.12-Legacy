@@ -7,7 +7,6 @@ import cofh.asm.relauncher.Implementable;
 import cofh.asm.relauncher.Substitutable;
 import cofh.core.item.IEqualityOverrideItem;
 import cofh.lib.util.helpers.*;
-import cofh.redstonearsenal.RedstoneArsenal;
 import cofh.redstonearsenal.core.RAProps;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
@@ -15,7 +14,6 @@ import ic2.api.tile.IWrenchable;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
@@ -36,13 +34,10 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.IShearable;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -349,12 +344,6 @@ public class ItemWrenchRF extends ItemShears implements IEnergyContainerItem, IT
 			multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getAttributeUnlocalizedName(), new AttributeModifier(ATTACK_SPEED_MODIFIER, "Tool modifier", -2.4D, 0));
 		}
 		return multimap;
-	}
-
-	@SideOnly (Side.CLIENT)
-	public void registerModel(String name) {
-
-		ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation(RedstoneArsenal.MOD_ID + ":" + name, "inventory"));
 	}
 
 	/* TRICKERY */

@@ -6,12 +6,15 @@ import cofh.lib.util.helpers.StringHelper;
 import cofh.redstonearsenal.RedstoneArsenal;
 import cofh.redstonearsenal.item.armor.ItemArmorRF;
 import cofh.redstonearsenal.item.tool.*;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.Item;
 import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
@@ -59,7 +62,7 @@ public class RAEquipment {
 
 	/* MATERIALS */
 	public static final ArmorMaterial ARMOR_MATERIAL_FLUX = EnumHelper.addArmorMaterial("RA:FLUXELECTRUM", "flux_armor", 100, new int[] { 3, 6, 8, 3 }, 20, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 2F);
-	public static final ToolMaterial TOOL_MATERIAL_FLUX = EnumHelper.addToolMaterial("RA:FLUXELECTRUM", 3, 100, 8.0F, 0, 25);
+	public static final ToolMaterial TOOL_MATERIAL_FLUX = EnumHelper.addToolMaterial("RA:FLUXELECTRUM", 4, 100, 8.0F, 0, 25);
 
 	/* ARMOR */
 	public enum ArmorSet implements IModelRegister {
@@ -148,15 +151,22 @@ public class RAEquipment {
 			}
 		}
 
+		/* HELPERS */
+		@SideOnly (Side.CLIENT)
+		public void registerModel(Item item, String name) {
+
+			ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(RedstoneArsenal.MOD_ID + ":" + name, "inventory"));
+		}
+
 		/* IModelRegister */
 		@Override
 		@SideOnly (Side.CLIENT)
 		public void registerModels() {
 
-			itemHelmet.registerModel(name + "_helmet");
-			itemPlate.registerModel(name + "_chestplate");
-			itemLegs.registerModel(name + "_leggings");
-			itemBoots.registerModel(name + "_boots");
+			registerModel(itemHelmet, name + "_helmet");
+			registerModel(itemPlate, name + "_chestplate");
+			registerModel(itemLegs, name + "_leggings");
+			registerModel(itemBoots, name + "_boots");
 		}
 	}
 
@@ -330,38 +340,45 @@ public class RAEquipment {
 		protected void postInit() {
 
 			if (enable[0]) {
-				GameRegistry.addRecipe(ShapedRecipe(toolWrench, "I I", " R ", " I ", 'I', "ingotElectrumFlux", 'R', ItemMaterial.rodObsidianFlux));
+				addRecipe(ShapedRecipe(toolWrench, "I I", " R ", " I ", 'I', "ingotElectrumFlux", 'R', ItemMaterial.rodObsidianFlux));
 			}
 			if (enable[1]) {
-				GameRegistry.addRecipe(ShapedRecipe(toolBattleWrench, "I I", " G ", " R ", 'I', "ingotElectrumFlux", 'G', "gearElectrumFlux", 'R', ItemMaterial.rodObsidianFlux));
+				addRecipe(ShapedRecipe(toolBattleWrench, "I I", " G ", " R ", 'I', "ingotElectrumFlux", 'G', "gearElectrumFlux", 'R', ItemMaterial.rodObsidianFlux));
 			}
 			if (enable[2]) {
-				GameRegistry.addRecipe(ShapedRecipe(toolSword, " I ", " I ", " R ", 'I', "ingotElectrumFlux", 'R', ItemMaterial.rodObsidianFlux));
+				addRecipe(ShapedRecipe(toolSword, " I ", " I ", " R ", 'I', "ingotElectrumFlux", 'R', ItemMaterial.rodObsidianFlux));
 			}
 			if (enable[3]) {
-				GameRegistry.addRecipe(ShapedRecipe(toolShovel, " I ", " R ", " R ", 'I', "ingotElectrumFlux", 'R', ItemMaterial.rodObsidianFlux));
+				addRecipe(ShapedRecipe(toolShovel, " I ", " R ", " R ", 'I', "ingotElectrumFlux", 'R', ItemMaterial.rodObsidianFlux));
 			}
 			if (enable[4]) {
-				GameRegistry.addRecipe(ShapedRecipe(toolPickaxe, "III", " R ", " R ", 'I', "ingotElectrumFlux", 'R', ItemMaterial.rodObsidianFlux));
+				addRecipe(ShapedRecipe(toolPickaxe, "III", " R ", " R ", 'I', "ingotElectrumFlux", 'R', ItemMaterial.rodObsidianFlux));
 			}
 			if (enable[5]) {
-				GameRegistry.addRecipe(ShapedRecipe(toolAxe, "II ", "IR ", " R ", 'I', "ingotElectrumFlux", 'R', ItemMaterial.rodObsidianFlux));
+				addRecipe(ShapedRecipe(toolAxe, "II ", "IR ", " R ", 'I', "ingotElectrumFlux", 'R', ItemMaterial.rodObsidianFlux));
 			}
 			if (enable[6]) {
-				GameRegistry.addRecipe(ShapedRecipe(toolBow, " IS", "R S", " IS", 'I', "ingotElectrumFlux", 'R', ItemMaterial.rodObsidianFlux, 'S', Items.STRING));
+				addRecipe(ShapedRecipe(toolBow, " IS", "R S", " IS", 'I', "ingotElectrumFlux", 'R', ItemMaterial.rodObsidianFlux, 'S', Items.STRING));
 			}
 			if (enable[7]) {
-				GameRegistry.addRecipe(ShapedRecipe(toolFishingRod, "  I", " IS", "R S", 'I', "ingotElectrumFlux", 'R', ItemMaterial.rodObsidianFlux, 'S', Items.STRING));
+				addRecipe(ShapedRecipe(toolFishingRod, "  I", " IS", "R S", 'I', "ingotElectrumFlux", 'R', ItemMaterial.rodObsidianFlux, 'S', Items.STRING));
 			}
 			if (enable[8]) {
-				GameRegistry.addRecipe(ShapedRecipe(toolSickle, " I ", "  I", "RI ", 'I', "ingotElectrumFlux", 'R', ItemMaterial.rodObsidianFlux));
+				addRecipe(ShapedRecipe(toolSickle, " I ", "  I", "RI ", 'I', "ingotElectrumFlux", 'R', ItemMaterial.rodObsidianFlux));
 			}
 			if (enable[9]) {
-				GameRegistry.addRecipe(ShapedRecipe(toolHammer, "III", "IRI", " R ", 'I', "ingotElectrumFlux", 'R', ItemMaterial.rodObsidianFlux));
+				addRecipe(ShapedRecipe(toolHammer, "III", "IRI", " R ", 'I', "ingotElectrumFlux", 'R', ItemMaterial.rodObsidianFlux));
 			}
 			if (enable[10]) {
-				GameRegistry.addRecipe(ShapedRecipe(toolShield, "IRI", "III", " I ", 'I', "ingotElectrumFlux", 'R', "gemCrystalFlux"));
+				addRecipe(ShapedRecipe(toolShield, "IRI", "III", " I ", 'I', "ingotElectrumFlux", 'R', "gemCrystalFlux"));
 			}
+		}
+
+		/* HELPERS */
+		@SideOnly (Side.CLIENT)
+		public void registerModel(Item item, String name) {
+
+			ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(RedstoneArsenal.MOD_ID + ":" + name, "inventory"));
 		}
 
 		/* IModelRegister */
@@ -369,17 +386,17 @@ public class RAEquipment {
 		@SideOnly (Side.CLIENT)
 		public void registerModels() {
 
-			itemWrench.registerModel(name + "_wrench");
-			itemBattleWrench.registerModel(name + "_battle_wrench");
-			itemSword.registerModel(name + "_sword");
-			itemShovel.registerModel(name + "_shovel");
-			itemPickaxe.registerModel(name + "_pickaxe");
-			itemAxe.registerModel(name + "_axe");
-			itemBow.registerModel(name + "_bow");
-			itemFishingRod.registerModel(name + "_fishing_rod");
-			itemSickle.registerModel(name + "_sickle");
-			itemHammer.registerModel(name + "_hammer");
-			itemShield.registerModel(name + "_shield");
+			registerModel(itemWrench, name + "_wrench");
+			registerModel(itemBattleWrench, name + "_battle_wrench");
+			registerModel(itemSword, name + "_sword");
+			registerModel(itemShovel, name + "_shovel");
+			registerModel(itemPickaxe, name + "_pickaxe");
+			registerModel(itemAxe, name + "_axe");
+			registerModel(itemBow, name + "_bow");
+			registerModel(itemFishingRod, name + "_fishing_rod");
+			registerModel(itemSickle, name + "_sickle");
+			registerModel(itemHammer, name + "_hammer");
+			registerModel(itemShield, name + "_shield");
 		}
 	}
 

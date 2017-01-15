@@ -8,9 +8,7 @@ import cofh.lib.util.helpers.EnergyHelper;
 import cofh.lib.util.helpers.ItemHelper;
 import cofh.lib.util.helpers.MathHelper;
 import cofh.lib.util.helpers.StringHelper;
-import cofh.redstonearsenal.RedstoneArsenal;
 import cofh.redstonearsenal.core.RAProps;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
@@ -25,9 +23,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.*;
 import net.minecraft.world.World;
-import net.minecraftforge.client.model.ModelLoader;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -229,12 +224,6 @@ public class ItemShieldRF extends ItemShieldAdv implements IMultiModeItem, IEner
 		}
 		player.setActiveHand(hand);
 		return new ActionResult(EnumActionResult.SUCCESS, stack);
-	}
-
-	@SideOnly (Side.CLIENT)
-	public void registerModel(String name) {
-
-		ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation(RedstoneArsenal.MOD_ID + ":" + name, "inventory"));
 	}
 
 	/* IMultiModeItem */
