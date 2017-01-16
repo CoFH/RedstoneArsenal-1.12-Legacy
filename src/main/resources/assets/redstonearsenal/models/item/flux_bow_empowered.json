@@ -1,6 +1,0 @@
-{
-	"parent": "redstonearsenal:item/flux_bow",
-	"textures": {
-		"layer0": "redstonearsenal:items/tool/flux_bow_empowered"
-	}
-}

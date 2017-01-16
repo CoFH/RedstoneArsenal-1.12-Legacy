@@ -5,7 +5,7 @@ import cofh.api.item.IMultiModeItem;
 import cofh.core.item.IEqualityOverrideItem;
 import cofh.core.item.tool.ItemToolAdv;
 import cofh.lib.util.helpers.*;
-import cofh.redstonearsenal.core.RAProps;
+import cofh.redstonearsenal.init.RAProps;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import net.minecraft.block.state.IBlockState;

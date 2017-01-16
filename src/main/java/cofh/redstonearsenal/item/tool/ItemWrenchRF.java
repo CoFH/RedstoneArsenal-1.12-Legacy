@@ -7,7 +7,7 @@ import cofh.asm.relauncher.Implementable;
 import cofh.asm.relauncher.Substitutable;
 import cofh.core.item.IEqualityOverrideItem;
 import cofh.lib.util.helpers.*;
-import cofh.redstonearsenal.core.RAProps;
+import cofh.redstonearsenal.init.RAProps;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import ic2.api.tile.IWrenchable;

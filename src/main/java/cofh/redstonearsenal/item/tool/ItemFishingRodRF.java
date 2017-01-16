@@ -6,7 +6,7 @@ import cofh.core.entity.EntityCoFHFishHook;
 import cofh.core.item.IEqualityOverrideItem;
 import cofh.core.item.tool.ItemFishingRodAdv;
 import cofh.lib.util.helpers.*;
-import cofh.redstonearsenal.core.RAProps;
+import cofh.redstonearsenal.init.RAProps;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;

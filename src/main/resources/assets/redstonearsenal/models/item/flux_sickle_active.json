@@ -1,6 +1,0 @@
-{
-	"parent": "redstonearsenal:item/flux_sickle",
-	"textures": {
-		"layer0": "redstonearsenal:items/tool/flux_sickle_active"
-	}
-}
