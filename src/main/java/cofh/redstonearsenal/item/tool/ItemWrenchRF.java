@@ -319,10 +319,10 @@ public class ItemWrenchRF extends ItemShears implements IEnergyContainerItem, IT
 
 			if (player.isSneaking()) {
 				world.setBlockState(pos, BlockHelper.rotateVanillaBlockAlt(world, state, pos), 3);
-				world.playSound(player, new BlockPos(x + 0.5, y + 0.5, z + 0.5), soundType.getBreakSound(), SoundCategory.BLOCKS, 1.0F, 0.8F);
+				world.playSound(null, pos, block.getSoundType(state, world, pos, player).getBreakSound(), SoundCategory.BLOCKS, 1.0F, 0.6F);
 			} else {
 				world.setBlockState(pos, BlockHelper.rotateVanillaBlock(world, state, pos), 3);
-				world.playSound(player, new BlockPos(x + 0.5, y + 0.5, z + 0.5), soundType.getBreakSound(), SoundCategory.BLOCKS, 1.0F, 0.8F);
+				world.playSound(null, pos, block.getSoundType(state, world, pos, player).getBreakSound(), SoundCategory.BLOCKS, 1.0F, 0.8F);
 			}
 			if (!player.capabilities.isCreativeMode) {
 				useEnergy(stack, false);

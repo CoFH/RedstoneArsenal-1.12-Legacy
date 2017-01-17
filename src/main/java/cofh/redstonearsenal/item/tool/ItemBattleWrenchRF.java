@@ -94,10 +94,10 @@ public class ItemBattleWrenchRF extends ItemSwordRF implements IToolHammer {
 
 			if (player.isSneaking()) {
 				world.setBlockState(pos, BlockHelper.rotateVanillaBlockAlt(world, state, pos), 3);
-				world.playSound(player, player.getPosition(), soundType.getBreakSound(), SoundCategory.BLOCKS, 0.1F, 0.5F * ((player.worldObj.rand.nextFloat() - player.worldObj.rand.nextFloat()) * 0.7F + 2F));
+				world.playSound(null, pos, block.getSoundType(state, world, pos, player).getBreakSound(), SoundCategory.BLOCKS, 1.0F, 0.6F);
 			} else {
 				world.setBlockState(pos, BlockHelper.rotateVanillaBlock(world, state, pos), 3);
-				world.playSound(player, player.getPosition(), soundType.getBreakSound(), SoundCategory.BLOCKS, 0.1F, 0.5F * ((player.worldObj.rand.nextFloat() - player.worldObj.rand.nextFloat()) * 0.7F + 2F));
+				world.playSound(null, pos, block.getSoundType(state, world, pos, player).getBreakSound(), SoundCategory.BLOCKS, 1.0F, 0.8F);
 			}
 			if (!player.capabilities.isCreativeMode) {
 				useEnergy(stack, false);
