@@ -2,8 +2,7 @@ package cofh.redstonearsenal.item.tool;
 
 import cofh.api.energy.IEnergyContainerItem;
 import cofh.api.item.IMultiModeItem;
-import cofh.core.item.IEqualityOverrideItem;
-import cofh.core.item.tool.ItemToolAdv;
+import cofh.core.item.tool.ItemToolCore;
 import cofh.lib.util.helpers.*;
 import cofh.redstonearsenal.init.RAProps;
 import com.google.common.collect.HashMultimap;
@@ -28,11 +27,14 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public abstract class ItemToolRF extends ItemToolAdv implements IMultiModeItem, IEnergyContainerItem, IEqualityOverrideItem {
+public abstract class ItemToolRF extends ItemToolCore implements IMultiModeItem, IEnergyContainerItem {
 
 	protected int maxEnergy = 160000;
 	protected int maxTransfer = 1600;
@@ -105,7 +107,7 @@ public abstract class ItemToolRF extends ItemToolAdv implements IMultiModeItem, 
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> list, boolean advanced) {
+	public void addInformation(ItemStack stack, EntityPlayer player, List<String> list, boolean advanced) {
 
 		if (StringHelper.displayShiftForDetail && !StringHelper.isShiftKeyDown()) {
 			list.add(StringHelper.shiftForDetails());
@@ -121,7 +123,7 @@ public abstract class ItemToolRF extends ItemToolAdv implements IMultiModeItem, 
 		list.add(StringHelper.ORANGE + getEnergyPerUse(stack) + " " + StringHelper.localize("info.redstonearsenal.tool.energyPerUse") + StringHelper.END);
 		RAProps.addEmpoweredTip(this, stack, list);
 		if (getEnergyStored(stack) >= getEnergyPerUse(stack)) {
-			int adjustedDamage = (int) (damage + playerIn.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getBaseValue());
+			int adjustedDamage = (int) (damage + player.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getBaseValue());
 			list.add("");
 			list.add(StringHelper.LIGHT_BLUE + "+" + adjustedDamage + " " + StringHelper.localize("info.cofh.damageAttack") + StringHelper.END);
 			list.add(StringHelper.BRIGHT_GREEN + "+" + (isEmpowered(stack) ? 2 : 1) + " " + StringHelper.localize("info.cofh.damageFlux") + StringHelper.END);
@@ -129,7 +131,8 @@ public abstract class ItemToolRF extends ItemToolAdv implements IMultiModeItem, 
 	}
 
 	@Override
-	public void getSubItems(Item item, CreativeTabs tab, List<ItemStack> list) {
+	@SideOnly (Side.CLIENT)
+	public void getSubItems(@Nonnull Item item, CreativeTabs tab, List<ItemStack> list) {
 
 		if (showInCreative) {
 			list.add(EnergyHelper.setDefaultEnergyTag(new ItemStack(item), 0));
@@ -359,24 +362,6 @@ public abstract class ItemToolRF extends ItemToolAdv implements IMultiModeItem, 
 	public int getMaxEnergyStored(ItemStack container) {
 
 		return maxEnergy;
-	}
-
-	/* IEqualityOverrideItem */
-	@Override
-	public boolean isLastHeldItemEqual(ItemStack current, ItemStack previous) {
-
-		NBTTagCompound a = current.getTagCompound(), b = previous.getTagCompound();
-		if (a == b) {
-			return true;
-		}
-		if (a == null || b == null) {
-			return false;
-		}
-		a = a.copy();
-		b = b.copy();
-		a.removeTag("Energy");
-		b.removeTag("Energy");
-		return a.equals(b);
 	}
 
 }

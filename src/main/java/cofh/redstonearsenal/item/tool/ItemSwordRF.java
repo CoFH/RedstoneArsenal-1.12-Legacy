@@ -2,7 +2,6 @@ package cofh.redstonearsenal.item.tool;
 
 import cofh.api.energy.IEnergyContainerItem;
 import cofh.api.item.IMultiModeItem;
-import cofh.core.item.IEqualityOverrideItem;
 import cofh.lib.util.helpers.*;
 import cofh.redstonearsenal.init.RAProps;
 import com.google.common.collect.HashMultimap;
@@ -25,11 +24,14 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class ItemSwordRF extends ItemSword implements IMultiModeItem, IEnergyContainerItem, IEqualityOverrideItem {
+public class ItemSwordRF extends ItemSword implements IMultiModeItem, IEnergyContainerItem {
 
 	protected int maxEnergy = 160000;
 	protected int maxTransfer = 1600;
@@ -127,7 +129,8 @@ public class ItemSwordRF extends ItemSword implements IMultiModeItem, IEnergyCon
 	}
 
 	@Override
-	public void getSubItems(Item item, CreativeTabs tab, List<ItemStack> list) {
+	@SideOnly (Side.CLIENT)
+	public void getSubItems(@Nonnull Item item, CreativeTabs tab, List<ItemStack> list) {
 
 		if (showInCreative) {
 			list.add(EnergyHelper.setDefaultEnergyTag(new ItemStack(item, 1, 0), 0));
@@ -358,24 +361,6 @@ public class ItemSwordRF extends ItemSword implements IMultiModeItem, IEnergyCon
 	public int getMaxEnergyStored(ItemStack container) {
 
 		return maxEnergy;
-	}
-
-	/* IEqualityOverrideItem */
-	@Override
-	public boolean isLastHeldItemEqual(ItemStack current, ItemStack previous) {
-
-		NBTTagCompound a = current.getTagCompound(), b = previous.getTagCompound();
-		if (a == b) {
-			return true;
-		}
-		if (a == null || b == null) {
-			return false;
-		}
-		a = a.copy();
-		b = b.copy();
-		a.removeTag("Energy");
-		b.removeTag("Energy");
-		return a.equals(b);
 	}
 
 }

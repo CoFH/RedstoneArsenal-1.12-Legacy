@@ -2,8 +2,7 @@ package cofh.redstonearsenal.item.tool;
 
 import cofh.api.energy.IEnergyContainerItem;
 import cofh.api.item.IMultiModeItem;
-import cofh.core.item.IEqualityOverrideItem;
-import cofh.core.item.tool.ItemShieldAdv;
+import cofh.core.item.tool.ItemShieldCore;
 import cofh.lib.util.helpers.EnergyHelper;
 import cofh.lib.util.helpers.ItemHelper;
 import cofh.lib.util.helpers.MathHelper;
@@ -23,11 +22,14 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.*;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class ItemShieldRF extends ItemShieldAdv implements IMultiModeItem, IEnergyContainerItem, IEqualityOverrideItem {
+public class ItemShieldRF extends ItemShieldCore implements IMultiModeItem, IEnergyContainerItem {
 
 	protected int maxEnergy = 160000;
 	protected int maxTransfer = 1600;
@@ -131,7 +133,8 @@ public class ItemShieldRF extends ItemShieldAdv implements IMultiModeItem, IEner
 	}
 
 	@Override
-	public void getSubItems(Item item, CreativeTabs tab, List<ItemStack> list) {
+	@SideOnly (Side.CLIENT)
+	public void getSubItems(@Nonnull Item item, CreativeTabs tab, List<ItemStack> list) {
 
 		if (showInCreative) {
 			list.add(EnergyHelper.setDefaultEnergyTag(new ItemStack(item, 1, 0), 0));
@@ -344,24 +347,6 @@ public class ItemShieldRF extends ItemShieldAdv implements IMultiModeItem, IEner
 	public int getMaxEnergyStored(ItemStack container) {
 
 		return maxEnergy;
-	}
-
-	/* IEqualityOverrideItem */
-	@Override
-	public boolean isLastHeldItemEqual(ItemStack current, ItemStack previous) {
-
-		NBTTagCompound a = current.getTagCompound(), b = previous.getTagCompound();
-		if (a == b) {
-			return true;
-		}
-		if (a == null || b == null) {
-			return false;
-		}
-		a = a.copy();
-		b = b.copy();
-		a.removeTag("Energy");
-		b.removeTag("Energy");
-		return a.equals(b);
 	}
 
 }
