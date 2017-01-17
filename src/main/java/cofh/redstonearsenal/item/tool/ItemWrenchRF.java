@@ -121,8 +121,10 @@ public class ItemWrenchRF extends ItemShears implements IEnergyContainerItem, IT
 	@Override
 	public void getSubItems(Item item, CreativeTabs tab, List<ItemStack> list) {
 
-		list.add(EnergyHelper.setDefaultEnergyTag(new ItemStack(item), 0));
-		list.add(EnergyHelper.setDefaultEnergyTag(new ItemStack(item), maxEnergy));
+		if (showInCreative) {
+			list.add(EnergyHelper.setDefaultEnergyTag(new ItemStack(item), 0));
+			list.add(EnergyHelper.setDefaultEnergyTag(new ItemStack(item), maxEnergy));
+		}
 	}
 
 	@Override

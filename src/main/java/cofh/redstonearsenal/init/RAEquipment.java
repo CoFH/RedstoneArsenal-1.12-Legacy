@@ -259,8 +259,13 @@ public class RAEquipment {
 			enable[6] = RedstoneArsenal.CONFIG.getConfiguration().get(category, "Bow", true).getBoolean(true);
 			enable[7] = RedstoneArsenal.CONFIG.getConfiguration().get(category, "FishingRod", true).getBoolean(true);
 			enable[8] = RedstoneArsenal.CONFIG.getConfiguration().get(category, "Sickle", true).getBoolean(true);
-			enable[9] = RedstoneArsenal.CONFIG.getConfiguration().get(category, "Hammer", true).getBoolean(true);
-			enable[10] = RedstoneArsenal.CONFIG.getConfiguration().get(category, "Shield", true).getBoolean(true);
+
+			// TODO: Add Hammer/Shield
+			// enable[9] = RedstoneArsenal.CONFIG.getConfiguration().get(category, "Hammer", true).getBoolean(true);
+			// enable[10] = RedstoneArsenal.CONFIG.getConfiguration().get(category, "Shield", true).getBoolean(true);
+
+			enable[9] = false;
+			enable[10] = false;
 
 			create();
 

@@ -106,8 +106,10 @@ public class ItemFishingRodRF extends ItemFishingRodAdv implements IMultiModeIte
 	@Override
 	public void getSubItems(Item item, CreativeTabs tab, List<ItemStack> list) {
 
-		list.add(EnergyHelper.setDefaultEnergyTag(new ItemStack(item, 1, 0), 0));
-		list.add(EnergyHelper.setDefaultEnergyTag(new ItemStack(item, 1, 0), maxEnergy));
+		if (showInCreative) {
+			list.add(EnergyHelper.setDefaultEnergyTag(new ItemStack(item, 1, 0), 0));
+			list.add(EnergyHelper.setDefaultEnergyTag(new ItemStack(item, 1, 0), maxEnergy));
+		}
 	}
 
 	@Override
