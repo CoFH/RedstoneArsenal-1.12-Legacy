@@ -78,18 +78,7 @@ public class BlockStorage extends BlockCore implements IInitializer, IModelRegis
 		}
 	}
 
-	public void onEntityCollidedWithBlock(World world, BlockPos pos, IBlockState state, Entity entity) {
-
-		entity.attackEntityFrom(DamageHelper.flux, 2.0F);
-
-		if (entity instanceof EntityPlayerMP) {
-			EntityPlayerMP player = (EntityPlayerMP) entity;
-			if (EnergyHelper.isPlayerHoldingEnergyContainerItem(player)) {
-				EnergyHelper.insertEnergyIntoHeldContainer(player, 100, false);
-			}
-		}
-	}
-
+	/* TYPE METHODS */
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
 
@@ -108,23 +97,18 @@ public class BlockStorage extends BlockCore implements IInitializer, IModelRegis
 		return state.getValue(VARIANT).getMetadata();
 	}
 
+	/* BLOCK METHODS */
 	@Override
-	public int getLightValue(IBlockState state, IBlockAccess world, BlockPos pos) {
+	public void onEntityCollidedWithBlock(World world, BlockPos pos, IBlockState state, Entity entity) {
 
-		return Type.byMetadata(state.getBlock().getMetaFromState(state)).light;
-	}
+		entity.attackEntityFrom(DamageHelper.flux, 2.0F);
 
-	@Override
-	public float getBlockHardness(IBlockState state, World world, BlockPos pos) {
-
-		return Type.byMetadata(state.getBlock().getMetaFromState(state)).hardness;
-	}
-
-	@Override
-	public float getExplosionResistance(World world, BlockPos pos, Entity exploder, Explosion explosion) {
-
-		IBlockState state = world.getBlockState(pos);
-		return Type.byMetadata(state.getBlock().getMetaFromState(state)).resistance;
+		if (entity instanceof EntityPlayerMP) {
+			EntityPlayerMP player = (EntityPlayerMP) entity;
+			if (EnergyHelper.isPlayerHoldingEnergyContainerItem(player)) {
+				EnergyHelper.insertEnergyIntoHeldContainer(player, 100, false);
+			}
+		}
 	}
 
 	@Override
@@ -149,6 +133,25 @@ public class BlockStorage extends BlockCore implements IInitializer, IModelRegis
 	public boolean isNormalCube(IBlockState state, IBlockAccess world, BlockPos pos) {
 
 		return true;
+	}
+
+	@Override
+	public int getLightValue(IBlockState state, IBlockAccess world, BlockPos pos) {
+
+		return Type.byMetadata(state.getBlock().getMetaFromState(state)).light;
+	}
+
+	@Override
+	public float getBlockHardness(IBlockState state, World world, BlockPos pos) {
+
+		return Type.byMetadata(state.getBlock().getMetaFromState(state)).hardness;
+	}
+
+	@Override
+	public float getExplosionResistance(World world, BlockPos pos, Entity exploder, Explosion explosion) {
+
+		IBlockState state = world.getBlockState(pos);
+		return Type.byMetadata(state.getBlock().getMetaFromState(state)).resistance;
 	}
 
 	@Override
