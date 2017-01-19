@@ -13,6 +13,14 @@ public class RAProps {
 
 	}
 
+	public static void preInit() {
+
+	}
+
+	public static void loadComplete() {
+
+	}
+
 	public static boolean showArmorCharge = true;
 	public static boolean showToolCharge = true;
 
