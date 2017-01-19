@@ -6,7 +6,6 @@ import cofh.asm.relauncher.Implementable;
 import cofh.lib.util.helpers.BlockHelper;
 import cofh.lib.util.helpers.ServerHelper;
 import net.minecraft.block.Block;
-import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -81,7 +80,6 @@ public class ItemBattleWrenchRF extends ItemSwordRF implements IToolHammer {
 		}
 		if (ServerHelper.isServerWorld(world) && player.isSneaking() && block instanceof IDismantleable && ((IDismantleable) block).canDismantle(world, pos, state, player)) {
 			((IDismantleable) block).dismantleBlock(world, pos, state, player, false);
-
 			if (!player.capabilities.isCreativeMode) {
 				useEnergy(stack, false);
 			}
@@ -90,8 +88,6 @@ public class ItemBattleWrenchRF extends ItemSwordRF implements IToolHammer {
 			return ServerHelper.isServerWorld(world) ? EnumActionResult.SUCCESS : EnumActionResult.PASS;
 		}
 		if (BlockHelper.canRotate(block)) {
-			SoundType soundType = block.getSoundType(state, world, pos, player);
-
 			if (player.isSneaking()) {
 				world.setBlockState(pos, BlockHelper.rotateVanillaBlockAlt(world, state, pos), 3);
 				world.playSound(null, pos, block.getSoundType(state, world, pos, player).getBreakSound(), SoundCategory.BLOCKS, 1.0F, 0.6F);
@@ -107,6 +103,7 @@ public class ItemBattleWrenchRF extends ItemSwordRF implements IToolHammer {
 			if (!player.capabilities.isCreativeMode) {
 				useEnergy(stack, false);
 			}
+			player.swingArm(hand);
 			return ServerHelper.isServerWorld(world) ? EnumActionResult.SUCCESS : EnumActionResult.PASS;
 		}
 		return EnumActionResult.PASS;
