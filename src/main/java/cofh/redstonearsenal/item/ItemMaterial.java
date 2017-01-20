@@ -55,9 +55,9 @@ public class ItemMaterial extends ItemCoFHBase implements IInitializer {
 
 		addGearRecipe(gearElectrumFlux, "ingotElectrumFlux");
 
-		addRecipe(ShapedRecipe(plateFlux, new Object[] { "NNN", "GIG", "NNN", 'G', "gemCrystalFlux", 'I', "ingotElectrumFlux", 'N', "nuggetElectrumFlux" }));
-		addRecipe(ShapedRecipe(rodObsidianFlux, new Object[] { "  O", " B ", "O  ", 'B', rodObsidian, 'O', "gemCrystalFlux" }));
-		addRecipe(ShapedRecipe(rodObsidian, new Object[] { "  O", " B ", "O  ", 'B', Items.BLAZE_POWDER, 'O', "dustObsidian" }));
+		addRecipe(ShapedRecipe(plateFlux, "NNN", "GIG", "NNN", 'G', "gemCrystalFlux", 'I', "ingotElectrumFlux", 'N', "nuggetElectrumFlux" ));
+		addRecipe(ShapedRecipe(rodObsidianFlux, "  O", " B ", "O  ", 'B', rodObsidian, 'O', "gemCrystalFlux" ));
+		addRecipe(ShapedRecipe(rodObsidian, "  O", " B ", "O  ", 'B', Items.BLAZE_POWDER, 'O', "dustObsidian" ));
 
 		if (!Loader.isModLoaded("ThermalExpansion")) {
 			addRecipe(ShapelessRecipe(dustElectrumFlux, "dustElectrum", "dustRedstone", "dustRedstone", "dustRedstone", "dustRedstone", "dustRedstone"));
