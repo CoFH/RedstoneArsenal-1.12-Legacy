@@ -1,7 +1,7 @@
 package cofh.redstonearsenal.item;
 
 import cofh.api.core.IInitializer;
-import cofh.core.item.ItemCoFHBase;
+import cofh.core.item.ItemMulti;
 import cofh.redstonearsenal.RedstoneArsenal;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumRarity;
@@ -10,7 +10,7 @@ import net.minecraftforge.fml.common.Loader;
 
 import static cofh.lib.util.helpers.ItemHelper.*;
 
-public class ItemMaterial extends ItemCoFHBase implements IInitializer {
+public class ItemMaterial extends ItemMulti implements IInitializer {
 
 	public ItemMaterial() {
 
