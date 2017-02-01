@@ -1,7 +1,7 @@
 package cofh.redstonearsenal;
 
 import cofh.CoFHCore;
-import cofh.core.CoFHProps;
+import cofh.core.init.CoreProps;
 import cofh.core.util.ConfigHandler;
 import cofh.redstonearsenal.init.RABlocks;
 import cofh.redstonearsenal.proxy.Proxy;
@@ -56,8 +56,8 @@ public class RedstoneArsenal {
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 
-		CONFIG.setConfiguration(new Configuration(new File(CoFHProps.configDir, "/cofh/" + MOD_ID + "/common.cfg"), true));
-		CONFIG_CLIENT.setConfiguration(new Configuration(new File(CoFHProps.configDir, "/cofh/" + MOD_ID + "/client.cfg"), true));
+		CONFIG.setConfiguration(new Configuration(new File(CoreProps.configDir, "/cofh/" + MOD_ID + "/common.cfg"), true));
+		CONFIG_CLIENT.setConfiguration(new Configuration(new File(CoreProps.configDir, "/cofh/" + MOD_ID + "/client.cfg"), true));
 
 		RABlocks.preInit();
 		RAItems.preInit();

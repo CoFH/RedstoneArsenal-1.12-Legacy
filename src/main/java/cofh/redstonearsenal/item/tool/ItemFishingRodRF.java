@@ -2,7 +2,7 @@ package cofh.redstonearsenal.item.tool;
 
 import cofh.api.energy.IEnergyContainerItem;
 import cofh.api.item.IMultiModeItem;
-import cofh.core.entity.EntityCoFHFishHook;
+import cofh.core.entity.EntityFishHookCore;
 import cofh.core.item.tool.ItemFishingRodCore;
 import cofh.lib.util.helpers.*;
 import cofh.redstonearsenal.init.RAProps;
@@ -180,9 +180,9 @@ public class ItemFishingRodRF extends ItemFishingRodCore implements IMultiModeIt
 
 			if (ServerHelper.isServerWorld(world)) {
 				if (isEmpowered(stack)) {
-					world.spawnEntityInWorld(new EntityCoFHFishHook(world, player, luckModifier + 2, speedModifier + 2));
+					world.spawnEntityInWorld(new EntityFishHookCore(world, player, luckModifier + 2, speedModifier + 2));
 				} else {
-					world.spawnEntityInWorld(new EntityCoFHFishHook(world, player, luckModifier, speedModifier));
+					world.spawnEntityInWorld(new EntityFishHookCore(world, player, luckModifier, speedModifier));
 				}
 
 			}
