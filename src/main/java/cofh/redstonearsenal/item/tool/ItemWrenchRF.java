@@ -294,10 +294,6 @@ public class ItemWrenchRF extends ItemShears implements IEnergyContainerItem, IT
 		IBlockState state = world.getBlockState(pos);
 		Block block = state.getBlock();
 
-		int x = pos.getX();
-		int y = pos.getY();
-		int z = pos.getZ();
-
 		if (world.isAirBlock(pos)) {
 			return EnumActionResult.PASS;
 		}
@@ -311,7 +307,7 @@ public class ItemWrenchRF extends ItemShears implements IEnergyContainerItem, IT
 				useEnergy(stack, false);
 			}
 			return EnumActionResult.SUCCESS;
-		} else if (handleIC2Tile(this, stack, player, world, x, y, z, side.ordinal())) {
+		} else if (handleIC2Tile(this, stack, player, world, pos, side.ordinal())) {
 			return ServerHelper.isServerWorld(world) ? EnumActionResult.SUCCESS : EnumActionResult.PASS;
 		}
 		if (BlockHelper.canRotate(block)) {
@@ -349,9 +345,8 @@ public class ItemWrenchRF extends ItemShears implements IEnergyContainerItem, IT
 
 	/* TRICKERY */
 	@Substitutable (method = "returnFalse", value = "ic2.api.tile.IWrenchable")
-	static boolean handleIC2Tile(IToolHammer tool, ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int hitSide) {
+	static boolean handleIC2Tile(IToolHammer tool, ItemStack stack, EntityPlayer player, World world, BlockPos pos, int hitSide) {
 
-		BlockPos pos = new BlockPos(x, y, z);
 		IBlockState state = world.getBlockState(pos);
 		Block block = state.getBlock();
 		if (!block.hasTileEntity(state)) {
@@ -373,14 +368,14 @@ public class ItemWrenchRF extends ItemShears implements IEnergyContainerItem, IT
 				List<ItemStack> drops = wrenchable.getWrenchDrops(world, pos, state, tile, player, fortune);
 
 				if (!drops.isEmpty()) {
-					world.setBlockToAir(new BlockPos(x, y, z));
+					world.setBlockToAir(pos);
 					if (ServerHelper.isServerWorld(world)) {
 						for (ItemStack drop : drops) {
 							float f = 0.7F;
 							double x2 = world.rand.nextFloat() * f + (1.0F - f) * 0.5D;
 							double y2 = world.rand.nextFloat() * f + (1.0F - f) * 0.5D;
 							double z2 = world.rand.nextFloat() * f + (1.0F - f) * 0.5D;
-							EntityItem entity = new EntityItem(world, x + x2, y + y2, z + z2, drop);
+							EntityItem entity = new EntityItem(world, pos.getX() + x2, pos.getY() + y2, pos.getZ() + z2, drop);
 							entity.setPickupDelay(10);
 							;
 							world.spawnEntityInWorld(entity);

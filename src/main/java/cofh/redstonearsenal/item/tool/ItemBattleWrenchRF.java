@@ -67,10 +67,6 @@ public class ItemBattleWrenchRF extends ItemSwordRF implements IToolHammer {
 		IBlockState state = world.getBlockState(pos);
 		Block block = state.getBlock();
 
-		int x = pos.getX();
-		int y = pos.getY();
-		int z = pos.getZ();
-
 		if (world.isAirBlock(pos)) {
 			return EnumActionResult.PASS;
 		}
@@ -84,7 +80,7 @@ public class ItemBattleWrenchRF extends ItemSwordRF implements IToolHammer {
 				useEnergy(stack, false);
 			}
 			return EnumActionResult.SUCCESS;
-		} else if (ItemWrenchRF.handleIC2Tile(this, stack, player, world, x, y, z, side.ordinal())) {
+		} else if (ItemWrenchRF.handleIC2Tile(this, stack, player, world, pos, side.ordinal())) {
 			return ServerHelper.isServerWorld(world) ? EnumActionResult.SUCCESS : EnumActionResult.PASS;
 		}
 		if (BlockHelper.canRotate(block)) {
