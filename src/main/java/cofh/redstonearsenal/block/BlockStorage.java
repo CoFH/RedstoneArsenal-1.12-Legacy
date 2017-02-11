@@ -53,7 +53,7 @@ public class BlockStorage extends BlockCore implements IInitializer, IModelRegis
 		super(Material.IRON, "redstonearsenal");
 
 		setUnlocalizedName("storage");
-		setCreativeTab(RedstoneArsenal.tab);
+		setCreativeTab(RedstoneArsenal.tabCommon);
 
 		setHardness(25.0F);
 		setResistance(120.0F);

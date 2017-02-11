@@ -17,7 +17,7 @@ public class ItemMaterial extends ItemMulti implements IInitializer {
 		super("redstonearsenal");
 
 		setUnlocalizedName("material");
-		setCreativeTab(RedstoneArsenal.tab);
+		setCreativeTab(RedstoneArsenal.tabCommon);
 	}
 
 	/* IInitializer */

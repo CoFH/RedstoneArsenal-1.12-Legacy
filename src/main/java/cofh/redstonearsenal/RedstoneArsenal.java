@@ -4,10 +4,10 @@ import cofh.CoFHCore;
 import cofh.core.init.CoreProps;
 import cofh.core.util.ConfigHandler;
 import cofh.redstonearsenal.init.RABlocks;
-import cofh.redstonearsenal.proxy.Proxy;
-import cofh.redstonearsenal.gui.CreativeTabRA;
 import cofh.redstonearsenal.init.RAEquipment;
 import cofh.redstonearsenal.init.RAItems;
+import cofh.redstonearsenal.init.RAProps;
+import cofh.redstonearsenal.proxy.Proxy;
 import cofh.thermalfoundation.ThermalFoundation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.common.config.Configuration;
@@ -27,12 +27,13 @@ public class RedstoneArsenal {
 
 	public static final String MOD_ID = "redstonearsenal";
 	public static final String MOD_NAME = "Redstone Arsenal";
+
 	public static final String VERSION = "1.2.0";
 	public static final String VERSION_MAX = "1.3.0";
+	public static final String VERSION_GROUP = "required-after:" + MOD_ID + "@[" + VERSION + "," + VERSION_MAX + ");";
+
 	public static final String DEPENDENCIES = CoFHCore.VERSION_GROUP + ThermalFoundation.VERSION_GROUP + "after:ThermalExpansion";
 	public static final String MOD_GUI_FACTORY = "cofh.redstonearsenal.gui.GuiConfigRAFactory";
-
-	public static final String VERSION_GROUP = "required-after:" + MOD_ID + "@[" + VERSION + "," + VERSION_MAX + ");";
 
 	@Instance (MOD_ID)
 	public static RedstoneArsenal instance;
@@ -44,21 +45,21 @@ public class RedstoneArsenal {
 	public static final ConfigHandler CONFIG = new ConfigHandler(VERSION);
 	public static final ConfigHandler CONFIG_CLIENT = new ConfigHandler(VERSION);
 
-	public static CreativeTabs tab = new CreativeTabRA();
+	public static CreativeTabs tabCommon;
 
-	/* INIT SEQUENCE */
 	public RedstoneArsenal() {
 
 		super();
 	}
 
-	/* INIT SEQUENCE */
+	/* INIT */
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 
 		CONFIG.setConfiguration(new Configuration(new File(CoreProps.configDir, "/cofh/" + MOD_ID + "/common.cfg"), true));
 		CONFIG_CLIENT.setConfiguration(new Configuration(new File(CoreProps.configDir, "/cofh/" + MOD_ID + "/client.cfg"), true));
 
+		RAProps.preInit();
 		RABlocks.preInit();
 		RAItems.preInit();
 		RAEquipment.preInit();
@@ -89,10 +90,16 @@ public class RedstoneArsenal {
 	@EventHandler
 	public void loadComplete(FMLLoadCompleteEvent event) {
 
+		RAProps.loadComplete();
 		CONFIG.cleanUp(false, true);
 		CONFIG_CLIENT.cleanUp(false, true);
 
 		LOG.info(MOD_NAME + ": Load Complete.");
+	}
+
+	@EventHandler
+	public void serverStart(FMLServerAboutToStartEvent event) {
+
 	}
 
 	@EventHandler
@@ -101,7 +108,7 @@ public class RedstoneArsenal {
 	}
 
 	@EventHandler
-	public void handleIMC(IMCEvent theIMC) {
+	public void handleIMC(IMCEvent event) {
 
 	}
 
