@@ -82,11 +82,6 @@ public class ItemSwordRF extends ItemSword implements IMultiModeItem, IEnergyCon
 		return this;
 	}
 
-	protected boolean isCreativeTab(ItemStack stack) {
-
-		return stack.getTagCompound() == null ? false : stack.getTagCompound().getBoolean("CreativeTab");
-	}
-
 	protected boolean isEmpowered(ItemStack stack) {
 
 		return getMode(stack) == 1 && getEnergyStored(stack) > energyPerUseCharged;
@@ -202,7 +197,7 @@ public class ItemSwordRF extends ItemSword implements IMultiModeItem, IEnergyCon
 	@Override
 	public boolean showDurabilityBar(ItemStack stack) {
 
-		return !RAProps.showToolCharge ? false : stack.getTagCompound() == null || !stack.getTagCompound().getBoolean("CreativeTab");
+		return RAProps.showToolCharge && stack.getTagCompound() != null && !stack.getTagCompound().getBoolean("CreativeTab");
 	}
 
 	@Override

@@ -246,7 +246,7 @@ public class ItemWrenchRF extends ItemShears implements IEnergyContainerItem, IT
 	@Override
 	public boolean showDurabilityBar(ItemStack stack) {
 
-		return !RAProps.showToolCharge ? false : stack.getTagCompound() == null || !stack.getTagCompound().getBoolean("CreativeTab");
+		return RAProps.showToolCharge && stack.getTagCompound() != null && !stack.getTagCompound().getBoolean("CreativeTab");
 	}
 
 	@Override

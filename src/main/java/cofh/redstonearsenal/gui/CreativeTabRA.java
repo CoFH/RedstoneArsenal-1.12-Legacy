@@ -1,9 +1,10 @@
 package cofh.redstonearsenal.gui;
 
-import cofh.redstonearsenal.item.ItemMaterial;
+import cofh.redstonearsenal.init.RAEquipment;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -18,12 +19,13 @@ public class CreativeTabRA extends CreativeTabs {
 	@SideOnly (Side.CLIENT)
 	public ItemStack getIconItemStack() {
 
-		return ItemMaterial.dustElectrumFlux;
+		ItemStack iconStack = new ItemStack(RAEquipment.ToolSet.FLUX.itemSword);
+		iconStack.setTagCompound(new NBTTagCompound());
+		iconStack.getTagCompound().setBoolean("CreativeTab", true);
+		iconStack.getTagCompound().setInteger("Energy", 32000);
+		iconStack.getTagCompound().setInteger("Mode", 1);
 
-		//		ItemStack iconStack = new ItemStack(RAEquipment.ToolSet.FLUX.itemSword);
-		//		iconStack.setTagCompound(new NBTTagCompound());
-		//		iconStack.getTagCompound().setBoolean("CreativeTab", true);
-		//		return iconStack;
+		return iconStack;
 	}
 
 	@Override
