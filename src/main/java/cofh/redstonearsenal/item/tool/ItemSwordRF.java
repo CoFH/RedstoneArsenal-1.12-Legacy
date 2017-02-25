@@ -50,20 +50,8 @@ public class ItemSwordRF extends ItemSword implements IMultiModeItem, IEnergyCon
 		super(toolMaterial);
 		setNoRepair();
 
-		addPropertyOverride(new ResourceLocation("active"), new IItemPropertyGetter() {
-			@Override
-			public float apply(ItemStack stack, @Nullable World world, @Nullable EntityLivingBase entity) {
-
-				return ItemSwordRF.this.getEnergyStored(stack) > 0 && !ItemSwordRF.this.isEmpowered(stack) ? 1F : 0F;
-			}
-		});
-		addPropertyOverride(new ResourceLocation("empowered"), new IItemPropertyGetter() {
-			@Override
-			public float apply(ItemStack stack, @Nullable World world, @Nullable EntityLivingBase entity) {
-
-				return ItemSwordRF.this.isEmpowered(stack) ? 1F : 0F;
-			}
-		});
+		addPropertyOverride(new ResourceLocation("active"), (stack, world, entity) -> ItemSwordRF.this.getEnergyStored(stack) > 0 && !ItemSwordRF.this.isEmpowered(stack) ? 1F : 0F);
+		addPropertyOverride(new ResourceLocation("empowered"), (stack, world, entity) -> ItemSwordRF.this.isEmpowered(stack) ? 1F : 0F);
 	}
 
 	public ItemSwordRF setEnergyParams(int maxEnergy, int maxTransfer, int energyPerUse, int energyPerUseCharged) {

@@ -42,20 +42,8 @@ public class ItemBowRF extends ItemBowCore implements IMultiModeItem, IEnergyCon
 		super(toolMaterial);
 		setNoRepair();
 
-		addPropertyOverride(new ResourceLocation("active"), new IItemPropertyGetter() {
-			@Override
-			public float apply(ItemStack stack, @Nullable World world, @Nullable EntityLivingBase entity) {
-
-				return ItemBowRF.this.getEnergyStored(stack) > 0 && !ItemBowRF.this.isEmpowered(stack) ? 1F : 0F;
-			}
-		});
-		addPropertyOverride(new ResourceLocation("empowered"), new IItemPropertyGetter() {
-			@Override
-			public float apply(ItemStack stack, @Nullable World world, @Nullable EntityLivingBase entity) {
-
-				return ItemBowRF.this.isEmpowered(stack) ? 1F : 0F;
-			}
-		});
+		addPropertyOverride(new ResourceLocation("active"), (stack, world, entity) -> ItemBowRF.this.getEnergyStored(stack) > 0 && !ItemBowRF.this.isEmpowered(stack) ? 1F : 0F);
+		addPropertyOverride(new ResourceLocation("empowered"), (stack, world, entity) -> ItemBowRF.this.isEmpowered(stack) ? 1F : 0F);
 	}
 
 	public ItemBowRF setEnergyParams(int maxEnergy, int maxTransfer, int energyPerUse, int energyPerUseCharged) {

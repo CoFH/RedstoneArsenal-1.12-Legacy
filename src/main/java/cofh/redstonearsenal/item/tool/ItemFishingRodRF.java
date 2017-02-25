@@ -39,20 +39,8 @@ public class ItemFishingRodRF extends ItemFishingRodCore implements IMultiModeIt
 		super(toolMaterial);
 		setNoRepair();
 
-		addPropertyOverride(new ResourceLocation("active"), new IItemPropertyGetter() {
-			@Override
-			public float apply(ItemStack stack, @Nullable World world, @Nullable EntityLivingBase entity) {
-
-				return ItemFishingRodRF.this.getEnergyStored(stack) > 0 && !ItemFishingRodRF.this.isEmpowered(stack) ? 1F : 0F;
-			}
-		});
-		addPropertyOverride(new ResourceLocation("empowered"), new IItemPropertyGetter() {
-			@Override
-			public float apply(ItemStack stack, @Nullable World world, @Nullable EntityLivingBase entity) {
-
-				return ItemFishingRodRF.this.isEmpowered(stack) ? 1F : 0F;
-			}
-		});
+		addPropertyOverride(new ResourceLocation("active"), (stack, world, entity) -> ItemFishingRodRF.this.getEnergyStored(stack) > 0 && !ItemFishingRodRF.this.isEmpowered(stack) ? 1F : 0F);
+		addPropertyOverride(new ResourceLocation("empowered"), (stack, world, entity) -> ItemFishingRodRF.this.isEmpowered(stack) ? 1F : 0F);
 	}
 
 	public ItemFishingRodRF setEnergyParams(int maxEnergy, int maxTransfer, int energyPerUse, int energyPerUseCharged) {

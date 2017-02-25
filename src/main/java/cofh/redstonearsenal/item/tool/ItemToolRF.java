@@ -49,20 +49,8 @@ public abstract class ItemToolRF extends ItemToolCore implements IMultiModeItem,
 		super(baseDamage, attackSpeed, toolMaterial);
 		setNoRepair();
 
-		addPropertyOverride(new ResourceLocation("active"), new IItemPropertyGetter() {
-			@Override
-			public float apply(ItemStack stack, @Nullable World world, @Nullable EntityLivingBase entity) {
-
-				return ItemToolRF.this.getEnergyStored(stack) > 0 && !ItemToolRF.this.isEmpowered(stack) ? 1F : 0F;
-			}
-		});
-		addPropertyOverride(new ResourceLocation("empowered"), new IItemPropertyGetter() {
-			@Override
-			public float apply(ItemStack stack, @Nullable World world, @Nullable EntityLivingBase entity) {
-
-				return ItemToolRF.this.isEmpowered(stack) ? 1F : 0F;
-			}
-		});
+		addPropertyOverride(new ResourceLocation("active"), (stack, world, entity) -> ItemToolRF.this.getEnergyStored(stack) > 0 && !ItemToolRF.this.isEmpowered(stack) ? 1F : 0F);
+		addPropertyOverride(new ResourceLocation("empowered"), (stack, world, entity) -> ItemToolRF.this.isEmpowered(stack) ? 1F : 0F);
 	}
 
 	public ItemToolRF(float attackSpeed, ToolMaterial toolMaterial) {

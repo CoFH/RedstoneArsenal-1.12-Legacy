@@ -65,13 +65,7 @@ public class ItemWrenchRF extends ItemShears implements IEnergyContainerItem, IT
 
 		setHarvestLevel("wrench", 1);
 
-		addPropertyOverride(new ResourceLocation("active"), new IItemPropertyGetter() {
-			@Override
-			public float apply(ItemStack stack, @Nullable World world, @Nullable EntityLivingBase entity) {
-
-				return ItemWrenchRF.this.getEnergyStored(stack) > 0 ? 1F : 0F;
-			}
-		});
+		addPropertyOverride(new ResourceLocation("active"), (stack, world, entity) -> ItemWrenchRF.this.getEnergyStored(stack) > 0 ? 1F : 0F);
 	}
 
 	public ItemWrenchRF setEnergyParams(int maxEnergy, int maxTransfer, int energyPerUse) {

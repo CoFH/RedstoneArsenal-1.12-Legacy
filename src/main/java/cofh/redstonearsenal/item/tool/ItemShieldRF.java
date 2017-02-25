@@ -42,20 +42,8 @@ public class ItemShieldRF extends ItemShieldCore implements IMultiModeItem, IEne
 		super(toolMaterial);
 		setNoRepair();
 
-		addPropertyOverride(new ResourceLocation("active"), new IItemPropertyGetter() {
-			@Override
-			public float apply(ItemStack stack, @Nullable World world, @Nullable EntityLivingBase entity) {
-
-				return ItemShieldRF.this.getEnergyStored(stack) > 0 && !ItemShieldRF.this.isEmpowered(stack) ? 1F : 0F;
-			}
-		});
-		addPropertyOverride(new ResourceLocation("empowered"), new IItemPropertyGetter() {
-			@Override
-			public float apply(ItemStack stack, @Nullable World world, @Nullable EntityLivingBase entity) {
-
-				return ItemShieldRF.this.isEmpowered(stack) ? 1F : 0F;
-			}
-		});
+		addPropertyOverride(new ResourceLocation("active"), (stack, world, entity) -> ItemShieldRF.this.getEnergyStored(stack) > 0 && !ItemShieldRF.this.isEmpowered(stack) ? 1F : 0F);
+		addPropertyOverride(new ResourceLocation("empowered"), (stack, world, entity) -> ItemShieldRF.this.isEmpowered(stack) ? 1F : 0F);
 	}
 
 	public ItemShieldRF setEnergyParams(int maxEnergy, int maxTransfer, int energyPerUse) {
