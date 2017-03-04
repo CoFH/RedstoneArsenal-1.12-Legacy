@@ -1,6 +1,6 @@
 [
     {
-        "modid": "RedstoneArsenal",
+        "modid": "redstonearsenal",
         "name": "Redstone Arsenal",
         "description": "Behold the Redstone (Flux) Revolution - provides Flux-Infused Tools and Armor!",
         "version": "${version}",
@@ -13,7 +13,7 @@
         "parent": "",
         "screenshots": [],
         "dependencies": [
-            "MinecraftForge,CoFHCore"
+            "Forge,cofhcore"
         ]
     }
 ]
