@@ -190,7 +190,7 @@ public class RAEquipment {
 
 		/* BOW */
 		private float arrowDamage = 1.5F;
-		private float arrowSpeed = 3.0F;
+		private float arrowSpeed = 0.5F;
 
 		/* FISHING ROD */
 		private int luckModifier = 1;
