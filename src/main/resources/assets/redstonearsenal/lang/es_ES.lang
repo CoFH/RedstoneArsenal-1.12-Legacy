@@ -1,4 +1,4 @@
-#en_US
+#es_ES
 
 info.redstonearsenal.tool.chargeOff=para Descargar
 info.redstonearsenal.tool.chargeOn=para Cargar
@@ -7,31 +7,12 @@ info.redstonearsenal.tool.energyPerUse=FR por Uso
 info.redstonearsenal.tool.shovel=Además sirve como Azada.
 info.redstonearsenal.tool.wrench=Además sirve como Tijeras.
 
-item.redstonearsenal.armor.fluxBoots.name=Flux-Infused Boots
-item.redstonearsenal.armor.fluxHelmet.name=Flux-Infused Helm
-item.redstonearsenal.armor.fluxLegs.name=Flux-Infused Leggings
-item.redstonearsenal.armor.fluxPlate.name=Flux-Infused Chestplate
-
 item.redstonearsenal.material.dustElectrumFlux.name=Mixtura de Electro Fluyente
-item.redstonearsenal.material.gearElectrumFlux.name=Fluxed Electrum Gear
 item.redstonearsenal.material.gemCrystalFlux.name=Cristal Fluyente
 item.redstonearsenal.material.ingotElectrumFlux.name=Lingote de Electro Fluyente
 item.redstonearsenal.material.nuggetElectrumFlux.name=Pepita de Electro Fluyente
-item.redstonearsenal.material.plateFlux.name=Fluxed Armor Plating
 item.redstonearsenal.material.rodObsidian.name=Barra de Obsidiana
 item.redstonearsenal.material.rodObsidianFlux.name=Barra Infusa de Obsidiana
-
-item.redstonearsenal.tool.fluxAxe.name=Flux-Infused Axe
-item.redstonearsenal.tool.fluxBattleWrench.name=Flux-Infused BattleWrench
-item.redstonearsenal.tool.fluxBow.name=Flux-Infused Bow
-item.redstonearsenal.tool.fluxFishingRod.name=Flux-Infused Fishing Rod
-item.redstonearsenal.tool.fluxHammer.name=Flux-Infused Hammer
-item.redstonearsenal.tool.fluxPickaxe.name=Flux-Infused Pickaxe
-item.redstonearsenal.tool.fluxShield.name=Flux-Infused Shield
-item.redstonearsenal.tool.fluxShovel.name=Flux-Infused Shovel
-item.redstonearsenal.tool.fluxSickle.name=Flux-Infused Sickle
-item.redstonearsenal.tool.fluxSword.name=Flux-Infused Sword
-item.redstonearsenal.tool.fluxWrench.name=Flux-Infused OmniWrench
 
 itemGroup.redstonearsenal.creativeTab=Arsenal de Redstone
 

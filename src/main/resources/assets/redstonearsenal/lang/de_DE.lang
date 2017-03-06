@@ -1,4 +1,4 @@
-#en_US
+#de_DE
 
 info.redstonearsenal.tool.chargeOff=, um zu bändigen
 info.redstonearsenal.tool.chargeOn=, um zu ermächtigen
@@ -13,7 +13,6 @@ item.redstonearsenal.armor.fluxLegs.name=Fluxierender Beinschutz
 item.redstonearsenal.armor.fluxPlate.name=Fluxierender Brustpanzer
 
 item.redstonearsenal.material.dustElectrumFlux.name=Fluxierende Elektrummischung
-item.redstonearsenal.material.gearElectrumFlux.name=Fluxed Electrum Gear
 item.redstonearsenal.material.gemCrystalFlux.name=Fluxkristall
 item.redstonearsenal.material.ingotElectrumFlux.name=Fluxierender Elektrumbarren
 item.redstonearsenal.material.nuggetElectrumFlux.name=Fluxierender Elektrumnugget
@@ -25,15 +24,11 @@ item.redstonearsenal.tool.fluxAxe.name=Fluxierende Axt
 item.redstonearsenal.tool.fluxBattleWrench.name=Fluxierender Kampfschraubenschlüssel
 item.redstonearsenal.tool.fluxBow.name=Fluxierender Bogen
 item.redstonearsenal.tool.fluxFishingRod.name=Fluxierende Angelrute
-item.redstonearsenal.tool.fluxHammer.name=Flux-Infused Hammer
 item.redstonearsenal.tool.fluxPickaxe.name=Fluxierende Spitzhacke
-item.redstonearsenal.tool.fluxShield.name=Flux-Infused Shield
 item.redstonearsenal.tool.fluxShovel.name=Fluxierende Schaufel
 item.redstonearsenal.tool.fluxSickle.name=Fluxierende Sichel
 item.redstonearsenal.tool.fluxSword.name=Fluxierendes Schwert
 item.redstonearsenal.tool.fluxWrench.name=Fluxierender OmniWrench
-
-itemGroup.redstonearsenal.creativeTab=Redstone Arsenal
 
 tile.redstonearsenal.storage.crystalFlux.name=Fluxkristallblock
 tile.redstonearsenal.storage.electrumFlux.name=Fluxierender Elektrumblock
