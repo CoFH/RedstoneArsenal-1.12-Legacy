@@ -39,9 +39,9 @@ public class RAProps {
 	public static void addEmpoweredTip(IMultiModeItem item, ItemStack stack, List<String> tooltip) {
 
 		if (item.getMode(stack) == 1) {
-			tooltip.add(StringHelper.YELLOW + StringHelper.ITALIC + StringHelper.localize("info.cofh.press") + " " + StringHelper.getKeyName(KeyBindingItemMultiMode.instance.getKey()) + " " + StringHelper.localize("info.redstonearsenal.tool.chargeOff") + StringHelper.END);
+			tooltip.add(StringHelper.localizeFormat("info.redstonearsenal.tool.chargeOff", StringHelper.getKeyName(KeyBindingItemMultiMode.instance.getKey())));
 		} else {
-			tooltip.add(StringHelper.BRIGHT_BLUE + StringHelper.ITALIC + StringHelper.localize("info.cofh.press") + " " + StringHelper.getKeyName(KeyBindingItemMultiMode.instance.getKey()) + " " + StringHelper.localize("info.redstonearsenal.tool.chargeOn") + StringHelper.END);
+			tooltip.add(StringHelper.localizeFormat("info.redstonearsenal.tool.chargeOn", StringHelper.getKeyName(KeyBindingItemMultiMode.instance.getKey())));
 		}
 	}
 
