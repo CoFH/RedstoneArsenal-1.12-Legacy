@@ -1,7 +1,7 @@
 #de_DE
 
-info.redstonearsenal.tool.chargeOff=, um zu bändigen
-info.redstonearsenal.tool.chargeOn=, um zu ermächtigen
+info.redstonearsenal.tool.chargeOff=§e§oDrücke (%s) zum Deaktivieren§r
+info.redstonearsenal.tool.chargeOn=§b§oDrücke (%s) zum Aktivieren§r
 
 info.redstonearsenal.tool.energyPerUse=RF je Nutzung
 info.redstonearsenal.tool.shovel=Dient auch als Hacke.
