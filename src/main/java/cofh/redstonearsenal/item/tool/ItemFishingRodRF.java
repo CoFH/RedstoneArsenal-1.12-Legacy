@@ -158,7 +158,7 @@ public class ItemFishingRodRF extends ItemFishingRodCore implements IMultiModeIt
 	public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand) {
 
 		if (!player.capabilities.isCreativeMode && getEnergyStored(stack) < getEnergyPerUse(stack)) {
-			return new ActionResult<ItemStack>(EnumActionResult.FAIL, stack);
+			return new ActionResult<>(EnumActionResult.FAIL, stack);
 		}
 		if (player.fishEntity != null) {
 			player.fishEntity.handleHookRetraction();
@@ -176,7 +176,7 @@ public class ItemFishingRodRF extends ItemFishingRodCore implements IMultiModeIt
 			}
 		}
 		player.swingArm(EnumHand.MAIN_HAND);
-		return new ActionResult<ItemStack>(EnumActionResult.PASS, stack);
+		return new ActionResult<>(EnumActionResult.PASS, stack);
 	}
 
 	/* IMultiModeItem */

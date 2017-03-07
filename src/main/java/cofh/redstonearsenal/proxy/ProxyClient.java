@@ -38,6 +38,6 @@ public class ProxyClient extends Proxy {
 		return modelList.add(modelRegister);
 	}
 
-	private static ArrayList<IModelRegister> modelList = new ArrayList<IModelRegister>();
+	private static ArrayList<IModelRegister> modelList = new ArrayList<>();
 
 }

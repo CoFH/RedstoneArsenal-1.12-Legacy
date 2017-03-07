@@ -15,11 +15,11 @@ public class ItemHammerRF extends ItemToolRF {
 
 	public ItemHammerRF(ToolMaterial toolMaterial) {
 
-		super(-3.5F, toolMaterial);
+		super(-3.6F, toolMaterial);
 		addToolClass("pickaxe");
 		addToolClass("hammer");
-		damage = 5;
-		energyPerUseCharged = 800;
+		damage = 11;
+		energyPerUseCharged = 1600;
 
 		effectiveBlocks.addAll(ItemPickaxe.EFFECTIVE_ON);
 
@@ -57,11 +57,13 @@ public class ItemHammerRF extends ItemToolRF {
 			int y = pos.getY();
 			int z = pos.getZ();
 
+			int radius = isEmpowered(stack) ? 2 : 1;
+
 			switch (traceResult.sideHit) {
 				case DOWN:
 				case UP:
-					for (x = tracePos.getX() - 1; x <= tracePos.getX() + 1; x++) {
-						for (z = tracePos.getZ() - 1; z <= tracePos.getZ() + 1; z++) {
+					for (x = tracePos.getX() - radius; x <= tracePos.getX() + radius; x++) {
+						for (z = tracePos.getZ() - radius; z <= tracePos.getZ() + radius; z++) {
 							BlockPos adjPos = new BlockPos(x, y, z);
 							adjBlock = world.getBlockState(adjPos);
 							strength = ForgeHooks.blockStrength(adjBlock, player, world, adjPos);
@@ -73,8 +75,8 @@ public class ItemHammerRF extends ItemToolRF {
 					break;
 				case NORTH:
 				case SOUTH:
-					for (x = tracePos.getX() - 1; x <= tracePos.getX() + 1; x++) {
-						for (y = tracePos.getY() - 1; y <= tracePos.getY() + 1; y++) {
+					for (x = tracePos.getX() - radius; x <= tracePos.getX() + radius; x++) {
+						for (y = tracePos.getY() - radius; y <= tracePos.getY() + radius; y++) {
 							BlockPos adjPos = new BlockPos(x, y, z);
 							adjBlock = world.getBlockState(adjPos);
 							strength = ForgeHooks.blockStrength(adjBlock, player, world, adjPos);
@@ -86,8 +88,8 @@ public class ItemHammerRF extends ItemToolRF {
 					break;
 				case WEST:
 				case EAST:
-					for (y = tracePos.getY() - 1; y <= tracePos.getY() + 1; y++) {
-						for (z = tracePos.getZ() - 1; z <= tracePos.getZ() + 1; z++) {
+					for (y = tracePos.getY() - radius; y <= tracePos.getY() + radius; y++) {
+						for (z = tracePos.getZ() - radius; z <= tracePos.getZ() + radius; z++) {
 							BlockPos adjPos = new BlockPos(x, y, z);
 							adjBlock = world.getBlockState(adjPos);
 							strength = ForgeHooks.blockStrength(adjBlock, player, world, adjPos);

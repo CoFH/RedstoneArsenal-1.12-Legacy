@@ -14,7 +14,7 @@ import net.minecraftforge.common.ForgeHooks;
 
 public class ItemPickaxeRF extends ItemToolRF {
 
-	public THashSet<Block> effectiveBlocksCharged = new THashSet<Block>();
+	public THashSet<Block> effectiveBlocksCharged = new THashSet<>();
 
 	public ItemPickaxeRF(ToolMaterial toolMaterial) {
 

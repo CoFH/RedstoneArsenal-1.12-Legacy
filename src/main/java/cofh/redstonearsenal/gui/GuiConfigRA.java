@@ -20,7 +20,7 @@ public class GuiConfigRA extends GuiConfig {
 
 	private static List<IConfigElement> getConfigElements(GuiScreen parent) {
 
-		List<IConfigElement> list = new ArrayList<IConfigElement>();
+		List<IConfigElement> list = new ArrayList<>();
 
 		for (String element : CATEGORIES) {
 			list.add(new ConfigElement(RedstoneArsenal.CONFIG.getCategory(element)));

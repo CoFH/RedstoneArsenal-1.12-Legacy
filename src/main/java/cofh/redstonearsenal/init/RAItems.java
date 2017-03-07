@@ -40,7 +40,7 @@ public class RAItems {
 		initList.clear();
 	}
 
-	static ArrayList<IInitializer> initList = new ArrayList<IInitializer>();
+	static ArrayList<IInitializer> initList = new ArrayList<>();
 
 	/* REFERENCES */
 	public static ItemMaterial itemMaterial;
