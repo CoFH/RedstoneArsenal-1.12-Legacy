@@ -1,6 +1,6 @@
 package cofh.redstonearsenal.item;
 
-import cofh.api.core.IInitializer;
+import cofh.core.util.core.IInitializer;
 import cofh.core.item.ItemMulti;
 import cofh.redstonearsenal.RedstoneArsenal;
 import net.minecraft.init.Items;

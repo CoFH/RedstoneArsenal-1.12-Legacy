@@ -1,6 +1,6 @@
 package cofh.redstonearsenal.init;
 
-import cofh.api.core.IModelRegister;
+import cofh.core.render.IModelRegister;
 import cofh.lib.util.helpers.EnergyHelper;
 import cofh.lib.util.helpers.StringHelper;
 import cofh.redstonearsenal.RedstoneArsenal;

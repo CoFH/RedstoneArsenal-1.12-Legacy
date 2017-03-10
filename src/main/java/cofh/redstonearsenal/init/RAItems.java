@@ -1,6 +1,6 @@
 package cofh.redstonearsenal.init;
 
-import cofh.api.core.IInitializer;
+import cofh.core.util.core.IInitializer;
 import cofh.redstonearsenal.RedstoneArsenal;
 import cofh.redstonearsenal.item.ItemMaterial;
 

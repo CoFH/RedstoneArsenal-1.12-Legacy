@@ -1,6 +1,6 @@
 package cofh.redstonearsenal.proxy;
 
-import cofh.api.core.IModelRegister;
+import cofh.core.render.IModelRegister;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
