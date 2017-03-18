@@ -1,5 +1,6 @@
 package cofh.redstonearsenal.item.tool;
 
+import cofh.lib.util.RayTracer;
 import cofh.lib.util.helpers.BlockHelper;
 import cofh.lib.util.helpers.MathHelper;
 import gnu.trove.set.hash.THashSet;
@@ -61,7 +62,7 @@ public class ItemPickaxeRF extends ItemToolRF {
 		float refStrength = ForgeHooks.blockStrength(state, player, world, pos);
 		if (refStrength != 0.0F) {
 			if (isEmpowered(stack) && canHarvestBlock(state, stack)) {
-				RayTraceResult traceResult = BlockHelper.getCurrentMovingObjectPosition(player, true);
+				RayTraceResult traceResult = RayTracer.retrace(player);
 				BlockPos adjPos;
 				IBlockState adjState;
 				float strength;

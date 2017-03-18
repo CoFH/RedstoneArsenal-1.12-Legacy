@@ -1,5 +1,6 @@
 package cofh.redstonearsenal.item.tool;
 
+import cofh.lib.util.RayTracer;
 import cofh.lib.util.helpers.BlockHelper;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -48,7 +49,7 @@ public class ItemHammerRF extends ItemToolRF {
 
 		float refStrength = ForgeHooks.blockStrength(state, player, world, pos);
 		if (refStrength != 0.0F) {
-			RayTraceResult traceResult = BlockHelper.getCurrentMovingObjectPosition(player, true);
+			RayTraceResult traceResult = RayTracer.retrace(player);
 			BlockPos adjPos;
 			IBlockState adjState;
 			float strength;
