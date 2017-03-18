@@ -49,8 +49,8 @@ public class ItemHammerRF extends ItemToolRF {
 		float refStrength = ForgeHooks.blockStrength(state, player, world, pos);
 		if (refStrength != 0.0F) {
 			RayTraceResult traceResult = BlockHelper.getCurrentMovingObjectPosition(player, true);
-			BlockPos tracePos = traceResult.getBlockPos();
-			IBlockState adjBlock;
+			BlockPos adjPos;
+			IBlockState adjState;
 			float strength;
 
 			int x = pos.getX();
@@ -62,11 +62,11 @@ public class ItemHammerRF extends ItemToolRF {
 			switch (traceResult.sideHit) {
 				case DOWN:
 				case UP:
-					for (x = tracePos.getX() - radius; x <= tracePos.getX() + radius; x++) {
-						for (z = tracePos.getZ() - radius; z <= tracePos.getZ() + radius; z++) {
-							BlockPos adjPos = new BlockPos(x, y, z);
-							adjBlock = world.getBlockState(adjPos);
-							strength = ForgeHooks.blockStrength(adjBlock, player, world, adjPos);
+					for (x = pos.getX() - radius; x <= pos.getX() + radius; x++) {
+						for (z = pos.getZ() - radius; z <= pos.getZ() + radius; z++) {
+							adjPos = new BlockPos(x, y, z);
+							adjState = world.getBlockState(adjPos);
+							strength = ForgeHooks.blockStrength(adjState, player, world, adjPos);
 							if (strength > 0F && refStrength / strength <= 10F) {
 								used |= harvestBlock(world, adjPos, player);
 							}
@@ -75,11 +75,11 @@ public class ItemHammerRF extends ItemToolRF {
 					break;
 				case NORTH:
 				case SOUTH:
-					for (x = tracePos.getX() - radius; x <= tracePos.getX() + radius; x++) {
-						for (y = tracePos.getY() - radius; y <= tracePos.getY() + radius; y++) {
-							BlockPos adjPos = new BlockPos(x, y, z);
-							adjBlock = world.getBlockState(adjPos);
-							strength = ForgeHooks.blockStrength(adjBlock, player, world, adjPos);
+					for (x = pos.getX() - radius; x <= pos.getX() + radius; x++) {
+						for (y = pos.getY() - radius; y <= pos.getY() + radius; y++) {
+							adjPos = new BlockPos(x, y, z);
+							adjState = world.getBlockState(adjPos);
+							strength = ForgeHooks.blockStrength(adjState, player, world, adjPos);
 							if (strength > 0F && refStrength / strength <= 10F) {
 								used |= harvestBlock(world, adjPos, player);
 							}
@@ -88,11 +88,11 @@ public class ItemHammerRF extends ItemToolRF {
 					break;
 				case WEST:
 				case EAST:
-					for (y = tracePos.getY() - radius; y <= tracePos.getY() + radius; y++) {
-						for (z = tracePos.getZ() - radius; z <= tracePos.getZ() + radius; z++) {
-							BlockPos adjPos = new BlockPos(x, y, z);
-							adjBlock = world.getBlockState(adjPos);
-							strength = ForgeHooks.blockStrength(adjBlock, player, world, adjPos);
+					for (y = pos.getY() - radius; y <= pos.getY() + radius; y++) {
+						for (z = pos.getZ() - radius; z <= pos.getZ() + radius; z++) {
+							adjPos = new BlockPos(x, y, z);
+							adjState = world.getBlockState(adjPos);
+							strength = ForgeHooks.blockStrength(adjState, player, world, adjPos);
 							if (strength > 0F && refStrength / strength <= 10F) {
 								used |= harvestBlock(world, adjPos, player);
 							}

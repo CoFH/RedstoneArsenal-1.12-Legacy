@@ -1,5 +1,7 @@
 package cofh.redstonearsenal.item.tool;
 
+import cofh.lib.util.helpers.BlockHelper;
+import cofh.lib.util.helpers.MathHelper;
 import gnu.trove.set.hash.THashSet;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -9,8 +11,12 @@ import net.minecraft.item.ItemPickaxe;
 import net.minecraft.item.ItemSpade;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
+
+import static net.minecraft.util.EnumFacing.DOWN;
+import static net.minecraft.util.EnumFacing.UP;
 
 public class ItemPickaxeRF extends ItemToolRF {
 
@@ -55,16 +61,53 @@ public class ItemPickaxeRF extends ItemToolRF {
 		float refStrength = ForgeHooks.blockStrength(state, player, world, pos);
 		if (refStrength != 0.0F) {
 			if (isEmpowered(stack) && canHarvestBlock(state, stack)) {
-				Material bMat = state.getMaterial();
-				BlockPos adjPos = new BlockPos(x, y - 1, z);
-				IBlockState adjState = world.getBlockState(adjPos);
-				float strength = ForgeHooks.blockStrength(adjState, player, world, adjPos);
-				if (strength > 0F && refStrength / strength <= 10F && state.getMaterial() == bMat) {
-					harvestBlock(world, adjPos, player);
-				}
-				strength = ForgeHooks.blockStrength(adjState, player, world, adjPos);
-				if (strength > 0F && refStrength / strength <= 10F && state.getMaterial() == bMat) {
-					harvestBlock(world, adjPos, player);
+				RayTraceResult traceResult = BlockHelper.getCurrentMovingObjectPosition(player, true);
+				BlockPos adjPos;
+				IBlockState adjState;
+				float strength;
+
+				if (traceResult.sideHit == DOWN || traceResult.sideHit == UP) {
+					int facing = MathHelper.floor(player.rotationYaw * 4.0F / 360.0F + 0.5D) & 3;
+					if (facing % 2 == 0) {
+						adjPos = new BlockPos(x, y, z - 1);
+						adjState = world.getBlockState(adjPos);
+						strength = ForgeHooks.blockStrength(adjState, player, world, adjPos);
+						if (strength > 0F && refStrength / strength <= 10F) {
+							harvestBlock(world, adjPos, player);
+						}
+						adjPos = new BlockPos(x, y, z + 1);
+						adjState = world.getBlockState(adjPos);
+						strength = ForgeHooks.blockStrength(adjState, player, world, adjPos);
+						if (strength > 0F && refStrength / strength <= 10F) {
+							harvestBlock(world, adjPos, player);
+						}
+					} else {
+						adjPos = new BlockPos(x - 1, y, z);
+						adjState = world.getBlockState(adjPos);
+						strength = ForgeHooks.blockStrength(adjState, player, world, adjPos);
+						if (strength > 0F && refStrength / strength <= 10F) {
+							harvestBlock(world, adjPos, player);
+						}
+						adjPos = new BlockPos(x + 1, y, z);
+						adjState = world.getBlockState(adjPos);
+						strength = ForgeHooks.blockStrength(adjState, player, world, adjPos);
+						if (strength > 0F && refStrength / strength <= 10F) {
+							harvestBlock(world, adjPos, player);
+						}
+					}
+				} else {
+					adjPos = new BlockPos(x, y - 1, z);
+					adjState = world.getBlockState(adjPos);
+					strength = ForgeHooks.blockStrength(adjState, player, world, adjPos);
+					if (strength > 0F && refStrength / strength <= 10F) {
+						harvestBlock(world, adjPos, player);
+					}
+					adjPos = new BlockPos(x, y + 1, z);
+					adjState = world.getBlockState(adjPos);
+					strength = ForgeHooks.blockStrength(adjState, player, world, adjPos);
+					if (strength > 0F && refStrength / strength <= 10F) {
+						harvestBlock(world, adjPos, player);
+					}
 				}
 			}
 			if (!player.capabilities.isCreativeMode) {
