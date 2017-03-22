@@ -1,8 +1,8 @@
 package cofh.redstonearsenal.block;
 
-import cofh.core.util.core.IInitializer;
-import cofh.core.render.IModelRegister;
 import cofh.core.block.BlockCore;
+import cofh.core.render.IModelRegister;
+import cofh.core.util.core.IInitializer;
 import cofh.lib.util.helpers.DamageHelper;
 import cofh.lib.util.helpers.EnergyHelper;
 import cofh.redstonearsenal.RedstoneArsenal;

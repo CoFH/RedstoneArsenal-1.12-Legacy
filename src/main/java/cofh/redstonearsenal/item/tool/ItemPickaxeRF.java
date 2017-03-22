@@ -1,7 +1,6 @@
 package cofh.redstonearsenal.item.tool;
 
 import cofh.lib.util.RayTracer;
-import cofh.lib.util.helpers.BlockHelper;
 import cofh.lib.util.helpers.MathHelper;
 import gnu.trove.set.hash.THashSet;
 import net.minecraft.block.Block;

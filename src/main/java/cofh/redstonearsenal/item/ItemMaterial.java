@@ -1,7 +1,7 @@
 package cofh.redstonearsenal.item;
 
-import cofh.core.util.core.IInitializer;
 import cofh.core.item.ItemMulti;
+import cofh.core.util.core.IInitializer;
 import cofh.redstonearsenal.RedstoneArsenal;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumRarity;
@@ -55,9 +55,9 @@ public class ItemMaterial extends ItemMulti implements IInitializer {
 
 		addGearRecipe(gearElectrumFlux, "ingotElectrumFlux");
 
-		addRecipe(ShapedRecipe(plateFlux, "NNN", "GIG", "NNN", 'G', "gemCrystalFlux", 'I', "ingotElectrumFlux", 'N', "nuggetElectrumFlux" ));
-		addRecipe(ShapedRecipe(rodObsidianFlux, "  O", " B ", "O  ", 'B', rodObsidian, 'O', "gemCrystalFlux" ));
-		addRecipe(ShapedRecipe(rodObsidian, "  O", " B ", "O  ", 'B', Items.BLAZE_POWDER, 'O', "dustObsidian" ));
+		addRecipe(ShapedRecipe(plateFlux, "NNN", "GIG", "NNN", 'G', "gemCrystalFlux", 'I', "ingotElectrumFlux", 'N', "nuggetElectrumFlux"));
+		addRecipe(ShapedRecipe(rodObsidianFlux, "  O", " B ", "O  ", 'B', rodObsidian, 'O', "gemCrystalFlux"));
+		addRecipe(ShapedRecipe(rodObsidian, "  O", " B ", "O  ", 'B', Items.BLAZE_POWDER, 'O', "dustObsidian"));
 
 		if (!Loader.isModLoaded("ThermalExpansion")) {
 			addRecipe(ShapelessRecipe(dustElectrumFlux, "dustElectrum", "dustRedstone", "dustRedstone", "dustRedstone", "dustRedstone", "dustRedstone"));
