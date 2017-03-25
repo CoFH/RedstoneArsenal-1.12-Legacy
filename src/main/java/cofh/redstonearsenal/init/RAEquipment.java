@@ -191,6 +191,7 @@ public class RAEquipment {
 		/* BOW */
 		private float arrowDamage = 1.5F;
 		private float arrowSpeed = 0.5F;
+		private float zoomMultiplier = 0.35F;
 
 		/* FISHING ROD */
 		private int luckModifier = 1;
@@ -305,7 +306,7 @@ public class RAEquipment {
 
 			/* BOW */
 			itemBow.setUnlocalizedName(TOOL + "Bow").setCreativeTab(RedstoneArsenal.tabCommon);
-			itemBow.setArrowDamage(arrowDamage).setArrowSpeed(arrowSpeed);
+			itemBow.setArrowDamage(arrowDamage).setArrowSpeed(arrowSpeed).setZoomMultiplier(zoomMultiplier);
 			itemBow.setShowInCreative(enable[6]);
 			itemBow.setRegistryName("tool.bow_" + name);
 			GameRegistry.register(itemBow);
