@@ -58,7 +58,7 @@ public class ItemPickaxeRF extends ItemToolRF {
 		int y = pos.getY();
 		int z = pos.getZ();
 
-		float refStrength = ForgeHooks.blockStrength(state, player, world, pos);
+		float refStrength = state.getPlayerRelativeBlockHardness(player, world, pos);
 		if (refStrength != 0.0F) {
 			if (isEmpowered(stack) && canHarvestBlock(state, stack)) {
 				RayTraceResult traceResult = RayTracer.retrace(player);
@@ -71,26 +71,26 @@ public class ItemPickaxeRF extends ItemToolRF {
 					if (facing % 2 == 0) {
 						adjPos = new BlockPos(x, y, z - 1);
 						adjState = world.getBlockState(adjPos);
-						strength = ForgeHooks.blockStrength(adjState, player, world, adjPos);
+						strength = adjState.getPlayerRelativeBlockHardness(player, world, pos);
 						if (strength > 0F && refStrength / strength <= 10F) {
 							harvestBlock(world, adjPos, player);
 						}
 						adjPos = new BlockPos(x, y, z + 1);
 						adjState = world.getBlockState(adjPos);
-						strength = ForgeHooks.blockStrength(adjState, player, world, adjPos);
+						strength = adjState.getPlayerRelativeBlockHardness(player, world, pos);
 						if (strength > 0F && refStrength / strength <= 10F) {
 							harvestBlock(world, adjPos, player);
 						}
 					} else {
 						adjPos = new BlockPos(x - 1, y, z);
 						adjState = world.getBlockState(adjPos);
-						strength = ForgeHooks.blockStrength(adjState, player, world, adjPos);
+						strength = adjState.getPlayerRelativeBlockHardness(player, world, pos);
 						if (strength > 0F && refStrength / strength <= 10F) {
 							harvestBlock(world, adjPos, player);
 						}
 						adjPos = new BlockPos(x + 1, y, z);
 						adjState = world.getBlockState(adjPos);
-						strength = ForgeHooks.blockStrength(adjState, player, world, adjPos);
+						strength = adjState.getPlayerRelativeBlockHardness(player, world, pos);
 						if (strength > 0F && refStrength / strength <= 10F) {
 							harvestBlock(world, adjPos, player);
 						}
@@ -98,13 +98,13 @@ public class ItemPickaxeRF extends ItemToolRF {
 				} else {
 					adjPos = new BlockPos(x, y - 1, z);
 					adjState = world.getBlockState(adjPos);
-					strength = ForgeHooks.blockStrength(adjState, player, world, adjPos);
+					strength = adjState.getPlayerRelativeBlockHardness(player, world, pos);
 					if (strength > 0F && refStrength / strength <= 10F) {
 						harvestBlock(world, adjPos, player);
 					}
 					adjPos = new BlockPos(x, y + 1, z);
 					adjState = world.getBlockState(adjPos);
-					strength = ForgeHooks.blockStrength(adjState, player, world, adjPos);
+					strength = adjState.getPlayerRelativeBlockHardness(player, world, pos);
 					if (strength > 0F && refStrength / strength <= 10F) {
 						harvestBlock(world, adjPos, player);
 					}

@@ -47,17 +47,17 @@ public class RAEquipment {
 
 	public static boolean initialize() {
 
+		for (ArmorSet e : ArmorSet.values()) {
+			e.initialize();
+		}
+		for (ToolSet e : ToolSet.values()) {
+			e.initialize();
+		}
 		return true;
 	}
 
 	public static boolean postInit() {
 
-		for (ArmorSet e : ArmorSet.values()) {
-			e.postInit();
-		}
-		for (ToolSet e : ToolSet.values()) {
-			e.postInit();
-		}
 		return true;
 	}
 
@@ -145,7 +145,7 @@ public class RAEquipment {
 			armorBoots = EnergyHelper.setDefaultEnergyTag(new ItemStack(itemBoots), 0);
 		}
 
-		protected void postInit() {
+		protected void initialize() {
 
 			if (enable[0]) {
 				addRecipe(ShapedRecipe(armorHelmet, "III", "I I", 'I', ItemMaterial.plateFlux));
@@ -351,7 +351,7 @@ public class RAEquipment {
 			toolShield = EnergyHelper.setDefaultEnergyTag(new ItemStack(itemShield), 0);
 		}
 
-		protected void postInit() {
+		protected void initialize() {
 
 			if (enable[0]) {
 				addRecipe(ShapedRecipe(toolWrench, "I I", " R ", " I ", 'I', "ingotElectrumFlux", 'R', ItemMaterial.rodObsidianFlux));

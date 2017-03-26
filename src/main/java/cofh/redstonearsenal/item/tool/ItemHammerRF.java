@@ -48,7 +48,7 @@ public class ItemHammerRF extends ItemToolRF {
 		boolean used = false;
 		world.playEvent(2001, pos, Block.getStateId(state));
 
-		float refStrength = ForgeHooks.blockStrength(state, player, world, pos);
+		float refStrength = state.getPlayerRelativeBlockHardness(player, world, pos);
 		if (refStrength != 0.0F) {
 			RayTraceResult traceResult = RayTracer.retrace(player);
 			BlockPos adjPos;
@@ -68,7 +68,7 @@ public class ItemHammerRF extends ItemToolRF {
 						for (z = pos.getZ() - radius; z <= pos.getZ() + radius; z++) {
 							adjPos = new BlockPos(x, y, z);
 							adjState = world.getBlockState(adjPos);
-							strength = ForgeHooks.blockStrength(adjState, player, world, adjPos);
+							strength = adjState.getPlayerRelativeBlockHardness(player, world, pos);
 							if (strength > 0F && refStrength / strength <= 10F) {
 								used |= harvestBlock(world, adjPos, player);
 							}
@@ -81,7 +81,7 @@ public class ItemHammerRF extends ItemToolRF {
 						for (y = pos.getY() - radius; y <= pos.getY() + radius; y++) {
 							adjPos = new BlockPos(x, y, z);
 							adjState = world.getBlockState(adjPos);
-							strength = ForgeHooks.blockStrength(adjState, player, world, adjPos);
+							strength = adjState.getPlayerRelativeBlockHardness(player, world, pos);
 							if (strength > 0F && refStrength / strength <= 10F) {
 								used |= harvestBlock(world, adjPos, player);
 							}
@@ -94,7 +94,7 @@ public class ItemHammerRF extends ItemToolRF {
 						for (z = pos.getZ() - radius; z <= pos.getZ() + radius; z++) {
 							adjPos = new BlockPos(x, y, z);
 							adjState = world.getBlockState(adjPos);
-							strength = ForgeHooks.blockStrength(adjState, player, world, adjPos);
+							strength = adjState.getPlayerRelativeBlockHardness(player, world, pos);
 							if (strength > 0F && refStrength / strength <= 10F) {
 								used |= harvestBlock(world, adjPos, player);
 							}

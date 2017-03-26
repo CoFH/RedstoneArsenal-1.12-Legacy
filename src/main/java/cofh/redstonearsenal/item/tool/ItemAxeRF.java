@@ -8,7 +8,6 @@ import net.minecraft.item.ItemAxe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.common.ForgeHooks;
 
 public class ItemAxeRF extends ItemToolRF {
 
@@ -40,7 +39,7 @@ public class ItemAxeRF extends ItemToolRF {
 
 		Block block = state.getBlock();
 
-		float refStrength = ForgeHooks.blockStrength(state, player, world, pos);
+		float refStrength = state.getPlayerRelativeBlockHardness(player, world, pos);
 		if (refStrength != 0.0F) {
 			if (isEmpowered(stack) && (block.isWood(world, pos) || canHarvestBlock(state, stack))) {
 				for (int i = x - 1; i <= x + 1; i++) {
