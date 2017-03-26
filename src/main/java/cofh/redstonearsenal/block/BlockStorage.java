@@ -193,14 +193,14 @@ public class BlockStorage extends BlockCore implements IInitializer, IModelRegis
 	@Override
 	public boolean initialize() {
 
+		addStorageRecipe(blockElectrumFlux, "ingotElectrumFlux");
+		addStorageRecipe(blockCrystalFlux, "gemCrystalFlux");
+
 		return true;
 	}
 
 	@Override
 	public boolean postInit() {
-
-		addStorageRecipe(blockElectrumFlux, "ingotElectrumFlux");
-		addStorageRecipe(blockCrystalFlux, "gemCrystalFlux");
 
 		return true;
 	}
