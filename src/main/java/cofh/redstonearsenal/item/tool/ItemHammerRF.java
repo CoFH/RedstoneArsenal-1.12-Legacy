@@ -10,7 +10,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
-import net.minecraftforge.common.ForgeHooks;
 
 public class ItemHammerRF extends ItemToolRF {
 
@@ -68,7 +67,7 @@ public class ItemHammerRF extends ItemToolRF {
 						for (z = pos.getZ() - radius; z <= pos.getZ() + radius; z++) {
 							adjPos = new BlockPos(x, y, z);
 							adjState = world.getBlockState(adjPos);
-							strength = adjState.getPlayerRelativeBlockHardness(player, world, pos);
+							strength = adjState.getPlayerRelativeBlockHardness(player, world, adjPos);
 							if (strength > 0F && refStrength / strength <= 10F) {
 								used |= harvestBlock(world, adjPos, player);
 							}
@@ -81,7 +80,7 @@ public class ItemHammerRF extends ItemToolRF {
 						for (y = pos.getY() - radius; y <= pos.getY() + radius; y++) {
 							adjPos = new BlockPos(x, y, z);
 							adjState = world.getBlockState(adjPos);
-							strength = adjState.getPlayerRelativeBlockHardness(player, world, pos);
+							strength = adjState.getPlayerRelativeBlockHardness(player, world, adjPos);
 							if (strength > 0F && refStrength / strength <= 10F) {
 								used |= harvestBlock(world, adjPos, player);
 							}
@@ -94,7 +93,7 @@ public class ItemHammerRF extends ItemToolRF {
 						for (z = pos.getZ() - radius; z <= pos.getZ() + radius; z++) {
 							adjPos = new BlockPos(x, y, z);
 							adjState = world.getBlockState(adjPos);
-							strength = adjState.getPlayerRelativeBlockHardness(player, world, pos);
+							strength = adjState.getPlayerRelativeBlockHardness(player, world, adjPos);
 							if (strength > 0F && refStrength / strength <= 10F) {
 								used |= harvestBlock(world, adjPos, player);
 							}

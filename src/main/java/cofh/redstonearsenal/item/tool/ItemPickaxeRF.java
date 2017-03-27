@@ -13,7 +13,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
-import net.minecraftforge.common.ForgeHooks;
 
 import static net.minecraft.util.EnumFacing.DOWN;
 import static net.minecraft.util.EnumFacing.UP;
@@ -71,26 +70,26 @@ public class ItemPickaxeRF extends ItemToolRF {
 					if (facing % 2 == 0) {
 						adjPos = new BlockPos(x, y, z - 1);
 						adjState = world.getBlockState(adjPos);
-						strength = adjState.getPlayerRelativeBlockHardness(player, world, pos);
+						strength = adjState.getPlayerRelativeBlockHardness(player, world, adjPos);
 						if (strength > 0F && refStrength / strength <= 10F) {
 							harvestBlock(world, adjPos, player);
 						}
 						adjPos = new BlockPos(x, y, z + 1);
 						adjState = world.getBlockState(adjPos);
-						strength = adjState.getPlayerRelativeBlockHardness(player, world, pos);
+						strength = adjState.getPlayerRelativeBlockHardness(player, world, adjPos);
 						if (strength > 0F && refStrength / strength <= 10F) {
 							harvestBlock(world, adjPos, player);
 						}
 					} else {
 						adjPos = new BlockPos(x - 1, y, z);
 						adjState = world.getBlockState(adjPos);
-						strength = adjState.getPlayerRelativeBlockHardness(player, world, pos);
+						strength = adjState.getPlayerRelativeBlockHardness(player, world, adjPos);
 						if (strength > 0F && refStrength / strength <= 10F) {
 							harvestBlock(world, adjPos, player);
 						}
 						adjPos = new BlockPos(x + 1, y, z);
 						adjState = world.getBlockState(adjPos);
-						strength = adjState.getPlayerRelativeBlockHardness(player, world, pos);
+						strength = adjState.getPlayerRelativeBlockHardness(player, world, adjPos);
 						if (strength > 0F && refStrength / strength <= 10F) {
 							harvestBlock(world, adjPos, player);
 						}
@@ -98,13 +97,13 @@ public class ItemPickaxeRF extends ItemToolRF {
 				} else {
 					adjPos = new BlockPos(x, y - 1, z);
 					adjState = world.getBlockState(adjPos);
-					strength = adjState.getPlayerRelativeBlockHardness(player, world, pos);
+					strength = adjState.getPlayerRelativeBlockHardness(player, world, adjPos);
 					if (strength > 0F && refStrength / strength <= 10F) {
 						harvestBlock(world, adjPos, player);
 					}
 					adjPos = new BlockPos(x, y + 1, z);
 					adjState = world.getBlockState(adjPos);
-					strength = adjState.getPlayerRelativeBlockHardness(player, world, pos);
+					strength = adjState.getPlayerRelativeBlockHardness(player, world, adjPos);
 					if (strength > 0F && refStrength / strength <= 10F) {
 						harvestBlock(world, adjPos, player);
 					}
