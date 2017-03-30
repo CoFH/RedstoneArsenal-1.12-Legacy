@@ -50,6 +50,10 @@ public class ItemHammerRF extends ItemToolRF {
 		float refStrength = state.getPlayerRelativeBlockHardness(player, world, pos);
 		if (refStrength != 0.0F) {
 			RayTraceResult traceResult = RayTracer.retrace(player);
+
+			if (traceResult == null) {
+				return false;
+			}
 			BlockPos adjPos;
 			IBlockState adjState;
 			float strength;

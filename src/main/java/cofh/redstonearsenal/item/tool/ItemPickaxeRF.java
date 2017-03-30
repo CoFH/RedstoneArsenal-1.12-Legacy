@@ -61,6 +61,10 @@ public class ItemPickaxeRF extends ItemToolRF {
 		if (refStrength != 0.0F) {
 			if (isEmpowered(stack) && canHarvestBlock(state, stack)) {
 				RayTraceResult traceResult = RayTracer.retrace(player);
+
+				if (traceResult == null) {
+					return false;
+				}
 				BlockPos adjPos;
 				IBlockState adjState;
 				float strength;
