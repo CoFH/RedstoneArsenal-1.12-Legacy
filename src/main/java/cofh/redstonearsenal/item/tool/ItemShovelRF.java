@@ -4,11 +4,13 @@ import cofh.lib.util.helpers.MathHelper;
 import cofh.lib.util.helpers.ServerHelper;
 import cofh.lib.util.helpers.StringHelper;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockDirt;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemSpade;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.*;
@@ -55,21 +57,41 @@ public class ItemShovelRF extends ItemToolRF {
 		Block block = state.getBlock();
 		SoundType soundType = farmland.getBlock().getSoundType(state, world, pos, player);
 		SoundEvent stepSound = soundType.getStepSound();
-		boolean air = world.isAirBlock(pos2);
+		boolean air = world.isAirBlock(pos.up());
 
 		if (!air) {
-
 			if (state2.getBlockHardness(world, pos2) == 0.0D) {
 				air = harvestBlock(world, pos2, player);
 			}
 		}
-		if (air && (block == Blocks.GRASS || block == Blocks.DIRT)) {
-			world.playSound(player, new BlockPos(x + 0.5F, y + 0.5F, z + 0.5F), stepSound, SoundCategory.BLOCKS, (soundType.getVolume() + 1.0F) / 2.0F, soundType.getPitch() * 0.8F);
-			if (ServerHelper.isServerWorld(world)) {
-				world.setBlockState(pos, farmland);
+		if (air) {
+			if (block == Blocks.GRASS || block == Blocks.GRASS_PATH) {
+				world.playSound(player, new BlockPos(x + 0.5F, y + 0.5F, z + 0.5F), stepSound, SoundCategory.BLOCKS, (soundType.getVolume() + 1.0F) / 2.0F, soundType.getPitch() * 0.8F);
+				if (ServerHelper.isServerWorld(world)) {
+					world.setBlockState(pos, farmland);
+				}
+				return true;
 			}
-			return true;
+			if (block == Blocks.DIRT) {
+				switch (state.getValue(BlockDirt.VARIANT)) {
+					case DIRT:
+						if (ServerHelper.isServerWorld(world)) {
+							world.setBlockState(pos, farmland);
+						}
+						return true;
+					case COARSE_DIRT:
+						if (ServerHelper.isServerWorld(world)) {
+							world.setBlockState(pos, Blocks.DIRT.getDefaultState().withProperty(BlockDirt.VARIANT, BlockDirt.DirtType.DIRT));
+						}
+						return true;
+				}
+			}
 		}
+		return false;
+	}
+
+	protected boolean makePath(World world, int x, int y, int z, int hitSide, EntityPlayer player) {
+
 		return false;
 	}
 
@@ -160,72 +182,90 @@ public class ItemShovelRF extends ItemToolRF {
 		return false;
 	}
 
-	@Override
 	public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 
 		if (!player.canPlayerEdit(pos, facing, stack) || !player.capabilities.isCreativeMode && getEnergyStored(stack) < getEnergyPerUse(stack)) {
 			return EnumActionResult.FAIL;
 		}
-		UseHoeEvent event = new UseHoeEvent(player, stack, world, pos);
+		if (player.isSneaking()) {
+			UseHoeEvent event = new UseHoeEvent(player, stack, world, pos);
 
-		if (MinecraftForge.EVENT_BUS.post(event)) {
-			return EnumActionResult.FAIL;
-		}
-		if (event.getResult() == Result.ALLOW) {
-			if (!player.capabilities.isCreativeMode) {
+			if (MinecraftForge.EVENT_BUS.post(event)) {
+				return EnumActionResult.FAIL;
+			}
+			if (event.getResult() == Result.ALLOW) {
+				if (!player.capabilities.isCreativeMode) {
+					useEnergy(stack, false);
+				}
+				return EnumActionResult.SUCCESS;
+			}
+			int x = pos.getX();
+			int y = pos.getY();
+			int z = pos.getZ();
+
+			int hoeRange = 1;
+			if (isEmpowered(stack)) {
+				hoeRange = range;
+			}
+			int hitVec = MathHelper.floor(player.rotationYaw * 4.0F / 360.0F + 0.5D) & 3;
+			EnumActionResult used = EnumActionResult.FAIL;
+
+			switch (hitVec) {
+				case 0:
+					for (int i = z; i < z + hoeRange; i++) {
+						if (!hoeBlock(world, x, y, i, facing.ordinal(), player)) {
+							break;
+						}
+						used = EnumActionResult.SUCCESS;
+					}
+					break;
+				case 1:
+					for (int i = x; i > x - hoeRange; i--) {
+						if (!hoeBlock(world, i, y, z, facing.ordinal(), player)) {
+							break;
+						}
+						used = EnumActionResult.SUCCESS;
+					}
+					break;
+				case 2:
+					for (int i = z; i > z - hoeRange; i--) {
+						if (!hoeBlock(world, x, y, i, facing.ordinal(), player)) {
+							break;
+						}
+						used = EnumActionResult.SUCCESS;
+					}
+					break;
+				case 3:
+					for (int i = x; i < x + hoeRange; i++) {
+						if (!hoeBlock(world, i, y, z, facing.ordinal(), player)) {
+							break;
+						}
+						used = EnumActionResult.SUCCESS;
+					}
+					break;
+			}
+			if (used == EnumActionResult.SUCCESS && !player.capabilities.isCreativeMode) {
 				useEnergy(stack, false);
 			}
-			return EnumActionResult.SUCCESS;
-		}
-		int x = pos.getX();
-		int y = pos.getY();
-		int z = pos.getZ();
+			return used;
+		} else {
+			IBlockState state = world.getBlockState(pos);
+			Block block = state.getBlock();
 
-		int hoeRange = 1;
-		if (isEmpowered(stack)) {
-			hoeRange = range;
-		}
-		int hitVec = MathHelper.floor(player.rotationYaw * 4.0F / 360.0F + 0.5D) & 3;
-		EnumActionResult used = EnumActionResult.FAIL;
+			if (facing != EnumFacing.DOWN && world.getBlockState(pos.up()).getMaterial() == Material.AIR && block == Blocks.GRASS) {
+				world.playSound(player, pos, SoundEvents.ITEM_SHOVEL_FLATTEN, SoundCategory.BLOCKS, 1.0F, 1.0F);
 
-		switch (hitVec) {
-			case 0:
-				for (int i = z; i < z + hoeRange; i++) {
-					if (!hoeBlock(world, x, y, i, facing.ordinal(), player)) {
-						break;
+				if (ServerHelper.isServerWorld(world)) {
+					world.setBlockState(pos, Blocks.GRASS_PATH.getDefaultState(), 11);
+					if (!player.capabilities.isCreativeMode) {
+						useEnergy(stack, false);
 					}
-					used = EnumActionResult.SUCCESS;
 				}
-				break;
-			case 1:
-				for (int i = x; i > x - hoeRange; i--) {
-					if (!hoeBlock(world, i, y, z, facing.ordinal(), player)) {
-						break;
-					}
-					used = EnumActionResult.SUCCESS;
-				}
-				break;
-			case 2:
-				for (int i = z; i > z - hoeRange; i--) {
-					if (!hoeBlock(world, x, y, i, facing.ordinal(), player)) {
-						break;
-					}
-					used = EnumActionResult.SUCCESS;
-				}
-				break;
-			case 3:
-				for (int i = x; i < x + hoeRange; i++) {
-					if (!hoeBlock(world, i, y, z, facing.ordinal(), player)) {
-						break;
-					}
-					used = EnumActionResult.SUCCESS;
-				}
-				break;
+				return EnumActionResult.SUCCESS;
+			} else {
+				return EnumActionResult.PASS;
+			}
 		}
-		if (used == EnumActionResult.SUCCESS && !player.capabilities.isCreativeMode) {
-			useEnergy(stack, false);
-		}
-		return used;
 	}
 
 }

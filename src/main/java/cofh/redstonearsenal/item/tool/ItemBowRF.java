@@ -4,6 +4,7 @@ import cofh.api.energy.IEnergyContainerItem;
 import cofh.api.item.IMultiModeItem;
 import cofh.core.item.tool.ItemBowCore;
 import cofh.lib.util.helpers.EnergyHelper;
+import cofh.lib.util.helpers.ItemHelper;
 import cofh.lib.util.helpers.MathHelper;
 import cofh.lib.util.helpers.StringHelper;
 import cofh.redstonearsenal.init.RAProps;
@@ -94,11 +95,11 @@ public class ItemBowRF extends ItemBowCore implements IMultiModeItem, IEnergyCon
 	@Override
 	public void onBowFired(EntityPlayer player, ItemStack stack) {
 
-		if (player.capabilities.isCreativeMode) {
-			return;
-		}
 		int unbreakingLevel = MathHelper.clamp(EnchantmentHelper.getEnchantmentLevel(Enchantments.UNBREAKING, stack), 0, 4);
-		extractEnergy(stack, isEmpowered(stack) ? energyPerUseCharged * (5 - unbreakingLevel) / 5 : energyPerUse * (5 - unbreakingLevel) / 5, false);
+		extractEnergy(stack, isEmpowered(stack) ? energyPerUseCharged * (5 - unbreakingLevel) / 5 : energyPerUse * (5 - unbreakingLevel) / 5, player.capabilities.isCreativeMode);
+
+		boolean fired = stack.getTagCompound().getBoolean("Fired");
+		stack.getTagCompound().setBoolean("Fired", !fired);
 	}
 
 	@Override
@@ -125,6 +126,12 @@ public class ItemBowRF extends ItemBowCore implements IMultiModeItem, IEnergyCon
 	public boolean isDamaged(ItemStack stack) {
 
 		return true;
+	}
+
+	@Override
+	public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
+
+		return super.shouldCauseReequipAnimation(oldStack, newStack, slotChanged) && (slotChanged || !ItemHelper.areItemStacksEqualIgnoreTags(oldStack, newStack, "Energy"));
 	}
 
 	@Override
