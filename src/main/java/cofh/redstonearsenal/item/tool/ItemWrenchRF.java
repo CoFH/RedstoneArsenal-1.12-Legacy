@@ -34,6 +34,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -487,13 +488,14 @@ public class ItemWrenchRF extends ItemShears implements IEnergyContainerItem, IT
 	}
 
 	/* IMPLEMENTABLES */
+
 	/* IToolCrowbar */
-	public boolean canWhack(EntityPlayer player, ItemStack crowbar, int x, int y, int z) {
+	public boolean canWhack(EntityPlayer player, EnumHand hand, ItemStack crowbar, BlockPos pos) {
 
 		return getEnergyStored(crowbar) >= getEnergyPerUse(crowbar) || player.capabilities.isCreativeMode;
 	}
 
-	public void onWhack(EntityPlayer player, ItemStack crowbar, int x, int y, int z) {
+	public void onWhack(EntityPlayer player, EnumHand hand, ItemStack crowbar, BlockPos pos) {
 
 		if (!player.capabilities.isCreativeMode) {
 			useEnergy(crowbar, false);
@@ -501,12 +503,12 @@ public class ItemWrenchRF extends ItemShears implements IEnergyContainerItem, IT
 		player.swingArm(EnumHand.MAIN_HAND);
 	}
 
-	public boolean canLink(EntityPlayer player, ItemStack crowbar, EntityMinecart cart) {
+	public boolean canLink(EntityPlayer player, EnumHand hand, ItemStack crowbar, EntityMinecart cart) {
 
 		return player.isSneaking() && getEnergyStored(crowbar) >= getEnergyPerUse(crowbar) || player.capabilities.isCreativeMode;
 	}
 
-	public void onLink(EntityPlayer player, ItemStack crowbar, EntityMinecart cart) {
+	public void onLink(EntityPlayer player, EnumHand hand, ItemStack crowbar, EntityMinecart cart) {
 
 		if (!player.capabilities.isCreativeMode) {
 			useEnergy(crowbar, false);
@@ -514,12 +516,12 @@ public class ItemWrenchRF extends ItemShears implements IEnergyContainerItem, IT
 		player.swingArm(EnumHand.MAIN_HAND);
 	}
 
-	public boolean canBoost(EntityPlayer player, ItemStack crowbar, EntityMinecart cart) {
+	public boolean canBoost(EntityPlayer player, EnumHand hand, ItemStack crowbar, EntityMinecart cart) {
 
 		return !player.isSneaking() && getEnergyStored(crowbar) >= getEnergyPerUse(crowbar);
 	}
 
-	public void onBoost(EntityPlayer player, ItemStack crowbar, EntityMinecart cart) {
+	public void onBoost(EntityPlayer player, EnumHand hand, ItemStack crowbar, EntityMinecart cart) {
 
 		if (!player.capabilities.isCreativeMode) {
 			useEnergy(crowbar, false);
@@ -528,13 +530,13 @@ public class ItemWrenchRF extends ItemShears implements IEnergyContainerItem, IT
 	}
 
 	/* IToolWrench */
-	public boolean canWrench(EntityPlayer player, int x, int y, int z) {
+	public boolean canWrench(EntityPlayer player, EnumHand hand, ItemStack wrench, RayTraceResult rayTrace) {
 
 		ItemStack stack = player.getHeldItemMainhand();
 		return getEnergyStored(stack) >= getEnergyPerUse(stack) || player.capabilities.isCreativeMode;
 	}
 
-	public void wrenchUsed(EntityPlayer player, int x, int y, int z) {
+	public void wrenchUsed(EntityPlayer player, EnumHand hand, ItemStack wrench, RayTraceResult rayTrace) {
 
 		if (!player.capabilities.isCreativeMode) {
 			useEnergy(player.getHeldItemMainhand(), false);

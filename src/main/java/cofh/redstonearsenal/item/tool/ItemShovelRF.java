@@ -5,7 +5,6 @@ import cofh.lib.util.helpers.ServerHelper;
 import cofh.lib.util.helpers.StringHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDirt;
-import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -13,7 +12,10 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemSpade;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.*;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
@@ -48,27 +50,15 @@ public class ItemShovelRF extends ItemToolRF {
 		if (hitSide == 0) {
 			return false;
 		}
-		IBlockState farmland = Blocks.FARMLAND.getDefaultState();
-
 		BlockPos pos = new BlockPos(x, y, z);
-		BlockPos pos2 = new BlockPos(x, y + 1, z);
 		IBlockState state = world.getBlockState(pos);
-		IBlockState state2 = world.getBlockState(pos2);
 		Block block = state.getBlock();
-		SoundType soundType = farmland.getBlock().getSoundType(state, world, pos, player);
-		SoundEvent stepSound = soundType.getStepSound();
-		boolean air = world.isAirBlock(pos.up());
 
-		if (!air) {
-			if (state2.getBlockHardness(world, pos2) == 0.0D) {
-				air = harvestBlock(world, pos2, player);
-			}
-		}
-		if (air) {
+		if (world.isAirBlock(pos.up())) {
 			if (block == Blocks.GRASS || block == Blocks.GRASS_PATH) {
-				world.playSound(player, new BlockPos(x + 0.5F, y + 0.5F, z + 0.5F), stepSound, SoundCategory.BLOCKS, (soundType.getVolume() + 1.0F) / 2.0F, soundType.getPitch() * 0.8F);
+				world.playSound(player, pos, SoundEvents.ITEM_HOE_TILL, SoundCategory.BLOCKS, 1.0F, 1.0F);
 				if (ServerHelper.isServerWorld(world)) {
-					world.setBlockState(pos, farmland);
+					world.setBlockState(pos, Blocks.FARMLAND.getDefaultState());
 				}
 				return true;
 			}
@@ -76,7 +66,7 @@ public class ItemShovelRF extends ItemToolRF {
 				switch (state.getValue(BlockDirt.VARIANT)) {
 					case DIRT:
 						if (ServerHelper.isServerWorld(world)) {
-							world.setBlockState(pos, farmland);
+							world.setBlockState(pos, Blocks.FARMLAND.getDefaultState());
 						}
 						return true;
 					case COARSE_DIRT:
@@ -92,6 +82,21 @@ public class ItemShovelRF extends ItemToolRF {
 
 	protected boolean makePath(World world, int x, int y, int z, int hitSide, EntityPlayer player) {
 
+		if (hitSide == 0) {
+			return false;
+		}
+		BlockPos pos = new BlockPos(x, y, z);
+		IBlockState state = world.getBlockState(pos);
+		Block block = state.getBlock();
+
+		if (world.isAirBlock(pos.up()) && block == Blocks.GRASS) {
+			world.playSound(player, pos, SoundEvents.ITEM_SHOVEL_FLATTEN, SoundCategory.BLOCKS, 1.0F, 1.0F);
+
+			if (ServerHelper.isServerWorld(world)) {
+				world.setBlockState(pos, Blocks.GRASS_PATH.getDefaultState(), 11);
+			}
+			return true;
+		}
 		return false;
 	}
 
@@ -187,6 +192,8 @@ public class ItemShovelRF extends ItemToolRF {
 		if (!player.canPlayerEdit(pos, facing, stack) || !player.capabilities.isCreativeMode && getEnergyStored(stack) < getEnergyPerUse(stack)) {
 			return EnumActionResult.FAIL;
 		}
+		EnumActionResult used = EnumActionResult.FAIL;
+
 		if (player.isSneaking()) {
 			UseHoeEvent event = new UseHoeEvent(player, stack, world, pos);
 
@@ -203,16 +210,15 @@ public class ItemShovelRF extends ItemToolRF {
 			int y = pos.getY();
 			int z = pos.getZ();
 
-			int hoeRange = 1;
+			int effRange = 1;
 			if (isEmpowered(stack)) {
-				hoeRange = range;
+				effRange = range;
 			}
 			int hitVec = MathHelper.floor(player.rotationYaw * 4.0F / 360.0F + 0.5D) & 3;
-			EnumActionResult used = EnumActionResult.FAIL;
 
 			switch (hitVec) {
 				case 0:
-					for (int i = z; i < z + hoeRange; i++) {
+					for (int i = z; i < z + effRange; i++) {
 						if (!hoeBlock(world, x, y, i, facing.ordinal(), player)) {
 							break;
 						}
@@ -220,7 +226,7 @@ public class ItemShovelRF extends ItemToolRF {
 					}
 					break;
 				case 1:
-					for (int i = x; i > x - hoeRange; i--) {
+					for (int i = x; i > x - effRange; i--) {
 						if (!hoeBlock(world, i, y, z, facing.ordinal(), player)) {
 							break;
 						}
@@ -228,7 +234,7 @@ public class ItemShovelRF extends ItemToolRF {
 					}
 					break;
 				case 2:
-					for (int i = z; i > z - hoeRange; i--) {
+					for (int i = z; i > z - effRange; i--) {
 						if (!hoeBlock(world, x, y, i, facing.ordinal(), player)) {
 							break;
 						}
@@ -236,7 +242,7 @@ public class ItemShovelRF extends ItemToolRF {
 					}
 					break;
 				case 3:
-					for (int i = x; i < x + hoeRange; i++) {
+					for (int i = x; i < x + effRange; i++) {
 						if (!hoeBlock(world, i, y, z, facing.ordinal(), player)) {
 							break;
 						}
@@ -244,28 +250,56 @@ public class ItemShovelRF extends ItemToolRF {
 					}
 					break;
 			}
-			if (used == EnumActionResult.SUCCESS && !player.capabilities.isCreativeMode) {
-				useEnergy(stack, false);
-			}
-			return used;
 		} else {
-			IBlockState state = world.getBlockState(pos);
-			Block block = state.getBlock();
+			int x = pos.getX();
+			int y = pos.getY();
+			int z = pos.getZ();
 
-			if (facing != EnumFacing.DOWN && world.getBlockState(pos.up()).getMaterial() == Material.AIR && block == Blocks.GRASS) {
-				world.playSound(player, pos, SoundEvents.ITEM_SHOVEL_FLATTEN, SoundCategory.BLOCKS, 1.0F, 1.0F);
+			int effRange = 1;
+			if (isEmpowered(stack)) {
+				effRange = range;
+			}
+			int hitVec = MathHelper.floor(player.rotationYaw * 4.0F / 360.0F + 0.5D) & 3;
 
-				if (ServerHelper.isServerWorld(world)) {
-					world.setBlockState(pos, Blocks.GRASS_PATH.getDefaultState(), 11);
-					if (!player.capabilities.isCreativeMode) {
-						useEnergy(stack, false);
+			switch (hitVec) {
+				case 0:
+					for (int i = z; i < z + effRange; i++) {
+						if (!makePath(world, x, y, i, facing.ordinal(), player)) {
+							break;
+						}
+						used = EnumActionResult.SUCCESS;
 					}
-				}
-				return EnumActionResult.SUCCESS;
-			} else {
-				return EnumActionResult.PASS;
+					break;
+				case 1:
+					for (int i = x; i > x - effRange; i--) {
+						if (!makePath(world, i, y, z, facing.ordinal(), player)) {
+							break;
+						}
+						used = EnumActionResult.SUCCESS;
+					}
+					break;
+				case 2:
+					for (int i = z; i > z - effRange; i--) {
+						if (!makePath(world, x, y, i, facing.ordinal(), player)) {
+							break;
+						}
+						used = EnumActionResult.SUCCESS;
+					}
+					break;
+				case 3:
+					for (int i = x; i < x + effRange; i++) {
+						if (!makePath(world, i, y, z, facing.ordinal(), player)) {
+							break;
+						}
+						used = EnumActionResult.SUCCESS;
+					}
+					break;
 			}
 		}
+		if (used == EnumActionResult.SUCCESS && !player.capabilities.isCreativeMode) {
+			useEnergy(stack, false);
+		}
+		return used;
 	}
 
 }
