@@ -59,7 +59,7 @@ public class ItemMaterial extends ItemMulti implements IInitializer {
 		addRecipe(ShapedRecipe(rodObsidianFlux, "  O", " B ", "O  ", 'B', rodObsidian, 'O', "gemCrystalFlux"));
 		addRecipe(ShapedRecipe(rodObsidian, "  O", " B ", "O  ", 'B', Items.BLAZE_POWDER, 'O', "dustObsidian"));
 
-		if (!Loader.isModLoaded("ThermalExpansion")) {
+		if (!Loader.isModLoaded("thermalexpansion")) {
 			addRecipe(ShapelessRecipe(dustElectrumFlux, "dustElectrum", "dustRedstone", "dustRedstone", "dustRedstone", "dustRedstone", "dustRedstone"));
 			addRecipe(ShapelessRecipe(gemCrystalFlux, "gemDiamond", "dustRedstone", "dustRedstone", "dustRedstone", "dustRedstone", "dustRedstone"));
 			addSmelting(ingotElectrumFlux, dustElectrumFlux, 0.0F);
