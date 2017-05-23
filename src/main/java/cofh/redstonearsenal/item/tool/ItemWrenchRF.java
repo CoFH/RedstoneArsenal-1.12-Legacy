@@ -46,7 +46,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nonnull;
-import java.util.ArrayList;
 import java.util.List;
 
 @Implementable ({ "buildcraft.api.tools.IToolWrench", "mods.railcraft.api.core.items.IToolCrowbar" })
@@ -186,7 +185,7 @@ public class ItemWrenchRF extends ItemShears implements IEnergyContainerItem, IT
 			IShearable target = (IShearable) entity;
 			BlockPos pos = new BlockPos(entity.posX, entity.posY, entity.posZ);
 			if (target.isShearable(stack, entity.worldObj, pos)) {
-				ArrayList<ItemStack> drops = (ArrayList<ItemStack>) target.onSheared(stack, entity.worldObj, pos, EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, stack));
+				List<ItemStack> drops = target.onSheared(stack, entity.worldObj, pos, EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, stack));
 
 				for (ItemStack drop : drops) {
 					EntityItem ent = entity.entityDropItem(drop, 1.0F);
@@ -217,7 +216,7 @@ public class ItemWrenchRF extends ItemShears implements IEnergyContainerItem, IT
 		if (block instanceof IShearable) {
 			IShearable target = (IShearable) block;
 			if (target.isShearable(stack, player.worldObj, pos)) {
-				ArrayList<ItemStack> drops = (ArrayList<ItemStack>) target.onSheared(stack, player.worldObj, pos, EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, stack));
+				List<ItemStack> drops = target.onSheared(stack, player.worldObj, pos, EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, stack));
 
 				for (ItemStack drop : drops) {
 					float f = 0.7F;
