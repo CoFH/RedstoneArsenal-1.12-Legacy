@@ -1,8 +1,5 @@
 #zh_CN
 
-info.redstonearsenal.tool.chargeOff=关闭充能模式
-info.redstonearsenal.tool.chargeOn=切换充能模式
-
 info.redstonearsenal.tool.energyPerUse=RF/次使用
 info.redstonearsenal.tool.shovel=具有锄头的功能
 info.redstonearsenal.tool.wrench=具有剪刀的功能
