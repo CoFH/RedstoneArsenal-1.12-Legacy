@@ -1,7 +1,6 @@
 package cofh.redstonearsenal.init;
 
 import cofh.core.util.core.IInitializer;
-import cofh.redstonearsenal.RedstoneArsenal;
 import cofh.redstonearsenal.item.ItemMaterial;
 
 import java.util.ArrayList;
@@ -17,8 +16,6 @@ public class RAItems {
 		itemMaterial = new ItemMaterial();
 
 		initList.add(itemMaterial);
-
-		RedstoneArsenal.proxy.addIModelRegister(itemMaterial);
 
 		for (int i = 0; i < initList.size(); i++) {
 			initList.get(i).preInit();

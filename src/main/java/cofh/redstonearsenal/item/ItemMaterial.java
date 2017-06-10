@@ -40,6 +40,8 @@ public class ItemMaterial extends ItemMulti implements IInitializer {
 		rodObsidian = addItem(192, "rodObsidian");
 		rodObsidianFlux = addItem(193, "rodObsidianFlux", EnumRarity.UNCOMMON);
 
+		RedstoneArsenal.proxy.addIModelRegister(this);
+
 		return true;
 	}
 
