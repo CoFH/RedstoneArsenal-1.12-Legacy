@@ -46,12 +46,6 @@ public class ItemMaterial extends ItemMulti implements IInitializer {
 	@Override
 	public boolean initialize() {
 
-		return true;
-	}
-
-	@Override
-	public boolean postInit() {
-
 		addTwoWayStorageRecipe(ingotElectrumFlux, "ingotElectrumFlux", nuggetElectrumFlux, "nuggetElectrumFlux");
 
 		addReverseStorageRecipe(ingotElectrumFlux, "blockElectrumFlux");
@@ -72,6 +66,12 @@ public class ItemMaterial extends ItemMulti implements IInitializer {
 			ThermalExpansionHelper.addTransposerFill(4000, cofh.thermalfoundation.item.ItemMaterial.dustElectrum, dustElectrumFlux, new FluidStack(TFFluids.fluidRedstone, 500), false);
 			ThermalExpansionHelper.addTransposerFill(4000, new ItemStack(Items.DIAMOND), gemCrystalFlux, new FluidStack(TFFluids.fluidRedstone, 500), false);
 		}
+		return true;
+	}
+
+	@Override
+	public boolean postInit() {
+
 		return true;
 	}
 
