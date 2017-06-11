@@ -1,0 +1,6 @@
+{
+	"parent": "redstonearsenal:item/tool/flux/flux_sword",
+	"textures": {
+		"layer0": "redstonearsenal:items/tool/flux/flux_sword_active"
+	}
+}

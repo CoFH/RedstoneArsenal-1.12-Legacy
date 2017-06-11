@@ -1,119 +1,115 @@
 package cofh.redstonearsenal;
 
 import cofh.CoFHCore;
-import cofh.core.CoFHProps;
+import cofh.core.init.CoreProps;
 import cofh.core.util.ConfigHandler;
-import cofh.mod.BaseMod;
-import cofh.mod.updater.UpdateManager;
-import cofh.redstonearsenal.gui.RACreativeTab;
-import cofh.redstonearsenal.item.RAItems;
-import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.Mod.CustomProperty;
-import cpw.mods.fml.common.Mod.EventHandler;
-import cpw.mods.fml.common.Mod.Instance;
-import cpw.mods.fml.common.event.FMLInitializationEvent;
-import cpw.mods.fml.common.event.FMLLoadCompleteEvent;
-import cpw.mods.fml.common.event.FMLPostInitializationEvent;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-
-import java.io.File;
-
+import cofh.redstonearsenal.init.RABlocks;
+import cofh.redstonearsenal.init.RAEquipment;
+import cofh.redstonearsenal.init.RAItems;
+import cofh.redstonearsenal.init.RAProps;
+import cofh.redstonearsenal.proxy.Proxy;
+import cofh.thermalfoundation.ThermalFoundation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.common.config.Configuration;
-
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.Mod.EventHandler;
+import net.minecraftforge.fml.common.Mod.Instance;
+import net.minecraftforge.fml.common.SidedProxy;
+import net.minecraftforge.fml.common.event.*;
+import net.minecraftforge.fml.common.event.FMLInterModComms.IMCEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-@Mod(modid = RedstoneArsenal.modId, name = RedstoneArsenal.modName, version = RedstoneArsenal.version, dependencies = RedstoneArsenal.dependencies,
-		guiFactory = RedstoneArsenal.modGuiFactory, customProperties = @CustomProperty(k = "cofhversion", v = "true"))
-public class RedstoneArsenal extends BaseMod {
+import java.io.File;
 
-	public static final String modId = "RedstoneArsenal";
-	public static final String modName = "Redstone Arsenal";
-	public static final String version = "1.7.10R1.1.3";
-	public static final String version_max = "1.7.10R1.2.0";
-	public static final String dependencies = CoFHCore.version_group + ";after:ThermalExpansion";
-	public static final String modGuiFactory = "cofh.redstonearsenal.gui.GuiConfigRAFactory";
+@Mod (modid = RedstoneArsenal.MOD_ID, name = RedstoneArsenal.MOD_NAME, version = RedstoneArsenal.VERSION, dependencies = RedstoneArsenal.DEPENDENCIES, updateJSON = RedstoneArsenal.UPDATE_URL)
+public class RedstoneArsenal {
 
-	public static final String version_group = "required-after:" + modId + "@[" + version + "," + version_max + ");";
-	public static final String releaseURL = "https://raw.github.com/CoFH/VERSION/master/" + modId;
+	public static final String MOD_ID = "redstonearsenal";
+	public static final String MOD_NAME = "Redstone Arsenal";
+	public static final String VERSION = "2.0.4";
+	public static final String VERSION_MAX = "2.1.0";
+	public static final String VERSION_GROUP = "required-after:" + MOD_ID + "@[" + VERSION + "," + VERSION_MAX + ");";
+	public static final String UPDATE_URL = "https://raw.github.com/cofh/version/master/" + MOD_ID + "_update.json";
 
-	@Instance("RedstoneArsenal")
+	public static final String DEPENDENCIES = CoFHCore.VERSION_GROUP + ThermalFoundation.VERSION_GROUP + "after:ThermalExpansion;";
+	public static final String MOD_GUI_FACTORY = "cofh.redstonearsenal.gui.GuiConfigRAFactory";
+
+	@Instance (MOD_ID)
 	public static RedstoneArsenal instance;
 
-	public static final Logger log = LogManager.getLogger(modId);
-	public static final ConfigHandler config = new ConfigHandler(version);
-	public static CreativeTabs tab;
+	@SidedProxy (clientSide = "cofh.redstonearsenal.proxy.ProxyClient", serverSide = "cofh.redstonearsenal.proxy.Proxy")
+	public static Proxy proxy;
 
-	/* INIT SEQUENCE */
+	public static final Logger LOG = LogManager.getLogger(MOD_ID);
+	public static final ConfigHandler CONFIG = new ConfigHandler(VERSION);
+	public static final ConfigHandler CONFIG_CLIENT = new ConfigHandler(VERSION);
+
+	public static CreativeTabs tabCommon;
+
 	public RedstoneArsenal() {
 
-		super(log);
+		super();
 	}
 
+	/* INIT */
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 
-		UpdateManager.registerUpdater(new UpdateManager(this, releaseURL, CoFHProps.DOWNLOAD_URL));
+		CONFIG.setConfiguration(new Configuration(new File(CoreProps.configDir, "/cofh/" + MOD_ID + "/common.cfg"), true));
+		CONFIG_CLIENT.setConfiguration(new Configuration(new File(CoreProps.configDir, "/cofh/" + MOD_ID + "/client.cfg"), true));
 
-		config.setConfiguration(new Configuration(new File(CoFHProps.configDir, "/cofh/redstonearsenal/common.cfg"), true));
-		tab = new RACreativeTab();
-
-		cleanConfig(true);
-
+		RAProps.preInit();
+		RABlocks.preInit();
 		RAItems.preInit();
+		RAEquipment.preInit();
+
+		proxy.preInit(event);
 	}
 
 	@EventHandler
 	public void initialize(FMLInitializationEvent event) {
 
+		RABlocks.initialize();
 		RAItems.initialize();
-		RACreativeTab.initialize();
+		RAEquipment.initialize();
+
+		proxy.initialize(event);
 	}
 
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent event) {
 
+		RABlocks.postInit();
 		RAItems.postInit();
+		RAEquipment.postInit();
+
+		proxy.postInit(event);
 	}
 
 	@EventHandler
 	public void loadComplete(FMLLoadCompleteEvent event) {
 
-		config.cleanUp(false, true);
+		RAProps.loadComplete();
+		CONFIG.cleanUp(false, true);
+		CONFIG_CLIENT.cleanUp(false, true);
 
-		log.info("Redstone Arsenal: Load Complete.");
+		LOG.info(MOD_NAME + ": Load Complete.");
 	}
 
-	void cleanConfig(boolean preInit) {
+	@EventHandler
+	public void serverStart(FMLServerAboutToStartEvent event) {
 
-		if (preInit) {
-
-		}
-		String prefix = "config.redstonearsenal.";
-		String[] categoryNames = config.getCategoryNames().toArray(new String[config.getCategoryNames().size()]);
-		for (int i = 0; i < categoryNames.length; i++) {
-			config.getCategory(categoryNames[i]).setLanguageKey(prefix + categoryNames[i]).setRequiresMcRestart(true);
-		}
 	}
 
-	/* BaseMod */
-	@Override
-	public String getModId() {
+	@EventHandler
+	public void serverStarting(FMLServerStartingEvent event) {
 
-		return modId;
 	}
 
-	@Override
-	public String getModName() {
+	@EventHandler
+	public void handleIMC(IMCEvent event) {
 
-		return modName;
-	}
-
-	@Override
-	public String getModVersion() {
-
-		return version;
 	}
 
 }

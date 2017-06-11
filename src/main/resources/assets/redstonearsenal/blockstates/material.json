@@ -1,0 +1,54 @@
+{
+	"forge_marker": 1,
+	"defaults": {
+		"model": "builtin/generated",
+		"textures": {
+			"layer0": "blocks/dirt"
+		},
+		"transform": "forge:default-item"
+	},
+	"variants": {
+		"type": {
+			"dustelectrumflux": {
+				"textures": {
+					"layer0": "redstonearsenal:items/material/dust_electrum_flux"
+				}
+			},
+			"ingotelectrumflux": {
+				"textures": {
+					"layer0": "redstonearsenal:items/material/ingot_electrum_flux"
+				}
+			},
+			"nuggetelectrumflux": {
+				"textures": {
+					"layer0": "redstonearsenal:items/material/nugget_electrum_flux"
+				}
+			},
+			"gearelectrumflux": {
+				"textures": {
+					"layer0": "redstonearsenal:items/material/gear_electrum_flux"
+				}
+			},
+			"gemcrystalflux": {
+				"textures": {
+					"layer0": "redstonearsenal:items/material/gem_crystal_flux"
+				}
+			},
+			"plateflux": {
+				"textures": {
+					"layer0": "redstonearsenal:items/material/plate_flux"
+				}
+			},
+			"rodobsidian": {
+				"textures": {
+					"layer0": "redstonearsenal:items/material/rod_obsidian"
+				}
+			},
+			"rodobsidianflux": {
+				"textures": {
+					"layer0": "redstonearsenal:items/material/rod_obsidian_flux"
+				}
+			}
+		}
+	}
+}

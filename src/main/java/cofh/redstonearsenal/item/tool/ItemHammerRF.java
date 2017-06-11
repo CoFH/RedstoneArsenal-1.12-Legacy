@@ -1,108 +1,109 @@
 package cofh.redstonearsenal.item.tool;
 
-import cofh.lib.util.helpers.BlockHelper;
-
-import java.util.ArrayList;
-import java.util.List;
-
+import cofh.lib.util.RayTracer;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemPickaxe;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
-import net.minecraftforge.common.ForgeHooks;
 
 public class ItemHammerRF extends ItemToolRF {
 
 	public ItemHammerRF(ToolMaterial toolMaterial) {
 
-		super(toolMaterial);
-
+		super(-3.6F, toolMaterial);
 		addToolClass("pickaxe");
 		addToolClass("hammer");
-		damage = 5;
-		energyPerUseCharged = 800;
+		damage = 11;
+		energyPerUseCharged = 1600;
 
-		effectiveBlocks.addAll(ItemPickaxe.field_150915_c);
-		effectiveMaterials.add(Material.iron);
-		effectiveMaterials.add(Material.anvil);
-		effectiveMaterials.add(Material.rock);
-		effectiveMaterials.add(Material.ice);
-		effectiveMaterials.add(Material.packedIce);
-		effectiveMaterials.add(Material.glass);
-		effectiveMaterials.add(Material.redstoneLight);
-	}
+		effectiveBlocks.addAll(ItemPickaxe.EFFECTIVE_ON);
 
-	public ItemHammerRF(Item.ToolMaterial toolMaterial, int harvestLevel) {
-
-		this(toolMaterial);
-		this.harvestLevel = harvestLevel;
+		effectiveMaterials.add(Material.IRON);
+		effectiveMaterials.add(Material.ANVIL);
+		effectiveMaterials.add(Material.ROCK);
+		effectiveMaterials.add(Material.ICE);
+		effectiveMaterials.add(Material.PACKED_ICE);
+		effectiveMaterials.add(Material.GLASS);
+		effectiveMaterials.add(Material.REDSTONE_LIGHT);
 	}
 
 	@Override
-	public boolean onBlockStartBreak(ItemStack stack, int x, int y, int z, EntityPlayer player) {
+	public boolean onBlockStartBreak(ItemStack stack, BlockPos pos, EntityPlayer player) {
 
 		World world = player.worldObj;
-		Block block = world.getBlock(x, y, z);
+		IBlockState state = world.getBlockState(pos);
 
-		if (!canHarvestBlock(block, stack)) {
+		if (!canHarvestBlock(state, stack)) {
 			if (!player.capabilities.isCreativeMode) {
 				useEnergy(stack, false);
 			}
 			return false;
 		}
 		boolean used = false;
+		world.playEvent(2001, pos, Block.getStateId(state));
 
-		float refStrength = ForgeHooks.blockStrength(block, player, world, x, y, z);
-		if (refStrength != 0.0D && canHarvestBlock(block, stack)) {
-			MovingObjectPosition pos = BlockHelper.getCurrentMovingObjectPosition(player, true);
-			List<ItemStack> drops = new ArrayList<ItemStack>();
-			Block adjBlock;
+		float refStrength = state.getPlayerRelativeBlockHardness(player, world, pos);
+		if (refStrength != 0.0F) {
+			RayTraceResult traceResult = RayTracer.retrace(player);
+
+			if (traceResult == null) {
+				return false;
+			}
+			BlockPos adjPos;
+			IBlockState adjState;
 			float strength;
 
-			int x2 = x;
-			int y2 = y;
-			int z2 = z;
+			int x = pos.getX();
+			int y = pos.getY();
+			int z = pos.getZ();
 
-			switch (pos.sideHit) {
-			case 0:
-			case 1:
-				for (x2 = pos.blockX - 1; x2 <= pos.blockX + 1; x2++) {
-					for (z2 = pos.blockZ - 1; z2 <= pos.blockZ + 1; z2++) {
-						adjBlock = world.getBlock(x2, y2, z2);
-						strength = ForgeHooks.blockStrength(adjBlock, player, world, x2, y2, z2);
-						if (strength > 0f && refStrength / strength <= 10f) {
-							used |= harvestBlock(world, x2, y2, z2, player);
+			int radius = isEmpowered(stack) ? 2 : 1;
+
+			switch (traceResult.sideHit) {
+				case DOWN:
+				case UP:
+					for (x = pos.getX() - radius; x <= pos.getX() + radius; x++) {
+						for (z = pos.getZ() - radius; z <= pos.getZ() + radius; z++) {
+							adjPos = new BlockPos(x, y, z);
+							adjState = world.getBlockState(adjPos);
+							strength = adjState.getPlayerRelativeBlockHardness(player, world, adjPos);
+							if (strength > 0F && refStrength / strength <= 10F) {
+								used |= harvestBlock(world, adjPos, player);
+							}
 						}
 					}
-				}
-				break;
-			case 2:
-			case 3:
-				for (x2 = pos.blockX - 1; x2 <= pos.blockX + 1; x2++) {
-					for (y2 = pos.blockY - 1; y2 <= pos.blockY + 1; y2++) {
-						adjBlock = world.getBlock(x2, y2, z2);
-						strength = ForgeHooks.blockStrength(adjBlock, player, world, x2, y2, z2);
-						if (strength > 0f && refStrength / strength <= 10f) {
-							used |= harvestBlock(world, x2, y2, z2, player);
+					break;
+				case NORTH:
+				case SOUTH:
+					for (x = pos.getX() - radius; x <= pos.getX() + radius; x++) {
+						for (y = pos.getY() - radius; y <= pos.getY() + radius; y++) {
+							adjPos = new BlockPos(x, y, z);
+							adjState = world.getBlockState(adjPos);
+							strength = adjState.getPlayerRelativeBlockHardness(player, world, adjPos);
+							if (strength > 0F && refStrength / strength <= 10F) {
+								used |= harvestBlock(world, adjPos, player);
+							}
 						}
 					}
-				}
-				break;
-			default:
-				for (y2 = pos.blockY - 1; y2 <= pos.blockY + 1; y2++) {
-					for (z2 = pos.blockZ - 1; z2 <= pos.blockZ + 1; z2++) {
-						adjBlock = world.getBlock(x2, y2, z2);
-						strength = ForgeHooks.blockStrength(adjBlock, player, world, x2, y2, z2);
-						if (strength > 0f && refStrength / strength <= 10f) {
-							used |= harvestBlock(world, x2, y2, z2, player);
+					break;
+				case WEST:
+				case EAST:
+					for (y = pos.getY() - radius; y <= pos.getY() + radius; y++) {
+						for (z = pos.getZ() - radius; z <= pos.getZ() + radius; z++) {
+							adjPos = new BlockPos(x, y, z);
+							adjState = world.getBlockState(adjPos);
+							strength = adjState.getPlayerRelativeBlockHardness(player, world, adjPos);
+							if (strength > 0F && refStrength / strength <= 10F) {
+								used |= harvestBlock(world, adjPos, player);
+							}
 						}
 					}
-				}
-				break;
+					break;
 			}
 			if (used && !player.capabilities.isCreativeMode) {
 				useEnergy(stack, false);

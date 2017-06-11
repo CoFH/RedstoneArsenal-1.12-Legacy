@@ -1,73 +1,116 @@
 package cofh.redstonearsenal.item.tool;
 
+import cofh.lib.util.RayTracer;
+import cofh.lib.util.helpers.MathHelper;
 import gnu.trove.set.hash.THashSet;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemPickaxe;
 import net.minecraft.item.ItemSpade;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
-import net.minecraftforge.common.ForgeHooks;
+
+import static net.minecraft.util.EnumFacing.DOWN;
+import static net.minecraft.util.EnumFacing.UP;
 
 public class ItemPickaxeRF extends ItemToolRF {
 
-	public THashSet<Block> effectiveBlocksCharged = new THashSet<Block>();
+	public THashSet<Block> effectiveBlocksCharged = new THashSet<>();
 
-	public ItemPickaxeRF(Item.ToolMaterial toolMaterial) {
+	public ItemPickaxeRF(ToolMaterial toolMaterial) {
 
-		super(toolMaterial);
-
+		super(-2.7F, toolMaterial);
 		addToolClass("pickaxe");
 		damage = 4;
 		energyPerUseCharged = 800;
 
-		effectiveBlocks.addAll(ItemPickaxe.field_150915_c);
-		effectiveBlocksCharged.addAll(ItemPickaxe.field_150915_c);
-		effectiveBlocksCharged.addAll(ItemSpade.field_150916_c);
-		effectiveMaterials.add(Material.iron);
-		effectiveMaterials.add(Material.anvil);
-		effectiveMaterials.add(Material.rock);
-		effectiveMaterials.add(Material.ice);
-		effectiveMaterials.add(Material.packedIce);
-		effectiveMaterials.add(Material.glass);
-		effectiveMaterials.add(Material.redstoneLight);
-	}
+		effectiveBlocks.addAll(ItemPickaxe.EFFECTIVE_ON);
+		effectiveBlocksCharged.addAll(ItemPickaxe.EFFECTIVE_ON);
+		effectiveBlocksCharged.addAll(ItemSpade.EFFECTIVE_ON);
 
-	public ItemPickaxeRF(Item.ToolMaterial toolMaterial, int harvestLevel) {
-
-		this(toolMaterial);
-		this.harvestLevel = harvestLevel;
+		effectiveMaterials.add(Material.IRON);
+		effectiveMaterials.add(Material.ANVIL);
+		effectiveMaterials.add(Material.ROCK);
+		effectiveMaterials.add(Material.ICE);
+		effectiveMaterials.add(Material.PACKED_ICE);
+		effectiveMaterials.add(Material.GLASS);
+		effectiveMaterials.add(Material.REDSTONE_LIGHT);
 	}
 
 	@Override
 	protected THashSet<Block> getEffectiveBlocks(ItemStack stack) {
 
-		return isEmpowered(stack) ? effectiveBlocksCharged : effectiveBlocks;
+		return isEmpowered(stack) ? effectiveBlocksCharged : super.getEffectiveBlocks(stack);
 	}
 
 	@Override
-	public boolean onBlockStartBreak(ItemStack stack, int x, int y, int z, EntityPlayer player) {
+	public boolean onBlockStartBreak(ItemStack stack, BlockPos pos, EntityPlayer player) {
 
 		World world = player.worldObj;
-		Block block = world.getBlock(x, y, z);
+		IBlockState state = world.getBlockState(pos);
 
-		float refStrength = ForgeHooks.blockStrength(block, player, world, x, y, z);
-		if (refStrength != 0.0D) {
-			if (isEmpowered(stack) && canHarvestBlock(block, stack)) {
-				Material bMat = block.getMaterial();
-				Block adjBlock = world.getBlock(x, y - 1, z);
+		int x = pos.getX();
+		int y = pos.getY();
+		int z = pos.getZ();
 
-				float strength = ForgeHooks.blockStrength(adjBlock, player, world, x, y - 1, z);
-				if (strength > 0f && refStrength / strength <= 10f && adjBlock.getMaterial() == bMat) {
-					harvestBlock(world, x, y - 1, z, player);
+		float refStrength = state.getPlayerRelativeBlockHardness(player, world, pos);
+		if (refStrength != 0.0F) {
+			if (isEmpowered(stack) && canHarvestBlock(state, stack)) {
+				RayTraceResult traceResult = RayTracer.retrace(player);
+
+				if (traceResult == null) {
+					return false;
 				}
-				adjBlock = world.getBlock(x, y + 1, z);
-				strength = ForgeHooks.blockStrength(adjBlock, player, world, x, y + 1, z);
-				if (strength > 0f && refStrength / strength <= 10f && adjBlock.getMaterial() == bMat) {
-					harvestBlock(world, x, y + 1, z, player);
+				BlockPos adjPos;
+				IBlockState adjState;
+				float strength;
+
+				if (traceResult.sideHit == DOWN || traceResult.sideHit == UP) {
+					int facing = MathHelper.floor(player.rotationYaw * 4.0F / 360.0F + 0.5D) & 3;
+					if (facing % 2 == 0) {
+						adjPos = new BlockPos(x, y, z - 1);
+						adjState = world.getBlockState(adjPos);
+						strength = adjState.getPlayerRelativeBlockHardness(player, world, adjPos);
+						if (strength > 0F && refStrength / strength <= 10F) {
+							harvestBlock(world, adjPos, player);
+						}
+						adjPos = new BlockPos(x, y, z + 1);
+						adjState = world.getBlockState(adjPos);
+						strength = adjState.getPlayerRelativeBlockHardness(player, world, adjPos);
+						if (strength > 0F && refStrength / strength <= 10F) {
+							harvestBlock(world, adjPos, player);
+						}
+					} else {
+						adjPos = new BlockPos(x - 1, y, z);
+						adjState = world.getBlockState(adjPos);
+						strength = adjState.getPlayerRelativeBlockHardness(player, world, adjPos);
+						if (strength > 0F && refStrength / strength <= 10F) {
+							harvestBlock(world, adjPos, player);
+						}
+						adjPos = new BlockPos(x + 1, y, z);
+						adjState = world.getBlockState(adjPos);
+						strength = adjState.getPlayerRelativeBlockHardness(player, world, adjPos);
+						if (strength > 0F && refStrength / strength <= 10F) {
+							harvestBlock(world, adjPos, player);
+						}
+					}
+				} else {
+					adjPos = new BlockPos(x, y - 1, z);
+					adjState = world.getBlockState(adjPos);
+					strength = adjState.getPlayerRelativeBlockHardness(player, world, adjPos);
+					if (strength > 0F && refStrength / strength <= 10F) {
+						harvestBlock(world, adjPos, player);
+					}
+					adjPos = new BlockPos(x, y + 1, z);
+					adjState = world.getBlockState(adjPos);
+					strength = adjState.getPlayerRelativeBlockHardness(player, world, adjPos);
+					if (strength > 0F && refStrength / strength <= 10F) {
+						harvestBlock(world, adjPos, player);
+					}
 				}
 			}
 			if (!player.capabilities.isCreativeMode) {
