@@ -1,7 +1,6 @@
 package cofh.redstonearsenal.init;
 
 import cofh.core.util.core.IInitializer;
-import cofh.redstonearsenal.RedstoneArsenal;
 import cofh.redstonearsenal.block.BlockStorage;
 
 import java.util.ArrayList;
@@ -17,8 +16,6 @@ public class RABlocks {
 		blockStorage = new BlockStorage();
 
 		initList.add(blockStorage);
-
-		RedstoneArsenal.proxy.addIModelRegister(blockStorage);
 
 		for (int i = 0; i < initList.size(); i++) {
 			initList.get(i).preInit();

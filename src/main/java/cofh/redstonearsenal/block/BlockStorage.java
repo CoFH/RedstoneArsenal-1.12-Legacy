@@ -187,6 +187,8 @@ public class BlockStorage extends BlockCore implements IInitializer, IModelRegis
 		registerWithHandlers("blockElectrumFlux", blockElectrumFlux);
 		registerWithHandlers("blockCrystalFlux", blockCrystalFlux);
 
+		RedstoneArsenal.proxy.addIModelRegister(this);
+
 		return true;
 	}
 
