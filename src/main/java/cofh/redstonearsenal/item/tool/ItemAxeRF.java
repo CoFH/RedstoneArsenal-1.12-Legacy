@@ -30,7 +30,7 @@ public class ItemAxeRF extends ItemToolRF {
 	@Override
 	public boolean onBlockStartBreak(ItemStack stack, BlockPos pos, EntityPlayer player) {
 
-		World world = player.worldObj;
+		World world = player.world;
 		IBlockState state = world.getBlockState(pos);
 
 		int x = pos.getX();

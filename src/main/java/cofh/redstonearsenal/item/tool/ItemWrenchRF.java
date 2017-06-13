@@ -29,10 +29,7 @@ import net.minecraft.item.ItemShears;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stats.StatList;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
@@ -119,7 +116,7 @@ public class ItemWrenchRF extends ItemShears implements IEnergyContainerItem, IT
 
 	@Override
 	@SideOnly (Side.CLIENT)
-	public void getSubItems(@Nonnull Item item, CreativeTabs tab, List<ItemStack> list) {
+	public void getSubItems(@Nonnull Item item, CreativeTabs tab, NonNullList<ItemStack> list) {
 
 		if (showInCreative) {
 			list.add(EnergyHelper.setDefaultEnergyTag(new ItemStack(item), 0));
@@ -176,7 +173,7 @@ public class ItemWrenchRF extends ItemShears implements IEnergyContainerItem, IT
 	@Override
 	public boolean itemInteractionForEntity(ItemStack stack, EntityPlayer player, EntityLivingBase entity, EnumHand hand) {
 
-		if (ServerHelper.isClientWorld(entity.worldObj)) {
+		if (ServerHelper.isClientWorld(entity.world)) {
 			entity.rotationYaw += 90;
 			entity.rotationYaw %= 360;
 			return false;
@@ -184,8 +181,8 @@ public class ItemWrenchRF extends ItemShears implements IEnergyContainerItem, IT
 		if (entity instanceof IShearable) {
 			IShearable target = (IShearable) entity;
 			BlockPos pos = new BlockPos(entity.posX, entity.posY, entity.posZ);
-			if (target.isShearable(stack, entity.worldObj, pos)) {
-				List<ItemStack> drops = target.onSheared(stack, entity.worldObj, pos, EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, stack));
+			if (target.isShearable(stack, entity.world, pos)) {
+				List<ItemStack> drops = target.onSheared(stack, entity.world, pos, EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, stack));
 
 				for (ItemStack drop : drops) {
 					EntityItem ent = entity.entityDropItem(drop, 1.0F);
@@ -209,23 +206,23 @@ public class ItemWrenchRF extends ItemShears implements IEnergyContainerItem, IT
 	@Override
 	public boolean onBlockStartBreak(ItemStack stack, BlockPos pos, EntityPlayer player) {
 
-		if (ServerHelper.isClientWorld(player.worldObj)) {
+		if (ServerHelper.isClientWorld(player.world)) {
 			return false;
 		}
-		Block block = player.worldObj.getBlockState(pos).getBlock();
+		Block block = player.world.getBlockState(pos).getBlock();
 		if (block instanceof IShearable) {
 			IShearable target = (IShearable) block;
-			if (target.isShearable(stack, player.worldObj, pos)) {
-				List<ItemStack> drops = target.onSheared(stack, player.worldObj, pos, EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, stack));
+			if (target.isShearable(stack, player.world, pos)) {
+				List<ItemStack> drops = target.onSheared(stack, player.world, pos, EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, stack));
 
 				for (ItemStack drop : drops) {
 					float f = 0.7F;
 					double d = MathHelper.RANDOM.nextFloat() * f + (1.0F - f) * 0.5D;
 					double d1 = MathHelper.RANDOM.nextFloat() * f + (1.0F - f) * 0.5D;
 					double d2 = MathHelper.RANDOM.nextFloat() * f + (1.0F - f) * 0.5D;
-					EntityItem entityitem = new EntityItem(player.worldObj, pos.getX() + d, pos.getY() + d1, pos.getZ() + d2, drop);
+					EntityItem entityitem = new EntityItem(player.world, pos.getX() + d, pos.getY() + d1, pos.getZ() + d2, drop);
 					entityitem.setPickupDelay(10);
-					player.worldObj.spawnEntityInWorld(entityitem);
+					player.world.spawnEntity(entityitem);
 				}
 				if (!player.capabilities.isCreativeMode) {
 					useEnergy(stack, false);
@@ -276,14 +273,15 @@ public class ItemWrenchRF extends ItemShears implements IEnergyContainerItem, IT
 	}
 
 	@Override
-	public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+	public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 
 		return ServerHelper.isClientWorld(world) ? EnumActionResult.SUCCESS : EnumActionResult.PASS;
 	}
 
 	@Override
-	public EnumActionResult onItemUseFirst(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand) {
+	public EnumActionResult onItemUseFirst(EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand) {
 
+		ItemStack stack = player.getHeldItem(hand);
 		if (stack.getItemDamage() > 0) {
 			stack.setItemDamage(0);
 		}
@@ -296,7 +294,7 @@ public class ItemWrenchRF extends ItemShears implements IEnergyContainerItem, IT
 		if (world.isAirBlock(pos)) {
 			return EnumActionResult.PASS;
 		}
-		PlayerInteractEvent.RightClickBlock event = new PlayerInteractEvent.RightClickBlock(player, hand, stack, pos, side, new Vec3d(hitX, hitY, hitZ));
+		PlayerInteractEvent.RightClickBlock event = new PlayerInteractEvent.RightClickBlock(player, hand, pos, side, new Vec3d(hitX, hitY, hitZ));
 		if (MinecraftForge.EVENT_BUS.post(event) || event.getResult() == Result.DENY || event.getUseItem() == Result.DENY || event.getUseBlock() == Result.DENY) {
 			return EnumActionResult.PASS;
 		}
@@ -331,8 +329,8 @@ public class ItemWrenchRF extends ItemShears implements IEnergyContainerItem, IT
 
 		Multimap<String, AttributeModifier> multimap = HashMultimap.create();
 		if (slot == EntityEquipmentSlot.MAINHAND) {
-			multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getAttributeUnlocalizedName(), new AttributeModifier(Item.ATTACK_DAMAGE_MODIFIER, "Tool modifier", 1, 0));
-			multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getAttributeUnlocalizedName(), new AttributeModifier(ATTACK_SPEED_MODIFIER, "Tool modifier", -2.4D, 0));
+			multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(), new AttributeModifier(Item.ATTACK_DAMAGE_MODIFIER, "Tool modifier", 1, 0));
+			multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getName(), new AttributeModifier(ATTACK_SPEED_MODIFIER, "Tool modifier", -2.4D, 0));
 		}
 		return multimap;
 	}
@@ -372,7 +370,7 @@ public class ItemWrenchRF extends ItemShears implements IEnergyContainerItem, IT
 							EntityItem entity = new EntityItem(world, pos.getX() + x2, pos.getY() + y2, pos.getZ() + z2, drop);
 							entity.setPickupDelay(10);
 							;
-							world.spawnEntityInWorld(entity);
+							world.spawnEntity(entity);
 						}
 					}
 					ret = true;
