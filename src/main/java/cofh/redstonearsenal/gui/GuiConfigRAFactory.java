@@ -16,11 +16,13 @@ public class GuiConfigRAFactory implements IModGuiFactory {
 
 	@Override
 	public boolean hasConfigGui() {
+
 		return true;
 	}
 
 	@Override
 	public GuiScreen createConfigGui(GuiScreen parentScreen) {
+
 		return new GuiConfigRA(parentScreen);
 	}
 

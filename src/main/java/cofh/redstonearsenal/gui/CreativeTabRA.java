@@ -2,7 +2,6 @@ package cofh.redstonearsenal.gui;
 
 import cofh.redstonearsenal.init.RAEquipment;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.relauncher.Side;
