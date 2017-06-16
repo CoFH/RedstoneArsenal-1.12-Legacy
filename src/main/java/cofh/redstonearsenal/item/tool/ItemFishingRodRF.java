@@ -2,7 +2,6 @@ package cofh.redstonearsenal.item.tool;
 
 import cofh.api.energy.IEnergyContainerItem;
 import cofh.api.item.IMultiModeItem;
-import cofh.core.entity.EntityFishHookCore;
 import cofh.core.item.tool.ItemFishingRodCore;
 import cofh.lib.util.helpers.*;
 import cofh.redstonearsenal.init.RAProps;
@@ -10,6 +9,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.projectile.EntityFishHook;
 import net.minecraft.init.Enchantments;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.EnumRarity;
@@ -156,26 +156,31 @@ public class ItemFishingRodRF extends ItemFishingRodCore implements IMultiModeIt
 	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
 
 		ItemStack stack = player.getHeldItem(hand);
+
 		if (!player.capabilities.isCreativeMode && getEnergyStored(stack) < getEnergyPerUse(stack)) {
 			return new ActionResult<>(EnumActionResult.FAIL, stack);
 		}
 		if (player.fishEntity != null) {
 			player.fishEntity.handleHookRetraction();
 			useEnergy(stack, false);
+			player.swingArm(hand);
 		} else {
 			world.playSound(null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_BOBBER_THROW, SoundCategory.NEUTRAL, 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
 
 			if (ServerHelper.isServerWorld(world)) {
-				if (isEmpowered(stack)) {
-					world.spawnEntity(new EntityFishHookCore(world, player, luckModifier + 2, speedModifier + 2));
-				} else {
-					world.spawnEntity(new EntityFishHookCore(world, player, luckModifier, speedModifier));
-				}
+				EntityFishHook hook = new EntityFishHook(world, player);
 
+				int enchantSpeed = EnchantmentHelper.func_191528_c(stack);
+				hook.func_191516_a(speedModifier + enchantSpeed + (isEmpowered(stack) ? 2 : 0));
+
+				int enchantLuck = EnchantmentHelper.func_191529_b(stack);
+				hook.func_191517_b(luckModifier + enchantLuck + (isEmpowered(stack) ? 2 : 0));
+
+				world.spawnEntity(hook);
 			}
+			player.swingArm(hand);
 		}
-		player.swingArm(EnumHand.MAIN_HAND);
-		return new ActionResult<>(EnumActionResult.PASS, stack);
+		return new ActionResult<>(EnumActionResult.SUCCESS, stack);
 	}
 
 	/* IMultiModeItem */
