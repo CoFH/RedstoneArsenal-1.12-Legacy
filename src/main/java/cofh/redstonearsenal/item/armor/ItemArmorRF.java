@@ -2,6 +2,7 @@ package cofh.redstonearsenal.item.armor;
 
 import cofh.api.energy.IEnergyContainerItem;
 import cofh.core.item.ItemArmorCore;
+import cofh.lib.util.capabilities.EnergyContainerItemWrapper;
 import cofh.lib.util.helpers.EnergyHelper;
 import cofh.lib.util.helpers.ItemHelper;
 import cofh.lib.util.helpers.MathHelper;
@@ -16,8 +17,10 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraftforge.common.ISpecialArmor;
+import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -202,6 +205,13 @@ public class ItemArmorRF extends ItemArmorCore implements ISpecialArmor, IEnergy
 	public int getMaxEnergyStored(ItemStack container) {
 
 		return maxEnergy;
+	}
+
+	/* CAPABILITIES */
+	@Override
+	public ICapabilityProvider initCapabilities(ItemStack stack, NBTTagCompound nbt) {
+
+		return new EnergyContainerItemWrapper(stack, this);
 	}
 
 }

@@ -3,6 +3,7 @@ package cofh.redstonearsenal.item.tool;
 import cofh.api.energy.IEnergyContainerItem;
 import cofh.api.item.IMultiModeItem;
 import cofh.core.item.tool.ItemToolCore;
+import cofh.lib.util.capabilities.EnergyContainerItemWrapper;
 import cofh.lib.util.helpers.*;
 import cofh.redstonearsenal.init.RAProps;
 import com.google.common.collect.HashMultimap;
@@ -26,6 +27,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
+import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -348,6 +350,13 @@ public abstract class ItemToolRF extends ItemToolCore implements IMultiModeItem,
 	public int getMaxEnergyStored(ItemStack container) {
 
 		return maxEnergy;
+	}
+
+	/* CAPABILITIES */
+	@Override
+	public ICapabilityProvider initCapabilities(ItemStack stack, NBTTagCompound nbt) {
+
+		return new EnergyContainerItemWrapper(stack, this);
 	}
 
 }

@@ -28,7 +28,7 @@ public class RedstoneArsenal {
 	public static final String MOD_ID = "redstonearsenal";
 	public static final String MOD_NAME = "Redstone Arsenal";
 
-	public static final String VERSION = "2.0.5";
+	public static final String VERSION = "2.0.6";
 	public static final String VERSION_MAX = "2.1.0";
 	public static final String VERSION_GROUP = "required-after:" + MOD_ID + "@[" + VERSION + "," + VERSION_MAX + ");";
 	public static final String UPDATE_URL = "https://raw.github.com/cofh/version/master/" + MOD_ID + "_update.json";

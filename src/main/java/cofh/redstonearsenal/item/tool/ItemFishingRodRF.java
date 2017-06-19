@@ -4,6 +4,7 @@ import cofh.api.energy.IEnergyContainerItem;
 import cofh.api.item.IMultiModeItem;
 import cofh.core.entity.EntityFishHookCore;
 import cofh.core.item.tool.ItemFishingRodCore;
+import cofh.lib.util.capabilities.EnergyContainerItemWrapper;
 import cofh.lib.util.helpers.*;
 import cofh.redstonearsenal.init.RAProps;
 import net.minecraft.creativetab.CreativeTabs;
@@ -18,6 +19,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.*;
 import net.minecraft.world.World;
+import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -293,6 +295,13 @@ public class ItemFishingRodRF extends ItemFishingRodCore implements IMultiModeIt
 	public int getMaxEnergyStored(ItemStack container) {
 
 		return maxEnergy;
+	}
+
+	/* CAPABILITIES */
+	@Override
+	public ICapabilityProvider initCapabilities(ItemStack stack, NBTTagCompound nbt) {
+
+		return new EnergyContainerItemWrapper(stack, this);
 	}
 
 }
