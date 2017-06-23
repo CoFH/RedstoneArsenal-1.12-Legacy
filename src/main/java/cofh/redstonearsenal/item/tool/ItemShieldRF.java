@@ -4,17 +4,16 @@ import cofh.api.energy.IEnergyContainerItem;
 import cofh.api.item.IMultiModeItem;
 import cofh.core.item.tool.ItemShieldCore;
 import cofh.lib.util.capabilities.EnergyContainerItemWrapper;
-import cofh.lib.util.helpers.EnergyHelper;
-import cofh.lib.util.helpers.ItemHelper;
-import cofh.lib.util.helpers.MathHelper;
-import cofh.lib.util.helpers.StringHelper;
+import cofh.lib.util.helpers.*;
 import cofh.redstonearsenal.init.RAProps;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Enchantments;
+import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
@@ -34,8 +33,10 @@ public class ItemShieldRF extends ItemShieldCore implements IMultiModeItem, IEne
 	protected int maxEnergy = 160000;
 	protected int maxTransfer = 1600;
 
-	protected int energyPerUse = 25;
-	protected int energyPerUseCharged = 100;
+	protected int energyPerUse = 100;
+	protected int energyPerUseCharged = 400;
+
+	protected int damageCharged = 4;
 
 	public ItemShieldRF(ToolMaterial toolMaterial) {
 
@@ -59,31 +60,6 @@ public class ItemShieldRF extends ItemShieldCore implements IMultiModeItem, IEne
 
 		this.showInCreative = showInCreative;
 		return this;
-	}
-
-	protected void pushEntityAway(Entity entity, Entity player) {
-
-		double x = player.posX - entity.posX;
-		double z = player.posZ - entity.posZ;
-		double abs = MathHelper.maxAbs(x, z);
-
-		if (abs >= 0.01D) {
-			abs = Math.sqrt(abs);
-			x /= abs;
-			z /= abs;
-			double factor = 1.0D / abs;
-
-			if (factor > 1.0D) {
-				factor = 1.0D;
-			}
-			x *= factor;
-			z *= factor;
-			x *= 0.2D;
-			z *= 0.2D;
-			x *= 1.0F - entity.entityCollisionReduction;
-			z *= 1.0F - entity.entityCollisionReduction;
-			entity.addVelocity(-x, 0.0D, -z);
-		}
 	}
 
 	protected boolean isEmpowered(ItemStack stack) {
@@ -118,6 +94,25 @@ public class ItemShieldRF extends ItemShieldCore implements IMultiModeItem, IEne
 		list.add(StringHelper.localize("info.cofh.charge") + ": " + StringHelper.formatNumber(stack.getTagCompound().getInteger("Energy")) + " / " + StringHelper.formatNumber(maxEnergy) + " RF");
 
 		list.add(StringHelper.ORANGE + getEnergyPerUse(stack) + " " + StringHelper.localize("info.redstonearsenal.tool.energyPerUse") + StringHelper.END);
+		RAProps.addEmpoweredTip(this, stack, list);
+		if (getEnergyStored(stack) >= getEnergyPerUse(stack)) {
+			list.add("");
+			list.add(StringHelper.BRIGHT_GREEN + "+" + (isEmpowered(stack) ? damageCharged : 1) + " " + StringHelper.localize("info.cofh.damageFlux") + StringHelper.END);
+		}
+	}
+
+	public void damageShield(ItemStack stack, int damage, EntityPlayer player, Entity source) {
+
+		if (source != null) {
+			float potionDamage = 1.0f;
+			if (player.isPotionActive(MobEffects.STRENGTH)) {
+				potionDamage += player.getActivePotionEffect(MobEffects.STRENGTH).getAmplifier() * 1.3f;
+			}
+			source.attackEntityFrom(DamageHelper.causePlayerFluxDamage(player), (isEmpowered(stack) ? damageCharged : 1) * potionDamage);
+		}
+		if (!player.capabilities.isCreativeMode) {
+			useEnergy(stack, false);
+		}
 	}
 
 	@Override
@@ -139,26 +134,6 @@ public class ItemShieldRF extends ItemShieldCore implements IMultiModeItem, IEne
 	}
 
 	@Override
-	public void onUsingTick(ItemStack stack, EntityLivingBase player, int count) {
-
-		//		if (!((EntityPlayer) player).capabilities.isCreativeMode && getEnergyStored(stack) < getEnergyPerUse(stack)) {
-		//			player.stopActiveHand();
-		//			return;
-		//		}
-		//		if (isEmpowered(stack)) {
-		//			if (player.isActiveItemStackBlocking()) {
-		//				AxisAlignedBB axisAlignedBB = player.getEntityBoundingBox().expand(2.0D, 1.0D, 2.0D);
-		//				List<EntityMob> list = player.worldObj.getEntitiesWithinAABB(EntityMob.class, axisAlignedBB);
-		//
-		//				for (Entity mob : list) {
-		//					pushEntityAway(mob, player);
-		//				}
-		//			}
-		//		}
-		//		useEnergy(stack, false);
-	}
-
-	@Override
 	public void setDamage(ItemStack stack, int damage) {
 
 		super.setDamage(stack, 0);
@@ -171,15 +146,29 @@ public class ItemShieldRF extends ItemShieldCore implements IMultiModeItem, IEne
 	}
 
 	@Override
-	public boolean isDamaged(ItemStack stack) {
+	public boolean hitEntity(ItemStack stack, EntityLivingBase entity, EntityLivingBase player) {
 
+		if (stack.getItemDamage() > 0) {
+			stack.setItemDamage(0);
+		}
+		EntityPlayer thePlayer = (EntityPlayer) player;
+
+		if (thePlayer.capabilities.isCreativeMode || useEnergy(stack, false) == getEnergyPerUse(stack)) {
+			int fluxDamage = isEmpowered(stack) ? damageCharged : 1;
+
+			float potionDamage = 1.0f;
+			if (player.isPotionActive(MobEffects.STRENGTH)) {
+				potionDamage += player.getActivePotionEffect(MobEffects.STRENGTH).getAmplifier() * 1.3f;
+			}
+			entity.attackEntityFrom(DamageHelper.causePlayerFluxDamage(thePlayer), fluxDamage * potionDamage);
+		}
 		return true;
 	}
 
 	@Override
-	public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
+	public boolean isDamaged(ItemStack stack) {
 
-		return super.shouldCauseReequipAnimation(oldStack, newStack, slotChanged) && (slotChanged || !ItemHelper.areItemStacksEqualIgnoreTags(oldStack, newStack, "Energy"));
+		return true;
 	}
 
 	@Override

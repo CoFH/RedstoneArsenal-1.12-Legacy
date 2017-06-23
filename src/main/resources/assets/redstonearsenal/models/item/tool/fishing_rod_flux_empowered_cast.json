@@ -1,0 +1,6 @@
+{
+	"parent": "redstonearsenal:item/tool/fishing_rod_flux",
+	"textures": {
+		"layer0": "redstonearsenal:items/tool/fishing_rod_flux_empowered_cast"
+	}
+}

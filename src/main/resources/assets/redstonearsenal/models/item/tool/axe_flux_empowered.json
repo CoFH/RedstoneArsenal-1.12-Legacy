@@ -1,0 +1,6 @@
+{
+	"parent": "redstonearsenal:item/tool/axe_flux",
+	"textures": {
+		"layer0": "redstonearsenal:items/tool/axe_flux_empowered"
+	}
+}
