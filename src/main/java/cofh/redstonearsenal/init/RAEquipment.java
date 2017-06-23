@@ -165,7 +165,7 @@ public class RAEquipment {
 		@SideOnly (Side.CLIENT)
 		public void registerModel(Item item, String stackName) {
 
-			ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(RedstoneArsenal.MOD_ID + ":armor/" + name + "/" + stackName, "inventory"));
+			ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(RedstoneArsenal.MOD_ID + ":armor", "type=" + stackName));
 		}
 
 		/* IModelRegister */
@@ -173,10 +173,10 @@ public class RAEquipment {
 		@SideOnly (Side.CLIENT)
 		public void registerModels() {
 
-			registerModel(itemHelmet, name + "_helmet");
-			registerModel(itemPlate, name + "_chestplate");
-			registerModel(itemLegs, name + "_leggings");
-			registerModel(itemBoots, name + "_boots");
+			registerModel(itemHelmet, "helmet_" + name);
+			registerModel(itemPlate, "chestplate_" + name);
+			registerModel(itemLegs, "leggings_" + name);
+			registerModel(itemBoots, "boots_" + name);
 		}
 	}
 
@@ -261,10 +261,7 @@ public class RAEquipment {
 			enable[7] = RedstoneArsenal.CONFIG.getConfiguration().get(category, "FishingRod", true).getBoolean(true);
 			enable[8] = RedstoneArsenal.CONFIG.getConfiguration().get(category, "Sickle", true).getBoolean(true);
 			enable[9] = RedstoneArsenal.CONFIG.getConfiguration().get(category, "Hammer", true).getBoolean(true);
-
-			// TODO: Add Shield
-			// enable[10] = RedstoneArsenal.CONFIG.getConfiguration().get(category, "Shield", true).getBoolean(true);
-			enable[10] = false;
+			enable[10] = RedstoneArsenal.CONFIG.getConfiguration().get(category, "Shield", true).getBoolean(true);
 
 			create();
 
@@ -392,7 +389,7 @@ public class RAEquipment {
 		@SideOnly (Side.CLIENT)
 		public void registerModel(Item item, String stackName) {
 
-			ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(RedstoneArsenal.MOD_ID + ":tool/" + name + "/" + stackName, "inventory"));
+			ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(RedstoneArsenal.MOD_ID + ":tool/" + stackName, "inventory"));
 		}
 
 		/* IModelRegister */
@@ -400,17 +397,17 @@ public class RAEquipment {
 		@SideOnly (Side.CLIENT)
 		public void registerModels() {
 
-			registerModel(itemWrench, name + "_wrench");
-			registerModel(itemBattleWrench, name + "_battle_wrench");
-			registerModel(itemSword, name + "_sword");
-			registerModel(itemShovel, name + "_shovel");
-			registerModel(itemPickaxe, name + "_pickaxe");
-			registerModel(itemAxe, name + "_axe");
-			registerModel(itemBow, name + "_bow");
-			registerModel(itemFishingRod, name + "_fishing_rod");
-			registerModel(itemSickle, name + "_sickle");
-			registerModel(itemHammer, name + "_hammer");
-			registerModel(itemShield, name + "_shield");
+			registerModel(itemWrench, "wrench_" + name);
+			registerModel(itemBattleWrench, "battle_wrench_" + name);
+			registerModel(itemSword, "sword_" + name);
+			registerModel(itemShovel, "shovel_" + name);
+			registerModel(itemPickaxe, "pickaxe_" + name);
+			registerModel(itemAxe, "axe_" + name);
+			registerModel(itemBow, "bow_" + name);
+			registerModel(itemFishingRod, "fishing_rod_" + name);
+			registerModel(itemSickle, "sickle_" + name);
+			registerModel(itemHammer, "hammer_" + name);
+			registerModel(itemShield, "shield_" + name);
 		}
 	}
 

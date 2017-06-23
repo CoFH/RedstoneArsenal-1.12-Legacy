@@ -1,6 +1,0 @@
-{
-	"parent": "redstonearsenal:item/tool/flux/flux_fishing_rod",
-	"textures": {
-		"layer0": "redstonearsenal:items/tool/flux/flux_fishing_rod_active_cast"
-	}
-}

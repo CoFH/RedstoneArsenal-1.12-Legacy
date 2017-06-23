@@ -1,0 +1,6 @@
+{
+	"parent": "redstonearsenal:item/tool/shovel_flux",
+	"textures": {
+		"layer0": "redstonearsenal:items/tool/shovel_flux_empowered"
+	}
+}

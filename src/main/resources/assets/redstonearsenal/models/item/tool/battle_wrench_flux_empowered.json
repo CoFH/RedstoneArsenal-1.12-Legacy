@@ -1,0 +1,6 @@
+{
+	"parent": "redstonearsenal:item/tool/battle_wrench_flux",
+	"textures": {
+		"layer0": "redstonearsenal:items/tool/battle_wrench_flux_empowered"
+	}
+}
