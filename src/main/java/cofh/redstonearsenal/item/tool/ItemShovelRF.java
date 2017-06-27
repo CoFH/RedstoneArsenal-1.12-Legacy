@@ -187,15 +187,16 @@ public class ItemShovelRF extends ItemToolRF {
 		return false;
 	}
 
-	public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+	public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 
+		ItemStack stack = player.getHeldItem(hand);
 		if (!player.canPlayerEdit(pos, facing, stack) || !player.capabilities.isCreativeMode && getEnergyStored(stack) < getEnergyPerUse(stack)) {
 			return EnumActionResult.FAIL;
 		}
 		EnumActionResult used = EnumActionResult.FAIL;
 
 		if (player.isSneaking()) {
-			UseHoeEvent event = new UseHoeEvent(player, stack, world, pos);
+			UseHoeEvent event = new UseHoeEvent(player, stack, worldIn, pos);
 
 			if (MinecraftForge.EVENT_BUS.post(event)) {
 				return EnumActionResult.FAIL;
@@ -219,7 +220,7 @@ public class ItemShovelRF extends ItemToolRF {
 			switch (hitVec) {
 				case 0:
 					for (int i = z; i < z + effRange; i++) {
-						if (!hoeBlock(world, x, y, i, facing.ordinal(), player)) {
+						if (!hoeBlock(worldIn, x, y, i, facing.ordinal(), player)) {
 							break;
 						}
 						used = EnumActionResult.SUCCESS;
@@ -227,7 +228,7 @@ public class ItemShovelRF extends ItemToolRF {
 					break;
 				case 1:
 					for (int i = x; i > x - effRange; i--) {
-						if (!hoeBlock(world, i, y, z, facing.ordinal(), player)) {
+						if (!hoeBlock(worldIn, i, y, z, facing.ordinal(), player)) {
 							break;
 						}
 						used = EnumActionResult.SUCCESS;
@@ -235,7 +236,7 @@ public class ItemShovelRF extends ItemToolRF {
 					break;
 				case 2:
 					for (int i = z; i > z - effRange; i--) {
-						if (!hoeBlock(world, x, y, i, facing.ordinal(), player)) {
+						if (!hoeBlock(worldIn, x, y, i, facing.ordinal(), player)) {
 							break;
 						}
 						used = EnumActionResult.SUCCESS;
@@ -243,7 +244,7 @@ public class ItemShovelRF extends ItemToolRF {
 					break;
 				case 3:
 					for (int i = x; i < x + effRange; i++) {
-						if (!hoeBlock(world, i, y, z, facing.ordinal(), player)) {
+						if (!hoeBlock(worldIn, i, y, z, facing.ordinal(), player)) {
 							break;
 						}
 						used = EnumActionResult.SUCCESS;
@@ -264,7 +265,7 @@ public class ItemShovelRF extends ItemToolRF {
 			switch (hitVec) {
 				case 0:
 					for (int i = z; i < z + effRange; i++) {
-						if (!makePath(world, x, y, i, facing.ordinal(), player)) {
+						if (!makePath(worldIn, x, y, i, facing.ordinal(), player)) {
 							break;
 						}
 						used = EnumActionResult.SUCCESS;
@@ -272,7 +273,7 @@ public class ItemShovelRF extends ItemToolRF {
 					break;
 				case 1:
 					for (int i = x; i > x - effRange; i--) {
-						if (!makePath(world, i, y, z, facing.ordinal(), player)) {
+						if (!makePath(worldIn, i, y, z, facing.ordinal(), player)) {
 							break;
 						}
 						used = EnumActionResult.SUCCESS;
@@ -280,7 +281,7 @@ public class ItemShovelRF extends ItemToolRF {
 					break;
 				case 2:
 					for (int i = z; i > z - effRange; i--) {
-						if (!makePath(world, x, y, i, facing.ordinal(), player)) {
+						if (!makePath(worldIn, x, y, i, facing.ordinal(), player)) {
 							break;
 						}
 						used = EnumActionResult.SUCCESS;
@@ -288,7 +289,7 @@ public class ItemShovelRF extends ItemToolRF {
 					break;
 				case 3:
 					for (int i = x; i < x + effRange; i++) {
-						if (!makePath(world, i, y, z, facing.ordinal(), player)) {
+						if (!makePath(worldIn, i, y, z, facing.ordinal(), player)) {
 							break;
 						}
 						used = EnumActionResult.SUCCESS;
