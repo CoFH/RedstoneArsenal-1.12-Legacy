@@ -313,5 +313,4 @@ public class ItemFishingRodRF extends ItemFishingRodCore implements IMultiModeIt
 		return new EnergyContainerItemWrapper(stack, this);
 	}
 
-
 }

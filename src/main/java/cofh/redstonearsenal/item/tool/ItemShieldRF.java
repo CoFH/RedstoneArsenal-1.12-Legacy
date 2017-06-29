@@ -4,13 +4,15 @@ import cofh.api.energy.IEnergyContainerItem;
 import cofh.api.item.IMultiModeItem;
 import cofh.core.item.tool.ItemShieldCore;
 import cofh.lib.util.capabilities.EnergyContainerItemWrapper;
-import cofh.lib.util.helpers.*;
+import cofh.lib.util.helpers.DamageHelper;
+import cofh.lib.util.helpers.EnergyHelper;
+import cofh.lib.util.helpers.MathHelper;
+import cofh.lib.util.helpers.StringHelper;
 import cofh.redstonearsenal.init.RAProps;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Enchantments;
 import net.minecraft.init.MobEffects;
@@ -333,6 +335,5 @@ public class ItemShieldRF extends ItemShieldCore implements IMultiModeItem, IEne
 
 		return new EnergyContainerItemWrapper(stack, this);
 	}
-
 
 }

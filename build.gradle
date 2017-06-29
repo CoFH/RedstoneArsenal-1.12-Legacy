@@ -47,7 +47,6 @@ repositories {
 
 dependencies {
 	compile "cofh:CoFHCore:${config.mc_version}-${config.cofhcore_version}:deobf"
-	compile "cofh:ThermalFoundation:${config.mc_version}-${config.tf_version}:deobf"
 }
 
 version = "${project.config.mod_version}." + (System.getenv("BUILD_NUMBER") ?: "1")
@@ -74,9 +73,6 @@ processResources {
 }
 
 version = "${project.minecraft.version}-${project.version}"
-//def commonManifest = {
-//attributes 'FMLAT': 'te_at.cfg'
-//}
 
 jar {
 	classifier = 'universal'

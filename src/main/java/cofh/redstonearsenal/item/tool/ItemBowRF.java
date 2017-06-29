@@ -298,5 +298,4 @@ public class ItemBowRF extends ItemBowCore implements IMultiModeItem, IEnergyCon
 		return new EnergyContainerItemWrapper(stack, this);
 	}
 
-
 }

@@ -7,7 +7,6 @@ import cofh.redstonearsenal.RedstoneArsenal;
 import cofh.redstonearsenal.item.ItemMaterial;
 import cofh.redstonearsenal.item.armor.ItemArmorRF;
 import cofh.redstonearsenal.item.tool.*;
-import cofh.thermalfoundation.ThermalFoundation;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;

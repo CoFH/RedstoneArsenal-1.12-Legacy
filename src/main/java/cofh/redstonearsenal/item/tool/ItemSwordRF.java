@@ -358,5 +358,4 @@ public class ItemSwordRF extends ItemSword implements IMultiModeItem, IEnergyCon
 		return new EnergyContainerItemWrapper(stack, this);
 	}
 
-
 }

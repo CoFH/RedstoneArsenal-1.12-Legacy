@@ -550,5 +550,4 @@ public class ItemWrenchRF extends ItemShears implements IEnergyContainerItem, IT
 		return new EnergyContainerItemWrapper(stack, this);
 	}
 
-
 }

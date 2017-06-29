@@ -360,5 +360,4 @@ public abstract class ItemToolRF extends ItemToolCore implements IMultiModeItem,
 		return new EnergyContainerItemWrapper(stack, this);
 	}
 
-
 }

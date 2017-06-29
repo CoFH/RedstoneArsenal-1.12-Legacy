@@ -215,5 +215,4 @@ public class ItemArmorRF extends ItemArmorCore implements ISpecialArmor, IEnergy
 		return new EnergyContainerItemWrapper(stack, this);
 	}
 
-
 }
