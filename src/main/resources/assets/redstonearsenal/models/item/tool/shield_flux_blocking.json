@@ -1,5 +1,5 @@
 {
-	"parent":"thermalfoundation:item/tool/shield_blocking",
+	"parent":"redstonearsenal:item/tool/shield_blocking",
 	"textures": {
 		"layer0":"redstonearsenal:items/tool/shield_flux"
 	}

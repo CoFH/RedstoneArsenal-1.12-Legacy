@@ -8,7 +8,6 @@ import cofh.redstonearsenal.init.RAEquipment;
 import cofh.redstonearsenal.init.RAItems;
 import cofh.redstonearsenal.init.RAProps;
 import cofh.redstonearsenal.proxy.Proxy;
-import cofh.thermalfoundation.ThermalFoundation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Mod;
@@ -28,12 +27,12 @@ public class RedstoneArsenal {
 	public static final String MOD_ID = "redstonearsenal";
 	public static final String MOD_NAME = "Redstone Arsenal";
 
-	public static final String VERSION = "2.1.0";
+	public static final String VERSION = "2.1.1";
 	public static final String VERSION_MAX = "2.2.0";
 	public static final String VERSION_GROUP = "required-after:" + MOD_ID + "@[" + VERSION + "," + VERSION_MAX + ");";
 	public static final String UPDATE_URL = "https://raw.github.com/cofh/version/master/" + MOD_ID + "_update.json";
 
-	public static final String DEPENDENCIES = CoFHCore.VERSION_GROUP + ThermalFoundation.VERSION_GROUP + "after:thermalexpansion;";
+	public static final String DEPENDENCIES = CoFHCore.VERSION_GROUP + "after:thermalexpansion;";
 	public static final String MOD_GUI_FACTORY = "cofh.redstonearsenal.gui.GuiConfigRAFactory";
 
 	@Instance (MOD_ID)
