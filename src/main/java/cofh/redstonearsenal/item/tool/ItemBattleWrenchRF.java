@@ -2,7 +2,6 @@ package cofh.redstonearsenal.item.tool;
 
 import cofh.api.block.IDismantleable;
 import cofh.api.item.IToolHammer;
-import cofh.asm.relauncher.Implementable;
 import cofh.lib.util.helpers.BlockHelper;
 import cofh.lib.util.helpers.ServerHelper;
 import net.minecraft.block.Block;
@@ -24,7 +23,8 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
 
-@Implementable ({ "buildcraft.api.tools.IToolWrench", "mods.railcraft.api.core.items.IToolCrowbar" })
+//TODO FIXME, @Optional.
+//@Implementable ({ "buildcraft.api.tools.IToolWrench", "mods.railcraft.api.core.items.IToolCrowbar" })
 public class ItemBattleWrenchRF extends ItemSwordRF implements IToolHammer {
 
 	public ItemBattleWrenchRF(ToolMaterial toolMaterial) {
@@ -81,8 +81,6 @@ public class ItemBattleWrenchRF extends ItemSwordRF implements IToolHammer {
 				useEnergy(stack, false);
 			}
 			return EnumActionResult.SUCCESS;
-		} else if (ItemWrenchRF.handleIC2Tile(this, stack, player, world, pos, side.ordinal())) {
-			return ServerHelper.isServerWorld(world) ? EnumActionResult.SUCCESS : EnumActionResult.PASS;
 		}
 		if (BlockHelper.canRotate(block)) {
 			world.setBlockState(pos, BlockHelper.rotateVanillaBlock(world, state, pos), 3);

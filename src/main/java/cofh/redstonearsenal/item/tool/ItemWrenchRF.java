@@ -2,15 +2,12 @@ package cofh.redstonearsenal.item.tool;
 
 import cofh.api.block.IDismantleable;
 import cofh.api.item.IToolHammer;
-import cofh.asm.relauncher.Implementable;
-import cofh.asm.relauncher.Substitutable;
 import cofh.lib.util.helpers.*;
 import cofh.redstonearsenal.init.RAProps;
 import cofh.redstoneflux.api.IEnergyContainerItem;
 import cofh.redstoneflux.util.EnergyContainerItemWrapper;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
-import ic2.api.tile.IWrenchable;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.ITooltipFlag;
@@ -31,7 +28,6 @@ import net.minecraft.item.ItemShears;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.stats.StatList;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
@@ -47,7 +43,8 @@ import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import javax.annotation.Nullable;
 import java.util.List;
 
-@Implementable ({ "buildcraft.api.tools.IToolWrench", "mods.railcraft.api.core.items.IToolCrowbar" })
+//TODO FIXME @Optional
+//@Implementable ({ "buildcraft.api.tools.IToolWrench", "mods.railcraft.api.core.items.IToolCrowbar" })
 public class ItemWrenchRF extends ItemShears implements IEnergyContainerItem, IToolHammer {
 
 	protected int maxEnergy = 160000;
@@ -305,8 +302,6 @@ public class ItemWrenchRF extends ItemShears implements IEnergyContainerItem, IT
 				useEnergy(stack, false);
 			}
 			return EnumActionResult.SUCCESS;
-		} else if (handleIC2Tile(this, stack, player, world, pos, side.ordinal())) {
-			return ServerHelper.isServerWorld(world) ? EnumActionResult.SUCCESS : EnumActionResult.PASS;
 		}
 		if (BlockHelper.canRotate(block)) {
 			world.setBlockState(pos, BlockHelper.rotateVanillaBlock(world, state, pos), 3);
@@ -334,59 +329,6 @@ public class ItemWrenchRF extends ItemShears implements IEnergyContainerItem, IT
 			multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getName(), new AttributeModifier(ATTACK_SPEED_MODIFIER, "Tool modifier", -2.4D, 0));
 		}
 		return multimap;
-	}
-
-	/* TRICKERY */
-	@Substitutable (method = "returnFalse", value = "ic2.api.tile.IWrenchable")
-	static boolean handleIC2Tile(IToolHammer tool, ItemStack stack, EntityPlayer player, World world, BlockPos pos, int hitSide) {
-
-		IBlockState state = world.getBlockState(pos);
-		Block block = state.getBlock();
-		if (!block.hasTileEntity(state)) {
-			return false;
-		}
-		boolean ret = false;
-		TileEntity tile = world.getTileEntity(pos);
-
-		if (block instanceof IWrenchable) {
-			IWrenchable wrenchable = (IWrenchable) block;
-
-			if (player.isSneaking()) {
-				hitSide = BlockHelper.SIDE_OPPOSITE[hitSide];
-			}
-			if (wrenchable.setFacing(world, pos, EnumFacing.VALUES[hitSide], player)) {
-				ret = true;
-			} else if (wrenchable.wrenchCanRemove(world, pos, player)) {
-				int fortune = EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, stack);
-				List<ItemStack> drops = wrenchable.getWrenchDrops(world, pos, state, tile, player, fortune);
-
-				if (!drops.isEmpty()) {
-					world.setBlockToAir(pos);
-					if (ServerHelper.isServerWorld(world)) {
-						for (ItemStack drop : drops) {
-							float f = 0.7F;
-							double x2 = world.rand.nextFloat() * f + (1.0F - f) * 0.5D;
-							double y2 = world.rand.nextFloat() * f + (1.0F - f) * 0.5D;
-							double z2 = world.rand.nextFloat() * f + (1.0F - f) * 0.5D;
-							EntityItem entity = new EntityItem(world, pos.getX() + x2, pos.getY() + y2, pos.getZ() + z2, drop);
-							entity.setPickupDelay(10);
-							;
-							world.spawnEntity(entity);
-						}
-					}
-					ret = true;
-				}
-			}
-		}
-		if (ret) {
-			tool.toolUsed(stack, player, pos);
-		}
-		return ret;
-	}
-
-	static boolean returnFalse(IToolHammer tool, ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int hitSide) {
-
-		return false;
 	}
 
 	/* IToolHammer */
