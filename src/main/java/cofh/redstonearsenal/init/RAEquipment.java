@@ -17,7 +17,7 @@ import net.minecraft.item.ItemArmor.ArmorMaterial;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.util.EnumHelper;
-import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -118,25 +118,25 @@ public class RAEquipment {
 			itemHelmet.setArmorTextures(TEXTURE).setUnlocalizedName(ARMOR + "Helmet").setCreativeTab(RedstoneArsenal.tabCommon);
 			itemHelmet.setShowInCreative(enable[0]);
 			itemHelmet.setRegistryName("armor.helmet_" + name);
-			GameRegistry.register(itemHelmet);
+			ForgeRegistries.ITEMS.register(itemHelmet);
 
 			/* PLATE */
 			itemPlate.setArmorTextures(TEXTURE).setUnlocalizedName(ARMOR + "Plate").setCreativeTab(RedstoneArsenal.tabCommon);
 			itemPlate.setShowInCreative(enable[1]);
 			itemPlate.setRegistryName("armor.plate_" + name);
-			GameRegistry.register(itemPlate);
+			ForgeRegistries.ITEMS.register(itemPlate);
 
 			/* LEGS */
 			itemLegs.setArmorTextures(TEXTURE).setUnlocalizedName(ARMOR + "Legs").setCreativeTab(RedstoneArsenal.tabCommon);
 			itemLegs.setShowInCreative(enable[2]);
 			itemLegs.setRegistryName("armor.legs_" + name);
-			GameRegistry.register(itemLegs);
+			ForgeRegistries.ITEMS.register(itemLegs);
 
 			/* BOOTS */
 			itemBoots.setArmorTextures(TEXTURE).setUnlocalizedName(ARMOR + "Boots").setCreativeTab(RedstoneArsenal.tabCommon);
 			itemBoots.setShowInCreative(enable[3]);
 			itemBoots.setRegistryName("armor.boots_" + name);
-			GameRegistry.register(itemBoots);
+			ForgeRegistries.ITEMS.register(itemBoots);
 
 			/* REFERENCES */
 			armorHelmet = EnergyHelper.setDefaultEnergyTag(new ItemStack(itemHelmet), 0);
@@ -269,69 +269,69 @@ public class RAEquipment {
 			itemWrench.setUnlocalizedName(TOOL + "Wrench").setCreativeTab(RedstoneArsenal.tabCommon);
 			itemWrench.setShowInCreative(enable[0]);
 			itemWrench.setRegistryName("tool.wrench_" + name);
-			GameRegistry.register(itemWrench);
+			ForgeRegistries.ITEMS.register(itemWrench);
 
 			/* BATTLEWRENCH */
 			itemBattleWrench.setUnlocalizedName(TOOL + "BattleWrench").setCreativeTab(RedstoneArsenal.tabCommon);
 			itemBattleWrench.setShowInCreative(enable[1]);
 			itemBattleWrench.setRegistryName("tool.battlewrench_" + name);
-			GameRegistry.register(itemBattleWrench);
+			ForgeRegistries.ITEMS.register(itemBattleWrench);
 
 			/* SWORD */
 			itemSword.setUnlocalizedName(TOOL + "Sword").setCreativeTab(RedstoneArsenal.tabCommon);
 			itemSword.setShowInCreative(enable[2]);
 			itemSword.setRegistryName("tool.sword_" + name);
-			GameRegistry.register(itemSword);
+			ForgeRegistries.ITEMS.register(itemSword);
 
 			/* SHOVEL */
 			itemShovel.setUnlocalizedName(TOOL + "Shovel").setCreativeTab(RedstoneArsenal.tabCommon);
 			itemShovel.setShowInCreative(enable[3]);
 			itemShovel.setRegistryName("tool.shovel_" + name);
-			GameRegistry.register(itemShovel);
+			ForgeRegistries.ITEMS.register(itemShovel);
 
 			/* PICKAXE */
 			itemPickaxe.setUnlocalizedName(TOOL + "Pickaxe").setCreativeTab(RedstoneArsenal.tabCommon);
 			itemPickaxe.setShowInCreative(enable[4]);
 			itemPickaxe.setRegistryName("tool.pickaxe_" + name);
-			GameRegistry.register(itemPickaxe);
+			ForgeRegistries.ITEMS.register(itemPickaxe);
 
 			/* AXE */
 			itemAxe.setUnlocalizedName(TOOL + "Axe").setCreativeTab(RedstoneArsenal.tabCommon);
 			itemAxe.setShowInCreative(enable[5]);
 			itemAxe.setRegistryName("tool.axe_" + name);
-			GameRegistry.register(itemAxe);
+			ForgeRegistries.ITEMS.register(itemAxe);
 
 			/* BOW */
 			itemBow.setUnlocalizedName(TOOL + "Bow").setCreativeTab(RedstoneArsenal.tabCommon);
 			itemBow.setArrowDamage(arrowDamage).setArrowSpeed(arrowSpeed).setZoomMultiplier(zoomMultiplier);
 			itemBow.setShowInCreative(enable[6]);
 			itemBow.setRegistryName("tool.bow_" + name);
-			GameRegistry.register(itemBow);
+			ForgeRegistries.ITEMS.register(itemBow);
 
 			/* FISHING ROD */
 			itemFishingRod.setUnlocalizedName(TOOL + "FishingRod").setCreativeTab(RedstoneArsenal.tabCommon);
 			itemFishingRod.setLuckModifier(luckModifier).setSpeedModifier(speedModifier);
 			itemFishingRod.setShowInCreative(enable[7]);
 			itemFishingRod.setRegistryName("tool.fishing_rod_" + name);
-			GameRegistry.register(itemFishingRod);
+			ForgeRegistries.ITEMS.register(itemFishingRod);
 
 			/* SICKLE */
 			itemSickle.setUnlocalizedName(TOOL + "Sickle").setCreativeTab(RedstoneArsenal.tabCommon);
 			itemSickle.setShowInCreative(enable[8]);
 			itemSickle.setRegistryName("tool.sickle_" + name);
-			GameRegistry.register(itemSickle);
+			ForgeRegistries.ITEMS.register(itemSickle);
 
 			/* HAMMER */
 			itemHammer.setUnlocalizedName(TOOL + "Hammer").setCreativeTab(RedstoneArsenal.tabCommon);
 			itemHammer.setShowInCreative(enable[9]);
 			itemHammer.setRegistryName("tool.hammer_" + name);
-			GameRegistry.register(itemHammer);
+			ForgeRegistries.ITEMS.register(itemHammer);
 
 			/* SHIELD */
 			itemShield.setUnlocalizedName(TOOL + "Shield").setCreativeTab(RedstoneArsenal.tabCommon);
 			itemShield.setShowInCreative(enable[10]);
 			itemShield.setRegistryName("tool.shield_" + name);
-			GameRegistry.register(itemShield);
+			ForgeRegistries.ITEMS.register(itemShield);
 
 
 			/* REFERENCES */

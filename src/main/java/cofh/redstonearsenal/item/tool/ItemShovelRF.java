@@ -7,6 +7,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockDirt;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;
@@ -22,6 +23,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.UseHoeEvent;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class ItemShovelRF extends ItemToolRF {
@@ -106,13 +108,14 @@ public class ItemShovelRF extends ItemToolRF {
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, EntityPlayer player, List<String> list, boolean check) {
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 
-		super.addInformation(stack, player, list, check);
+		super.addInformation(stack, worldIn, tooltip, flagIn);
+
 		if (!StringHelper.isShiftKeyDown()) {
 			return;
 		}
-		list.add(StringHelper.getFlavorText("info.redstonearsenal.tool.shovel"));
+		tooltip.add(StringHelper.getFlavorText("info.redstonearsenal.tool.shovel"));
 	}
 
 	@Override
