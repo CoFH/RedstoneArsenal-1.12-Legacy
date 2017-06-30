@@ -23,8 +23,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.Locale;
 
-import static cofh.lib.util.helpers.ItemHelper.ShapedRecipe;
-import static cofh.lib.util.helpers.ItemHelper.addRecipe;
+import static cofh.lib.util.helpers.RecipeHelper.addShapedRecipe;
 
 public class RAEquipment {
 
@@ -148,16 +147,16 @@ public class RAEquipment {
 		protected void initialize() {
 
 			if (enable[0]) {
-				addRecipe(ShapedRecipe(armorHelmet, "III", "I I", 'I', ItemMaterial.plateFlux));
+				addShapedRecipe(armorHelmet, "III", "I I", 'I', ItemMaterial.plateFlux);
 			}
 			if (enable[1]) {
-				addRecipe(ShapedRecipe(armorPlate, "I I", "III", "III", 'I', ItemMaterial.plateFlux));
+				addShapedRecipe(armorPlate, "I I", "III", "III", 'I', ItemMaterial.plateFlux);
 			}
 			if (enable[2]) {
-				addRecipe(ShapedRecipe(armorLegs, "III", "I I", "I I", 'I', ItemMaterial.plateFlux));
+				addShapedRecipe(armorLegs, "III", "I I", "I I", 'I', ItemMaterial.plateFlux);
 			}
 			if (enable[3]) {
-				addRecipe(ShapedRecipe(armorBoots, "I I", "I I", 'I', ItemMaterial.plateFlux));
+				addShapedRecipe(armorBoots, "I I", "I I", 'I', ItemMaterial.plateFlux);
 			}
 		}
 
@@ -351,37 +350,37 @@ public class RAEquipment {
 		protected void initialize() {
 
 			if (enable[0]) {
-				addRecipe(ShapedRecipe(toolWrench, "I I", " R ", " I ", 'I', "ingotElectrumFlux", 'R', ItemMaterial.rodObsidianFlux));
+				addShapedRecipe(toolWrench, "I I", " R ", " I ", 'I', "ingotElectrumFlux", 'R', ItemMaterial.rodObsidianFlux);
 			}
 			if (enable[1]) {
-				addRecipe(ShapedRecipe(toolBattleWrench, "I I", " G ", " R ", 'I', "ingotElectrumFlux", 'G', "gearElectrumFlux", 'R', ItemMaterial.rodObsidianFlux));
+				addShapedRecipe(toolBattleWrench, "I I", " G ", " R ", 'I', "ingotElectrumFlux", 'G', "gearElectrumFlux", 'R', ItemMaterial.rodObsidianFlux);
 			}
 			if (enable[2]) {
-				addRecipe(ShapedRecipe(toolSword, " I ", " I ", " R ", 'I', "ingotElectrumFlux", 'R', ItemMaterial.rodObsidianFlux));
+				addShapedRecipe(toolSword, " I ", " I ", " R ", 'I', "ingotElectrumFlux", 'R', ItemMaterial.rodObsidianFlux);
 			}
 			if (enable[3]) {
-				addRecipe(ShapedRecipe(toolShovel, " I ", " R ", " R ", 'I', "ingotElectrumFlux", 'R', ItemMaterial.rodObsidianFlux));
+				addShapedRecipe(toolShovel, " I ", " R ", " R ", 'I', "ingotElectrumFlux", 'R', ItemMaterial.rodObsidianFlux);
 			}
 			if (enable[4]) {
-				addRecipe(ShapedRecipe(toolPickaxe, "III", " R ", " R ", 'I', "ingotElectrumFlux", 'R', ItemMaterial.rodObsidianFlux));
+				addShapedRecipe(toolPickaxe, "III", " R ", " R ", 'I', "ingotElectrumFlux", 'R', ItemMaterial.rodObsidianFlux);
 			}
 			if (enable[5]) {
-				addRecipe(ShapedRecipe(toolAxe, "II ", "IR ", " R ", 'I', "ingotElectrumFlux", 'R', ItemMaterial.rodObsidianFlux));
+				addShapedRecipe(toolAxe, "II ", "IR ", " R ", 'I', "ingotElectrumFlux", 'R', ItemMaterial.rodObsidianFlux);
 			}
 			if (enable[6]) {
-				addRecipe(ShapedRecipe(toolBow, " IS", "R S", " IS", 'I', "ingotElectrumFlux", 'R', ItemMaterial.rodObsidianFlux, 'S', Items.STRING));
+				addShapedRecipe(toolBow, " IS", "R S", " IS", 'I', "ingotElectrumFlux", 'R', ItemMaterial.rodObsidianFlux, 'S', Items.STRING);
 			}
 			if (enable[7]) {
-				addRecipe(ShapedRecipe(toolFishingRod, "  I", " IS", "R S", 'I', "ingotElectrumFlux", 'R', ItemMaterial.rodObsidianFlux, 'S', Items.STRING));
+				addShapedRecipe(toolFishingRod, "  I", " IS", "R S", 'I', "ingotElectrumFlux", 'R', ItemMaterial.rodObsidianFlux, 'S', Items.STRING);
 			}
 			if (enable[8]) {
-				addRecipe(ShapedRecipe(toolSickle, " I ", "  I", "RI ", 'I', "ingotElectrumFlux", 'R', ItemMaterial.rodObsidianFlux));
+				addShapedRecipe(toolSickle, " I ", "  I", "RI ", 'I', "ingotElectrumFlux", 'R', ItemMaterial.rodObsidianFlux);
 			}
 			if (enable[9]) {
-				addRecipe(ShapedRecipe(toolHammer, "III", "IRI", " R ", 'I', "ingotElectrumFlux", 'R', ItemMaterial.rodObsidianFlux));
+				addShapedRecipe(toolHammer, "III", "IRI", " R ", 'I', "ingotElectrumFlux", 'R', ItemMaterial.rodObsidianFlux);
 			}
 			if (enable[10]) {
-				addRecipe(ShapedRecipe(toolShield, "IRI", "III", " I ", 'I', "ingotElectrumFlux", 'R', "gemCrystalFlux"));
+				addShapedRecipe(toolShield, "IRI", "III", " I ", 'I', "ingotElectrumFlux", 'R', "gemCrystalFlux");
 			}
 		}
 

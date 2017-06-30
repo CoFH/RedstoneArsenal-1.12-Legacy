@@ -33,8 +33,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.Locale;
 
-import static cofh.lib.util.helpers.ItemHelper.addStorageRecipe;
 import static cofh.lib.util.helpers.ItemHelper.registerWithHandlers;
+import static cofh.lib.util.helpers.RecipeHelper.addStorageRecipe;
 
 public class BlockStorage extends BlockCore implements IInitializer, IModelRegister {
 

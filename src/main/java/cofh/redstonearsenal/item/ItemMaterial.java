@@ -14,7 +14,7 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.oredict.OreDictionary;
 
-import static cofh.lib.util.helpers.ItemHelper.*;
+import static cofh.lib.util.helpers.RecipeHelper.*;
 
 public class ItemMaterial extends ItemMulti implements IInitializer {
 
@@ -57,18 +57,18 @@ public class ItemMaterial extends ItemMulti implements IInitializer {
 
 		addGearRecipe(gearElectrumFlux, "ingotElectrumFlux");
 
-		addRecipe(ShapedRecipe(plateFlux, "NNN", "GIG", "NNN", 'G', "gemCrystalFlux", 'I', "ingotElectrumFlux", 'N', "nuggetElectrumFlux"));
-		addRecipe(ShapedRecipe(rodObsidianFlux, "  O", " B ", "O  ", 'B', rodObsidian, 'O', "gemCrystalFlux"));
-		addRecipe(ShapedRecipe(rodObsidian, "  O", " B ", "O  ", 'B', Items.BLAZE_POWDER, 'O', "dustObsidian"));
+		addShapedRecipe(plateFlux, "NNN", "GIG", "NNN", 'G', "gemCrystalFlux", 'I', "ingotElectrumFlux", 'N', "nuggetElectrumFlux");
+		addShapedRecipe(rodObsidianFlux, "  O", " B ", "O  ", 'B', rodObsidian, 'O', "gemCrystalFlux");
+		addShapedRecipe(rodObsidian, "  O", " B ", "O  ", 'B', Items.BLAZE_POWDER, 'O', "dustObsidian");
 
 		if (!Loader.isModLoaded("thermalexpansion")) {
 			if (OreDictionary.doesOreNameExist("dustElectrum")) {
-				addRecipe(ShapelessRecipe(dustElectrumFlux, "dustElectrum", "dustRedstone", "dustRedstone", "dustRedstone", "dustRedstone", "dustRedstone"));
+				addShapelessRecipe(dustElectrumFlux, "dustElectrum", "dustRedstone", "dustRedstone", "dustRedstone", "dustRedstone", "dustRedstone");
 			} else {
-				addRecipe(ShapelessRecipe(dustElectrumFlux, "ingotGold", "dustRedstone", "dustRedstone", "dustRedstone", "dustRedstone", "dustRedstone"));
+				addShapelessRecipe(dustElectrumFlux, "ingotGold", "dustRedstone", "dustRedstone", "dustRedstone", "dustRedstone", "dustRedstone");
 			}
-			addRecipe(ShapelessRecipe(gemCrystalFlux, "gemDiamond", "dustRedstone", "dustRedstone", "dustRedstone", "dustRedstone", "dustRedstone"));
-			addSmelting(ingotElectrumFlux, dustElectrumFlux, 0.0F);
+			addShapelessRecipe(gemCrystalFlux, "gemDiamond", "dustRedstone", "dustRedstone", "dustRedstone", "dustRedstone", "dustRedstone");
+			addSmelting(dustElectrumFlux, ingotElectrumFlux);
 		} else {
 			ItemStack dustElectrum = ItemHelper.cloneStack(OreDictionary.getOres("dustElectrum", false).get(0), 1);
 			FluidStack fluidRedstone = new FluidStack(FluidRegistry.getFluid("redstone"), 500);
