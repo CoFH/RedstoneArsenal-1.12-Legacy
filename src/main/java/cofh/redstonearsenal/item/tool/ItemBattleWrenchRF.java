@@ -2,8 +2,8 @@ package cofh.redstonearsenal.item.tool;
 
 import cofh.api.block.IDismantleable;
 import cofh.api.item.IToolHammer;
-import cofh.lib.util.helpers.BlockHelper;
-import cofh.lib.util.helpers.ServerHelper;
+import cofh.core.util.helpers.BlockHelper;
+import cofh.core.util.helpers.ServerHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;

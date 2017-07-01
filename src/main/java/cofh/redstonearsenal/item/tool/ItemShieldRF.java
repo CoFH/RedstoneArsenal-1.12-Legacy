@@ -2,10 +2,10 @@ package cofh.redstonearsenal.item.tool;
 
 import cofh.api.item.IMultiModeItem;
 import cofh.core.item.tool.ItemShieldCore;
-import cofh.lib.util.helpers.DamageHelper;
-import cofh.lib.util.helpers.EnergyHelper;
-import cofh.lib.util.helpers.MathHelper;
-import cofh.lib.util.helpers.StringHelper;
+import cofh.core.util.helpers.DamageHelper;
+import cofh.core.util.helpers.EnergyHelper;
+import cofh.core.util.helpers.MathHelper;
+import cofh.core.util.helpers.StringHelper;
 import cofh.redstonearsenal.init.RAProps;
 import cofh.redstoneflux.api.IEnergyContainerItem;
 import cofh.redstoneflux.util.EnergyContainerItemWrapper;

@@ -2,7 +2,7 @@ package cofh.redstonearsenal.init;
 
 import cofh.api.item.IMultiModeItem;
 import cofh.core.key.KeyBindingItemMultiMode;
-import cofh.lib.util.helpers.StringHelper;
+import cofh.core.util.helpers.StringHelper;
 import cofh.redstonearsenal.RedstoneArsenal;
 import cofh.redstonearsenal.gui.CreativeTabRA;
 import net.minecraft.item.ItemStack;

@@ -3,7 +3,7 @@ package cofh.redstonearsenal.item;
 import cofh.api.util.ThermalExpansionHelper;
 import cofh.core.item.ItemMulti;
 import cofh.core.util.core.IInitializer;
-import cofh.lib.util.helpers.ItemHelper;
+import cofh.core.util.helpers.ItemHelper;
 import cofh.redstonearsenal.RedstoneArsenal;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -14,7 +14,7 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.oredict.OreDictionary;
 
-import static cofh.lib.util.helpers.RecipeHelper.*;
+import static cofh.core.util.helpers.RecipeHelper.*;
 
 public class ItemMaterial extends ItemMulti implements IInitializer {
 

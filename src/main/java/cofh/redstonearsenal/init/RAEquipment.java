@@ -1,8 +1,8 @@
 package cofh.redstonearsenal.init;
 
 import cofh.core.render.IModelRegister;
-import cofh.lib.util.helpers.EnergyHelper;
-import cofh.lib.util.helpers.StringHelper;
+import cofh.core.util.helpers.EnergyHelper;
+import cofh.core.util.helpers.StringHelper;
 import cofh.redstonearsenal.RedstoneArsenal;
 import cofh.redstonearsenal.item.ItemMaterial;
 import cofh.redstonearsenal.item.armor.ItemArmorRF;
@@ -23,7 +23,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.Locale;
 
-import static cofh.lib.util.helpers.RecipeHelper.addShapedRecipe;
+import static cofh.core.util.helpers.RecipeHelper.addShapedRecipe;
 
 public class RAEquipment {
 

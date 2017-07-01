@@ -1,8 +1,8 @@
 package cofh.redstonearsenal.item.tool;
 
-import cofh.lib.util.helpers.MathHelper;
-import cofh.lib.util.helpers.ServerHelper;
-import cofh.lib.util.helpers.StringHelper;
+import cofh.core.util.helpers.MathHelper;
+import cofh.core.util.helpers.ServerHelper;
+import cofh.core.util.helpers.StringHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDirt;
 import net.minecraft.block.material.Material;

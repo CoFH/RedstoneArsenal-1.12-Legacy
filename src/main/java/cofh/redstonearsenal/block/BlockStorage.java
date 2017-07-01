@@ -3,8 +3,8 @@ package cofh.redstonearsenal.block;
 import cofh.core.block.BlockCore;
 import cofh.core.render.IModelRegister;
 import cofh.core.util.core.IInitializer;
-import cofh.lib.util.helpers.DamageHelper;
-import cofh.lib.util.helpers.EnergyHelper;
+import cofh.core.util.helpers.DamageHelper;
+import cofh.core.util.helpers.EnergyHelper;
 import cofh.redstonearsenal.RedstoneArsenal;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -33,8 +33,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.Locale;
 
-import static cofh.lib.util.helpers.ItemHelper.registerWithHandlers;
-import static cofh.lib.util.helpers.RecipeHelper.addStorageRecipe;
+import static cofh.core.util.helpers.ItemHelper.registerWithHandlers;
+import static cofh.core.util.helpers.RecipeHelper.addStorageRecipe;
 
 public class BlockStorage extends BlockCore implements IInitializer, IModelRegister {
 

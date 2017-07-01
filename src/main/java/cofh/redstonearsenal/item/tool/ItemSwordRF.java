@@ -1,7 +1,7 @@
 package cofh.redstonearsenal.item.tool;
 
 import cofh.api.item.IMultiModeItem;
-import cofh.lib.util.helpers.*;
+import cofh.core.util.helpers.*;
 import cofh.redstonearsenal.init.RAProps;
 import cofh.redstoneflux.api.IEnergyContainerItem;
 import cofh.redstoneflux.util.EnergyContainerItemWrapper;
