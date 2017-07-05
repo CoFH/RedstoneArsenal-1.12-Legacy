@@ -28,7 +28,7 @@ public class ItemMaterial extends ItemMulti implements IInitializer {
 
 	/* IInitializer */
 	@Override
-	public boolean preInit() {
+	public boolean initialize() {
 
 		dustElectrumFlux = addOreDictItem(0, "dustElectrumFlux", EnumRarity.UNCOMMON);
 		ingotElectrumFlux = addOreDictItem(32, "ingotElectrumFlux", EnumRarity.UNCOMMON);
@@ -48,7 +48,7 @@ public class ItemMaterial extends ItemMulti implements IInitializer {
 	}
 
 	@Override
-	public boolean initialize() {
+	public boolean register() {
 
 		addTwoWayStorageRecipe(ingotElectrumFlux, "ingotElectrumFlux", nuggetElectrumFlux, "nuggetElectrumFlux");
 
@@ -77,12 +77,6 @@ public class ItemMaterial extends ItemMulti implements IInitializer {
 			ThermalExpansionHelper.addTransposerFill(4000, dustElectrum, dustElectrumFlux, fluidRedstone, false);
 			ThermalExpansionHelper.addTransposerFill(4000, new ItemStack(Items.DIAMOND), gemCrystalFlux, fluidRedstone, false);
 		}
-		return true;
-	}
-
-	@Override
-	public boolean postInit() {
-
 		return true;
 	}
 

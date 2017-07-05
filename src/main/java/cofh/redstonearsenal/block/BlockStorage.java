@@ -170,7 +170,7 @@ public class BlockStorage extends BlockCore implements IInitializer, IModelRegis
 
 	/* IInitializer */
 	@Override
-	public boolean preInit() {
+	public boolean initialize() {
 
 		this.setRegistryName("storage");
 		ForgeRegistries.BLOCKS.register(this);
@@ -191,16 +191,10 @@ public class BlockStorage extends BlockCore implements IInitializer, IModelRegis
 	}
 
 	@Override
-	public boolean initialize() {
+	public boolean register() {
 
 		addStorageRecipe(blockElectrumFlux, "ingotElectrumFlux");
 		addStorageRecipe(blockCrystalFlux, "gemCrystalFlux");
-
-		return true;
-	}
-
-	@Override
-	public boolean postInit() {
 
 		return true;
 	}

@@ -14,8 +14,10 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.SidedProxy;
-import net.minecraftforge.fml.common.event.*;
-import net.minecraftforge.fml.common.event.FMLInterModComms.IMCEvent;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLLoadCompleteEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -70,19 +72,11 @@ public class RedstoneArsenal {
 	@EventHandler
 	public void initialize(FMLInitializationEvent event) {
 
-		RABlocks.initialize();
-		RAItems.initialize();
-		RAEquipment.initialize();
-
 		proxy.initialize(event);
 	}
 
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent event) {
-
-		RABlocks.postInit();
-		RAItems.postInit();
-		RAEquipment.postInit();
 
 		proxy.postInit(event);
 	}
@@ -95,21 +89,6 @@ public class RedstoneArsenal {
 		CONFIG_CLIENT.cleanUp(false, true);
 
 		LOG.info(MOD_NAME + ": Load Complete.");
-	}
-
-	@EventHandler
-	public void serverStart(FMLServerAboutToStartEvent event) {
-
-	}
-
-	@EventHandler
-	public void serverStarting(FMLServerStartingEvent event) {
-
-	}
-
-	@EventHandler
-	public void handleIMC(IMCEvent event) {
-
 	}
 
 }

@@ -15,8 +15,12 @@ import net.minecraft.item.Item;
 import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.EnumHelper;
+import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -27,37 +31,35 @@ import static cofh.core.util.helpers.RecipeHelper.addShapedRecipe;
 
 public class RAEquipment {
 
+	public static final RAEquipment INSTANCE = new RAEquipment();
+
 	private RAEquipment() {
 
 	}
 
-	public static boolean preInit() {
-
-		for (ArmorSet e : ArmorSet.values()) {
-			e.preInit();
-			RedstoneArsenal.proxy.addIModelRegister(e);
-		}
-		for (ToolSet e : ToolSet.values()) {
-			e.preInit();
-			RedstoneArsenal.proxy.addIModelRegister(e);
-		}
-		return true;
-	}
-
-	public static boolean initialize() {
+	public static void preInit() {
 
 		for (ArmorSet e : ArmorSet.values()) {
 			e.initialize();
+			RedstoneArsenal.proxy.addIModelRegister(e);
 		}
 		for (ToolSet e : ToolSet.values()) {
 			e.initialize();
+			RedstoneArsenal.proxy.addIModelRegister(e);
 		}
-		return true;
+		MinecraftForge.EVENT_BUS.register(INSTANCE);
 	}
 
-	public static boolean postInit() {
+	/* EVENT HANDLING */
+	@SubscribeEvent
+	public void registerRecipes(RegistryEvent.Register<IRecipe> event) {
 
-		return true;
+		for (ArmorSet e : ArmorSet.values()) {
+			e.register();
+		}
+		for (ToolSet e : ToolSet.values()) {
+			e.register();
+		}
 	}
 
 	/* MATERIALS */
@@ -98,7 +100,7 @@ public class RAEquipment {
 			itemBoots = new ItemArmorRF(ARMOR_MATERIAL, EntityEquipmentSlot.FEET);
 		}
 
-		protected void preInit() {
+		protected void initialize() {
 
 			final String ARMOR = "redstonearsenal.armor." + name;
 			final String PATH_ARMOR = "redstonearsenal:textures/armor/";
@@ -144,7 +146,7 @@ public class RAEquipment {
 			armorBoots = EnergyHelper.setDefaultEnergyTag(new ItemStack(itemBoots), 0);
 		}
 
-		protected void initialize() {
+		protected void register() {
 
 			if (enable[0]) {
 				addShapedRecipe(armorHelmet, "III", "I I", 'I', ItemMaterial.plateFlux);
@@ -244,7 +246,7 @@ public class RAEquipment {
 			itemShield = new ItemShieldRF(TOOL_MATERIAL);
 		}
 
-		protected void preInit() {
+		protected void initialize() {
 
 			final String TOOL = "redstonearsenal.tool." + name;
 
@@ -347,7 +349,7 @@ public class RAEquipment {
 			toolShield = EnergyHelper.setDefaultEnergyTag(new ItemStack(itemShield), 0);
 		}
 
-		protected void initialize() {
+		protected void register() {
 
 			if (enable[0]) {
 				addShapedRecipe(toolWrench, "I I", " R ", " I ", 'I', "ingotElectrumFlux", 'R', ItemMaterial.rodObsidianFlux);
