@@ -18,7 +18,7 @@ item.redstonearsenal.material.gemCrystalFlux.name=Flux Crystal
 item.redstonearsenal.material.ingotElectrumFlux.name=Fluxed Electrum Ingot
 item.redstonearsenal.material.nuggetElectrumFlux.name=Fluxed Electrum Nugget
 item.redstonearsenal.material.plateElectrumFlux.name=Fluxed Electrum Plate
-item.redstonearsenal.material.plateFlux.name=Fluxed Armor Plating
+item.redstonearsenal.material.plateArmorFlux.name=Fluxed Armor Plating
 item.redstonearsenal.material.rodObsidian.name=Obsidian Rod
 item.redstonearsenal.material.rodObsidianFlux.name=Flux-Infused Obsidian Rod
 
