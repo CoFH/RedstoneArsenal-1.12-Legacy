@@ -148,16 +148,16 @@ public class RAEquipment {
 		protected void initialize() {
 
 			if (enable[0]) {
-				addRecipe(ShapedRecipe(armorHelmet, "III", "I I", 'I', ItemMaterial.plateFlux));
+				addRecipe(ShapedRecipe(armorHelmet, "III", "I I", 'I', ItemMaterial.plateArmorFlux));
 			}
 			if (enable[1]) {
-				addRecipe(ShapedRecipe(armorPlate, "I I", "III", "III", 'I', ItemMaterial.plateFlux));
+				addRecipe(ShapedRecipe(armorPlate, "I I", "III", "III", 'I', ItemMaterial.plateArmorFlux));
 			}
 			if (enable[2]) {
-				addRecipe(ShapedRecipe(armorLegs, "III", "I I", "I I", 'I', ItemMaterial.plateFlux));
+				addRecipe(ShapedRecipe(armorLegs, "III", "I I", "I I", 'I', ItemMaterial.plateArmorFlux));
 			}
 			if (enable[3]) {
-				addRecipe(ShapedRecipe(armorBoots, "I I", "I I", 'I', ItemMaterial.plateFlux));
+				addRecipe(ShapedRecipe(armorBoots, "I I", "I I", 'I', ItemMaterial.plateArmorFlux));
 			}
 		}
 
