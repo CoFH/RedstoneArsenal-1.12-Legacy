@@ -29,14 +29,14 @@
 					"layer0": "redstonearsenal:items/material/gear_electrum_flux"
 				}
 			},
+			"plateelectrumflux": {
+				"textures": {
+					"layer0": "redstonearsenal:items/material/plate_electrum_flux"
+				}
+			},
 			"gemcrystalflux": {
 				"textures": {
 					"layer0": "redstonearsenal:items/material/gem_crystal_flux"
-				}
-			},
-			"plateflux": {
-				"textures": {
-					"layer0": "redstonearsenal:items/material/plate_flux"
 				}
 			},
 			"rodobsidian": {
@@ -47,6 +47,11 @@
 			"rodobsidianflux": {
 				"textures": {
 					"layer0": "redstonearsenal:items/material/rod_obsidian_flux"
+				}
+			},
+			"platearmorflux": {
+				"textures": {
+					"layer0": "redstonearsenal:items/material/plate_armor_flux"
 				}
 			}
 		}

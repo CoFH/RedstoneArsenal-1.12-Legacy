@@ -23,8 +23,8 @@ public class RABlocks {
 
 		initList.add(blockStorage);
 
-		for (int i = 0; i < initList.size(); i++) {
-			initList.get(i).initialize();
+		for (IInitializer init : initList) {
+			init.initialize();
 		}
 		MinecraftForge.EVENT_BUS.register(INSTANCE);
 	}
@@ -33,8 +33,8 @@ public class RABlocks {
 	@SubscribeEvent
 	public void registerRecipes(RegistryEvent.Register<IRecipe> event) {
 
-		for (int i = 0; i < initList.size(); i++) {
-			initList.get(i).register();
+		for (IInitializer init : initList) {
+			init.register();
 		}
 	}
 

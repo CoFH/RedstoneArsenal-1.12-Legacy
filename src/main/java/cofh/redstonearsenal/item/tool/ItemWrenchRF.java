@@ -47,8 +47,8 @@ import java.util.List;
 //@Implementable ({ "buildcraft.api.tools.IToolWrench", "mods.railcraft.api.core.items.IToolCrowbar" })
 public class ItemWrenchRF extends ItemShears implements IEnergyContainerItem, IToolHammer {
 
-	protected int maxEnergy = 160000;
-	protected int maxTransfer = 1600;
+	protected int maxEnergy = 320000;
+	protected int maxTransfer = 4000;
 
 	protected int energyPerUse = 200;
 

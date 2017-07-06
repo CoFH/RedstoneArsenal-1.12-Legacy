@@ -62,6 +62,7 @@ public class RedstoneArsenal {
 		CONFIG_CLIENT.setConfiguration(new Configuration(new File(CoreProps.configDir, "/cofh/" + MOD_ID + "/client.cfg"), true));
 
 		RAProps.preInit();
+
 		RABlocks.preInit();
 		RAItems.preInit();
 		RAEquipment.preInit();

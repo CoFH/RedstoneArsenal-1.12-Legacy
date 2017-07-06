@@ -26,8 +26,8 @@ import java.util.List;
 
 public class ItemFishingRodRF extends ItemFishingRodCore implements IMultiModeItem, IEnergyContainerItem {
 
-	protected int maxEnergy = 160000;
-	protected int maxTransfer = 1600;
+	protected int maxEnergy = 320000;
+	protected int maxTransfer = 4000;
 
 	protected int energyPerUse = 200;
 	protected int energyPerUseCharged = 800;
