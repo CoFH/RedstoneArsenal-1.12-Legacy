@@ -31,9 +31,10 @@ import java.util.List;
 public class ItemArmorRF extends ItemArmorCore implements ISpecialArmor, IEnergyContainerItem {
 
 	private static final ArmorProperties FLUX = new ArmorProperties(0, 0.20D, Integer.MAX_VALUE);
+	private static final ArmorProperties FALL = new ArmorProperties(0, 0.00D, 0);
 
-	protected int maxEnergy = 400000;
-	protected int maxTransfer = 2000;
+	protected int maxEnergy = 800000;
+	protected int maxTransfer = 4000;
 
 	protected double absorbRatio = 0.9D;
 	protected int energyPerDamage = 160;
@@ -131,6 +132,12 @@ public class ItemArmorRF extends ItemArmorCore implements ISpecialArmor, IEnergy
 
 		if (source.damageType.equals("flux")) {
 			return FLUX;
+		} else if (source.damageType.equals("fall")) {
+			if (slot == 0) {
+				int absorbMax = getEnergyPerDamage(armor) > 0 ? 25 * getEnergyStored(armor) / getEnergyPerDamage(armor) : 0;
+				return new ArmorProperties(0, absorbRatio * getArmorMaterial().getDamageReductionAmount(armorType) * 0.25, absorbMax);
+			}
+			return FALL;
 		} else if (source.isUnblockable()) {
 			int absorbMax = getEnergyPerDamage(armor) > 0 ? 25 * getEnergyStored(armor) / getEnergyPerDamage(armor) : 0;
 			return new ArmorProperties(0, absorbRatio * getArmorMaterial().getDamageReductionAmount(armorType) * 0.025, absorbMax);

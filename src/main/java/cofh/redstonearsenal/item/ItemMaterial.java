@@ -5,6 +5,7 @@ import cofh.core.item.ItemMulti;
 import cofh.core.util.core.IInitializer;
 import cofh.lib.util.helpers.ItemHelper;
 import cofh.redstonearsenal.RedstoneArsenal;
+import cofh.redstonearsenal.block.BlockStorage;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumRarity;
@@ -35,12 +36,14 @@ public class ItemMaterial extends ItemMulti implements IInitializer {
 		nuggetElectrumFlux = addOreDictItem(64, "nuggetElectrumFlux", EnumRarity.UNCOMMON);
 		gearElectrumFlux = addOreDictItem(96, "gearElectrumFlux", EnumRarity.UNCOMMON);
 
-		gemCrystalFlux = addOreDictItem(128, "gemCrystalFlux", EnumRarity.UNCOMMON);
+		plateElectrumFlux = addOreDictItem(128, "plateElectrumFlux", EnumRarity.UNCOMMON);
 
-		plateFlux = addItem(160, "plateFlux", EnumRarity.UNCOMMON);
+		gemCrystalFlux = addOreDictItem(160, "gemCrystalFlux", EnumRarity.UNCOMMON);
 
 		rodObsidian = addItem(192, "rodObsidian");
 		rodObsidianFlux = addItem(193, "rodObsidianFlux", EnumRarity.UNCOMMON);
+
+		plateArmorFlux = addItem(224, "plateArmorFlux", EnumRarity.UNCOMMON);
 
 		RedstoneArsenal.proxy.addIModelRegister(this);
 
@@ -57,7 +60,7 @@ public class ItemMaterial extends ItemMulti implements IInitializer {
 
 		addGearRecipe(gearElectrumFlux, "ingotElectrumFlux");
 
-		addRecipe(ShapedRecipe(plateFlux, "NNN", "GIG", "NNN", 'G', "gemCrystalFlux", 'I', "ingotElectrumFlux", 'N', "nuggetElectrumFlux"));
+		addRecipe(ShapedRecipe(plateArmorFlux, " I ", "IGI", " I ", 'G', "gemCrystalFlux", 'I', "plateElectrumFlux"));
 		addRecipe(ShapedRecipe(rodObsidianFlux, "  O", " B ", "O  ", 'B', rodObsidian, 'O', "gemCrystalFlux"));
 		addRecipe(ShapedRecipe(rodObsidian, "  O", " B ", "O  ", 'B', Items.BLAZE_POWDER, 'O', "dustObsidian"));
 
@@ -68,12 +71,19 @@ public class ItemMaterial extends ItemMulti implements IInitializer {
 				addRecipe(ShapelessRecipe(dustElectrumFlux, "ingotGold", "dustRedstone", "dustRedstone", "dustRedstone", "dustRedstone", "dustRedstone"));
 			}
 			addRecipe(ShapelessRecipe(gemCrystalFlux, "gemDiamond", "dustRedstone", "dustRedstone", "dustRedstone", "dustRedstone", "dustRedstone"));
+			addRecipe(ShapedRecipe(ItemHelper.cloneStack(plateElectrumFlux, 4), "II", "II", 'I', "ingotElectrumFlux"));
 			addSmelting(ingotElectrumFlux, dustElectrumFlux, 0.0F);
 		} else {
 			ItemStack dustElectrum = ItemHelper.cloneStack(OreDictionary.getOres("dustElectrum", false).get(0), 1);
 			FluidStack fluidRedstone = new FluidStack(FluidRegistry.getFluid("redstone"), 500);
 
 			ThermalExpansionHelper.addSmelterRecipe(4000, dustElectrumFlux, new ItemStack(Blocks.SAND), ingotElectrumFlux);
+
+			ThermalExpansionHelper.addCompactorPressRecipe(4000, ingotElectrumFlux, plateElectrumFlux);
+			ThermalExpansionHelper.addCompactorStorageRecipe(400, ItemHelper.cloneStack(ingotElectrumFlux, 9), BlockStorage.blockElectrumFlux);
+			ThermalExpansionHelper.addCompactorStorageRecipe(400, ItemHelper.cloneStack(gemCrystalFlux, 9), BlockStorage.blockCrystalFlux);
+			ThermalExpansionHelper.addCompactorStorageRecipe(400, ItemHelper.cloneStack(nuggetElectrumFlux, 9), ingotElectrumFlux);
+
 			ThermalExpansionHelper.addTransposerFill(4000, dustElectrum, dustElectrumFlux, fluidRedstone, false);
 			ThermalExpansionHelper.addTransposerFill(4000, new ItemStack(Items.DIAMOND), gemCrystalFlux, fluidRedstone, false);
 		}
@@ -91,12 +101,13 @@ public class ItemMaterial extends ItemMulti implements IInitializer {
 	public static ItemStack ingotElectrumFlux;
 	public static ItemStack nuggetElectrumFlux;
 	public static ItemStack gearElectrumFlux;
+	public static ItemStack plateElectrumFlux;
 
 	public static ItemStack gemCrystalFlux;
 
-	public static ItemStack plateFlux;
-
 	public static ItemStack rodObsidian;
 	public static ItemStack rodObsidianFlux;
+
+	public static ItemStack plateArmorFlux;
 
 }
