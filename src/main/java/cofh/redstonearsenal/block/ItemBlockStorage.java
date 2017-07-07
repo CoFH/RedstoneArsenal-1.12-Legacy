@@ -2,6 +2,7 @@ package cofh.redstonearsenal.block;
 
 import cofh.core.block.ItemBlockCore;
 import cofh.core.util.helpers.ItemHelper;
+import cofh.redstonearsenal.block.BlockStorage.Type;
 import net.minecraft.block.Block;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
@@ -18,13 +19,13 @@ public class ItemBlockStorage extends ItemBlockCore {
 	@Override
 	public String getUnlocalizedName(ItemStack stack) {
 
-		return "tile.redstonearsenal.storage." + BlockStorage.Type.byMetadata(ItemHelper.getItemDamage(stack)).getNameRaw() + ".name";
+		return "tile.redstonearsenal.storage." + Type.byMetadata(ItemHelper.getItemDamage(stack)).getNameRaw() + ".name";
 	}
 
 	@Override
 	public EnumRarity getRarity(ItemStack stack) {
 
-		return BlockStorage.Type.byMetadata(ItemHelper.getItemDamage(stack)).getRarity();
+		return Type.byMetadata(ItemHelper.getItemDamage(stack)).getRarity();
 	}
 
 }

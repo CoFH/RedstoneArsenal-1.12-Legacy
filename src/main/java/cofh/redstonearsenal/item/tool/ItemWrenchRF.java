@@ -110,7 +110,7 @@ public class ItemWrenchRF extends ItemShears implements IEnergyContainerItem, IT
 		}
 		tooltip.add(StringHelper.localize("info.cofh.charge") + ": " + StringHelper.formatNumber(stack.getTagCompound().getInteger("Energy")) + " / " + StringHelper.formatNumber(maxEnergy) + " RF");
 		tooltip.add(StringHelper.ORANGE + getEnergyPerUse(stack) + " " + StringHelper.localize("info.redstonearsenal.tool.energyPerUse") + StringHelper.END);
-		tooltip.add(StringHelper.getFlavorText("info.redstonearsenal.tool.wrench"));
+		tooltip.add(StringHelper.getNoticeText("info.redstonearsenal.tool.wrench"));
 	}
 
 	@Override

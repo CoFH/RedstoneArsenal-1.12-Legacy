@@ -4,7 +4,7 @@ info.redstonearsenal.tool.chargeOff=§ePress (%s) to Quell§r
 info.redstonearsenal.tool.chargeOn=§bPress (%s) to Empower§r
 
 info.redstonearsenal.tool.energyPerUse=RF Per Use
-info.redstonearsenal.tool.shovel=Also serves as a Hoe while Sneaking.
+info.redstonearsenal.tool.shovel=Also serves as a Hoe while sneaking.
 info.redstonearsenal.tool.wrench=Also serves as Shears.
 
 item.redstonearsenal.armor.fluxBoots.name=Flux-Infused Boots

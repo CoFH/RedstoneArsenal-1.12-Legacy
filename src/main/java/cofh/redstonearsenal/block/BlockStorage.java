@@ -38,7 +38,7 @@ import static cofh.core.util.helpers.RecipeHelper.addStorageRecipe;
 
 public class BlockStorage extends BlockCore implements IInitializer, IModelRegister {
 
-	public static final PropertyEnum<BlockStorage.Type> VARIANT = PropertyEnum.<BlockStorage.Type>create("type", BlockStorage.Type.class);
+	public static final PropertyEnum<Type> VARIANT = PropertyEnum.create("type", Type.class);
 
 	// TODO: Review if this should be optional.
 	//		static final boolean[] ENABLE_CHARGE = new boolean[2];
@@ -80,7 +80,7 @@ public class BlockStorage extends BlockCore implements IInitializer, IModelRegis
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
 
-		return this.getDefaultState().withProperty(VARIANT, BlockStorage.Type.byMetadata(meta));
+		return this.getDefaultState().withProperty(VARIANT, Type.byMetadata(meta));
 	}
 
 	@Override
@@ -207,7 +207,7 @@ public class BlockStorage extends BlockCore implements IInitializer, IModelRegis
 		CRYSTAL_FLUX(1, "crystalFlux", blockCrystalFlux, 7);
 		// @formatter: on
 
-		private static final BlockStorage.Type[] METADATA_LOOKUP = new BlockStorage.Type[values().length];
+		private static final Type[] METADATA_LOOKUP = new Type[values().length];
 		private final int metadata;
 		private final String name;
 		private final ItemStack stack;

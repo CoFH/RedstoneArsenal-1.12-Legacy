@@ -1,11 +1,14 @@
 package cofh.redstonearsenal.init;
 
 import cofh.api.item.IMultiModeItem;
+import cofh.core.gui.CreativeTabCore;
 import cofh.core.key.KeyBindingItemMultiMode;
 import cofh.core.util.helpers.StringHelper;
 import cofh.redstonearsenal.RedstoneArsenal;
-import cofh.redstonearsenal.gui.CreativeTabRA;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
@@ -21,10 +24,6 @@ public class RAProps {
 		configClient();
 	}
 
-	public static void loadComplete() {
-
-	}
-
 	/* HELPERS */
 	private static void configCommon() {
 
@@ -33,7 +32,22 @@ public class RAProps {
 	private static void configClient() {
 
 		/* CREATIVE TABS */
-		RedstoneArsenal.tabCommon = new CreativeTabRA();
+		RedstoneArsenal.tabCommon = new CreativeTabCore("redstonearsenal") {
+
+			@Override
+			@SideOnly (Side.CLIENT)
+			public ItemStack getIconItemStack() {
+
+				ItemStack iconStack = new ItemStack(RAEquipment.ToolSet.FLUX.itemSword);
+				iconStack.setTagCompound(new NBTTagCompound());
+				iconStack.getTagCompound().setBoolean("CreativeTab", true);
+				iconStack.getTagCompound().setInteger("Energy", 32000);
+				iconStack.getTagCompound().setInteger("Mode", 1);
+
+				return iconStack;
+			}
+
+		};
 	}
 
 	public static void addEmpoweredTip(IMultiModeItem item, ItemStack stack, List<String> tooltip) {

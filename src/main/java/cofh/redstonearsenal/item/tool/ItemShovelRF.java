@@ -115,7 +115,7 @@ public class ItemShovelRF extends ItemToolRF {
 		if (!StringHelper.isShiftKeyDown()) {
 			return;
 		}
-		tooltip.add(StringHelper.getFlavorText("info.redstonearsenal.tool.shovel"));
+		tooltip.add(StringHelper.getNoticeText("info.redstonearsenal.tool.shovel"));
 	}
 
 	@Override

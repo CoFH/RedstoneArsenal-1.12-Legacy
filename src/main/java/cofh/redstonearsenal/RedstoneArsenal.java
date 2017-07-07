@@ -85,7 +85,6 @@ public class RedstoneArsenal {
 	@EventHandler
 	public void loadComplete(FMLLoadCompleteEvent event) {
 
-		RAProps.loadComplete();
 		CONFIG.cleanUp(false, true);
 		CONFIG_CLIENT.cleanUp(false, true);
 
