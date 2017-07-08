@@ -1,6 +1,7 @@
 package cofh.redstonearsenal.item.tool;
 
 import cofh.api.item.IMultiModeItem;
+import cofh.core.init.CoreProps;
 import cofh.core.item.tool.ItemShieldCore;
 import cofh.core.util.helpers.DamageHelper;
 import cofh.core.util.helpers.EnergyHelper;
@@ -180,6 +181,12 @@ public class ItemShieldRF extends ItemShieldCore implements IMultiModeItem, IEne
 	public int getMaxDamage(ItemStack stack) {
 
 		return 0;
+	}
+
+	@Override
+	public int getRGBDurabilityForDisplay(ItemStack stack) {
+
+		return CoreProps.RGB_DURABILITY_FLUX;
 	}
 
 	@Override

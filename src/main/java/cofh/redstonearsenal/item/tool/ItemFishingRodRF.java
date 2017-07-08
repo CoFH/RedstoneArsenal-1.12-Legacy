@@ -1,6 +1,7 @@
 package cofh.redstonearsenal.item.tool;
 
 import cofh.api.item.IMultiModeItem;
+import cofh.core.init.CoreProps;
 import cofh.core.item.tool.ItemFishingRodCore;
 import cofh.core.util.helpers.*;
 import cofh.redstonearsenal.init.RAProps;
@@ -134,6 +135,12 @@ public class ItemFishingRodRF extends ItemFishingRodCore implements IMultiModeIt
 	public int getMaxDamage(ItemStack stack) {
 
 		return 0;
+	}
+
+	@Override
+	public int getRGBDurabilityForDisplay(ItemStack stack) {
+
+		return CoreProps.RGB_DURABILITY_FLUX;
 	}
 
 	@Override

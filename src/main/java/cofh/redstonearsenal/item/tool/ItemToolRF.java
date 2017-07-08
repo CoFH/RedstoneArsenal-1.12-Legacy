@@ -1,6 +1,7 @@
 package cofh.redstonearsenal.item.tool;
 
 import cofh.api.item.IMultiModeItem;
+import cofh.core.init.CoreProps;
 import cofh.core.item.tool.ItemToolCore;
 import cofh.core.util.helpers.*;
 import cofh.redstonearsenal.init.RAProps;
@@ -199,6 +200,12 @@ public abstract class ItemToolRF extends ItemToolCore implements IMultiModeItem,
 			return 1.0F;
 		}
 		return super.getStrVsBlock(stack, state);
+	}
+
+	@Override
+	public int getRGBDurabilityForDisplay(ItemStack stack) {
+
+		return CoreProps.RGB_DURABILITY_FLUX;
 	}
 
 	@Override

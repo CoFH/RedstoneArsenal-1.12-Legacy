@@ -1,5 +1,6 @@
 package cofh.redstonearsenal.item.armor;
 
+import cofh.core.init.CoreProps;
 import cofh.core.item.ItemArmorCore;
 import cofh.core.util.helpers.EnergyHelper;
 import cofh.core.util.helpers.ItemHelper;
@@ -109,6 +110,12 @@ public class ItemArmorRF extends ItemArmorCore implements ISpecialArmor, IEnergy
 	public int getMaxDamage(ItemStack stack) {
 
 		return 0;
+	}
+
+	@Override
+	public int getRGBDurabilityForDisplay(ItemStack stack) {
+
+		return CoreProps.RGB_DURABILITY_FLUX;
 	}
 
 	@Override

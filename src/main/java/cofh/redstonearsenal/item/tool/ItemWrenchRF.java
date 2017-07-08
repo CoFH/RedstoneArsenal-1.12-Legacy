@@ -2,6 +2,7 @@ package cofh.redstonearsenal.item.tool;
 
 import cofh.api.block.IDismantleable;
 import cofh.api.item.IToolHammer;
+import cofh.core.init.CoreProps;
 import cofh.core.util.helpers.*;
 import cofh.redstonearsenal.init.RAProps;
 import cofh.redstoneflux.api.IEnergyContainerItem;
@@ -253,6 +254,12 @@ public class ItemWrenchRF extends ItemShears implements IEnergyContainerItem, IT
 	public int getMaxDamage(ItemStack stack) {
 
 		return 0;
+	}
+
+	@Override
+	public int getRGBDurabilityForDisplay(ItemStack stack) {
+
+		return CoreProps.RGB_DURABILITY_FLUX;
 	}
 
 	@Override

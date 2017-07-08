@@ -1,6 +1,7 @@
 package cofh.redstonearsenal.item.tool;
 
 import cofh.api.item.IMultiModeItem;
+import cofh.core.init.CoreProps;
 import cofh.core.item.tool.ItemBowCore;
 import cofh.core.util.helpers.EnergyHelper;
 import cofh.core.util.helpers.ItemHelper;
@@ -144,6 +145,12 @@ public class ItemBowRF extends ItemBowCore implements IMultiModeItem, IEnergyCon
 	public int getMaxDamage(ItemStack stack) {
 
 		return 0;
+	}
+
+	@Override
+	public int getRGBDurabilityForDisplay(ItemStack stack) {
+
+		return CoreProps.RGB_DURABILITY_FLUX;
 	}
 
 	@Override
