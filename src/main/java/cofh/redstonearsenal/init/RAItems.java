@@ -2,6 +2,7 @@ package cofh.redstonearsenal.init;
 
 import cofh.core.util.core.IInitializer;
 import cofh.redstonearsenal.item.ItemMaterial;
+import cofh.redstonearsenal.item.ItemQuiverRF;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
@@ -20,8 +21,10 @@ public class RAItems {
 	public static void preInit() {
 
 		itemMaterial = new ItemMaterial();
+		itemQuiver = new ItemQuiverRF();
 
 		initList.add(itemMaterial);
+		initList.add(itemQuiver);
 
 		for (IInitializer init : initList) {
 			init.initialize();
@@ -42,5 +45,6 @@ public class RAItems {
 
 	/* REFERENCES */
 	public static ItemMaterial itemMaterial;
+	public static ItemQuiverRF itemQuiver;
 
 }

@@ -34,6 +34,8 @@ item.redstonearsenal.tool.fluxSickle.name=Flux-Infused Sickle
 item.redstonearsenal.tool.fluxSword.name=Flux-Infused Sword
 item.redstonearsenal.tool.fluxWrench.name=Flux-Infused OmniWrench
 
+item.redstonearsenal.util.fluxQuiver.name=Flux-Infused Quiver
+
 itemGroup.redstonearsenal.creativeTab=Redstone Arsenal
 
 tile.redstonearsenal.storage.crystalFlux.name=Flux Crystal Block

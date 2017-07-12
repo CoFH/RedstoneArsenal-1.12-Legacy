@@ -1,0 +1,6 @@
+{
+	"parent": "redstonearsenal:item/util/quiver_flux",
+	"textures": {
+		"layer0": "redstonearsenal:items/util/quiver_flux_active"
+	}
+}
