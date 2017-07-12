@@ -1,6 +1,7 @@
 package cofh.redstonearsenal.item.tool;
 
 import cofh.api.item.IMultiModeItem;
+import cofh.core.init.CoreEnchantments;
 import cofh.core.init.CoreProps;
 import cofh.core.item.tool.ItemBowCore;
 import cofh.core.util.helpers.EnergyHelper;
@@ -12,6 +13,7 @@ import cofh.redstoneflux.api.IEnergyContainerItem;
 import cofh.redstoneflux.util.EnergyContainerItemWrapper;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -78,7 +80,7 @@ public class ItemBowRF extends ItemBowCore implements IMultiModeItem, IEnergyCon
 		if (stack.getTagCompound() == null) {
 			EnergyHelper.setDefaultEnergyTag(stack, 0);
 		}
-		tooltip.add(StringHelper.localize("info.cofh.charge") + ": " + StringHelper.formatNumber(stack.getTagCompound().getInteger("Energy")) + " / " + StringHelper.formatNumber(maxEnergy) + " RF");
+		tooltip.add(StringHelper.localize("info.cofh.charge") + ": " + StringHelper.formatNumber(stack.getTagCompound().getInteger("Energy")) + " / " + StringHelper.formatNumber(getMaxEnergyStored(stack)) + " RF");
 
 		tooltip.add(StringHelper.ORANGE + getEnergyPerUse(stack) + " " + StringHelper.localize("info.redstonearsenal.tool.energyPerUse") + StringHelper.END);
 		RAProps.addEmpoweredTip(this, stack, tooltip);
@@ -159,7 +161,7 @@ public class ItemBowRF extends ItemBowCore implements IMultiModeItem, IEnergyCon
 		if (stack.getTagCompound() == null) {
 			EnergyHelper.setDefaultEnergyTag(stack, 0);
 		}
-		return 1D - (double) stack.getTagCompound().getInteger("Energy") / (double) maxEnergy;
+		return 1D - (double) stack.getTagCompound().getInteger("Energy") / (double) getMaxEnergyStored(stack);
 	}
 
 	@Override
@@ -249,7 +251,7 @@ public class ItemBowRF extends ItemBowCore implements IMultiModeItem, IEnergyCon
 			EnergyHelper.setDefaultEnergyTag(container, 0);
 		}
 		int stored = container.getTagCompound().getInteger("Energy");
-		int receive = Math.min(maxReceive, Math.min(maxEnergy - stored, maxTransfer));
+		int receive = Math.min(maxReceive, Math.min(getMaxEnergyStored(container) - stored, maxTransfer));
 
 		if (!simulate) {
 			stored += receive;
@@ -293,7 +295,15 @@ public class ItemBowRF extends ItemBowCore implements IMultiModeItem, IEnergyCon
 	@Override
 	public int getMaxEnergyStored(ItemStack container) {
 
-		return maxEnergy;
+		int enchant = EnchantmentHelper.getEnchantmentLevel(CoreEnchantments.holding, container);
+		return maxEnergy + maxEnergy * enchant / 2;
+	}
+
+	/* IEnchantableItem */
+	@Override
+	public boolean canEnchant(ItemStack stack, Enchantment enchantment) {
+
+		return enchantment == CoreEnchantments.holding;
 	}
 
 	/* CAPABILITIES */

@@ -4,6 +4,7 @@ import cofh.core.init.CoreProps;
 import cofh.core.util.helpers.DamageHelper;
 import cofh.core.util.helpers.ServerHelper;
 import cofh.redstonearsenal.RedstoneArsenal;
+import cofh.redstonearsenal.init.RAProps;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -170,7 +171,7 @@ public class EntityFluxArrow extends EntityArrow {
 			}
 		}
 		if (!world.isRemote && empowered) {
-			world.createExplosion(this, posX, posY, posZ, EXPLOSION_STRENGTH, true);
+			world.createExplosion(this, posX, posY, posZ, EXPLOSION_STRENGTH, RAProps.explosionsDestroyBlocks);
 		}
 		this.setDead();
 	}
@@ -178,7 +179,10 @@ public class EntityFluxArrow extends EntityArrow {
 	@Override
 	public void onUpdate() {
 
-		super.onUpdate();
+		if (!this.world.isRemote) {
+			this.setFlag(6, this.isGlowing());
+		}
+		this.onEntityUpdate();
 
 		if (this.prevRotationPitch == 0.0F && this.prevRotationYaw == 0.0F) {
 			float f = MathHelper.sqrt(this.motionX * this.motionX + this.motionZ * this.motionZ);
@@ -266,11 +270,11 @@ public class EntityFluxArrow extends EntityArrow {
 			this.doBlockCollisions();
 		}
 		if (world.isRemote) {
-			spawnParticles(empowered ? 4 : 1);
+			spawnParticles(empowered ? 8 : 2);
 		}
 		if (this.ticksInAir >= MAX_TICKS) {
 			if (!world.isRemote && empowered) {
-				world.createExplosion(this, posX, posY, posZ, EXPLOSION_STRENGTH, true);
+				world.createExplosion(this, posX, posY, posZ, EXPLOSION_STRENGTH, RAProps.explosionsDestroyBlocks);
 			}
 			this.setDead();
 		}

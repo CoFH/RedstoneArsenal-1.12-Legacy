@@ -2,7 +2,9 @@ package cofh.redstonearsenal.item.tool;
 
 import cofh.api.block.IDismantleable;
 import cofh.api.item.IToolHammer;
+import cofh.core.init.CoreEnchantments;
 import cofh.core.init.CoreProps;
+import cofh.core.item.IEnchantableItem;
 import cofh.core.util.helpers.*;
 import cofh.redstonearsenal.init.RAProps;
 import cofh.redstoneflux.api.IEnergyContainerItem;
@@ -13,6 +15,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -46,7 +49,7 @@ import java.util.List;
 
 //TODO FIXME @Optional
 //@Implementable ({ "buildcraft.api.tools.IToolWrench", "mods.railcraft.api.core.items.IToolCrowbar" })
-public class ItemWrenchRF extends ItemShears implements IEnergyContainerItem, IToolHammer {
+public class ItemWrenchRF extends ItemShears implements IEnergyContainerItem, IEnchantableItem, IToolHammer {
 
 	protected int maxEnergy = 320000;
 	protected int maxTransfer = 4000;
@@ -109,7 +112,7 @@ public class ItemWrenchRF extends ItemShears implements IEnergyContainerItem, IT
 		if (stack.getTagCompound() == null) {
 			EnergyHelper.setDefaultEnergyTag(stack, 0);
 		}
-		tooltip.add(StringHelper.localize("info.cofh.charge") + ": " + StringHelper.formatNumber(stack.getTagCompound().getInteger("Energy")) + " / " + StringHelper.formatNumber(maxEnergy) + " RF");
+		tooltip.add(StringHelper.localize("info.cofh.charge") + ": " + StringHelper.formatNumber(stack.getTagCompound().getInteger("Energy")) + " / " + StringHelper.formatNumber(getMaxEnergyStored(stack)) + " RF");
 		tooltip.add(StringHelper.ORANGE + getEnergyPerUse(stack) + " " + StringHelper.localize("info.redstonearsenal.tool.energyPerUse") + StringHelper.END);
 		tooltip.add(StringHelper.getNoticeText("info.redstonearsenal.tool.wrench"));
 	}
@@ -268,7 +271,7 @@ public class ItemWrenchRF extends ItemShears implements IEnergyContainerItem, IT
 		if (stack.getTagCompound() == null) {
 			EnergyHelper.setDefaultEnergyTag(stack, 0);
 		}
-		return 1D - (double) stack.getTagCompound().getInteger("Energy") / (double) maxEnergy;
+		return 1D - (double) stack.getTagCompound().getInteger("Energy") / (double) getMaxEnergyStored(stack);
 	}
 
 	@Override
@@ -391,7 +394,7 @@ public class ItemWrenchRF extends ItemShears implements IEnergyContainerItem, IT
 			EnergyHelper.setDefaultEnergyTag(container, 0);
 		}
 		int stored = container.getTagCompound().getInteger("Energy");
-		int receive = Math.min(maxReceive, Math.min(maxEnergy - stored, maxTransfer));
+		int receive = Math.min(maxReceive, Math.min(getMaxEnergyStored(container) - stored, maxTransfer));
 
 		if (!simulate) {
 			stored += receive;
@@ -431,7 +434,15 @@ public class ItemWrenchRF extends ItemShears implements IEnergyContainerItem, IT
 	@Override
 	public int getMaxEnergyStored(ItemStack container) {
 
-		return maxEnergy;
+		int enchant = EnchantmentHelper.getEnchantmentLevel(CoreEnchantments.holding, container);
+		return maxEnergy + maxEnergy * enchant / 2;
+	}
+
+	/* IEnchantableItem */
+	@Override
+	public boolean canEnchant(ItemStack stack, Enchantment enchantment) {
+
+		return enchantment == CoreEnchantments.holding;
 	}
 
 	/* IMPLEMENTABLES */

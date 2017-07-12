@@ -2,7 +2,7 @@ package cofh.redstonearsenal.init;
 
 import cofh.core.util.core.IInitializer;
 import cofh.redstonearsenal.item.ItemMaterial;
-import cofh.redstonearsenal.item.ItemQuiverRF;
+import cofh.redstonearsenal.item.util.ItemQuiverRF;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;

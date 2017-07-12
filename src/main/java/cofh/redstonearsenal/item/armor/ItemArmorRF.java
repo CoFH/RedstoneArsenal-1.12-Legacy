@@ -1,6 +1,8 @@
 package cofh.redstonearsenal.item.armor;
 
+import cofh.core.init.CoreEnchantments;
 import cofh.core.init.CoreProps;
+import cofh.core.item.IEnchantableItem;
 import cofh.core.item.ItemArmorCore;
 import cofh.core.util.helpers.EnergyHelper;
 import cofh.core.util.helpers.ItemHelper;
@@ -11,6 +13,7 @@ import cofh.redstoneflux.api.IEnergyContainerItem;
 import cofh.redstoneflux.util.EnergyContainerItemWrapper;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -28,7 +31,7 @@ import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class ItemArmorRF extends ItemArmorCore implements ISpecialArmor, IEnergyContainerItem {
+public class ItemArmorRF extends ItemArmorCore implements ISpecialArmor, IEnergyContainerItem, IEnchantableItem {
 
 	private static final ArmorProperties FLUX = new ArmorProperties(0, 0.20D, Integer.MAX_VALUE);
 	private static final ArmorProperties FALL = new ArmorProperties(0, 0.00D, 0);
@@ -70,7 +73,7 @@ public class ItemArmorRF extends ItemArmorCore implements ISpecialArmor, IEnergy
 		if (stack.getTagCompound() == null) {
 			EnergyHelper.setDefaultEnergyTag(stack, 0);
 		}
-		tooltip.add(StringHelper.localize("info.cofh.charge") + ": " + StringHelper.formatNumber(stack.getTagCompound().getInteger("Energy")) + " / " + StringHelper.formatNumber(maxEnergy) + " RF");
+		tooltip.add(StringHelper.localize("info.cofh.charge") + ": " + StringHelper.formatNumber(stack.getTagCompound().getInteger("Energy")) + " / " + StringHelper.formatNumber(getMaxEnergyStored(stack)) + " RF");
 	}
 
 	@Override
@@ -124,7 +127,7 @@ public class ItemArmorRF extends ItemArmorCore implements ISpecialArmor, IEnergy
 		if (stack.getTagCompound() == null) {
 			EnergyHelper.setDefaultEnergyTag(stack, 0);
 		}
-		return 1D - (double) stack.getTagCompound().getInteger("Energy") / (double) maxEnergy;
+		return 1D - (double) stack.getTagCompound().getInteger("Energy") / (double) getMaxEnergyStored(stack);
 	}
 
 	@Override
@@ -182,7 +185,7 @@ public class ItemArmorRF extends ItemArmorCore implements ISpecialArmor, IEnergy
 			EnergyHelper.setDefaultEnergyTag(container, 0);
 		}
 		int stored = container.getTagCompound().getInteger("Energy");
-		int receive = Math.min(maxReceive, Math.min(maxEnergy - stored, maxTransfer));
+		int receive = Math.min(maxReceive, Math.min(getMaxEnergyStored(container) - stored, maxTransfer));
 
 		if (!simulate) {
 			stored += receive;
@@ -219,7 +222,15 @@ public class ItemArmorRF extends ItemArmorCore implements ISpecialArmor, IEnergy
 	@Override
 	public int getMaxEnergyStored(ItemStack container) {
 
-		return maxEnergy;
+		int enchant = EnchantmentHelper.getEnchantmentLevel(CoreEnchantments.holding, container);
+		return maxEnergy + maxEnergy * enchant / 2;
+	}
+
+	/* IEnchantableItem */
+	@Override
+	public boolean canEnchant(ItemStack stack, Enchantment enchantment) {
+
+		return enchantment == CoreEnchantments.holding;
 	}
 
 	/* CAPABILITIES */
