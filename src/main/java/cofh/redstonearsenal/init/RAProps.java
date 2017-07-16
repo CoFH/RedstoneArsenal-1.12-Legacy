@@ -66,7 +66,7 @@ public class RAProps {
 	}
 
 	/* GENERAL */
-	public static boolean explosionsDestroyBlocks = true;
+	public static boolean explosionsDestroyBlocks = false;
 
 	/* INTERFACE */
 	public static boolean showArmorCharge = true;

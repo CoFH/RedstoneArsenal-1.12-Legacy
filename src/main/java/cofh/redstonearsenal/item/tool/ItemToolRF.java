@@ -74,7 +74,7 @@ public abstract class ItemToolRF extends ItemToolCore implements IMultiModeItem,
 
 	protected boolean isEmpowered(ItemStack stack) {
 
-		return getMode(stack) == 1 && getEnergyStored(stack) > energyPerUseCharged;
+		return getMode(stack) == 1 && getEnergyStored(stack) >= energyPerUseCharged;
 	}
 
 	protected int getEnergyPerUse(ItemStack stack) {

@@ -37,9 +37,9 @@ public class EntityFluxArrow extends EntityArrow {
 
 	public static final int MAX_TICKS = 100;
 	public static final float MIN_VELOCITY = 0.5F;
-	public static final float EXPLOSION_STRENGTH = 4.0F;
 	public static final double DAMAGE = 2.0D;
 	public static final double DAMAGE_EMPOWERED = 4.0D;
+	public static final float EXPLOSION_STRENGTH = 4.0F;
 
 	protected boolean empowered = false;
 
@@ -90,9 +90,7 @@ public class EntityFluxArrow extends EntityArrow {
 		Entity entity = traceResult.entityHit;
 
 		if (entity != null) {
-			float f = MathHelper.sqrt(this.motionX * this.motionX + this.motionY * this.motionY + this.motionZ * this.motionZ);
-			int i = MathHelper.ceil((double) f * this.damage);
-
+			int i = MathHelper.ceil(MathHelper.sqrt(this.motionX * this.motionX + this.motionY * this.motionY + this.motionZ * this.motionZ) * this.damage);
 			if (this.getIsCritical()) {
 				i += this.rand.nextInt(i / 2 + 2);
 			}
@@ -171,7 +169,7 @@ public class EntityFluxArrow extends EntityArrow {
 			}
 		}
 		if (!world.isRemote && empowered) {
-			world.createExplosion(this, posX, posY, posZ, EXPLOSION_STRENGTH, RAProps.explosionsDestroyBlocks);
+			world.createExplosion(this, posX, posY, posZ, EXPLOSION_STRENGTH + (getIsCritical() ? 2 + rand.nextFloat() : 0), RAProps.explosionsDestroyBlocks);
 		}
 		this.setDead();
 	}
@@ -274,7 +272,7 @@ public class EntityFluxArrow extends EntityArrow {
 		}
 		if (this.ticksInAir >= MAX_TICKS) {
 			if (!world.isRemote && empowered) {
-				world.createExplosion(this, posX, posY, posZ, EXPLOSION_STRENGTH, RAProps.explosionsDestroyBlocks);
+				world.createExplosion(this, posX, posY, posZ, EXPLOSION_STRENGTH + (getIsCritical() ? 2 + rand.nextFloat() : 0), RAProps.explosionsDestroyBlocks);
 			}
 			this.setDead();
 		}

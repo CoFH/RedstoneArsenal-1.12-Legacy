@@ -6,6 +6,7 @@ import cofh.core.init.CoreProps;
 import cofh.core.item.IEnchantableItem;
 import cofh.core.render.IModelRegister;
 import cofh.core.util.core.IInitializer;
+import cofh.core.util.core.IQuiverItem;
 import cofh.core.util.helpers.EnergyHelper;
 import cofh.core.util.helpers.ItemHelper;
 import cofh.core.util.helpers.MathHelper;
@@ -43,7 +44,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class ItemQuiverRF extends ItemArrow implements IModelRegister, IMultiModeItem, IEnergyContainerItem, IEnchantableItem, IInitializer {
+public class ItemQuiverRF extends ItemArrow implements IModelRegister, IMultiModeItem, IEnergyContainerItem, IQuiverItem, IEnchantableItem, IInitializer {
 
 	protected int maxEnergy = 320000;
 	protected int maxTransfer = 4000;
@@ -77,33 +78,13 @@ public class ItemQuiverRF extends ItemArrow implements IModelRegister, IMultiMod
 
 	protected boolean isEmpowered(ItemStack stack) {
 
-		return getMode(stack) == 1 && getEnergyStored(stack) > energyPerUseCharged;
+		return getMode(stack) == 1 && getEnergyStored(stack) >= energyPerUseCharged;
 	}
 
 	protected int getEnergyPerUse(ItemStack stack) {
 
 		int unbreakingLevel = MathHelper.clamp(EnchantmentHelper.getEnchantmentLevel(Enchantments.UNBREAKING, stack), 0, 4);
 		return (isEmpowered(stack) ? energyPerUseCharged : energyPerUse) * (5 - unbreakingLevel) / 5;
-	}
-
-	@Override
-	public EntityArrow createArrow(World world, ItemStack stack, EntityLivingBase shooter) {
-
-		boolean empowered = isEmpowered(stack);
-
-		if (shooter instanceof EntityPlayer && !stack.getTagCompound().hasKey("Fired")) {
-			int unbreakingLevel = MathHelper.clamp(EnchantmentHelper.getEnchantmentLevel(Enchantments.UNBREAKING, stack), 0, 4);
-			extractEnergy(stack, empowered ? energyPerUseCharged * (5 - unbreakingLevel) / 5 : energyPerUse * (5 - unbreakingLevel) / 5, ((EntityPlayer) shooter).capabilities.isCreativeMode);
-
-			stack.getTagCompound().setBoolean("Fired", true);
-		}
-		return new EntityFluxArrow(world, shooter, empowered);
-	}
-
-	@Override
-	public boolean isInfinite(ItemStack stack, ItemStack bow, EntityPlayer player) {
-
-		return true;
 	}
 
 	@Override
@@ -139,7 +120,6 @@ public class ItemQuiverRF extends ItemArrow implements IModelRegister, IMultiMod
 		if (stack.getItemDamage() > 0) {
 			stack.setItemDamage(0);
 		}
-		stack.getTagCompound().removeTag("Fired");
 	}
 
 	@Override
@@ -163,7 +143,7 @@ public class ItemQuiverRF extends ItemArrow implements IModelRegister, IMultiMod
 	@Override
 	public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
 
-		return super.shouldCauseReequipAnimation(oldStack, newStack, slotChanged) && (slotChanged || !ItemHelper.areItemStacksEqualIgnoreTags(oldStack, newStack, "Energy", "Fired"));
+		return super.shouldCauseReequipAnimation(oldStack, newStack, slotChanged) && (slotChanged || !ItemHelper.areItemStacksEqualIgnoreTags(oldStack, newStack, "Energy"));
 	}
 
 	@Override
@@ -324,6 +304,27 @@ public class ItemQuiverRF extends ItemArrow implements IModelRegister, IMultiMod
 
 		int enchant = EnchantmentHelper.getEnchantmentLevel(CoreEnchantments.holding, container);
 		return maxEnergy + maxEnergy * enchant / 2;
+	}
+
+	/* IQuiverItem */
+	@Override
+	public EntityArrow createArrow(World world, ItemStack stack, EntityLivingBase shooter) {
+
+		return new EntityFluxArrow(world, shooter, isEmpowered(stack));
+	}
+
+	@Override
+	public boolean isEmpty(ItemStack stack, EntityLivingBase shooter) {
+
+		return !(shooter instanceof EntityPlayer && ((EntityPlayer) shooter).capabilities.isCreativeMode) && getEnergyStored(stack) <= 0;
+	}
+
+	@Override
+	public void onArrowFired(ItemStack stack, EntityLivingBase shooter) {
+
+		if (shooter instanceof EntityPlayer) {
+			extractEnergy(stack, getEnergyPerUse(stack), ((EntityPlayer) shooter).capabilities.isCreativeMode);
+		}
 	}
 
 	/* IEnchantableItem */

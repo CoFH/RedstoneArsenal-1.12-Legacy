@@ -59,7 +59,7 @@ public class ItemBowRF extends ItemBowCore implements IMultiModeItem, IEnergyCon
 
 	protected boolean isEmpowered(ItemStack stack) {
 
-		return getMode(stack) == 1 && getEnergyStored(stack) > energyPerUseCharged;
+		return getMode(stack) == 1 && getEnergyStored(stack) >= energyPerUseCharged;
 	}
 
 	protected int getEnergyPerUse(ItemStack stack) {

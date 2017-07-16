@@ -68,7 +68,7 @@ public class ItemShieldRF extends ItemShieldCore implements IMultiModeItem, IEne
 
 	protected boolean isEmpowered(ItemStack stack) {
 
-		return getMode(stack) == 1 && getEnergyStored(stack) > energyPerUseCharged;
+		return getMode(stack) == 1 && getEnergyStored(stack) >= energyPerUseCharged;
 	}
 
 	protected int getEnergyPerUse(ItemStack stack) {
