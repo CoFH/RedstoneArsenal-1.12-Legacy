@@ -100,9 +100,6 @@ public class ItemBowRF extends ItemBowCore implements IMultiModeItem, IEnergyCon
 
 		int unbreakingLevel = MathHelper.clamp(EnchantmentHelper.getEnchantmentLevel(Enchantments.UNBREAKING, stack), 0, 4);
 		extractEnergy(stack, isEmpowered(stack) ? energyPerUseCharged * (5 - unbreakingLevel) / 5 : energyPerUse * (5 - unbreakingLevel) / 5, player.capabilities.isCreativeMode);
-
-		boolean fired = stack.getTagCompound().getBoolean("Fired");
-		stack.getTagCompound().setBoolean("Fired", !fired);
 	}
 
 	@Override
