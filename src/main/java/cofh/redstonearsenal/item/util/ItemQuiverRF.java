@@ -26,6 +26,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.init.Enchantments;
+import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemArrow;
@@ -44,6 +45,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import javax.annotation.Nullable;
 import java.util.List;
 
+import static cofh.core.util.helpers.RecipeHelper.addShapedRecipe;
+
 public class ItemQuiverRF extends ItemArrow implements IModelRegister, IMultiModeItem, IEnergyContainerItem, IQuiverItem, IEnchantableItem, IInitializer {
 
 	protected int maxEnergy = 320000;
@@ -58,6 +61,7 @@ public class ItemQuiverRF extends ItemArrow implements IModelRegister, IMultiMod
 
 		super();
 		setNoRepair();
+		setMaxStackSize(1);
 
 		addPropertyOverride(new ResourceLocation("active"), (stack, world, entity) -> ItemQuiverRF.this.getEnergyStored(stack) > 0 && !ItemQuiverRF.this.isEmpowered(stack) ? 1F : 0F);
 		addPropertyOverride(new ResourceLocation("empowered"), (stack, world, entity) -> ItemQuiverRF.this.isEmpowered(stack) ? 1F : 0F);
@@ -308,7 +312,7 @@ public class ItemQuiverRF extends ItemArrow implements IModelRegister, IMultiMod
 
 	/* IQuiverItem */
 	@Override
-	public EntityArrow createArrow(World world, ItemStack stack, EntityLivingBase shooter) {
+	public EntityArrow createEntityArrow(World world, ItemStack stack, EntityLivingBase shooter) {
 
 		return new EntityFluxArrow(world, shooter, isEmpowered(stack));
 	}
@@ -348,6 +352,8 @@ public class ItemQuiverRF extends ItemArrow implements IModelRegister, IMultiMod
 		this.setRegistryName("util.quiver_flux");
 		ForgeRegistries.ITEMS.register(this);
 
+		quiverElectrumFlux = EnergyHelper.setDefaultEnergyTag(new ItemStack(this, 1, 0), 0);
+
 		RedstoneArsenal.proxy.addIModelRegister(this);
 
 		return true;
@@ -355,6 +361,8 @@ public class ItemQuiverRF extends ItemArrow implements IModelRegister, IMultiMod
 
 	@Override
 	public boolean register() {
+
+		addShapedRecipe(quiverElectrumFlux, "AA ", "GIS", "IGS", 'A', Items.ARROW, 'G', "gemCrystalFlux", 'I', "ingotElectrumFlux", 'S', Items.STRING);
 
 		return true;
 	}
