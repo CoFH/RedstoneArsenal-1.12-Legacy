@@ -4,6 +4,7 @@ import cofh.api.item.IMultiModeItem;
 import cofh.core.init.CoreEnchantments;
 import cofh.core.init.CoreProps;
 import cofh.core.item.IEnchantableItem;
+import cofh.core.item.ItemCore;
 import cofh.core.render.IModelRegister;
 import cofh.core.util.core.IInitializer;
 import cofh.core.util.core.IQuiverItem;
@@ -29,7 +30,6 @@ import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.EnumRarity;
-import net.minecraft.item.ItemArrow;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.NonNullList;
@@ -47,7 +47,7 @@ import java.util.List;
 
 import static cofh.core.util.helpers.RecipeHelper.addShapedRecipe;
 
-public class ItemQuiverRF extends ItemArrow implements IModelRegister, IMultiModeItem, IEnergyContainerItem, IQuiverItem, IEnchantableItem, IInitializer {
+public class ItemQuiverRF extends ItemCore implements IModelRegister, IMultiModeItem, IEnergyContainerItem, IQuiverItem, IEnchantableItem, IInitializer {
 
 	protected int maxEnergy = 320000;
 	protected int maxTransfer = 4000;
@@ -59,15 +59,15 @@ public class ItemQuiverRF extends ItemArrow implements IModelRegister, IMultiMod
 
 	public ItemQuiverRF() {
 
-		super();
+		super("redstonearsenal");
+
 		setNoRepair();
 		setMaxStackSize(1);
+		setUnlocalizedName("redstonearsenal.util.fluxQuiver");
+		setCreativeTab(RedstoneArsenal.tabCommon);
 
 		addPropertyOverride(new ResourceLocation("active"), (stack, world, entity) -> ItemQuiverRF.this.getEnergyStored(stack) > 0 && !ItemQuiverRF.this.isEmpowered(stack) ? 1F : 0F);
 		addPropertyOverride(new ResourceLocation("empowered"), (stack, world, entity) -> ItemQuiverRF.this.isEmpowered(stack) ? 1F : 0F);
-
-		setUnlocalizedName("redstonearsenal.util.fluxQuiver");
-		setCreativeTab(RedstoneArsenal.tabCommon);
 	}
 
 	public ItemQuiverRF setEnergyParams(int maxEnergy, int maxTransfer, int energyPerUse, int energyPerUseCharged) {

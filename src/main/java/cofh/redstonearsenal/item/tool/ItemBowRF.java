@@ -300,7 +300,7 @@ public class ItemBowRF extends ItemBowCore implements IMultiModeItem, IEnergyCon
 	@Override
 	public boolean canEnchant(ItemStack stack, Enchantment enchantment) {
 
-		return enchantment == CoreEnchantments.holding;
+		return enchantment == CoreEnchantments.holding || super.canEnchant(stack, enchantment);
 	}
 
 	/* CAPABILITIES */

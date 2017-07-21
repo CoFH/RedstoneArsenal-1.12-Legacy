@@ -1,0 +1,22 @@
+{
+	"type": "thermalfoundation:fluid_shapeless",
+	"result": {
+		"item": "redstonearsenal:material",
+		"data": 0,
+		"count": 2
+	},
+	"ingredients": [
+		{
+			"type": "forge:ore_dict",
+			"ore": "dustGold"
+		},
+		{
+			"type": "forge:ore_dict",
+			"ore": "dustSilver"
+		},
+		{
+			"type": "redstonearsenal:fluid",
+			"fluid": "redstone"
+		}
+	]
+}

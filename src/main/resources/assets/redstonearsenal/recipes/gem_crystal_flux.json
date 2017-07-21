@@ -1,0 +1,22 @@
+{
+	"type": "thermalfoundation:fluid_shapeless",
+	"result": {
+		"item": "redstonearsenal:material",
+		"data": 160,
+		"count": 2
+	},
+	"ingredients": [
+		{
+			"type": "forge:ore_dict",
+			"ore": "gemDiamond"
+		},
+		{
+			"type": "forge:ore_dict",
+			"ore": "gemDiamond"
+		},
+		{
+			"type": "redstonearsenal:fluid",
+			"fluid": "redstone"
+		}
+	]
+}

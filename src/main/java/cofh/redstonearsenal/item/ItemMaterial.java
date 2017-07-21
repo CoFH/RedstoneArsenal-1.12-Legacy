@@ -84,8 +84,8 @@ public class ItemMaterial extends ItemMulti implements IInitializer {
 			ThermalExpansionHelper.addCompactorStorageRecipe(400, ItemHelper.cloneStack(gemCrystalFlux, 9), BlockStorage.blockCrystalFlux);
 			ThermalExpansionHelper.addCompactorStorageRecipe(400, ItemHelper.cloneStack(nuggetElectrumFlux, 9), ingotElectrumFlux);
 
-			ThermalExpansionHelper.addTransposerFill(4000, dustElectrum, dustElectrumFlux, fluidRedstone, false);
-			ThermalExpansionHelper.addTransposerFill(4000, new ItemStack(Items.DIAMOND), gemCrystalFlux, fluidRedstone, false);
+			ThermalExpansionHelper.addTransposerFill(400, dustElectrum, dustElectrumFlux, fluidRedstone, false);
+			ThermalExpansionHelper.addTransposerFill(400, new ItemStack(Items.DIAMOND), gemCrystalFlux, fluidRedstone, false);
 		}
 		return true;
 	}
