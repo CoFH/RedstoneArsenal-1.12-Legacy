@@ -1,7 +1,7 @@
 #zh_CN
 
-info.redstonearsenal.tool.chargeOff=§e按下 (%s) to 压制§r
-info.redstonearsenal.tool.chargeOn=§b按下 (%s) to 授权§r
+info.redstonearsenal.tool.chargeOff=§e按下 (%s) to 休眠§r
+info.redstonearsenal.tool.chargeOn=§b按下 (%s) to 充能§r
 
 info.redstonearsenal.tool.energyPerUse=RF/次使用
 info.redstonearsenal.tool.shovel=具有锄头的功能
@@ -17,7 +17,8 @@ item.redstonearsenal.material.gearElectrumFlux.name=红石琥珀金齿轮
 item.redstonearsenal.material.gemCrystalFlux.name=红石水晶
 item.redstonearsenal.material.ingotElectrumFlux.name=红石琥珀金锭
 item.redstonearsenal.material.nuggetElectrumFlux.name=红石琥珀金粒
-item.redstonearsenal.material.plateFlux.name=红石装甲防护板
+item.redstonearsenal.material.plateElectrumFlux.name=红石琥珀金板
+item.redstonearsenal.material.plateArmorFlux.name=红石护甲防护板
 item.redstonearsenal.material.rodObsidian.name=黑曜石手柄
 item.redstonearsenal.material.rodObsidianFlux.name=充能黑曜石手柄
 
