@@ -145,6 +145,12 @@ public class ItemQuiverRF extends ItemCore implements IModelRegister, IMultiMode
 	}
 
 	@Override
+	public boolean isEnchantable(ItemStack stack) {
+
+		return true;
+	}
+
+	@Override
 	public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
 
 		return super.shouldCauseReequipAnimation(oldStack, newStack, slotChanged) && (slotChanged || !ItemHelper.areItemStacksEqualIgnoreTags(oldStack, newStack, "Energy"));
@@ -154,6 +160,12 @@ public class ItemQuiverRF extends ItemCore implements IModelRegister, IMultiMode
 	public boolean showDurabilityBar(ItemStack stack) {
 
 		return RAProps.showToolCharge && stack.getTagCompound() != null && !stack.getTagCompound().getBoolean("CreativeTab");
+	}
+
+	@Override
+	public int getItemEnchantability() {
+
+		return 10;
 	}
 
 	@Override
