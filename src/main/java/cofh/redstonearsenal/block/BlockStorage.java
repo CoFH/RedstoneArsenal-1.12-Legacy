@@ -99,7 +99,7 @@ public class BlockStorage extends BlockCore implements IInitializer, IModelRegis
 	@Override
 	public void onEntityCollidedWithBlock(World world, BlockPos pos, IBlockState state, Entity entity) {
 
-		entity.attackEntityFrom(DamageHelper.flux, 2.0F);
+		entity.attackEntityFrom(DamageHelper.FLUX, 2.0F);
 
 		if (entity instanceof EntityPlayerMP) {
 			EntityPlayerMP player = (EntityPlayerMP) entity;

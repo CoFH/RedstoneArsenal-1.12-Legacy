@@ -97,7 +97,7 @@ public class EntityFluxArrow extends EntityArrow {
 			DamageSource damagesource;
 
 			if (this.shootingEntity == null) {
-				damagesource = DamageHelper.flux;
+				damagesource = DamageHelper.FLUX;
 			} else {
 				damagesource = DamageHelper.causeEntityFluxDamage("arrow", this.shootingEntity);
 			}
