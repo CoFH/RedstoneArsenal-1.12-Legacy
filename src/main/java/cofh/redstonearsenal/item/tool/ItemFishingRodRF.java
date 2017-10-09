@@ -183,7 +183,7 @@ public class ItemFishingRodRF extends ItemFishingRodCore implements IMultiModeIt
 				EntityFishHook hook = new EntityFishHook(world, player);
 
 				int enchantSpeed = EnchantmentHelper.getFishingSpeedBonus(stack);
-				hook.setLureSpeed(speedModifier + enchantSpeed + (isEmpowered(stack) ? 2 : 0));
+				hook.setLureSpeed(Math.max(speedModifier + enchantSpeed + (isEmpowered(stack) ? 2 : 0), 5));
 
 				int enchantLuck = EnchantmentHelper.getFishingLuckBonus(stack);
 				hook.setLuck(luckModifier + enchantLuck + (isEmpowered(stack) ? 2 : 0));

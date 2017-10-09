@@ -288,9 +288,9 @@ public class EntityFluxArrow extends EntityArrow {
 	}
 
 	@Override
-	public void setAim(Entity shooter, float pitch, float yaw, float roll, float velocity, float inaccuracy) {
+	public void shoot(Entity shooter, float pitch, float yaw, float roll, float velocity, float inaccuracy) {
 
-		super.setAim(shooter, pitch, yaw, roll, Math.max(MIN_VELOCITY, velocity), inaccuracy);
+		super.shoot(shooter, pitch, yaw, roll, Math.max(MIN_VELOCITY, velocity), inaccuracy);
 	}
 
 	@Override
