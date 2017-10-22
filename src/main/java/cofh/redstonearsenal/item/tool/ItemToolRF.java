@@ -173,12 +173,6 @@ public abstract class ItemToolRF extends ItemToolCore implements IMultiModeItem,
 	}
 
 	@Override
-	public boolean isDamaged(ItemStack stack) {
-
-		return true;
-	}
-
-	@Override
 	public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
 
 		return super.shouldCauseReequipAnimation(oldStack, newStack, slotChanged) && (slotChanged || !ItemHelper.areItemStacksEqualIgnoreTags(oldStack, newStack, "Energy"));

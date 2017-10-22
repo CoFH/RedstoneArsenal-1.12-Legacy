@@ -123,12 +123,6 @@ public class ItemBowRF extends ItemBowCore implements IMultiModeItem, IEnergyCon
 	}
 
 	@Override
-	public boolean isDamaged(ItemStack stack) {
-
-		return true;
-	}
-
-	@Override
 	public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
 
 		return super.shouldCauseReequipAnimation(oldStack, newStack, slotChanged) && (slotChanged || !ItemHelper.areItemStacksEqualIgnoreTags(oldStack, newStack, "Energy"));

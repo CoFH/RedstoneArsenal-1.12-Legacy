@@ -169,12 +169,6 @@ public class ItemShieldRF extends ItemShieldCore implements IMultiModeItem, IEne
 	}
 
 	@Override
-	public boolean isDamaged(ItemStack stack) {
-
-		return true;
-	}
-
-	@Override
 	public boolean showDurabilityBar(ItemStack stack) {
 
 		return RAProps.showToolCharge && stack.getTagCompound() != null && !stack.getTagCompound().getBoolean("CreativeTab");

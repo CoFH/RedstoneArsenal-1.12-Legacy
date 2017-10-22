@@ -170,12 +170,6 @@ public class ItemSwordRF extends ItemSword implements IMultiModeItem, IEnergyCon
 	}
 
 	@Override
-	public boolean isDamaged(ItemStack stack) {
-
-		return true;
-	}
-
-	@Override
 	public boolean onBlockDestroyed(ItemStack stack, World world, IBlockState state, BlockPos pos, EntityLivingBase entityLivingy) {
 
 		if (state.getBlockHardness(world, pos) != 0.0D) {

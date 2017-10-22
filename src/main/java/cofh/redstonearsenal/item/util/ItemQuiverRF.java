@@ -139,12 +139,6 @@ public class ItemQuiverRF extends ItemCore implements IModelRegister, IMultiMode
 	}
 
 	@Override
-	public boolean isDamaged(ItemStack stack) {
-
-		return true;
-	}
-
-	@Override
 	public boolean isEnchantable(ItemStack stack) {
 
 		return true;
