@@ -1,0 +1,40 @@
+#pl_PL
+
+info.redstonearsenal.tool.chargeOff=§eNaciśnij (%s) aby odładować§r
+info.redstonearsenal.tool.chargeOn=§bNaciśnij (%s) aby naładować§r
+
+info.redstonearsenal.tool.energyPerUse=RF Na Użycie
+info.redstonearsenal.tool.shovel=Służy również jako Motyka, podczas skradania się.
+info.redstonearsenal.tool.wrench=Służy również jako Nożyce.
+
+item.redstonearsenal.armor.fluxBoots.name=Zaparzone Fluxem Buty
+item.redstonearsenal.armor.fluxHelmet.name=Zaparzony Fluxem Hełm
+item.redstonearsenal.armor.fluxLegs.name=Zaparzone Fluxem Spodnie
+item.redstonearsenal.armor.fluxPlate.name=Zaparzony Fluxem Napierśnik
+
+item.redstonearsenal.material.dustElectrumFlux.name=Mieszanka Elektronu Fluxu
+item.redstonearsenal.material.gearElectrumFlux.name=Przekładnia Elektronu Fluxu
+item.redstonearsenal.material.gemCrystalFlux.name=Kryształ Fluxu
+item.redstonearsenal.material.ingotElectrumFlux.name=Sztaba Elektronu Fluxu
+item.redstonearsenal.material.nuggetElectrumFlux.name=Bryłka Elektronu Fluxu
+item.redstonearsenal.material.plateElectrumFlux.name=Płyta Elektronu Fluxu
+item.redstonearsenal.material.plateArmorFlux.name=Opancerzenie Fluxowe
+item.redstonearsenal.material.rodObsidian.name=Obsydianowy Pręt
+item.redstonearsenal.material.rodObsidianFlux.name=Zaparzony Fluxem Obsydianowy Pręt
+
+item.redstonearsenal.tool.fluxAxe.name=Zaparzona Fluxem Siekiera
+item.redstonearsenal.tool.fluxBattleWrench.name=Zaparzony Fluxem Bitewny Klucz
+item.redstonearsenal.tool.fluxBow.name=Zaparzony Fluxem Łuk
+item.redstonearsenal.tool.fluxFishingRod.name=Zaparzona Fluxem Wędka
+item.redstonearsenal.tool.fluxHammer.name=Zaparzony Fluxem Młot
+item.redstonearsenal.tool.fluxPickaxe.name=Zaparzony Fluxem Kilof
+item.redstonearsenal.tool.fluxShield.name=Zaparzona Fluxem Tarcza
+item.redstonearsenal.tool.fluxShovel.name=Zaparzona Fluxem Łopata
+item.redstonearsenal.tool.fluxSickle.name=Zaparzony Fluxem Sierp
+item.redstonearsenal.tool.fluxSword.name=Zaparzony Fluxem Miecz
+item.redstonearsenal.tool.fluxWrench.name=Zaparzony Fluxem Wszechmocny Klucz
+
+itemGroup.redstonearsenal.creativeTab=Redstone Arsenal
+
+tile.redstonearsenal.storage.crystalFlux.name=Blok Kryształu Fluxu
+tile.redstonearsenal.storage.electrumFlux.name=Blok Elektronu Fluxu
