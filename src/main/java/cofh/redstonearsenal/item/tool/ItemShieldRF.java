@@ -40,7 +40,7 @@ public class ItemShieldRF extends ItemShieldCore implements IMultiModeItem, IEne
 	protected int energyPerUse = 200;
 	protected int energyPerUseCharged = 800;
 
-	protected int damageCharged = 4;
+	protected int damageCharged = 6;
 
 	public ItemShieldRF(ToolMaterial toolMaterial) {
 
@@ -101,16 +101,16 @@ public class ItemShieldRF extends ItemShieldCore implements IMultiModeItem, IEne
 		RAProps.addEmpoweredTip(this, stack, tooltip);
 		if (getEnergyStored(stack) >= getEnergyPerUse(stack)) {
 			tooltip.add("");
-			tooltip.add(StringHelper.BRIGHT_GREEN + "+" + (isEmpowered(stack) ? damageCharged : 1) + " " + StringHelper.localize("info.cofh.damageFlux") + StringHelper.END);
+			tooltip.add(StringHelper.BRIGHT_GREEN + (isEmpowered(stack) ? damageCharged : 1) + " " + StringHelper.localize("info.cofh.damageFlux") + StringHelper.END);
 		}
 	}
 
 	public void damageShield(ItemStack stack, int damage, EntityPlayer player, Entity source) {
 
 		if (source != null) {
-			float potionDamage = 1.0f;
+			float potionDamage = 1.0F;
 			if (player.isPotionActive(MobEffects.STRENGTH)) {
-				potionDamage += player.getActivePotionEffect(MobEffects.STRENGTH).getAmplifier() * 1.3f;
+				potionDamage += player.getActivePotionEffect(MobEffects.STRENGTH).getAmplifier() * 1.3F;
 			}
 			source.attackEntityFrom(DamageHelper.causePlayerFluxDamage(player), (isEmpowered(stack) ? damageCharged : 1) * potionDamage);
 		}
@@ -159,9 +159,9 @@ public class ItemShieldRF extends ItemShieldCore implements IMultiModeItem, IEne
 		if (thePlayer.capabilities.isCreativeMode || useEnergy(stack, false) == getEnergyPerUse(stack)) {
 			int fluxDamage = isEmpowered(stack) ? damageCharged : 1;
 
-			float potionDamage = 1.0f;
+			float potionDamage = 1.0F;
 			if (player.isPotionActive(MobEffects.STRENGTH)) {
-				potionDamage += player.getActivePotionEffect(MobEffects.STRENGTH).getAmplifier() * 1.3f;
+				potionDamage += player.getActivePotionEffect(MobEffects.STRENGTH).getAmplifier() * 1.3F;
 			}
 			entity.attackEntityFrom(DamageHelper.causePlayerFluxDamage(thePlayer), fluxDamage * potionDamage);
 		}

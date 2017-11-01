@@ -330,7 +330,6 @@ public class ItemWrenchRF extends ItemShears implements IEnergyContainerItem, IE
 		Multimap<String, AttributeModifier> multimap = HashMultimap.create();
 		if (slot == EntityEquipmentSlot.MAINHAND) {
 			multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(), new AttributeModifier(Item.ATTACK_DAMAGE_MODIFIER, "Tool modifier", 1, 0));
-			multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getName(), new AttributeModifier(ATTACK_SPEED_MODIFIER, "Tool modifier", -2.4D, 0));
 		}
 		return multimap;
 	}

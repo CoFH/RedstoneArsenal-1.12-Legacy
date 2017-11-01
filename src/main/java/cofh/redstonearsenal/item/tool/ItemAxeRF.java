@@ -15,7 +15,8 @@ public class ItemAxeRF extends ItemToolRF {
 
 		super(-2.8F, toolMaterial);
 		addToolClass("axe");
-		damage = 8;
+		damage = 7;
+		damageCharged = 6;
 		energyPerUseCharged = 1600;
 
 		effectiveBlocks.addAll(ItemAxe.EFFECTIVE_ON);

@@ -23,9 +23,9 @@ public class ItemPickaxeRF extends ItemToolRF {
 
 	public ItemPickaxeRF(ToolMaterial toolMaterial) {
 
-		super(-2.7F, toolMaterial);
+		super(-2.8F, toolMaterial);
 		addToolClass("pickaxe");
-		damage = 4;
+		damage = 3;
 		energyPerUseCharged = 800;
 
 		effectiveBlocks.addAll(ItemPickaxe.EFFECTIVE_ON);

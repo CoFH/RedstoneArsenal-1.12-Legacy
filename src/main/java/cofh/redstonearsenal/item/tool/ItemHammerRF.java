@@ -15,10 +15,11 @@ public class ItemHammerRF extends ItemToolRF {
 
 	public ItemHammerRF(ToolMaterial toolMaterial) {
 
-		super(-3.6F, toolMaterial);
+		super(-3.2F, toolMaterial);
 		addToolClass("pickaxe");
 		addToolClass("hammer");
-		damage = 11;
+		damage = 9;
+		damageCharged = 6;
 		energyPerUseCharged = 1600;
 
 		effectiveBlocks.addAll(ItemPickaxe.EFFECTIVE_ON);

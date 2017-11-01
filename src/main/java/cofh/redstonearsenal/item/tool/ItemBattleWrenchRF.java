@@ -31,8 +31,8 @@ public class ItemBattleWrenchRF extends ItemSwordRF implements IToolHammer {
 
 		super(toolMaterial);
 		setHarvestLevel("wrench", 1);
-		damage = 6;
-		damageCharged = 3;
+		damage = 5;
+		damageCharged = 8;
 	}
 
 	@Override

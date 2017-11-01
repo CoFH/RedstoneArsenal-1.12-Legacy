@@ -15,9 +15,10 @@ public class ItemSickleRF extends ItemToolRF {
 
 	public ItemSickleRF(ToolMaterial toolMaterial) {
 
-		super(-2.2F, toolMaterial);
+		super(-2.6F, toolMaterial);
 		addToolClass("sickle");
-		damage = 5;
+		damage = 4;
+		damageCharged = 6;
 		energyPerUseCharged = 1200;
 
 		effectiveBlocks.add(Blocks.WEB);

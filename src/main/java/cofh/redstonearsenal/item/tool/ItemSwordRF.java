@@ -47,9 +47,9 @@ public class ItemSwordRF extends ItemSword implements IMultiModeItem, IEnergyCon
 	protected int energyPerUse = 200;
 	protected int energyPerUseCharged = 800;
 
-	protected int damage = 8;
-	protected int damageCharged = 4;
-	protected float attackSpeed = -2.2F;
+	protected int damage = 5;
+	protected int damageCharged = 10;
+	protected float attackSpeed = -2.4F;
 
 	protected boolean showInCreative = true;
 
@@ -115,8 +115,8 @@ public class ItemSwordRF extends ItemSword implements IMultiModeItem, IEnergyCon
 		if (getEnergyStored(stack) >= getEnergyPerUse(stack) && worldIn != null) {
 			int adjustedDamage = (int) (damage + Minecraft.getMinecraft().player.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getBaseValue());
 			tooltip.add("");
-			tooltip.add(StringHelper.LIGHT_BLUE + "+" + adjustedDamage + " " + StringHelper.localize("info.cofh.damageAttack") + StringHelper.END);
-			tooltip.add(StringHelper.BRIGHT_GREEN + "+" + (isEmpowered(stack) ? damageCharged : 1) + " " + StringHelper.localize("info.cofh.damageFlux") + StringHelper.END);
+			tooltip.add(StringHelper.LIGHT_BLUE + adjustedDamage + " " + StringHelper.localize("info.cofh.damageAttack") + StringHelper.END);
+			tooltip.add(StringHelper.BRIGHT_GREEN + (isEmpowered(stack) ? damageCharged : 1) + " " + StringHelper.localize("info.cofh.damageFlux") + StringHelper.END);
 		}
 	}
 
@@ -157,12 +157,11 @@ public class ItemSwordRF extends ItemSword implements IMultiModeItem, IEnergyCon
 		}
 		EntityPlayer thePlayer = (EntityPlayer) player;
 
-		if (thePlayer.capabilities.isCreativeMode || useEnergy(stack, false) == getEnergyPerUse(stack)) {
+		if (thePlayer.capabilities.isCreativeMode || useEnergy(stack, false) >= getEnergyPerUse(stack)) {
 			int fluxDamage = isEmpowered(stack) ? damageCharged : 1;
-
-			float potionDamage = 1.0f;
+			float potionDamage = 1.0F;
 			if (player.isPotionActive(MobEffects.STRENGTH)) {
-				potionDamage += player.getActivePotionEffect(MobEffects.STRENGTH).getAmplifier() * 1.3f;
+				potionDamage += player.getActivePotionEffect(MobEffects.STRENGTH).getAmplifier() * 1.3F;
 			}
 			entity.attackEntityFrom(DamageHelper.causePlayerFluxDamage(thePlayer), fluxDamage * potionDamage);
 		}
@@ -223,16 +222,14 @@ public class ItemSwordRF extends ItemSword implements IMultiModeItem, IEnergyCon
 		Multimap<String, AttributeModifier> multimap = HashMultimap.create();
 
 		if (slot == EntityEquipmentSlot.MAINHAND) {
-			multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getName(), new AttributeModifier(ATTACK_SPEED_MODIFIER, "Tool modifier", attackSpeed, 0));
-
 			if (useEnergy(stack, true) == getEnergyPerUse(stack)) {
-				int fluxDamage = isEmpowered(stack) ? damageCharged : 1;
-				multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Tool modifier", fluxDamage + damage, 0));
+				multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getName(), new AttributeModifier(ATTACK_SPEED_MODIFIER, "Tool modifier", isEmpowered(stack) ? attackSpeed + 0.4F : attackSpeed, 0));
+				multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Tool modifier",  (isEmpowered(stack) ? damageCharged : 1) + damage, 0));
 			} else {
+				multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getName(), new AttributeModifier(ATTACK_SPEED_MODIFIER, "Tool modifier", attackSpeed, 0));
 				multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Tool modifier", 1, 0));
 			}
 		}
-
 		return multimap;
 	}
 

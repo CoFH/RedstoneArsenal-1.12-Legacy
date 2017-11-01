@@ -34,7 +34,7 @@ public class ItemShovelRF extends ItemToolRF {
 
 		super(-3.0F, toolMaterial);
 		addToolClass("shovel");
-		damage = 3;
+		damage = 4;
 		energyPerUseCharged = 800;
 
 		effectiveBlocks.addAll(ItemSpade.EFFECTIVE_ON);
