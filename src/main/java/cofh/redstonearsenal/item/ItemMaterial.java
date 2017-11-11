@@ -60,8 +60,12 @@ public class ItemMaterial extends ItemMulti implements IInitializer {
 
 		addGearRecipe(gearElectrumFlux, "ingotElectrumFlux");
 
+		if (OreDictionary.doesOreNameExist("dustObsidian")) {
+			addShapedRecipe(rodObsidian, "  O", " B ", "O  ", 'B', Items.BLAZE_POWDER, 'O', "dustObsidian");
+		} else {
+			addShapedRecipe(rodObsidian, "  O", " B ", "O  ", 'B', Items.BLAZE_POWDER, 'O', Blocks.OBSIDIAN);
+		}
 		addShapedRecipe(rodObsidianFlux, "  O", " B ", "O  ", 'B', rodObsidian, 'O', "gemCrystalFlux");
-		addShapedRecipe(rodObsidian, "  O", " B ", "O  ", 'B', Items.BLAZE_POWDER, 'O', "dustObsidian");
 		addShapedRecipe(plateArmorFlux, " I ", "IGI", " I ", 'G', "gemCrystalFlux", 'I', "plateElectrumFlux");
 
 		if (!Loader.isModLoaded("thermalexpansion")) {
