@@ -34,6 +34,12 @@ public class ItemHammerRF extends ItemToolRF {
 	}
 
 	@Override
+	public boolean hasContainerItem(ItemStack stack) {
+
+		return false;
+	}
+
+	@Override
 	public boolean onBlockStartBreak(ItemStack stack, BlockPos pos, EntityPlayer player) {
 
 		World world = player.world;
