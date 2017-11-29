@@ -154,8 +154,8 @@ public class ItemArmorRF extends ItemArmorCore implements ISpecialArmor, IEnergy
 	@Override
 	public int getArmorDisplay(EntityPlayer player, ItemStack armor, int slot) {
 
-		if (getEnergyStored(armor) >= getEnergyPerDamage(armor)) {
-			return getArmorMaterial().getDamageReductionAmount(armorType);
+		if (getEnergyStored(armor) < getEnergyPerDamage(armor)) {
+			return -getArmorMaterial().getDamageReductionAmount(armorType);
 		}
 		return 0;
 	}
