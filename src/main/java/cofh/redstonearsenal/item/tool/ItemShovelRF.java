@@ -1,8 +1,9 @@
 package cofh.redstonearsenal.item.tool;
 
-import cofh.core.util.helpers.MathHelper;
+import cofh.core.item.IAOEBreakItem;
 import cofh.core.util.helpers.ServerHelper;
 import cofh.core.util.helpers.StringHelper;
+import com.google.common.collect.ImmutableList;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDirt;
 import net.minecraft.block.material.Material;
@@ -24,11 +25,12 @@ import net.minecraftforge.event.entity.player.UseHoeEvent;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.List;
 
-public class ItemShovelRF extends ItemToolRF {
+public class ItemShovelRF extends ItemToolRF implements IAOEBreakItem {
 
-	int range = 5;
+	int range = 4;
 
 	public ItemShovelRF(ToolMaterial toolMaterial) {
 
@@ -121,7 +123,7 @@ public class ItemShovelRF extends ItemToolRF {
 	@Override
 	public boolean canHarvestBlock(IBlockState state) {
 
-		return state.getBlock() == Blocks.SNOW_LAYER ? true : state.getBlock() == Blocks.SNOW;
+		return state.getBlock() == Blocks.SNOW_LAYER || state.getBlock() == Blocks.SNOW;
 	}
 
 	@Override
@@ -130,53 +132,45 @@ public class ItemShovelRF extends ItemToolRF {
 		World world = player.world;
 		IBlockState state = world.getBlockState(pos);
 
-		if (state.getBlockHardness(world, pos) == 0.0D) {
+		if (state.getBlockHardness(world, pos) == 0.0F) {
 			return false;
 		}
-		Block block = state.getBlock();
-
+		if (!canHarvestBlock(state, stack)) {
+			if (!player.capabilities.isCreativeMode) {
+				useEnergy(stack, false);
+			}
+			return false;
+		}
 		int x = pos.getX();
 		int y = pos.getY();
 		int z = pos.getZ();
 
-		if (getEffectiveBlocks(stack).contains(block) && isEmpowered(stack)) {
-			int facing = MathHelper.floor(player.rotationYaw * 4.0F / 360.0F + 0.5D) & 3;
-			switch (facing) {
-				case 0:
-					for (int i = ++z; i < z + range; i++) {
-						if (!getEffectiveBlocks(stack).contains(getBlockFromPos(world, x, y, i))) {
-							break;
-						}
-						if (!harvestBlock(world, new BlockPos(x, y, i), player)) {
+		if (isEmpowered(stack)) {
+			EnumFacing horizontalFacing = player.getHorizontalFacing();
+			switch (horizontalFacing) {
+				case SOUTH:
+					for (int k = ++z; k < z + range; k++) {
+						if (!harvestBlock(world, new BlockPos(x, y, k), player)) {
 							break;
 						}
 					}
 					break;
-				case 1:
+				case WEST:
 					for (int i = --x; i > x - range; i--) {
-						if (!getEffectiveBlocks(stack).contains(getBlockFromPos(world, i, y, z))) {
-							break;
-						}
 						if (!harvestBlock(world, new BlockPos(i, y, z), player)) {
 							break;
 						}
 					}
 					break;
-				case 2:
-					for (int i = --z; i > z - range; i--) {
-						if (!getEffectiveBlocks(stack).contains(getBlockFromPos(world, x, y, i))) {
-							break;
-						}
-						if (!harvestBlock(world, new BlockPos(x, y, i), player)) {
+				case NORTH:
+					for (int k = --z; k > z - range; k--) {
+						if (!harvestBlock(world, new BlockPos(x, y, k), player)) {
 							break;
 						}
 					}
 					break;
-				case 3:
+				case EAST:
 					for (int i = ++x; i < x + range; i++) {
-						if (!getEffectiveBlocks(stack).contains(getBlockFromPos(world, i, y, z))) {
-							break;
-						}
 						if (!harvestBlock(world, new BlockPos(i, y, z), player)) {
 							break;
 						}
@@ -193,14 +187,20 @@ public class ItemShovelRF extends ItemToolRF {
 	public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 
 		ItemStack stack = player.getHeldItem(hand);
+
 		if (!player.canPlayerEdit(pos, facing, stack) || !player.capabilities.isCreativeMode && getEnergyStored(stack) < getEnergyPerUse(stack)) {
 			return EnumActionResult.FAIL;
 		}
 		EnumActionResult used = EnumActionResult.FAIL;
 
+		int x = pos.getX();
+		int y = pos.getY();
+		int z = pos.getZ();
+		int effRange = 1 + (isEmpowered(stack) ? range : 0);
+		EnumFacing horizontalFacing = player.getHorizontalFacing();
+
 		if (player.isSneaking()) {
 			UseHoeEvent event = new UseHoeEvent(player, stack, worldIn, pos);
-
 			if (MinecraftForge.EVENT_BUS.post(event)) {
 				return EnumActionResult.FAIL;
 			}
@@ -210,26 +210,16 @@ public class ItemShovelRF extends ItemToolRF {
 				}
 				return EnumActionResult.SUCCESS;
 			}
-			int x = pos.getX();
-			int y = pos.getY();
-			int z = pos.getZ();
-
-			int effRange = 1;
-			if (isEmpowered(stack)) {
-				effRange = range;
-			}
-			int hitVec = MathHelper.floor(player.rotationYaw * 4.0F / 360.0F + 0.5D) & 3;
-
-			switch (hitVec) {
-				case 0:
-					for (int i = z; i < z + effRange; i++) {
-						if (!hoeBlock(worldIn, x, y, i, facing.ordinal(), player)) {
+			switch (horizontalFacing) {
+				case SOUTH:
+					for (int k = z; k < z + effRange; k++) {
+						if (!hoeBlock(worldIn, x, y, k, facing.ordinal(), player)) {
 							break;
 						}
 						used = EnumActionResult.SUCCESS;
 					}
 					break;
-				case 1:
+				case WEST:
 					for (int i = x; i > x - effRange; i--) {
 						if (!hoeBlock(worldIn, i, y, z, facing.ordinal(), player)) {
 							break;
@@ -237,15 +227,15 @@ public class ItemShovelRF extends ItemToolRF {
 						used = EnumActionResult.SUCCESS;
 					}
 					break;
-				case 2:
-					for (int i = z; i > z - effRange; i--) {
-						if (!hoeBlock(worldIn, x, y, i, facing.ordinal(), player)) {
+				case NORTH:
+					for (int k = z; k > z - effRange; k--) {
+						if (!hoeBlock(worldIn, x, y, k, facing.ordinal(), player)) {
 							break;
 						}
 						used = EnumActionResult.SUCCESS;
 					}
 					break;
-				case 3:
+				case EAST:
 					for (int i = x; i < x + effRange; i++) {
 						if (!hoeBlock(worldIn, i, y, z, facing.ordinal(), player)) {
 							break;
@@ -255,26 +245,16 @@ public class ItemShovelRF extends ItemToolRF {
 					break;
 			}
 		} else {
-			int x = pos.getX();
-			int y = pos.getY();
-			int z = pos.getZ();
-
-			int effRange = 1;
-			if (isEmpowered(stack)) {
-				effRange = range;
-			}
-			int hitVec = MathHelper.floor(player.rotationYaw * 4.0F / 360.0F + 0.5D) & 3;
-
-			switch (hitVec) {
-				case 0:
-					for (int i = z; i < z + effRange; i++) {
-						if (!makePath(worldIn, x, y, i, facing.ordinal(), player)) {
+			switch (horizontalFacing) {
+				case SOUTH:
+					for (int k = z; k < z + effRange; k++) {
+						if (!makePath(worldIn, x, y, k, facing.ordinal(), player)) {
 							break;
 						}
 						used = EnumActionResult.SUCCESS;
 					}
 					break;
-				case 1:
+				case WEST:
 					for (int i = x; i > x - effRange; i--) {
 						if (!makePath(worldIn, i, y, z, facing.ordinal(), player)) {
 							break;
@@ -282,15 +262,15 @@ public class ItemShovelRF extends ItemToolRF {
 						used = EnumActionResult.SUCCESS;
 					}
 					break;
-				case 2:
-					for (int i = z; i > z - effRange; i--) {
-						if (!makePath(worldIn, x, y, i, facing.ordinal(), player)) {
+				case NORTH:
+					for (int k = z; k > z - effRange; k--) {
+						if (!makePath(worldIn, x, y, k, facing.ordinal(), player)) {
 							break;
 						}
 						used = EnumActionResult.SUCCESS;
 					}
 					break;
-				case 3:
+				case EAST:
 					for (int i = x; i < x + effRange; i++) {
 						if (!makePath(worldIn, i, y, z, facing.ordinal(), player)) {
 							break;
@@ -304,6 +284,65 @@ public class ItemShovelRF extends ItemToolRF {
 			useEnergy(stack, false);
 		}
 		return used;
+	}
+
+	/* IAOEBreakItem */
+	@Override
+	public ImmutableList<BlockPos> getAOEBlocks(ItemStack stack, BlockPos pos, EntityPlayer player) {
+
+		ArrayList<BlockPos> area = new ArrayList<>();
+		World world = player.getEntityWorld();
+
+		if (!isEmpowered(stack) || !canHarvestBlock(world.getBlockState(pos), stack)) {
+			return ImmutableList.copyOf(area);
+		}
+		EnumFacing horizontalFacing = player.getHorizontalFacing();
+		BlockPos harvestPos;
+
+		int x = pos.getX();
+		int y = pos.getY();
+		int z = pos.getZ();
+		int effRange = 1 + (isEmpowered(stack) ? range : 0);
+
+		switch (horizontalFacing) {
+			case SOUTH:
+				for (int k = z; k < z + effRange; k++) {
+					harvestPos = new BlockPos(x, y, k);
+					if (!canHarvestBlock(world.getBlockState(harvestPos), stack)) {
+						break;
+					}
+					area.add(harvestPos);
+				}
+				break;
+			case WEST:
+				for (int i = x; i > x - effRange; i--) {
+					harvestPos = new BlockPos(i, y, z);
+					if (!canHarvestBlock(world.getBlockState(harvestPos), stack)) {
+						break;
+					}
+					area.add(harvestPos);
+				}
+				break;
+			case NORTH:
+				for (int k = z; k > z - effRange; k--) {
+					harvestPos = new BlockPos(x, y, k);
+					if (!canHarvestBlock(world.getBlockState(harvestPos), stack)) {
+						break;
+					}
+					area.add(harvestPos);
+				}
+				break;
+			case EAST:
+				for (int i = x; i < x + effRange; i++) {
+					harvestPos = new BlockPos(i, y, z);
+					if (!canHarvestBlock(world.getBlockState(harvestPos), stack)) {
+						break;
+					}
+					area.add(harvestPos);
+				}
+				break;
+		}
+		return ImmutableList.copyOf(area);
 	}
 
 }

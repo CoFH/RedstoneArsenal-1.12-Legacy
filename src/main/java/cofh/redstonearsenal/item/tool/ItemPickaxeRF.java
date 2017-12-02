@@ -1,7 +1,9 @@
 package cofh.redstonearsenal.item.tool;
 
+import cofh.core.item.IAOEBreakItem;
 import cofh.core.util.RayTracer;
 import cofh.core.util.helpers.MathHelper;
+import com.google.common.collect.ImmutableList;
 import gnu.trove.set.hash.THashSet;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -14,10 +16,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 
-import static net.minecraft.util.EnumFacing.DOWN;
-import static net.minecraft.util.EnumFacing.UP;
+import java.util.ArrayList;
 
-public class ItemPickaxeRF extends ItemToolRF {
+public class ItemPickaxeRF extends ItemToolRF implements IAOEBreakItem {
 
 	public THashSet<Block> effectiveBlocksCharged = new THashSet<>();
 
@@ -53,11 +54,17 @@ public class ItemPickaxeRF extends ItemToolRF {
 		World world = player.world;
 		IBlockState state = world.getBlockState(pos);
 
-		int x = pos.getX();
-		int y = pos.getY();
-		int z = pos.getZ();
-
+		if (state.getBlockHardness(world, pos) == 0.0F) {
+			return false;
+		}
+		if (!canHarvestBlock(state, stack)) {
+			if (!player.capabilities.isCreativeMode) {
+				useEnergy(stack, false);
+			}
+			return false;
+		}
 		float refStrength = state.getPlayerRelativeBlockHardness(player, world, pos);
+
 		if (refStrength != 0.0F) {
 			if (isEmpowered(stack) && canHarvestBlock(state, stack)) {
 				RayTraceResult traceResult = RayTracer.retrace(player);
@@ -69,48 +76,55 @@ public class ItemPickaxeRF extends ItemToolRF {
 				IBlockState adjState;
 				float strength;
 
-				if (traceResult.sideHit == DOWN || traceResult.sideHit == UP) {
-					int facing = MathHelper.floor(player.rotationYaw * 4.0F / 360.0F + 0.5D) & 3;
-					if (facing % 2 == 0) {
-						adjPos = new BlockPos(x, y, z - 1);
+				int x = pos.getX();
+				int y = pos.getY();
+				int z = pos.getZ();
+
+				switch (traceResult.sideHit) {
+					case DOWN:
+					case UP:
+						int facing = MathHelper.floor(player.rotationYaw * 4.0F / 360.0F + 0.5D) & 3;
+						if (facing % 2 == 0) {
+							adjPos = new BlockPos(x, y, z - 1);
+							adjState = world.getBlockState(adjPos);
+							strength = adjState.getPlayerRelativeBlockHardness(player, world, adjPos);
+							if (strength > 0F && refStrength / strength <= 10F) {
+								harvestBlock(world, adjPos, player);
+							}
+							adjPos = new BlockPos(x, y, z + 1);
+							adjState = world.getBlockState(adjPos);
+							strength = adjState.getPlayerRelativeBlockHardness(player, world, adjPos);
+							if (strength > 0F && refStrength / strength <= 10F) {
+								harvestBlock(world, adjPos, player);
+							}
+						} else {
+							adjPos = new BlockPos(x - 1, y, z);
+							adjState = world.getBlockState(adjPos);
+							strength = adjState.getPlayerRelativeBlockHardness(player, world, adjPos);
+							if (strength > 0F && refStrength / strength <= 10F) {
+								harvestBlock(world, adjPos, player);
+							}
+							adjPos = new BlockPos(x + 1, y, z);
+							adjState = world.getBlockState(adjPos);
+							strength = adjState.getPlayerRelativeBlockHardness(player, world, adjPos);
+							if (strength > 0F && refStrength / strength <= 10F) {
+								harvestBlock(world, adjPos, player);
+							}
+						}
+						break;
+					default:
+						adjPos = new BlockPos(x, y - 1, z);
 						adjState = world.getBlockState(adjPos);
 						strength = adjState.getPlayerRelativeBlockHardness(player, world, adjPos);
 						if (strength > 0F && refStrength / strength <= 10F) {
 							harvestBlock(world, adjPos, player);
 						}
-						adjPos = new BlockPos(x, y, z + 1);
+						adjPos = new BlockPos(x, y + 1, z);
 						adjState = world.getBlockState(adjPos);
 						strength = adjState.getPlayerRelativeBlockHardness(player, world, adjPos);
 						if (strength > 0F && refStrength / strength <= 10F) {
 							harvestBlock(world, adjPos, player);
 						}
-					} else {
-						adjPos = new BlockPos(x - 1, y, z);
-						adjState = world.getBlockState(adjPos);
-						strength = adjState.getPlayerRelativeBlockHardness(player, world, adjPos);
-						if (strength > 0F && refStrength / strength <= 10F) {
-							harvestBlock(world, adjPos, player);
-						}
-						adjPos = new BlockPos(x + 1, y, z);
-						adjState = world.getBlockState(adjPos);
-						strength = adjState.getPlayerRelativeBlockHardness(player, world, adjPos);
-						if (strength > 0F && refStrength / strength <= 10F) {
-							harvestBlock(world, adjPos, player);
-						}
-					}
-				} else {
-					adjPos = new BlockPos(x, y - 1, z);
-					adjState = world.getBlockState(adjPos);
-					strength = adjState.getPlayerRelativeBlockHardness(player, world, adjPos);
-					if (strength > 0F && refStrength / strength <= 10F) {
-						harvestBlock(world, adjPos, player);
-					}
-					adjPos = new BlockPos(x, y + 1, z);
-					adjState = world.getBlockState(adjPos);
-					strength = adjState.getPlayerRelativeBlockHardness(player, world, adjPos);
-					if (strength > 0F && refStrength / strength <= 10F) {
-						harvestBlock(world, adjPos, player);
-					}
 				}
 			}
 			if (!player.capabilities.isCreativeMode) {
@@ -118,6 +132,59 @@ public class ItemPickaxeRF extends ItemToolRF {
 			}
 		}
 		return false;
+	}
+
+	/* IAOEBreakItem */
+	@Override
+	public ImmutableList<BlockPos> getAOEBlocks(ItemStack stack, BlockPos pos, EntityPlayer player) {
+
+		ArrayList<BlockPos> area = new ArrayList<>();
+		World world = player.getEntityWorld();
+
+		if (!isEmpowered(stack) || !canHarvestBlock(world.getBlockState(pos), stack)) {
+			return ImmutableList.copyOf(area);
+		}
+		RayTraceResult traceResult = RayTracer.retrace(player);
+		BlockPos harvestPos;
+
+		int x = pos.getX();
+		int y = pos.getY();
+		int z = pos.getZ();
+
+		switch (traceResult.sideHit) {
+			case DOWN:
+			case UP:
+				int facing = MathHelper.floor(player.rotationYaw * 4.0F / 360.0F + 0.5D) & 3;
+				if (facing % 2 == 0) {
+					harvestPos = new BlockPos(x, y, z - 1);
+					if (canHarvestBlock(world.getBlockState(harvestPos), stack)) {
+						area.add(harvestPos);
+					}
+					harvestPos = new BlockPos(x, y, z + 1);
+					if (canHarvestBlock(world.getBlockState(harvestPos), stack)) {
+						area.add(harvestPos);
+					}
+				} else {
+					harvestPos = new BlockPos(x - 1, y, z);
+					if (canHarvestBlock(world.getBlockState(harvestPos), stack)) {
+						area.add(harvestPos);
+					}
+					harvestPos = new BlockPos(x + 1, y, z);
+					if (canHarvestBlock(world.getBlockState(harvestPos), stack)) {
+						area.add(harvestPos);
+					}
+				}
+			default:
+				harvestPos = new BlockPos(x, y - 1, z);
+				if (canHarvestBlock(world.getBlockState(harvestPos), stack)) {
+					area.add(harvestPos);
+				}
+				harvestPos = new BlockPos(x, y + 1, z);
+				if (canHarvestBlock(world.getBlockState(harvestPos), stack)) {
+					area.add(harvestPos);
+				}
+		}
+		return ImmutableList.copyOf(area);
 	}
 
 }

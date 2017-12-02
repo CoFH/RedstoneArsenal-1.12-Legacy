@@ -1,6 +1,8 @@
 package cofh.redstonearsenal.item.tool;
 
+import cofh.core.item.IAOEBreakItem;
 import cofh.core.util.RayTracer;
+import com.google.common.collect.ImmutableList;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -11,7 +13,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 
-public class ItemHammerRF extends ItemToolRF {
+import java.util.ArrayList;
+
+public class ItemHammerRF extends ItemToolRF implements IAOEBreakItem {
 
 	public ItemHammerRF(ToolMaterial toolMaterial) {
 
@@ -34,24 +38,20 @@ public class ItemHammerRF extends ItemToolRF {
 	}
 
 	@Override
-	public boolean hasContainerItem(ItemStack stack) {
-
-		return false;
-	}
-
-	@Override
 	public boolean onBlockStartBreak(ItemStack stack, BlockPos pos, EntityPlayer player) {
 
 		World world = player.world;
 		IBlockState state = world.getBlockState(pos);
 
+		if (state.getBlockHardness(world, pos) == 0.0F) {
+			return false;
+		}
 		if (!canHarvestBlock(state, stack)) {
 			if (!player.capabilities.isCreativeMode) {
 				useEnergy(stack, false);
 			}
 			return false;
 		}
-		boolean used = false;
 		world.playEvent(2001, pos, Block.getStateId(state));
 
 		float refStrength = state.getPlayerRelativeBlockHardness(player, world, pos);
@@ -64,19 +64,19 @@ public class ItemHammerRF extends ItemToolRF {
 			BlockPos adjPos;
 			IBlockState adjState;
 			float strength;
+			boolean used = false;
 
 			int x = pos.getX();
 			int y = pos.getY();
 			int z = pos.getZ();
-
 			int radius = isEmpowered(stack) ? 2 : 1;
 
 			switch (traceResult.sideHit) {
 				case DOWN:
 				case UP:
-					for (x = pos.getX() - radius; x <= pos.getX() + radius; x++) {
-						for (z = pos.getZ() - radius; z <= pos.getZ() + radius; z++) {
-							adjPos = new BlockPos(x, y, z);
+					for (int i = x - radius; i <= x + radius; i++) {
+						for (int k = z - radius; k <= z + radius; k++) {
+							adjPos = new BlockPos(i, y, k);
 							adjState = world.getBlockState(adjPos);
 							strength = adjState.getPlayerRelativeBlockHardness(player, world, adjPos);
 							if (strength > 0F && refStrength / strength <= 10F) {
@@ -87,9 +87,9 @@ public class ItemHammerRF extends ItemToolRF {
 					break;
 				case NORTH:
 				case SOUTH:
-					for (x = pos.getX() - radius; x <= pos.getX() + radius; x++) {
-						for (y = pos.getY() - radius; y <= pos.getY() + radius; y++) {
-							adjPos = new BlockPos(x, y, z);
+					for (int i = x - radius; i <= x + radius; i++) {
+						for (int j = y - radius; j <= y + radius; j++) {
+							adjPos = new BlockPos(i, j, z);
 							adjState = world.getBlockState(adjPos);
 							strength = adjState.getPlayerRelativeBlockHardness(player, world, adjPos);
 							if (strength > 0F && refStrength / strength <= 10F) {
@@ -100,9 +100,9 @@ public class ItemHammerRF extends ItemToolRF {
 					break;
 				case WEST:
 				case EAST:
-					for (y = pos.getY() - radius; y <= pos.getY() + radius; y++) {
-						for (z = pos.getZ() - radius; z <= pos.getZ() + radius; z++) {
-							adjPos = new BlockPos(x, y, z);
+					for (int j = y - radius; j <= y + radius; j++) {
+						for (int k = z - radius; k <= z + radius; k++) {
+							adjPos = new BlockPos(x, j, k);
 							adjState = world.getBlockState(adjPos);
 							strength = adjState.getPlayerRelativeBlockHardness(player, world, adjPos);
 							if (strength > 0F && refStrength / strength <= 10F) {
@@ -117,6 +117,71 @@ public class ItemHammerRF extends ItemToolRF {
 			}
 		}
 		return true;
+	}
+
+	/* IAOEBreakItem */
+	@Override
+	public ImmutableList<BlockPos> getAOEBlocks(ItemStack stack, BlockPos pos, EntityPlayer player) {
+
+		ArrayList<BlockPos> area = new ArrayList<>();
+		World world = player.getEntityWorld();
+
+		if (!canHarvestBlock(world.getBlockState(pos), stack)) {
+			return ImmutableList.copyOf(area);
+		}
+		RayTraceResult traceResult = RayTracer.retrace(player);
+		BlockPos harvestPos;
+
+		int x = pos.getX();
+		int y = pos.getY();
+		int z = pos.getZ();
+		int radius = isEmpowered(stack) ? 2 : 1;
+
+		switch (traceResult.sideHit) {
+			case DOWN:
+			case UP:
+				for (int i = x - radius; i <= x + radius; i++) {
+					for (int k = z - radius; k <= z + radius; k++) {
+						if (i == x && k == z) {
+							continue;
+						}
+						harvestPos = new BlockPos(i, y, k);
+						if (canHarvestBlock(world.getBlockState(harvestPos), stack)) {
+							area.add(harvestPos);
+						}
+					}
+				}
+				break;
+			case NORTH:
+			case SOUTH:
+				for (int i = x - radius; i <= x + radius; i++) {
+					for (int j = y - radius; j <= y + radius; j++) {
+						if (i == x && j == y) {
+							continue;
+						}
+						harvestPos = new BlockPos(i, j, z);
+						if (canHarvestBlock(world.getBlockState(harvestPos), stack)) {
+							area.add(harvestPos);
+						}
+					}
+				}
+				break;
+			case WEST:
+			case EAST:
+				for (int j = y - radius; j <= y + radius; j++) {
+					for (int k = z - radius; k <= z + radius; k++) {
+						if (j == y && k == z) {
+							continue;
+						}
+						harvestPos = new BlockPos(x, j, k);
+						if (canHarvestBlock(world.getBlockState(harvestPos), stack)) {
+							area.add(harvestPos);
+						}
+					}
+				}
+				break;
+		}
+		return ImmutableList.copyOf(area);
 	}
 
 }
