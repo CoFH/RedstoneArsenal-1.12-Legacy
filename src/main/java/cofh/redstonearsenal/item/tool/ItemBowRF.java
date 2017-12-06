@@ -96,13 +96,6 @@ public class ItemBowRF extends ItemBowCore implements IMultiModeItem, IEnergyCon
 	}
 
 	@Override
-	public void onBowFired(EntityPlayer player, ItemStack stack) {
-
-		int unbreakingLevel = MathHelper.clamp(EnchantmentHelper.getEnchantmentLevel(Enchantments.UNBREAKING, stack), 0, 4);
-		extractEnergy(stack, isEmpowered(stack) ? energyPerUseCharged * (5 - unbreakingLevel) / 5 : energyPerUse * (5 - unbreakingLevel) / 5, player.capabilities.isCreativeMode);
-	}
-
-	@Override
 	public void onUpdate(ItemStack stack, World world, Entity entity, int slot, boolean isCurrentItem) {
 
 		if (stack.getItemDamage() > 0) {
@@ -169,6 +162,26 @@ public class ItemBowRF extends ItemBowCore implements IMultiModeItem, IEnergyCon
 			return new ActionResult<>(EnumActionResult.FAIL, stack);
 		}
 		return super.onItemRightClick(world, player, hand);
+	}
+
+	/* IBowImproved */
+	@Override
+	public void onBowFired(EntityPlayer player, ItemStack stack) {
+
+		int unbreakingLevel = MathHelper.clamp(EnchantmentHelper.getEnchantmentLevel(Enchantments.UNBREAKING, stack), 0, 4);
+		extractEnergy(stack, isEmpowered(stack) ? energyPerUseCharged * (5 - unbreakingLevel) / 5 : energyPerUse * (5 - unbreakingLevel) / 5, player.capabilities.isCreativeMode);
+	}
+
+	@Override
+	public float getArrowDamageMultiplier(ItemStack stack) {
+
+		return isEmpowered(stack) ? arrowDamageMultiplier * 1.5F : arrowDamageMultiplier;
+	}
+
+	@Override
+	public float getArrowSpeedMultiplier(ItemStack stack) {
+
+		return isEmpowered(stack) ? arrowSpeedMultiplier + 0.1F : arrowSpeedMultiplier;
 	}
 
 	/* IMultiModeItem */
