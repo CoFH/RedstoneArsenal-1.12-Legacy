@@ -18,7 +18,7 @@ import net.minecraft.world.World;
 
 import java.util.ArrayList;
 
-public class ItemPickaxeRF extends ItemToolRF implements IAOEBreakItem {
+public class ItemPickaxeRF extends ItemToolFlux implements IAOEBreakItem {
 
 	public THashSet<Block> effectiveBlocksCharged = new THashSet<>();
 

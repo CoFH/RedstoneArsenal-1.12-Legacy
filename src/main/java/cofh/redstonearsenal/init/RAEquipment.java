@@ -5,7 +5,7 @@ import cofh.core.util.helpers.EnergyHelper;
 import cofh.core.util.helpers.StringHelper;
 import cofh.redstonearsenal.RedstoneArsenal;
 import cofh.redstonearsenal.item.ItemMaterial;
-import cofh.redstonearsenal.item.armor.ItemArmorRF;
+import cofh.redstonearsenal.item.armor.ItemArmorFlux;
 import cofh.redstonearsenal.item.tool.*;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.init.Items;
@@ -74,10 +74,10 @@ public class RAEquipment {
 		private final String name;
 		private final ArmorMaterial ARMOR_MATERIAL;
 
-		public ItemArmorRF itemHelmet;
-		public ItemArmorRF itemPlate;
-		public ItemArmorRF itemLegs;
-		public ItemArmorRF itemBoots;
+		public ItemArmorFlux itemHelmet;
+		public ItemArmorFlux itemPlate;
+		public ItemArmorFlux itemLegs;
+		public ItemArmorFlux itemBoots;
 
 		public ItemStack armorHelmet;
 		public ItemStack armorPlate;
@@ -94,10 +94,10 @@ public class RAEquipment {
 
 		protected void create() {
 
-			itemHelmet = new ItemArmorRF(ARMOR_MATERIAL, EntityEquipmentSlot.HEAD);
-			itemPlate = new ItemArmorRF(ARMOR_MATERIAL, EntityEquipmentSlot.CHEST);
-			itemLegs = new ItemArmorRF(ARMOR_MATERIAL, EntityEquipmentSlot.LEGS);
-			itemBoots = new ItemArmorRF(ARMOR_MATERIAL, EntityEquipmentSlot.FEET);
+			itemHelmet = new ItemArmorFlux(ARMOR_MATERIAL, EntityEquipmentSlot.HEAD);
+			itemPlate = new ItemArmorFlux(ARMOR_MATERIAL, EntityEquipmentSlot.CHEST);
+			itemLegs = new ItemArmorFlux(ARMOR_MATERIAL, EntityEquipmentSlot.LEGS);
+			itemBoots = new ItemArmorFlux(ARMOR_MATERIAL, EntityEquipmentSlot.FEET);
 		}
 
 		protected void initialize() {

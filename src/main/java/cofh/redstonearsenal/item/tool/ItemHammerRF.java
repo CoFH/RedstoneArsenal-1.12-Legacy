@@ -15,7 +15,7 @@ import net.minecraft.world.World;
 
 import java.util.ArrayList;
 
-public class ItemHammerRF extends ItemToolRF implements IAOEBreakItem {
+public class ItemHammerRF extends ItemToolFlux implements IAOEBreakItem {
 
 	public ItemHammerRF(ToolMaterial toolMaterial) {
 

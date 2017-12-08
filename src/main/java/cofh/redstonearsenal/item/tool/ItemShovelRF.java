@@ -28,7 +28,7 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ItemShovelRF extends ItemToolRF implements IAOEBreakItem {
+public class ItemShovelRF extends ItemToolFlux implements IAOEBreakItem {
 
 	int range = 4;
 

@@ -38,7 +38,7 @@ import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public abstract class ItemToolRF extends ItemToolCore implements IMultiModeItem, IEnergyContainerItem, IEnchantableItem {
+public abstract class ItemToolFlux extends ItemToolCore implements IMultiModeItem, IEnergyContainerItem, IEnchantableItem {
 
 	protected int maxEnergy = 320000;
 	protected int maxTransfer = 4000;
@@ -49,21 +49,21 @@ public abstract class ItemToolRF extends ItemToolCore implements IMultiModeItem,
 	protected int damage;
 	protected int damageCharged = 4;
 
-	public ItemToolRF(float baseDamage, float attackSpeed, ToolMaterial toolMaterial) {
+	public ItemToolFlux(float baseDamage, float attackSpeed, ToolMaterial toolMaterial) {
 
 		super(baseDamage, attackSpeed, toolMaterial);
 		setNoRepair();
 
-		addPropertyOverride(new ResourceLocation("active"), (stack, world, entity) -> ItemToolRF.this.getEnergyStored(stack) > 0 && !ItemToolRF.this.isEmpowered(stack) ? 1F : 0F);
-		addPropertyOverride(new ResourceLocation("empowered"), (stack, world, entity) -> ItemToolRF.this.isEmpowered(stack) ? 1F : 0F);
+		addPropertyOverride(new ResourceLocation("active"), (stack, world, entity) -> ItemToolFlux.this.getEnergyStored(stack) > 0 && !ItemToolFlux.this.isEmpowered(stack) ? 1F : 0F);
+		addPropertyOverride(new ResourceLocation("empowered"), (stack, world, entity) -> ItemToolFlux.this.isEmpowered(stack) ? 1F : 0F);
 	}
 
-	public ItemToolRF(float attackSpeed, ToolMaterial toolMaterial) {
+	public ItemToolFlux(float attackSpeed, ToolMaterial toolMaterial) {
 
 		this(0, attackSpeed, toolMaterial);
 	}
 
-	public ItemToolRF setEnergyParams(int maxEnergy, int maxTransfer, int energyPerUse, int energyPerUseCharged) {
+	public ItemToolFlux setEnergyParams(int maxEnergy, int maxTransfer, int energyPerUse, int energyPerUseCharged) {
 
 		this.maxEnergy = maxEnergy;
 		this.maxTransfer = maxTransfer;
@@ -87,7 +87,7 @@ public abstract class ItemToolRF extends ItemToolCore implements IMultiModeItem,
 	protected int useEnergy(ItemStack stack, boolean simulate) {
 
 		int unbreakingLevel = MathHelper.clamp(EnchantmentHelper.getEnchantmentLevel(Enchantments.UNBREAKING, stack), 0, 4);
-		return extractEnergy(stack, isEmpowered(stack) ? energyPerUseCharged * (5 - unbreakingLevel) / 5 : energyPerUse * (5 - unbreakingLevel) / 5, simulate);
+		return extractEnergy(stack, (isEmpowered(stack) ? energyPerUseCharged : energyPerUse) * (5 - unbreakingLevel) / 5, simulate);
 	}
 
 	@Override

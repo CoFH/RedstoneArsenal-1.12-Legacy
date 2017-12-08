@@ -31,7 +31,7 @@ import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class ItemArmorRF extends ItemArmorCore implements ISpecialArmor, IEnergyContainerItem, IEnchantableItem {
+public class ItemArmorFlux extends ItemArmorCore implements ISpecialArmor, IEnergyContainerItem, IEnchantableItem {
 
 	private static final ArmorProperties FLUX = new ArmorProperties(0, 0.20D, Integer.MAX_VALUE);
 	private static final ArmorProperties FALL = new ArmorProperties(0, 0.00D, 0);
@@ -42,12 +42,12 @@ public class ItemArmorRF extends ItemArmorCore implements ISpecialArmor, IEnergy
 	protected double absorbRatio = 0.9D;
 	protected int energyPerDamage = 160;
 
-	public ItemArmorRF(ArmorMaterial material, EntityEquipmentSlot type) {
+	public ItemArmorFlux(ArmorMaterial material, EntityEquipmentSlot type) {
 
 		super(material, type);
 	}
 
-	public ItemArmorRF setEnergyParams(int maxEnergy, int maxTransfer) {
+	public ItemArmorFlux setEnergyParams(int maxEnergy, int maxTransfer) {
 
 		this.maxEnergy = maxEnergy;
 		this.maxTransfer = maxTransfer;

@@ -157,7 +157,7 @@ public class ItemQuiverRF extends ItemCore implements IModelRegister, IMultiMode
 	}
 
 	@Override
-	public int getItemEnchantability() {
+	public int getItemEnchantability(ItemStack stack) {
 
 		return 10;
 	}

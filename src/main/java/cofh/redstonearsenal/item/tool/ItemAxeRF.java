@@ -1,15 +1,19 @@
 package cofh.redstonearsenal.item.tool;
 
+import cofh.core.init.CoreEnchantments;
+import cofh.core.item.IEnchantableItem;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemAxe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class ItemAxeRF extends ItemToolRF {
+public class ItemAxeRF extends ItemToolFlux implements IEnchantableItem {
 
 	public ItemAxeRF(ToolMaterial toolMaterial) {
 
@@ -26,6 +30,19 @@ public class ItemAxeRF extends ItemToolRF {
 		effectiveMaterials.add(Material.VINE);
 		effectiveMaterials.add(Material.CACTUS);
 		effectiveMaterials.add(Material.GOURD);
+	}
+
+	@Override
+	public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
+
+		return enchantment.type.canEnchantItem(stack.getItem()) || enchantment.canApply(new ItemStack(Items.IRON_AXE));
+	}
+
+	/* IEnchantableItem */
+	@Override
+	public boolean canEnchant(ItemStack stack, Enchantment enchantment) {
+
+		return enchantment == CoreEnchantments.leech || enchantment == CoreEnchantments.vorpal;
 	}
 
 	@Override

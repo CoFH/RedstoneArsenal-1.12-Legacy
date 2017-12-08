@@ -9,7 +9,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class ItemSickleRF extends ItemToolRF {
+public class ItemSickleRF extends ItemToolFlux {
 
 	public int radius = 3;
 
