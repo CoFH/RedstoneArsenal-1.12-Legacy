@@ -20,7 +20,8 @@ import java.util.ArrayList;
 
 public class ItemPickaxeRF extends ItemToolFlux implements IAOEBreakItem {
 
-	public THashSet<Block> effectiveBlocksCharged = new THashSet<>();
+	protected THashSet<Block> effectiveBlocksCharged = new THashSet<>();
+	protected THashSet<Material> effectiveMaterialsCharged = new THashSet<>();
 
 	public ItemPickaxeRF(ToolMaterial toolMaterial) {
 
@@ -40,12 +41,31 @@ public class ItemPickaxeRF extends ItemToolFlux implements IAOEBreakItem {
 		effectiveMaterials.add(Material.PACKED_ICE);
 		effectiveMaterials.add(Material.GLASS);
 		effectiveMaterials.add(Material.REDSTONE_LIGHT);
+
+		effectiveMaterialsCharged.add(Material.IRON);
+		effectiveMaterialsCharged.add(Material.ANVIL);
+		effectiveMaterialsCharged.add(Material.ROCK);
+		effectiveMaterialsCharged.add(Material.ICE);
+		effectiveMaterialsCharged.add(Material.PACKED_ICE);
+		effectiveMaterialsCharged.add(Material.GLASS);
+		effectiveMaterialsCharged.add(Material.REDSTONE_LIGHT);
+		effectiveMaterialsCharged.add(Material.GROUND);
+		effectiveMaterialsCharged.add(Material.GRASS);
+		effectiveMaterialsCharged.add(Material.SAND);
+		effectiveMaterialsCharged.add(Material.SNOW);
+		effectiveMaterialsCharged.add(Material.CRAFTED_SNOW);
+		effectiveMaterialsCharged.add(Material.CLAY);
 	}
 
 	@Override
 	protected THashSet<Block> getEffectiveBlocks(ItemStack stack) {
 
 		return isEmpowered(stack) ? effectiveBlocksCharged : super.getEffectiveBlocks(stack);
+	}
+
+	protected THashSet<Material> getEffectiveMaterials(ItemStack stack) {
+
+		return isEmpowered(stack) ? effectiveMaterialsCharged : super.getEffectiveMaterials(stack);
 	}
 
 	@Override

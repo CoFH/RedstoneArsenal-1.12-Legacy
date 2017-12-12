@@ -235,58 +235,6 @@ public class ItemSwordRF extends ItemSword implements IMultiModeItem, IEnergyCon
 
 	/* IMultiModeItem */
 	@Override
-	public int getMode(ItemStack stack) {
-
-		return !stack.hasTagCompound() ? 0 : stack.getTagCompound().getInteger("Mode");
-	}
-
-	@Override
-	public boolean setMode(ItemStack stack, int mode) {
-
-		if (!stack.hasTagCompound()) {
-			stack.setTagCompound(new NBTTagCompound());
-		}
-		stack.getTagCompound().setInteger("Mode", mode);
-		return false;
-	}
-
-	@Override
-	public boolean incrMode(ItemStack stack) {
-
-		if (!stack.hasTagCompound()) {
-			stack.setTagCompound(new NBTTagCompound());
-		}
-		int curMode = getMode(stack);
-		curMode++;
-		if (curMode >= getNumModes(stack)) {
-			curMode = 0;
-		}
-		stack.getTagCompound().setInteger("Mode", curMode);
-		return true;
-	}
-
-	@Override
-	public boolean decrMode(ItemStack stack) {
-
-		if (!stack.hasTagCompound()) {
-			stack.setTagCompound(new NBTTagCompound());
-		}
-		int curMode = getMode(stack);
-		curMode--;
-		if (curMode <= 0) {
-			curMode = getNumModes(stack) - 1;
-		}
-		stack.getTagCompound().setInteger("Mode", curMode);
-		return true;
-	}
-
-	@Override
-	public int getNumModes(ItemStack stack) {
-
-		return 2;
-	}
-
-	@Override
 	public void onModeChange(EntityPlayer player, ItemStack stack) {
 
 		if (isEmpowered(stack)) {

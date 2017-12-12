@@ -226,7 +226,7 @@ public abstract class ItemToolFlux extends ItemToolCore implements IMultiModeIte
 		Multimap<String, AttributeModifier> multimap = HashMultimap.create();
 
 		if (slot == EntityEquipmentSlot.MAINHAND) {
-			if (useEnergy(stack, true) == getEnergyPerUse(stack)) {
+			if (useEnergy(stack, true) >= getEnergyPerUse(stack)) {
 				multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getName(), new AttributeModifier(ATTACK_SPEED_MODIFIER, "Tool modifier", isEmpowered(stack) ? attackSpeed + 0.4F : attackSpeed, 0));
 				multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Tool modifier", (isEmpowered(stack) ? damageCharged : 1) + damage, 0));
 			} else {
@@ -238,58 +238,6 @@ public abstract class ItemToolFlux extends ItemToolCore implements IMultiModeIte
 	}
 
 	/* IMultiModeItem */
-	@Override
-	public int getMode(ItemStack stack) {
-
-		return !stack.hasTagCompound() ? 0 : stack.getTagCompound().getInteger("Mode");
-	}
-
-	@Override
-	public boolean setMode(ItemStack stack, int mode) {
-
-		if (!stack.hasTagCompound()) {
-			stack.setTagCompound(new NBTTagCompound());
-		}
-		stack.getTagCompound().setInteger("Mode", mode);
-		return false;
-	}
-
-	@Override
-	public boolean incrMode(ItemStack stack) {
-
-		if (!stack.hasTagCompound()) {
-			stack.setTagCompound(new NBTTagCompound());
-		}
-		int curMode = getMode(stack);
-		curMode++;
-		if (curMode >= getNumModes(stack)) {
-			curMode = 0;
-		}
-		stack.getTagCompound().setInteger("Mode", curMode);
-		return true;
-	}
-
-	@Override
-	public boolean decrMode(ItemStack stack) {
-
-		if (!stack.hasTagCompound()) {
-			stack.setTagCompound(new NBTTagCompound());
-		}
-		int curMode = getMode(stack);
-		curMode--;
-		if (curMode <= 0) {
-			curMode = getNumModes(stack) - 1;
-		}
-		stack.getTagCompound().setInteger("Mode", curMode);
-		return true;
-	}
-
-	@Override
-	public int getNumModes(ItemStack stack) {
-
-		return 2;
-	}
-
 	@Override
 	public void onModeChange(EntityPlayer player, ItemStack stack) {
 
