@@ -4,10 +4,10 @@ import cofh.api.item.IMultiModeItem;
 import cofh.core.init.CoreEnchantments;
 import cofh.core.init.CoreProps;
 import cofh.core.item.IEnchantableItem;
-import cofh.core.item.tool.ItemShieldCore;
-import cofh.core.util.helpers.DamageHelper;
+import cofh.core.item.tool.ItemFishingRodCore;
 import cofh.core.util.helpers.EnergyHelper;
 import cofh.core.util.helpers.MathHelper;
+import cofh.core.util.helpers.ServerHelper;
 import cofh.core.util.helpers.StringHelper;
 import cofh.redstonearsenal.init.RAProps;
 import cofh.redstoneflux.api.IEnergyContainerItem;
@@ -16,11 +16,10 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.projectile.EntityFishHook;
 import net.minecraft.init.Enchantments;
-import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
@@ -32,7 +31,7 @@ import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class ItemShieldRF extends ItemShieldCore implements IMultiModeItem, IEnergyContainerItem, IEnchantableItem {
+public class ItemFishingRodFlux extends ItemFishingRodCore implements IMultiModeItem, IEnergyContainerItem, IEnchantableItem {
 
 	protected int maxEnergy = 320000;
 	protected int maxTransfer = 4000;
@@ -40,30 +39,28 @@ public class ItemShieldRF extends ItemShieldCore implements IMultiModeItem, IEne
 	protected int energyPerUse = 200;
 	protected int energyPerUseCharged = 800;
 
-	protected int damageCharged = 6;
-
-	public ItemShieldRF(ToolMaterial toolMaterial) {
+	public ItemFishingRodFlux(ToolMaterial toolMaterial) {
 
 		super(toolMaterial);
 		setNoRepair();
 
-		addPropertyOverride(new ResourceLocation("active"), (stack, world, entity) -> ItemShieldRF.this.getEnergyStored(stack) > 0 && !ItemShieldRF.this.isEmpowered(stack) ? 1F : 0F);
-		addPropertyOverride(new ResourceLocation("empowered"), (stack, world, entity) -> ItemShieldRF.this.isEmpowered(stack) ? 1F : 0F);
+		addPropertyOverride(new ResourceLocation("active"), (stack, world, entity) -> ItemFishingRodFlux.this.getEnergyStored(stack) > 0 && !ItemFishingRodFlux.this.isEmpowered(stack) ? 1F : 0F);
+		addPropertyOverride(new ResourceLocation("empowered"), (stack, world, entity) -> ItemFishingRodFlux.this.isEmpowered(stack) ? 1F : 0F);
 	}
 
-	public ItemShieldRF setEnergyParams(int maxEnergy, int maxTransfer, int energyPerUse) {
+	public ItemFishingRodFlux setEnergyParams(int maxEnergy, int maxTransfer, int energyPerUse, int energyPerUseCharged) {
 
 		this.maxEnergy = maxEnergy;
 		this.maxTransfer = maxTransfer;
 		this.energyPerUse = energyPerUse;
+		this.energyPerUseCharged = energyPerUseCharged;
 
 		return this;
 	}
 
-	public ItemShieldRF setShowInCreative(boolean showInCreative) {
+	protected boolean isCastState(ItemStack stack, EntityLivingBase entity) {
 
-		this.showInCreative = showInCreative;
-		return this;
+		return (entity != null && entity.getHeldItemMainhand() == stack && entity instanceof EntityPlayer && ((EntityPlayer) entity).fishEntity != null);
 	}
 
 	protected boolean isEmpowered(ItemStack stack) {
@@ -73,14 +70,16 @@ public class ItemShieldRF extends ItemShieldCore implements IMultiModeItem, IEne
 
 	protected int getEnergyPerUse(ItemStack stack) {
 
-		int unbreakingLevel = MathHelper.clamp(EnchantmentHelper.getEnchantmentLevel(Enchantments.UNBREAKING, stack), 0, 4);
-		return (isEmpowered(stack) ? energyPerUseCharged : energyPerUse) * (5 - unbreakingLevel) / 5;
+		return isEmpowered(stack) ? energyPerUseCharged : energyPerUse;
 	}
 
 	protected int useEnergy(ItemStack stack, boolean simulate) {
 
-		int unbreakingLevel = MathHelper.clamp(EnchantmentHelper.getEnchantmentLevel(Enchantments.UNBREAKING, stack), 0, 4);
-		return extractEnergy(stack, isEmpowered(stack) ? energyPerUseCharged * (5 - unbreakingLevel) / 5 : energyPerUse * (5 - unbreakingLevel) / 5, simulate);
+		int unbreakingLevel = MathHelper.clamp(EnchantmentHelper.getEnchantmentLevel(Enchantments.UNBREAKING, stack), 0, 10);
+		if (MathHelper.RANDOM.nextInt(2 + unbreakingLevel) < 2) {
+			return 0;
+		}
+		return extractEnergy(stack, isEmpowered(stack) ? energyPerUseCharged : energyPerUse, simulate);
 	}
 
 	@Override
@@ -99,24 +98,6 @@ public class ItemShieldRF extends ItemShieldCore implements IMultiModeItem, IEne
 
 		tooltip.add(StringHelper.ORANGE + getEnergyPerUse(stack) + " " + StringHelper.localize("info.redstonearsenal.tool.energyPerUse") + StringHelper.END);
 		RAProps.addEmpoweredTip(this, stack, tooltip);
-		if (getEnergyStored(stack) >= getEnergyPerUse(stack)) {
-			tooltip.add("");
-			tooltip.add(StringHelper.BRIGHT_GREEN + (isEmpowered(stack) ? damageCharged : 1) + " " + StringHelper.localize("info.cofh.damageFlux") + StringHelper.END);
-		}
-	}
-
-	public void damageShield(ItemStack stack, int damage, EntityPlayer player, Entity source) {
-
-		if (source != null) {
-			float potionDamage = 1.0F;
-			if (player.isPotionActive(MobEffects.STRENGTH)) {
-				potionDamage += player.getActivePotionEffect(MobEffects.STRENGTH).getAmplifier() * 1.3F;
-			}
-			source.attackEntityFrom(DamageHelper.causePlayerFluxDamage(player), (isEmpowered(stack) ? damageCharged : 1) * potionDamage);
-		}
-		if (!player.capabilities.isCreativeMode) {
-			useEnergy(stack, false);
-		}
 	}
 
 	@Override
@@ -125,14 +106,6 @@ public class ItemShieldRF extends ItemShieldCore implements IMultiModeItem, IEne
 		if (isInCreativeTab(tab) && showInCreative) {
 			items.add(EnergyHelper.setDefaultEnergyTag(new ItemStack(this, 1, 0), 0));
 			items.add(EnergyHelper.setDefaultEnergyTag(new ItemStack(this, 1, 0), maxEnergy));
-		}
-	}
-
-	@Override
-	public void onUpdate(ItemStack stack, World world, Entity entity, int slot, boolean isCurrentItem) {
-
-		if (stack.getItemDamage() > 0) {
-			stack.setItemDamage(0);
 		}
 	}
 
@@ -149,23 +122,9 @@ public class ItemShieldRF extends ItemShieldCore implements IMultiModeItem, IEne
 	}
 
 	@Override
-	public boolean hitEntity(ItemStack stack, EntityLivingBase entity, EntityLivingBase player) {
+	public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
 
-		if (stack.getItemDamage() > 0) {
-			stack.setItemDamage(0);
-		}
-		EntityPlayer thePlayer = (EntityPlayer) player;
-
-		if (thePlayer.capabilities.isCreativeMode || useEnergy(stack, false) == getEnergyPerUse(stack)) {
-			int fluxDamage = isEmpowered(stack) ? damageCharged : 1;
-
-			float potionDamage = 1.0F;
-			if (player.isPotionActive(MobEffects.STRENGTH)) {
-				potionDamage += player.getActivePotionEffect(MobEffects.STRENGTH).getAmplifier() * 1.3F;
-			}
-			entity.attackEntityFrom(DamageHelper.causePlayerFluxDamage(thePlayer), fluxDamage * potionDamage);
-		}
-		return true;
+		return super.shouldCauseReequipAnimation(oldStack, newStack, slotChanged) && (slotChanged || getEnergyStored(oldStack) > 0 != getEnergyStored(newStack) > 0);
 	}
 
 	@Override
@@ -198,17 +157,40 @@ public class ItemShieldRF extends ItemShieldCore implements IMultiModeItem, IEne
 	@Override
 	public EnumRarity getRarity(ItemStack stack) {
 
-		return EnumRarity.UNCOMMON;
+		return isEmpowered(stack) ? EnumRarity.RARE : EnumRarity.UNCOMMON;
 	}
 
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
 
 		ItemStack stack = player.getHeldItem(hand);
+
 		if (!player.capabilities.isCreativeMode && getEnergyStored(stack) < getEnergyPerUse(stack)) {
-			new ActionResult<>(EnumActionResult.FAIL, stack);
+			return new ActionResult<>(EnumActionResult.FAIL, stack);
 		}
-		player.setActiveHand(hand);
+		if (player.fishEntity != null) {
+			player.fishEntity.handleHookRetraction();
+
+			if (!player.capabilities.isCreativeMode) {
+				useEnergy(stack, false);
+			}
+			player.swingArm(hand);
+		} else {
+			world.playSound(null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_BOBBER_THROW, SoundCategory.NEUTRAL, 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
+
+			if (ServerHelper.isServerWorld(world)) {
+				EntityFishHook hook = new EntityFishHook(world, player);
+
+				int enchantSpeed = EnchantmentHelper.getFishingSpeedBonus(stack);
+				hook.setLureSpeed(Math.max(speedModifier + enchantSpeed + (isEmpowered(stack) ? 2 : 0), 5));
+
+				int enchantLuck = EnchantmentHelper.getFishingLuckBonus(stack);
+				hook.setLuck(luckModifier + enchantLuck + (isEmpowered(stack) ? 2 : 0));
+
+				world.spawnEntity(hook);
+			}
+			player.swingArm(hand);
+		}
 		return new ActionResult<>(EnumActionResult.SUCCESS, stack);
 	}
 

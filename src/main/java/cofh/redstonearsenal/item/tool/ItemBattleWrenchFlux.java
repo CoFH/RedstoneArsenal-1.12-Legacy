@@ -25,9 +25,9 @@ import net.minecraftforge.fml.common.eventhandler.Event.Result;
 
 //TODO FIXME, @Optional.
 //@Implementable ({ "buildcraft.api.tools.IToolWrench", "mods.railcraft.api.core.items.IToolCrowbar" })
-public class ItemBattleWrenchRF extends ItemSwordRF implements IToolHammer {
+public class ItemBattleWrenchFlux extends ItemSwordFlux implements IToolHammer {
 
-	public ItemBattleWrenchRF(ToolMaterial toolMaterial) {
+	public ItemBattleWrenchFlux(ToolMaterial toolMaterial) {
 
 		super(toolMaterial);
 		setHarvestLevel("wrench", 1);

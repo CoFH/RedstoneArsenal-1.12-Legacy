@@ -15,9 +15,9 @@ import net.minecraft.world.World;
 
 import java.util.ArrayList;
 
-public class ItemHammerRF extends ItemToolFlux implements IAOEBreakItem {
+public class ItemHammerFlux extends ItemToolFlux implements IAOEBreakItem {
 
-	public ItemHammerRF(ToolMaterial toolMaterial) {
+	public ItemHammerFlux(ToolMaterial toolMaterial) {
 
 		super(-3.2F, toolMaterial);
 		addToolClass("pickaxe");

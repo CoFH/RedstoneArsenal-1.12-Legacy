@@ -5,7 +5,6 @@ import cofh.core.init.CoreEnchantments;
 import cofh.core.init.CoreProps;
 import cofh.core.item.tool.ItemBowCore;
 import cofh.core.util.helpers.EnergyHelper;
-import cofh.core.util.helpers.ItemHelper;
 import cofh.core.util.helpers.MathHelper;
 import cofh.core.util.helpers.StringHelper;
 import cofh.redstonearsenal.init.RAProps;
@@ -30,7 +29,7 @@ import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class ItemBowRF extends ItemBowCore implements IMultiModeItem, IEnergyContainerItem {
+public class ItemBowFlux extends ItemBowCore implements IMultiModeItem, IEnergyContainerItem {
 
 	protected int maxEnergy = 320000;
 	protected int maxTransfer = 4000;
@@ -38,16 +37,16 @@ public class ItemBowRF extends ItemBowCore implements IMultiModeItem, IEnergyCon
 	protected int energyPerUse = 200;
 	protected int energyPerUseCharged = 800;
 
-	public ItemBowRF(Item.ToolMaterial toolMaterial) {
+	public ItemBowFlux(Item.ToolMaterial toolMaterial) {
 
 		super(toolMaterial);
 		setNoRepair();
 
-		addPropertyOverride(new ResourceLocation("active"), (stack, world, entity) -> ItemBowRF.this.getEnergyStored(stack) > 0 && !ItemBowRF.this.isEmpowered(stack) ? 1F : 0F);
-		addPropertyOverride(new ResourceLocation("empowered"), (stack, world, entity) -> ItemBowRF.this.isEmpowered(stack) ? 1F : 0F);
+		addPropertyOverride(new ResourceLocation("active"), (stack, world, entity) -> ItemBowFlux.this.getEnergyStored(stack) > 0 && !ItemBowFlux.this.isEmpowered(stack) ? 1F : 0F);
+		addPropertyOverride(new ResourceLocation("empowered"), (stack, world, entity) -> ItemBowFlux.this.isEmpowered(stack) ? 1F : 0F);
 	}
 
-	public ItemBowRF setEnergyParams(int maxEnergy, int maxTransfer, int energyPerUse, int energyPerUseCharged) {
+	public ItemBowFlux setEnergyParams(int maxEnergy, int maxTransfer, int energyPerUse, int energyPerUseCharged) {
 
 		this.maxEnergy = maxEnergy;
 		this.maxTransfer = maxTransfer;
@@ -64,8 +63,16 @@ public class ItemBowRF extends ItemBowCore implements IMultiModeItem, IEnergyCon
 
 	protected int getEnergyPerUse(ItemStack stack) {
 
-		int unbreakingLevel = MathHelper.clamp(EnchantmentHelper.getEnchantmentLevel(Enchantments.UNBREAKING, stack), 0, 4);
-		return (isEmpowered(stack) ? energyPerUseCharged : energyPerUse) * (5 - unbreakingLevel) / 5;
+		return isEmpowered(stack) ? energyPerUseCharged : energyPerUse;
+	}
+
+	protected int useEnergy(ItemStack stack, boolean simulate) {
+
+		int unbreakingLevel = MathHelper.clamp(EnchantmentHelper.getEnchantmentLevel(Enchantments.UNBREAKING, stack), 0, 10);
+		if (MathHelper.RANDOM.nextInt(2 + unbreakingLevel) < 2) {
+			return 0;
+		}
+		return extractEnergy(stack, isEmpowered(stack) ? energyPerUseCharged : energyPerUse, simulate);
 	}
 
 	@Override
@@ -96,7 +103,7 @@ public class ItemBowRF extends ItemBowCore implements IMultiModeItem, IEnergyCon
 	}
 
 	@Override
-	public void onUpdate(ItemStack stack, World world, Entity entity, int slot, boolean isCurrentItem) {
+	public void onUpdate(ItemStack stack, World world, Entity entity, int slot, boolean isSelected) {
 
 		if (stack.getItemDamage() > 0) {
 			stack.setItemDamage(0);
@@ -118,7 +125,7 @@ public class ItemBowRF extends ItemBowCore implements IMultiModeItem, IEnergyCon
 	@Override
 	public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
 
-		return super.shouldCauseReequipAnimation(oldStack, newStack, slotChanged) && (slotChanged || !ItemHelper.areItemStacksEqualIgnoreTags(oldStack, newStack, "Energy"));
+		return super.shouldCauseReequipAnimation(oldStack, newStack, slotChanged) && (slotChanged || getEnergyStored(oldStack) > 0 != getEnergyStored(newStack) > 0);
 	}
 
 	@Override
@@ -168,8 +175,7 @@ public class ItemBowRF extends ItemBowCore implements IMultiModeItem, IEnergyCon
 	@Override
 	public void onBowFired(EntityPlayer player, ItemStack stack) {
 
-		int unbreakingLevel = MathHelper.clamp(EnchantmentHelper.getEnchantmentLevel(Enchantments.UNBREAKING, stack), 0, 4);
-		extractEnergy(stack, isEmpowered(stack) ? energyPerUseCharged * (5 - unbreakingLevel) / 5 : energyPerUse * (5 - unbreakingLevel) / 5, player.capabilities.isCreativeMode);
+		useEnergy(stack, player.capabilities.isCreativeMode);
 	}
 
 	@Override

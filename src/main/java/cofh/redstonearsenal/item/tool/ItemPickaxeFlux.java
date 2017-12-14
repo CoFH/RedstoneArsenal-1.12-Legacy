@@ -18,12 +18,12 @@ import net.minecraft.world.World;
 
 import java.util.ArrayList;
 
-public class ItemPickaxeRF extends ItemToolFlux implements IAOEBreakItem {
+public class ItemPickaxeFlux extends ItemToolFlux implements IAOEBreakItem {
 
 	protected THashSet<Block> effectiveBlocksCharged = new THashSet<>();
 	protected THashSet<Material> effectiveMaterialsCharged = new THashSet<>();
 
-	public ItemPickaxeRF(ToolMaterial toolMaterial) {
+	public ItemPickaxeFlux(ToolMaterial toolMaterial) {
 
 		super(-2.8F, toolMaterial);
 		addToolClass("pickaxe");

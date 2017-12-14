@@ -1,82 +1,83 @@
-package cofh.redstonearsenal.item.util;
+package cofh.redstonearsenal.item.tool;
 
 import cofh.api.item.IMultiModeItem;
 import cofh.core.init.CoreEnchantments;
 import cofh.core.init.CoreProps;
 import cofh.core.item.IEnchantableItem;
-import cofh.core.item.ItemCore;
-import cofh.core.render.IModelRegister;
-import cofh.core.util.core.IInitializer;
-import cofh.core.util.core.IQuiverItem;
+import cofh.core.util.helpers.DamageHelper;
 import cofh.core.util.helpers.EnergyHelper;
-import cofh.core.util.helpers.ItemHelper;
 import cofh.core.util.helpers.MathHelper;
 import cofh.core.util.helpers.StringHelper;
-import cofh.redstonearsenal.RedstoneArsenal;
-import cofh.redstonearsenal.entity.projectile.EntityFluxArrow;
 import cofh.redstonearsenal.init.RAProps;
 import cofh.redstoneflux.api.IEnergyContainerItem;
 import cofh.redstoneflux.util.EnergyContainerItemWrapper;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Multimap;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.init.Enchantments;
-import net.minecraft.init.Items;
+import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemSword;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import net.minecraftforge.fml.common.registry.ForgeRegistries;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
-import static cofh.core.util.helpers.RecipeHelper.addShapedRecipe;
-
-public class ItemQuiverRF extends ItemCore implements IModelRegister, IMultiModeItem, IEnergyContainerItem, IQuiverItem, IEnchantableItem, IInitializer {
+public class ItemSwordFlux extends ItemSword implements IMultiModeItem, IEnergyContainerItem, IEnchantableItem {
 
 	protected int maxEnergy = 320000;
 	protected int maxTransfer = 4000;
 
-	protected int energyPerUse = 800;
-	protected int energyPerUseCharged = 6400;
+	protected int energyPerUse = 200;
+	protected int energyPerUseCharged = 800;
+
+	protected int damage = 5;
+	protected int damageCharged = 10;
+	protected float attackSpeed = -2.4F;
 
 	protected boolean showInCreative = true;
 
-	public ItemQuiverRF() {
+	public ItemSwordFlux(ToolMaterial toolMaterial) {
 
-		super("redstonearsenal");
-
+		super(toolMaterial);
 		setNoRepair();
-		setMaxStackSize(1);
-		setUnlocalizedName("redstonearsenal.util.fluxQuiver");
-		setCreativeTab(RedstoneArsenal.tabCommon);
 
-		addPropertyOverride(new ResourceLocation("active"), (stack, world, entity) -> ItemQuiverRF.this.getEnergyStored(stack) > 0 && !ItemQuiverRF.this.isEmpowered(stack) ? 1F : 0F);
-		addPropertyOverride(new ResourceLocation("empowered"), (stack, world, entity) -> ItemQuiverRF.this.isEmpowered(stack) ? 1F : 0F);
+		addPropertyOverride(new ResourceLocation("active"), (stack, world, entity) -> ItemSwordFlux.this.getEnergyStored(stack) > 0 && !ItemSwordFlux.this.isEmpowered(stack) ? 1F : 0F);
+		addPropertyOverride(new ResourceLocation("empowered"), (stack, world, entity) -> ItemSwordFlux.this.isEmpowered(stack) ? 1F : 0F);
 	}
 
-	public ItemQuiverRF setEnergyParams(int maxEnergy, int maxTransfer, int energyPerUse, int energyPerUseCharged) {
+	public ItemSwordFlux setEnergyParams(int maxEnergy, int maxTransfer, int energyPerUse, int energyPerUseCharged) {
 
 		this.maxEnergy = maxEnergy;
 		this.maxTransfer = maxTransfer;
 		this.energyPerUse = energyPerUse;
 		this.energyPerUseCharged = energyPerUseCharged;
 
+		return this;
+	}
+
+	public ItemSwordFlux setShowInCreative(boolean showInCreative) {
+
+		this.showInCreative = showInCreative;
 		return this;
 	}
 
@@ -87,8 +88,16 @@ public class ItemQuiverRF extends ItemCore implements IModelRegister, IMultiMode
 
 	protected int getEnergyPerUse(ItemStack stack) {
 
-		int unbreakingLevel = MathHelper.clamp(EnchantmentHelper.getEnchantmentLevel(Enchantments.UNBREAKING, stack), 0, 4);
-		return (isEmpowered(stack) ? energyPerUseCharged : energyPerUse) * (5 - unbreakingLevel) / 5;
+		return isEmpowered(stack) ? energyPerUseCharged : energyPerUse;
+	}
+
+	protected int useEnergy(ItemStack stack, boolean simulate) {
+
+		int unbreakingLevel = MathHelper.clamp(EnchantmentHelper.getEnchantmentLevel(Enchantments.UNBREAKING, stack), 0, 10);
+		if (MathHelper.RANDOM.nextInt(2 + unbreakingLevel) < 2) {
+			return 0;
+		}
+		return extractEnergy(stack, isEmpowered(stack) ? energyPerUseCharged : energyPerUse, simulate);
 	}
 
 	@Override
@@ -107,6 +116,13 @@ public class ItemQuiverRF extends ItemCore implements IModelRegister, IMultiMode
 
 		tooltip.add(StringHelper.ORANGE + getEnergyPerUse(stack) + " " + StringHelper.localize("info.redstonearsenal.tool.energyPerUse") + StringHelper.END);
 		RAProps.addEmpoweredTip(this, stack, tooltip);
+
+		if (getEnergyStored(stack) >= getEnergyPerUse(stack) && worldIn != null) {
+			int adjustedDamage = (int) (damage + Minecraft.getMinecraft().player.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getBaseValue());
+			tooltip.add("");
+			tooltip.add(StringHelper.LIGHT_BLUE + adjustedDamage + " " + StringHelper.localize("info.cofh.damageAttack") + StringHelper.END);
+			tooltip.add(StringHelper.BRIGHT_GREEN + (isEmpowered(stack) ? damageCharged : 1) + " " + StringHelper.localize("info.cofh.damageFlux") + StringHelper.END);
+		}
 	}
 
 	@Override
@@ -119,7 +135,7 @@ public class ItemQuiverRF extends ItemCore implements IModelRegister, IMultiMode
 	}
 
 	@Override
-	public void onUpdate(ItemStack stack, World world, Entity entity, int slot, boolean isCurrentItem) {
+	public void onUpdate(ItemStack stack, World world, Entity entity, int slot, boolean isSelected) {
 
 		if (stack.getItemDamage() > 0) {
 			stack.setItemDamage(0);
@@ -139,27 +155,50 @@ public class ItemQuiverRF extends ItemCore implements IModelRegister, IMultiMode
 	}
 
 	@Override
-	public boolean isEnchantable(ItemStack stack) {
+	public boolean hitEntity(ItemStack stack, EntityLivingBase entity, EntityLivingBase player) {
 
+		if (stack.getItemDamage() > 0) {
+			stack.setItemDamage(0);
+		}
+		EntityPlayer thePlayer = (EntityPlayer) player;
+
+		if (thePlayer.capabilities.isCreativeMode || getEnergyStored(stack) >= getEnergyPerUse(stack)) {
+			int fluxDamage = isEmpowered(stack) ? damageCharged : 1;
+			float potionDamage = 1.0F;
+			if (player.isPotionActive(MobEffects.STRENGTH)) {
+				potionDamage += player.getActivePotionEffect(MobEffects.STRENGTH).getAmplifier() * 1.3F;
+			}
+			entity.attackEntityFrom(DamageHelper.causePlayerFluxDamage(thePlayer), fluxDamage * potionDamage);
+			useEnergy(stack, thePlayer.capabilities.isCreativeMode);
+		}
 		return true;
+	}
+
+	@Override
+	public boolean onBlockDestroyed(ItemStack stack, World world, IBlockState state, BlockPos pos, EntityLivingBase entityLivingy) {
+
+		if (state.getBlockHardness(world, pos) != 0.0D) {
+			extractEnergy(stack, energyPerUse, false);
+		}
+		return true;
+	}
+
+	@Override
+	public boolean shouldCauseBlockBreakReset(ItemStack oldStack, ItemStack newStack) {
+
+		return !oldStack.equals(newStack) && (getEnergyStored(oldStack) > 0 != getEnergyStored(newStack) > 0);
 	}
 
 	@Override
 	public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
 
-		return super.shouldCauseReequipAnimation(oldStack, newStack, slotChanged) && (slotChanged || !ItemHelper.areItemStacksEqualIgnoreTags(oldStack, newStack, "Energy"));
+		return super.shouldCauseReequipAnimation(oldStack, newStack, slotChanged) && (slotChanged || getEnergyStored(oldStack) > 0 != getEnergyStored(newStack) > 0);
 	}
 
 	@Override
 	public boolean showDurabilityBar(ItemStack stack) {
 
 		return RAProps.showToolCharge && stack.getTagCompound() != null && !stack.getTagCompound().getBoolean("CreativeTab");
-	}
-
-	@Override
-	public int getItemEnchantability(ItemStack stack) {
-
-		return 10;
 	}
 
 	@Override
@@ -189,12 +228,21 @@ public class ItemQuiverRF extends ItemCore implements IModelRegister, IMultiMode
 		return isEmpowered(stack) ? EnumRarity.RARE : EnumRarity.UNCOMMON;
 	}
 
-	/* IModelRegister */
 	@Override
-	@SideOnly (Side.CLIENT)
-	public void registerModels() {
+	public Multimap<String, AttributeModifier> getAttributeModifiers(EntityEquipmentSlot slot, ItemStack stack) {
 
-		ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation(RedstoneArsenal.MOD_ID + ":util/quiver_flux", "inventory"));
+		Multimap<String, AttributeModifier> multimap = HashMultimap.create();
+
+		if (slot == EntityEquipmentSlot.MAINHAND) {
+			if (getEnergyStored(stack) >= getEnergyPerUse(stack)) {
+				multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getName(), new AttributeModifier(ATTACK_SPEED_MODIFIER, "Tool modifier", isEmpowered(stack) ? attackSpeed + 0.4F : attackSpeed, 0));
+				multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Tool modifier", (isEmpowered(stack) ? damageCharged : 1) + damage, 0));
+			} else {
+				multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getName(), new AttributeModifier(ATTACK_SPEED_MODIFIER, "Tool modifier", attackSpeed, 0));
+				multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Tool modifier", 1, 0));
+			}
+		}
+		return multimap;
 	}
 
 	/* IMultiModeItem */
@@ -264,27 +312,6 @@ public class ItemQuiverRF extends ItemCore implements IModelRegister, IMultiMode
 		return maxEnergy + maxEnergy * enchant / 2;
 	}
 
-	/* IQuiverItem */
-	@Override
-	public EntityArrow createEntityArrow(World world, ItemStack stack, EntityLivingBase shooter) {
-
-		return new EntityFluxArrow(world, shooter, isEmpowered(stack));
-	}
-
-	@Override
-	public boolean isEmpty(ItemStack stack, EntityLivingBase shooter) {
-
-		return !(shooter instanceof EntityPlayer && ((EntityPlayer) shooter).capabilities.isCreativeMode) && getEnergyStored(stack) <= 0;
-	}
-
-	@Override
-	public void onArrowFired(ItemStack stack, EntityLivingBase shooter) {
-
-		if (shooter instanceof EntityPlayer) {
-			extractEnergy(stack, getEnergyPerUse(stack), ((EntityPlayer) shooter).capabilities.isCreativeMode);
-		}
-	}
-
 	/* IEnchantableItem */
 	@Override
 	public boolean canEnchant(ItemStack stack, Enchantment enchantment) {
@@ -299,28 +326,4 @@ public class ItemQuiverRF extends ItemCore implements IModelRegister, IMultiMode
 		return new EnergyContainerItemWrapper(stack, this);
 	}
 
-	/* IInitializer */
-	@Override
-	public boolean initialize() {
-
-		this.setRegistryName("util.quiver_flux");
-		ForgeRegistries.ITEMS.register(this);
-
-		quiverElectrumFlux = EnergyHelper.setDefaultEnergyTag(new ItemStack(this, 1, 0), 0);
-
-		RedstoneArsenal.proxy.addIModelRegister(this);
-
-		return true;
-	}
-
-	@Override
-	public boolean register() {
-
-		addShapedRecipe(quiverElectrumFlux, "AA ", "GIS", "IGS", 'A', Items.ARROW, 'G', "gemCrystalFlux", 'I', "ingotElectrumFlux", 'S', Items.STRING);
-
-		return true;
-	}
-
-	/* REFERENCES */
-	public static ItemStack quiverElectrumFlux;
 }

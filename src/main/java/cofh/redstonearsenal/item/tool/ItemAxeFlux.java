@@ -13,9 +13,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class ItemAxeRF extends ItemToolFlux implements IEnchantableItem {
+public class ItemAxeFlux extends ItemToolFlux implements IEnchantableItem {
 
-	public ItemAxeRF(ToolMaterial toolMaterial) {
+	public ItemAxeFlux(ToolMaterial toolMaterial) {
 
 		super(-2.8F, toolMaterial);
 		addToolClass("axe");

@@ -1,51 +1,75 @@
-package cofh.redstonearsenal.item.tool;
+package cofh.redstonearsenal.item.util;
 
 import cofh.api.item.IMultiModeItem;
 import cofh.core.init.CoreEnchantments;
 import cofh.core.init.CoreProps;
 import cofh.core.item.IEnchantableItem;
-import cofh.core.item.tool.ItemFishingRodCore;
-import cofh.core.util.helpers.*;
+import cofh.core.item.ItemCore;
+import cofh.core.render.IModelRegister;
+import cofh.core.util.core.IInitializer;
+import cofh.core.util.core.IQuiverItem;
+import cofh.core.util.helpers.EnergyHelper;
+import cofh.core.util.helpers.MathHelper;
+import cofh.core.util.helpers.StringHelper;
+import cofh.redstonearsenal.RedstoneArsenal;
+import cofh.redstonearsenal.entity.projectile.EntityFluxArrow;
 import cofh.redstonearsenal.init.RAProps;
 import cofh.redstoneflux.api.IEnergyContainerItem;
 import cofh.redstoneflux.util.EnergyContainerItemWrapper;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.projectile.EntityFishHook;
+import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.init.Enchantments;
+import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.*;
+import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
+import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class ItemFishingRodRF extends ItemFishingRodCore implements IMultiModeItem, IEnergyContainerItem, IEnchantableItem {
+import static cofh.core.util.helpers.RecipeHelper.addShapedRecipe;
+
+public class ItemQuiverFlux extends ItemCore implements IModelRegister, IMultiModeItem, IEnergyContainerItem, IQuiverItem, IEnchantableItem, IInitializer {
 
 	protected int maxEnergy = 320000;
 	protected int maxTransfer = 4000;
 
-	protected int energyPerUse = 200;
-	protected int energyPerUseCharged = 800;
+	protected int energyPerUse = 800;
+	protected int energyPerUseCharged = 6400;
 
-	public ItemFishingRodRF(ToolMaterial toolMaterial) {
+	protected boolean showInCreative = true;
 
-		super(toolMaterial);
+	public ItemQuiverFlux() {
+
+		super("redstonearsenal");
+
 		setNoRepair();
+		setMaxStackSize(1);
+		setUnlocalizedName("redstonearsenal.util.fluxQuiver");
+		setCreativeTab(RedstoneArsenal.tabCommon);
 
-		addPropertyOverride(new ResourceLocation("active"), (stack, world, entity) -> ItemFishingRodRF.this.getEnergyStored(stack) > 0 && !ItemFishingRodRF.this.isEmpowered(stack) ? 1F : 0F);
-		addPropertyOverride(new ResourceLocation("empowered"), (stack, world, entity) -> ItemFishingRodRF.this.isEmpowered(stack) ? 1F : 0F);
+		addPropertyOverride(new ResourceLocation("active"), (stack, world, entity) -> ItemQuiverFlux.this.getEnergyStored(stack) > 0 && !ItemQuiverFlux.this.isEmpowered(stack) ? 1F : 0F);
+		addPropertyOverride(new ResourceLocation("empowered"), (stack, world, entity) -> ItemQuiverFlux.this.isEmpowered(stack) ? 1F : 0F);
 	}
 
-	public ItemFishingRodRF setEnergyParams(int maxEnergy, int maxTransfer, int energyPerUse, int energyPerUseCharged) {
+	public ItemQuiverFlux setEnergyParams(int maxEnergy, int maxTransfer, int energyPerUse, int energyPerUseCharged) {
 
 		this.maxEnergy = maxEnergy;
 		this.maxTransfer = maxTransfer;
@@ -53,11 +77,6 @@ public class ItemFishingRodRF extends ItemFishingRodCore implements IMultiModeIt
 		this.energyPerUseCharged = energyPerUseCharged;
 
 		return this;
-	}
-
-	protected boolean isCastState(ItemStack stack, EntityLivingBase entity) {
-
-		return (entity != null && entity.getHeldItemMainhand() == stack && entity instanceof EntityPlayer && ((EntityPlayer) entity).fishEntity != null);
 	}
 
 	protected boolean isEmpowered(ItemStack stack) {
@@ -69,12 +88,6 @@ public class ItemFishingRodRF extends ItemFishingRodCore implements IMultiModeIt
 
 		int unbreakingLevel = MathHelper.clamp(EnchantmentHelper.getEnchantmentLevel(Enchantments.UNBREAKING, stack), 0, 4);
 		return (isEmpowered(stack) ? energyPerUseCharged : energyPerUse) * (5 - unbreakingLevel) / 5;
-	}
-
-	protected int useEnergy(ItemStack stack, boolean simulate) {
-
-		int unbreakingLevel = MathHelper.clamp(EnchantmentHelper.getEnchantmentLevel(Enchantments.UNBREAKING, stack), 0, 4);
-		return extractEnergy(stack, isEmpowered(stack) ? energyPerUseCharged * (5 - unbreakingLevel) / 5 : energyPerUse * (5 - unbreakingLevel) / 5, simulate);
 	}
 
 	@Override
@@ -105,6 +118,14 @@ public class ItemFishingRodRF extends ItemFishingRodCore implements IMultiModeIt
 	}
 
 	@Override
+	public void onUpdate(ItemStack stack, World world, Entity entity, int slot, boolean isSelected) {
+
+		if (stack.getItemDamage() > 0) {
+			stack.setItemDamage(0);
+		}
+	}
+
+	@Override
 	public void setDamage(ItemStack stack, int damage) {
 
 		super.setDamage(stack, 0);
@@ -117,15 +138,27 @@ public class ItemFishingRodRF extends ItemFishingRodCore implements IMultiModeIt
 	}
 
 	@Override
+	public boolean isEnchantable(ItemStack stack) {
+
+		return true;
+	}
+
+	@Override
 	public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
 
-		return super.shouldCauseReequipAnimation(oldStack, newStack, slotChanged) && (slotChanged || !ItemHelper.areItemStacksEqualIgnoreTags(oldStack, newStack, "Energy"));
+		return super.shouldCauseReequipAnimation(oldStack, newStack, slotChanged) && (slotChanged || getEnergyStored(oldStack) > 0 != getEnergyStored(newStack) > 0);
 	}
 
 	@Override
 	public boolean showDurabilityBar(ItemStack stack) {
 
 		return RAProps.showToolCharge && stack.getTagCompound() != null && !stack.getTagCompound().getBoolean("CreativeTab");
+	}
+
+	@Override
+	public int getItemEnchantability(ItemStack stack) {
+
+		return 10;
 	}
 
 	@Override
@@ -155,38 +188,12 @@ public class ItemFishingRodRF extends ItemFishingRodCore implements IMultiModeIt
 		return isEmpowered(stack) ? EnumRarity.RARE : EnumRarity.UNCOMMON;
 	}
 
+	/* IModelRegister */
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
+	@SideOnly (Side.CLIENT)
+	public void registerModels() {
 
-		ItemStack stack = player.getHeldItem(hand);
-
-		if (!player.capabilities.isCreativeMode && getEnergyStored(stack) < getEnergyPerUse(stack)) {
-			return new ActionResult<>(EnumActionResult.FAIL, stack);
-		}
-		if (player.fishEntity != null) {
-			player.fishEntity.handleHookRetraction();
-
-			if (!player.capabilities.isCreativeMode) {
-				useEnergy(stack, false);
-			}
-			player.swingArm(hand);
-		} else {
-			world.playSound(null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_BOBBER_THROW, SoundCategory.NEUTRAL, 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
-
-			if (ServerHelper.isServerWorld(world)) {
-				EntityFishHook hook = new EntityFishHook(world, player);
-
-				int enchantSpeed = EnchantmentHelper.getFishingSpeedBonus(stack);
-				hook.setLureSpeed(Math.max(speedModifier + enchantSpeed + (isEmpowered(stack) ? 2 : 0), 5));
-
-				int enchantLuck = EnchantmentHelper.getFishingLuckBonus(stack);
-				hook.setLuck(luckModifier + enchantLuck + (isEmpowered(stack) ? 2 : 0));
-
-				world.spawnEntity(hook);
-			}
-			player.swingArm(hand);
-		}
-		return new ActionResult<>(EnumActionResult.SUCCESS, stack);
+		ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation(RedstoneArsenal.MOD_ID + ":util/quiver_flux", "inventory"));
 	}
 
 	/* IMultiModeItem */
@@ -256,6 +263,27 @@ public class ItemFishingRodRF extends ItemFishingRodCore implements IMultiModeIt
 		return maxEnergy + maxEnergy * enchant / 2;
 	}
 
+	/* IQuiverItem */
+	@Override
+	public EntityArrow createEntityArrow(World world, ItemStack stack, EntityLivingBase shooter) {
+
+		return new EntityFluxArrow(world, shooter, isEmpowered(stack));
+	}
+
+	@Override
+	public boolean isEmpty(ItemStack stack, EntityLivingBase shooter) {
+
+		return !(shooter instanceof EntityPlayer && ((EntityPlayer) shooter).capabilities.isCreativeMode) && getEnergyStored(stack) <= 0;
+	}
+
+	@Override
+	public void onArrowFired(ItemStack stack, EntityLivingBase shooter) {
+
+		if (shooter instanceof EntityPlayer) {
+			extractEnergy(stack, getEnergyPerUse(stack), ((EntityPlayer) shooter).capabilities.isCreativeMode);
+		}
+	}
+
 	/* IEnchantableItem */
 	@Override
 	public boolean canEnchant(ItemStack stack, Enchantment enchantment) {
@@ -270,4 +298,28 @@ public class ItemFishingRodRF extends ItemFishingRodCore implements IMultiModeIt
 		return new EnergyContainerItemWrapper(stack, this);
 	}
 
+	/* IInitializer */
+	@Override
+	public boolean initialize() {
+
+		this.setRegistryName("util.quiver_flux");
+		ForgeRegistries.ITEMS.register(this);
+
+		quiverElectrumFlux = EnergyHelper.setDefaultEnergyTag(new ItemStack(this, 1, 0), 0);
+
+		RedstoneArsenal.proxy.addIModelRegister(this);
+
+		return true;
+	}
+
+	@Override
+	public boolean register() {
+
+		addShapedRecipe(quiverElectrumFlux, "AA ", "GIS", "IGS", 'A', Items.ARROW, 'G', "gemCrystalFlux", 'I', "ingotElectrumFlux", 'S', Items.STRING);
+
+		return true;
+	}
+
+	/* REFERENCES */
+	public static ItemStack quiverElectrumFlux;
 }

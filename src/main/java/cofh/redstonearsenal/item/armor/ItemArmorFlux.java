@@ -5,7 +5,6 @@ import cofh.core.init.CoreProps;
 import cofh.core.item.IEnchantableItem;
 import cofh.core.item.ItemArmorCore;
 import cofh.core.util.helpers.EnergyHelper;
-import cofh.core.util.helpers.ItemHelper;
 import cofh.core.util.helpers.MathHelper;
 import cofh.core.util.helpers.StringHelper;
 import cofh.redstonearsenal.init.RAProps;
@@ -55,12 +54,6 @@ public class ItemArmorFlux extends ItemArmorCore implements ISpecialArmor, IEner
 		return this;
 	}
 
-	protected int getEnergyPerDamage(ItemStack stack) {
-
-		int unbreakingLevel = MathHelper.clamp(EnchantmentHelper.getEnchantmentLevel(Enchantments.UNBREAKING, stack), 0, 4);
-		return energyPerDamage * (5 - unbreakingLevel) / 5;
-	}
-
 	@Override
 	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 
@@ -94,7 +87,7 @@ public class ItemArmorFlux extends ItemArmorCore implements ISpecialArmor, IEner
 	@Override
 	public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
 
-		return super.shouldCauseReequipAnimation(oldStack, newStack, slotChanged) && (slotChanged || !ItemHelper.areItemStacksEqualIgnoreTags(oldStack, newStack, "Energy"));
+		return super.shouldCauseReequipAnimation(oldStack, newStack, slotChanged) && (slotChanged || getEnergyStored(oldStack) > 0 != getEnergyStored(newStack) > 0);
 	}
 
 	@Override
@@ -138,15 +131,15 @@ public class ItemArmorFlux extends ItemArmorCore implements ISpecialArmor, IEner
 			return FLUX;
 		} else if (source.damageType.equals("fall")) {
 			if (slot == 0) {
-				int absorbMax = getEnergyPerDamage(armor) > 0 ? 25 * getEnergyStored(armor) / getEnergyPerDamage(armor) : 0;
+				int absorbMax = energyPerDamage > 0 ? 25 * getEnergyStored(armor) / energyPerDamage : 0;
 				return new ArmorProperties(0, absorbRatio * getArmorMaterial().getDamageReductionAmount(armorType) * 0.25, absorbMax);
 			}
 			return FALL;
 		} else if (source.isUnblockable()) {
-			int absorbMax = getEnergyPerDamage(armor) > 0 ? 25 * getEnergyStored(armor) / getEnergyPerDamage(armor) : 0;
+			int absorbMax = energyPerDamage > 0 ? 25 * getEnergyStored(armor) / energyPerDamage : 0;
 			return new ArmorProperties(0, absorbRatio * getArmorMaterial().getDamageReductionAmount(armorType) * 0.025, absorbMax);
 		}
-		int absorbMax = getEnergyPerDamage(armor) > 0 ? 25 * getEnergyStored(armor) / getEnergyPerDamage(armor) : 0;
+		int absorbMax = energyPerDamage > 0 ? 25 * getEnergyStored(armor) / energyPerDamage : 0;
 		return new ArmorProperties(0, absorbRatio * getArmorMaterial().getDamageReductionAmount(armorType) * 0.05, absorbMax);
 		// 0.05 = 1 / 20 (max armor)
 	}
@@ -154,7 +147,7 @@ public class ItemArmorFlux extends ItemArmorCore implements ISpecialArmor, IEner
 	@Override
 	public int getArmorDisplay(EntityPlayer player, ItemStack armor, int slot) {
 
-		if (getEnergyStored(armor) < getEnergyPerDamage(armor)) {
+		if (getEnergyStored(armor) < energyPerDamage) {
 			return -getArmorMaterial().getDamageReductionAmount(armorType);
 		}
 		return 0;
@@ -165,9 +158,13 @@ public class ItemArmorFlux extends ItemArmorCore implements ISpecialArmor, IEner
 
 		if (source.damageType.equals("flux")) {
 			boolean p = source.getTrueSource() == null;
-			receiveEnergy(armor, damage * (p ? energyPerDamage / 2 : getEnergyPerDamage(armor)), false);
+			receiveEnergy(armor, damage * energyPerDamage, false);
 		} else {
-			extractEnergy(armor, damage * getEnergyPerDamage(armor), false);
+			int unbreakingLevel = MathHelper.clamp(EnchantmentHelper.getEnchantmentLevel(Enchantments.UNBREAKING, armor), 0, 10);
+			if (MathHelper.RANDOM.nextInt(2 + unbreakingLevel) < 2) {
+				return;
+			}
+			extractEnergy(armor, damage * energyPerDamage, false);
 		}
 	}
 

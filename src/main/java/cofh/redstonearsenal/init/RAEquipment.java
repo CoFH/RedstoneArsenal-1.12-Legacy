@@ -199,17 +199,17 @@ public class RAEquipment {
 		private int speedModifier = 1;
 
 		/* TOOLS */
-		public ItemWrenchRF itemWrench;
-		public ItemBattleWrenchRF itemBattleWrench;
-		public ItemSwordRF itemSword;
-		public ItemShovelRF itemShovel;
-		public ItemPickaxeRF itemPickaxe;
-		public ItemAxeRF itemAxe;
-		public ItemBowRF itemBow;
-		public ItemFishingRodRF itemFishingRod;
-		public ItemSickleRF itemSickle;
-		public ItemHammerRF itemHammer;
-		public ItemShieldRF itemShield;
+		public ItemWrenchFlux itemWrench;
+		public ItemBattleWrenchFlux itemBattleWrench;
+		public ItemSwordFlux itemSword;
+		public ItemShovelFlux itemShovel;
+		public ItemPickaxeFlux itemPickaxe;
+		public ItemAxeFlux itemAxe;
+		public ItemBowFlux itemBow;
+		public ItemFishingRodFlux itemFishingRod;
+		public ItemSickleFlux itemSickle;
+		public ItemHammerFlux itemHammer;
+		public ItemShieldFlux itemShield;
 
 		public ItemStack toolWrench;
 		public ItemStack toolBattleWrench;
@@ -233,17 +233,17 @@ public class RAEquipment {
 
 		protected void create() {
 
-			itemWrench = new ItemWrenchRF(TOOL_MATERIAL);
-			itemBattleWrench = new ItemBattleWrenchRF(TOOL_MATERIAL);
-			itemSword = new ItemSwordRF(TOOL_MATERIAL);
-			itemShovel = new ItemShovelRF(TOOL_MATERIAL);
-			itemPickaxe = new ItemPickaxeRF(TOOL_MATERIAL);
-			itemAxe = new ItemAxeRF(TOOL_MATERIAL);
-			itemBow = new ItemBowRF(TOOL_MATERIAL);
-			itemFishingRod = new ItemFishingRodRF(TOOL_MATERIAL);
-			itemSickle = new ItemSickleRF(TOOL_MATERIAL);
-			itemHammer = new ItemHammerRF(TOOL_MATERIAL);
-			itemShield = new ItemShieldRF(TOOL_MATERIAL);
+			itemWrench = new ItemWrenchFlux(TOOL_MATERIAL);
+			itemBattleWrench = new ItemBattleWrenchFlux(TOOL_MATERIAL);
+			itemSword = new ItemSwordFlux(TOOL_MATERIAL);
+			itemShovel = new ItemShovelFlux(TOOL_MATERIAL);
+			itemPickaxe = new ItemPickaxeFlux(TOOL_MATERIAL);
+			itemAxe = new ItemAxeFlux(TOOL_MATERIAL);
+			itemBow = new ItemBowFlux(TOOL_MATERIAL);
+			itemFishingRod = new ItemFishingRodFlux(TOOL_MATERIAL);
+			itemSickle = new ItemSickleFlux(TOOL_MATERIAL);
+			itemHammer = new ItemHammerFlux(TOOL_MATERIAL);
+			itemShield = new ItemShieldFlux(TOOL_MATERIAL);
 		}
 
 		protected void initialize() {

@@ -28,11 +28,11 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ItemShovelRF extends ItemToolFlux implements IAOEBreakItem {
+public class ItemShovelFlux extends ItemToolFlux implements IAOEBreakItem {
 
 	int range = 4;
 
-	public ItemShovelRF(ToolMaterial toolMaterial) {
+	public ItemShovelFlux(ToolMaterial toolMaterial) {
 
 		super(-3.0F, toolMaterial);
 		addToolClass("shovel");

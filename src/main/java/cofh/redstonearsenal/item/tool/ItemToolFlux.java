@@ -5,7 +5,10 @@ import cofh.core.init.CoreEnchantments;
 import cofh.core.init.CoreProps;
 import cofh.core.item.IEnchantableItem;
 import cofh.core.item.tool.ItemToolCore;
-import cofh.core.util.helpers.*;
+import cofh.core.util.helpers.DamageHelper;
+import cofh.core.util.helpers.EnergyHelper;
+import cofh.core.util.helpers.MathHelper;
+import cofh.core.util.helpers.StringHelper;
 import cofh.redstonearsenal.init.RAProps;
 import cofh.redstoneflux.api.IEnergyContainerItem;
 import cofh.redstoneflux.util.EnergyContainerItemWrapper;
@@ -80,14 +83,16 @@ public abstract class ItemToolFlux extends ItemToolCore implements IMultiModeIte
 
 	protected int getEnergyPerUse(ItemStack stack) {
 
-		int unbreakingLevel = MathHelper.clamp(EnchantmentHelper.getEnchantmentLevel(Enchantments.UNBREAKING, stack), 0, 4);
-		return (isEmpowered(stack) ? energyPerUseCharged : energyPerUse) * (5 - unbreakingLevel) / 5;
+		return isEmpowered(stack) ? energyPerUseCharged : energyPerUse;
 	}
 
 	protected int useEnergy(ItemStack stack, boolean simulate) {
 
-		int unbreakingLevel = MathHelper.clamp(EnchantmentHelper.getEnchantmentLevel(Enchantments.UNBREAKING, stack), 0, 4);
-		return extractEnergy(stack, (isEmpowered(stack) ? energyPerUseCharged : energyPerUse) * (5 - unbreakingLevel) / 5, simulate);
+		int unbreakingLevel = MathHelper.clamp(EnchantmentHelper.getEnchantmentLevel(Enchantments.UNBREAKING, stack), 0, 10);
+		if (MathHelper.RANDOM.nextInt(2 + unbreakingLevel) < 2) {
+			return 0;
+		}
+		return extractEnergy(stack, isEmpowered(stack) ? energyPerUseCharged : energyPerUse, simulate);
 	}
 
 	@Override
@@ -134,7 +139,7 @@ public abstract class ItemToolFlux extends ItemToolCore implements IMultiModeIte
 	}
 
 	@Override
-	public void onUpdate(ItemStack stack, World world, Entity entity, int slot, boolean isCurrentItem) {
+	public void onUpdate(ItemStack stack, World world, Entity entity, int slot, boolean isSelected) {
 
 		if (stack.getItemDamage() > 0) {
 			stack.setItemDamage(0);
@@ -161,21 +166,28 @@ public abstract class ItemToolFlux extends ItemToolCore implements IMultiModeIte
 		}
 		EntityPlayer thePlayer = (EntityPlayer) player;
 
-		if (thePlayer.capabilities.isCreativeMode || useEnergy(stack, false) >= getEnergyPerUse(stack)) {
+		if (thePlayer.capabilities.isCreativeMode || getEnergyStored(stack) >= getEnergyPerUse(stack)) {
 			int fluxDamage = isEmpowered(stack) ? damageCharged : 1;
 			float potionDamage = 1.0F;
 			if (player.isPotionActive(MobEffects.STRENGTH)) {
 				potionDamage += player.getActivePotionEffect(MobEffects.STRENGTH).getAmplifier() * 1.3F;
 			}
 			entity.attackEntityFrom(DamageHelper.causePlayerFluxDamage(thePlayer), fluxDamage * potionDamage);
+			useEnergy(stack, thePlayer.capabilities.isCreativeMode);
 		}
 		return true;
 	}
 
 	@Override
+	public boolean shouldCauseBlockBreakReset(ItemStack oldStack, ItemStack newStack) {
+
+		return !oldStack.equals(newStack) && (getEnergyStored(oldStack) > 0 != getEnergyStored(newStack) > 0);
+	}
+
+	@Override
 	public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
 
-		return super.shouldCauseReequipAnimation(oldStack, newStack, slotChanged) && (slotChanged || !ItemHelper.areItemStacksEqualIgnoreTags(oldStack, newStack, "Energy"));
+		return super.shouldCauseReequipAnimation(oldStack, newStack, slotChanged) && (slotChanged || getEnergyStored(oldStack) > 0 != getEnergyStored(newStack) > 0);
 	}
 
 	@Override
@@ -226,7 +238,7 @@ public abstract class ItemToolFlux extends ItemToolCore implements IMultiModeIte
 		Multimap<String, AttributeModifier> multimap = HashMultimap.create();
 
 		if (slot == EntityEquipmentSlot.MAINHAND) {
-			if (useEnergy(stack, true) >= getEnergyPerUse(stack)) {
+			if (getEnergyStored(stack) >= getEnergyPerUse(stack)) {
 				multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getName(), new AttributeModifier(ATTACK_SPEED_MODIFIER, "Tool modifier", isEmpowered(stack) ? attackSpeed + 0.4F : attackSpeed, 0));
 				multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Tool modifier", (isEmpowered(stack) ? damageCharged : 1) + damage, 0));
 			} else {

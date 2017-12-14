@@ -49,7 +49,7 @@ import java.util.List;
 
 //TODO FIXME @Optional
 //@Implementable ({ "buildcraft.api.tools.IToolWrench", "mods.railcraft.api.core.items.IToolCrowbar" })
-public class ItemWrenchRF extends ItemShears implements IEnergyContainerItem, IEnchantableItem, IToolHammer {
+public class ItemWrenchFlux extends ItemShears implements IEnergyContainerItem, IEnchantableItem, IToolHammer {
 
 	protected int maxEnergy = 320000;
 	protected int maxTransfer = 4000;
@@ -60,7 +60,7 @@ public class ItemWrenchRF extends ItemShears implements IEnergyContainerItem, IE
 
 	protected boolean showInCreative = true;
 
-	public ItemWrenchRF(ToolMaterial toolMaterial) {
+	public ItemWrenchFlux(ToolMaterial toolMaterial) {
 
 		super();
 
@@ -70,10 +70,10 @@ public class ItemWrenchRF extends ItemShears implements IEnergyContainerItem, IE
 
 		setHarvestLevel("wrench", 1);
 
-		addPropertyOverride(new ResourceLocation("active"), (stack, world, entity) -> ItemWrenchRF.this.getEnergyStored(stack) > 0 ? 1F : 0F);
+		addPropertyOverride(new ResourceLocation("active"), (stack, world, entity) -> ItemWrenchFlux.this.getEnergyStored(stack) > 0 ? 1F : 0F);
 	}
 
-	public ItemWrenchRF setEnergyParams(int maxEnergy, int maxTransfer, int energyPerUse) {
+	public ItemWrenchFlux setEnergyParams(int maxEnergy, int maxTransfer, int energyPerUse) {
 
 		this.maxEnergy = maxEnergy;
 		this.maxTransfer = maxTransfer;
@@ -82,7 +82,7 @@ public class ItemWrenchRF extends ItemShears implements IEnergyContainerItem, IE
 		return this;
 	}
 
-	public ItemWrenchRF setShowInCreative(boolean showInCreative) {
+	public ItemWrenchFlux setShowInCreative(boolean showInCreative) {
 
 		this.showInCreative = showInCreative;
 		return this;
@@ -90,14 +90,16 @@ public class ItemWrenchRF extends ItemShears implements IEnergyContainerItem, IE
 
 	protected int getEnergyPerUse(ItemStack stack) {
 
-		int unbreakingLevel = MathHelper.clamp(EnchantmentHelper.getEnchantmentLevel(Enchantments.UNBREAKING, stack), 0, 4);
-		return energyPerUse * (5 - unbreakingLevel) / 5;
+		return energyPerUse;
 	}
 
 	protected int useEnergy(ItemStack stack, boolean simulate) {
 
-		int unbreakingLevel = MathHelper.clamp(EnchantmentHelper.getEnchantmentLevel(Enchantments.UNBREAKING, stack), 0, 4);
-		return extractEnergy(stack, energyPerUse * (5 - unbreakingLevel) / 5, simulate);
+		int unbreakingLevel = MathHelper.clamp(EnchantmentHelper.getEnchantmentLevel(Enchantments.UNBREAKING, stack), 0, 10);
+		if (MathHelper.RANDOM.nextInt(2 + unbreakingLevel) < 2) {
+			return 0;
+		}
+		return extractEnergy(stack, energyPerUse, simulate);
 	}
 
 	@Override
@@ -127,7 +129,7 @@ public class ItemWrenchRF extends ItemShears implements IEnergyContainerItem, IE
 	}
 
 	@Override
-	public void onUpdate(ItemStack stack, World world, Entity entity, int slot, boolean isCurrentItem) {
+	public void onUpdate(ItemStack stack, World world, Entity entity, int slot, boolean isSelected) {
 
 		if (stack.getItemDamage() > 0) {
 			stack.setItemDamage(0);
@@ -232,7 +234,7 @@ public class ItemWrenchRF extends ItemShears implements IEnergyContainerItem, IE
 	@Override
 	public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
 
-		return super.shouldCauseReequipAnimation(oldStack, newStack, slotChanged) && !(!slotChanged && oldStack.isItemEqual(newStack) && getEnergyStored(oldStack) < getEnergyStored(newStack));
+		return super.shouldCauseReequipAnimation(oldStack, newStack, slotChanged) && (slotChanged || getEnergyStored(oldStack) > 0 != getEnergyStored(newStack) > 0);
 	}
 
 	@Override

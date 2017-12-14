@@ -9,11 +9,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class ItemSickleRF extends ItemToolFlux {
+public class ItemSickleFlux extends ItemToolFlux {
 
 	public int radius = 3;
 
-	public ItemSickleRF(ToolMaterial toolMaterial) {
+	public ItemSickleFlux(ToolMaterial toolMaterial) {
 
 		super(-2.6F, toolMaterial);
 		addToolClass("sickle");
@@ -32,7 +32,7 @@ public class ItemSickleRF extends ItemToolFlux {
 		effectiveMaterials.add(Material.WEB);
 	}
 
-	public ItemSickleRF setRadius(int radius) {
+	public ItemSickleFlux setRadius(int radius) {
 
 		this.radius = radius;
 		return this;
