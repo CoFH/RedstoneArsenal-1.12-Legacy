@@ -157,11 +157,10 @@ public class ItemArmorFlux extends ItemArmorCore implements ISpecialArmor, IEner
 	public void damageArmor(EntityLivingBase entity, ItemStack armor, DamageSource source, int damage, int slot) {
 
 		if (source.damageType.equals("flux")) {
-			boolean p = source.getTrueSource() == null;
 			receiveEnergy(armor, damage * energyPerDamage, false);
 		} else {
 			int unbreakingLevel = MathHelper.clamp(EnchantmentHelper.getEnchantmentLevel(Enchantments.UNBREAKING, armor), 0, 10);
-			if (MathHelper.RANDOM.nextInt(2 + unbreakingLevel) < 2) {
+			if (MathHelper.RANDOM.nextInt(3 + unbreakingLevel) >= 3) {
 				return;
 			}
 			extractEnergy(armor, damage * energyPerDamage, false);

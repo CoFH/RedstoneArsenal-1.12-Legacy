@@ -76,7 +76,7 @@ public class ItemFishingRodFlux extends ItemFishingRodCore implements IMultiMode
 	protected int useEnergy(ItemStack stack, boolean simulate) {
 
 		int unbreakingLevel = MathHelper.clamp(EnchantmentHelper.getEnchantmentLevel(Enchantments.UNBREAKING, stack), 0, 10);
-		if (MathHelper.RANDOM.nextInt(2 + unbreakingLevel) < 2) {
+		if (MathHelper.RANDOM.nextInt(2 + unbreakingLevel) >= 2) {
 			return 0;
 		}
 		return extractEnergy(stack, isEmpowered(stack) ? energyPerUseCharged : energyPerUse, simulate);
