@@ -126,10 +126,10 @@ public class ItemHammerFlux extends ItemToolFlux implements IAOEBreakItem {
 		ArrayList<BlockPos> area = new ArrayList<>();
 		World world = player.getEntityWorld();
 
-		if (!canHarvestBlock(world.getBlockState(pos), stack)) {
+		RayTraceResult traceResult = RayTracer.retrace(player);
+		if (traceResult == null || !canHarvestBlock(world.getBlockState(pos), stack)) {
 			return ImmutableList.copyOf(area);
 		}
-		RayTraceResult traceResult = RayTracer.retrace(player);
 		BlockPos harvestPos;
 
 		int x = pos.getX();
