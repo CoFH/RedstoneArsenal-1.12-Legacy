@@ -1,42 +1,42 @@
-#en_US
+#ja_JP
 
-info.redstonearsenal.tool.chargeOff=§ePress (%s) to Quell§r
-info.redstonearsenal.tool.chargeOn=§bPress (%s) to Empower§r
+info.redstonearsenal.tool.chargeOff=§e%sで鎮まります§r
+info.redstonearsenal.tool.chargeOn=§b%sで活性化します§r
 
-info.redstonearsenal.tool.energyPerUse=RF Per Use
-info.redstonearsenal.tool.shovel=Also serves as a Hoe while sneaking.
-info.redstonearsenal.tool.wrench=Also serves as Shears.
+info.redstonearsenal.tool.energyPerUse=消費RF
+info.redstonearsenal.tool.shovel=スニーク中は鍬としても機能します
+info.redstonearsenal.tool.wrench=スニーク中はハサミとしても機能します
 
-item.redstonearsenal.armor.fluxBoots.name=Flux-Infused Boots
-item.redstonearsenal.armor.fluxHelmet.name=Flux-Infused Helm
-item.redstonearsenal.armor.fluxLegs.name=Flux-Infused Leggings
-item.redstonearsenal.armor.fluxPlate.name=Flux-Infused Chestplate
+item.redstonearsenal.armor.fluxBoots.name=流転充電ブーツ
+item.redstonearsenal.armor.fluxHelmet.name=流転充電ヘルメット
+item.redstonearsenal.armor.fluxLegs.name=流転充電レギンス
+item.redstonearsenal.armor.fluxPlate.name=流転充電チェストプレート
 
-item.redstonearsenal.material.dustElectrumFlux.name=Fluxed Electrum Blend
-item.redstonearsenal.material.gearElectrumFlux.name=Fluxed Electrum Gear
-item.redstonearsenal.material.gemCrystalFlux.name=Flux Crystal
-item.redstonearsenal.material.ingotElectrumFlux.name=Fluxed Electrum Ingot
-item.redstonearsenal.material.nuggetElectrumFlux.name=Fluxed Electrum Nugget
-item.redstonearsenal.material.plateElectrumFlux.name=Fluxed Electrum Plate
-item.redstonearsenal.material.plateArmorFlux.name=Fluxed Armor Plating
-item.redstonearsenal.material.rodObsidian.name=Obsidian Rod
-item.redstonearsenal.material.rodObsidianFlux.name=Flux-Infused Obsidian Rod
+item.redstonearsenal.material.dustElectrumFlux.name=流転充電エレクトラムの粉
+item.redstonearsenal.material.gearElectrumFlux.name=流転充電エレクトラムの歯車
+item.redstonearsenal.material.gemCrystalFlux.name=流転のクリスタル
+item.redstonearsenal.material.ingotElectrumFlux.name=流転充電エレクトラムインゴット
+item.redstonearsenal.material.nuggetElectrumFlux.name=流転充電エレクトラムナゲット
+item.redstonearsenal.material.plateElectrumFlux.name=流転充電エレクトラムプレート
+item.redstonearsenal.material.plateArmorFlux.name=流転充電アーマープレート
+item.redstonearsenal.material.rodObsidian.name=黒曜石の棒
+item.redstonearsenal.material.rodObsidianFlux.name=流転充電黒曜石の棒
 
-item.redstonearsenal.tool.fluxAxe.name=Flux-Infused Axe
-item.redstonearsenal.tool.fluxBattleWrench.name=Flux-Infused BattleWrench
-item.redstonearsenal.tool.fluxBow.name=Flux-Infused Bow
-item.redstonearsenal.tool.fluxFishingRod.name=Flux-Infused Fishing Rod
-item.redstonearsenal.tool.fluxHammer.name=Flux-Infused Hammer
-item.redstonearsenal.tool.fluxPickaxe.name=Flux-Infused Pickaxe
-item.redstonearsenal.tool.fluxShield.name=Flux-Infused Shield
-item.redstonearsenal.tool.fluxShovel.name=Flux-Infused Shovel
-item.redstonearsenal.tool.fluxSickle.name=Flux-Infused Sickle
-item.redstonearsenal.tool.fluxSword.name=Flux-Infused Sword
-item.redstonearsenal.tool.fluxWrench.name=Flux-Infused OmniWrench
+item.redstonearsenal.tool.fluxAxe.name=流転充電斧
+item.redstonearsenal.tool.fluxBattleWrench.name=流転充電戦闘レンチ
+item.redstonearsenal.tool.fluxBow.name=流転充電弓
+item.redstonearsenal.tool.fluxFishingRod.name=流転充電釣り竿
+item.redstonearsenal.tool.fluxHammer.name=流転充電ハンマー
+item.redstonearsenal.tool.fluxPickaxe.name=流転充電ツルハシ
+item.redstonearsenal.tool.fluxShield.name=流転充電盾
+item.redstonearsenal.tool.fluxShovel.name=流転充電シャベル
+item.redstonearsenal.tool.fluxSickle.name=流転充電草刈り鎌
+item.redstonearsenal.tool.fluxSword.name=流転充電剣
+item.redstonearsenal.tool.fluxWrench.name=流転充電万能レンチ
 
-item.redstonearsenal.util.fluxQuiver.name=Flux-Infused Quiver
+item.redstonearsenal.util.fluxQuiver.name=流転充電矢筒
 
 itemGroup.redstonearsenal.creativeTab=Redstone Arsenal
 
-tile.redstonearsenal.storage.crystalFlux.name=Flux Crystal Block
-tile.redstonearsenal.storage.electrumFlux.name=Fluxed Electrum Block
+tile.redstonearsenal.storage.crystalFlux.name=流転のクリスタルブロック
+tile.redstonearsenal.storage.electrumFlux.name=流転充電エレクトラムブロック
