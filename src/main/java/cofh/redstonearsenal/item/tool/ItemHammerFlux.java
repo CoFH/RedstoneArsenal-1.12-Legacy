@@ -56,9 +56,9 @@ public class ItemHammerFlux extends ItemToolFlux implements IAOEBreakItem {
 
 		float refStrength = state.getPlayerRelativeBlockHardness(player, world, pos);
 		if (refStrength != 0.0F) {
-			RayTraceResult traceResult = RayTracer.retrace(player);
+			RayTraceResult traceResult = RayTracer.retrace(player, false);
 
-			if (traceResult == null) {
+			if (traceResult == null || traceResult.sideHit == null) {
 				return false;
 			}
 			BlockPos adjPos;
@@ -126,8 +126,8 @@ public class ItemHammerFlux extends ItemToolFlux implements IAOEBreakItem {
 		ArrayList<BlockPos> area = new ArrayList<>();
 		World world = player.getEntityWorld();
 
-		RayTraceResult traceResult = RayTracer.retrace(player);
-		if (traceResult == null || !canHarvestBlock(world.getBlockState(pos), stack)) {
+		RayTraceResult traceResult = RayTracer.retrace(player, false);
+		if (traceResult == null || traceResult.sideHit == null || !canHarvestBlock(world.getBlockState(pos), stack)) {
 			return ImmutableList.copyOf(area);
 		}
 		BlockPos harvestPos;

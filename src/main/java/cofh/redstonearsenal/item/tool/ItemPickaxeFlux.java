@@ -87,9 +87,9 @@ public class ItemPickaxeFlux extends ItemToolFlux implements IAOEBreakItem {
 
 		if (refStrength != 0.0F) {
 			if (isEmpowered(stack) && canHarvestBlock(state, stack)) {
-				RayTraceResult traceResult = RayTracer.retrace(player);
+				RayTraceResult traceResult = RayTracer.retrace(player, false);
 
-				if (traceResult == null) {
+				if (traceResult == null || traceResult.sideHit == null) {
 					return false;
 				}
 				BlockPos adjPos;
@@ -161,8 +161,8 @@ public class ItemPickaxeFlux extends ItemToolFlux implements IAOEBreakItem {
 		ArrayList<BlockPos> area = new ArrayList<>();
 		World world = player.getEntityWorld();
 
-		RayTraceResult traceResult = RayTracer.retrace(player);
-		if (traceResult == null || !isEmpowered(stack) || !canHarvestBlock(world.getBlockState(pos), stack)) {
+		RayTraceResult traceResult = RayTracer.retrace(player, false);
+		if (traceResult == null || traceResult.sideHit == null || !isEmpowered(stack) || !canHarvestBlock(world.getBlockState(pos), stack)) {
 			return ImmutableList.copyOf(area);
 		}
 		BlockPos harvestPos;
