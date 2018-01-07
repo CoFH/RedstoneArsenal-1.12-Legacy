@@ -305,6 +305,9 @@ public class ItemQuiverFlux extends ItemCore implements IModelRegister, IMultiMo
 		this.setRegistryName("util.quiver_flux");
 		ForgeRegistries.ITEMS.register(this);
 
+		config();
+		this.showInCreative = enable;
+
 		quiverElectrumFlux = EnergyHelper.setDefaultEnergyTag(new ItemStack(this, 1, 0), 0);
 
 		RedstoneArsenal.proxy.addIModelRegister(this);
@@ -315,11 +318,35 @@ public class ItemQuiverFlux extends ItemCore implements IModelRegister, IMultiMo
 	@Override
 	public boolean register() {
 
-		addShapedRecipe(quiverElectrumFlux, "AA ", "GIS", "IGS", 'A', Items.ARROW, 'G', "gemCrystalFlux", 'I', "ingotElectrumFlux", 'S', Items.STRING);
+		if (!enable) {
+			return false;
+		}
+		// @formatter:off
+
+		addShapedRecipe(quiverElectrumFlux,
+				"AA ",
+				"GIS",
+				"IGS",
+				'A', Items.ARROW,
+				'G', "gemCrystalFlux",
+				'I', "ingotElectrumFlux",
+				'S', Items.STRING
+		);
+
+		// @formatter:on
 
 		return true;
 	}
 
+	private static void config() {
+
+		String category = "Equipment.Tools.Flux";
+		enable = RedstoneArsenal.CONFIG.get(category, "Quiver", true);
+	}
+
+	public static boolean enable;
+
 	/* REFERENCES */
 	public static ItemStack quiverElectrumFlux;
+
 }
