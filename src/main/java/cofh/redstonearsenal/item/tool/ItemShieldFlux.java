@@ -107,7 +107,8 @@ public class ItemShieldFlux extends ItemShieldCore implements IMultiModeItem, IE
 		}
 	}
 
-	public void damageShield(ItemStack stack, int damage, EntityPlayer player, Entity source) {
+	@Override
+	public void onHit(ItemStack stack, EntityPlayer player, Entity source) {
 
 		if (source != null) {
 			float potionDamage = 1.0F;

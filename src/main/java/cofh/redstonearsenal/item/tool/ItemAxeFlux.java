@@ -6,6 +6,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.Enchantment;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemAxe;
@@ -30,6 +31,12 @@ public class ItemAxeFlux extends ItemToolFlux implements IEnchantableItem {
 		effectiveMaterials.add(Material.VINE);
 		effectiveMaterials.add(Material.CACTUS);
 		effectiveMaterials.add(Material.GOURD);
+	}
+
+	@Override
+	public boolean canDisableShield(ItemStack stack, ItemStack shield, EntityLivingBase entity, EntityLivingBase attacker) {
+
+		return true;
 	}
 
 	@Override
