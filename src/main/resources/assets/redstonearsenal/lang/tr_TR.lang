@@ -1,0 +1,41 @@
+#tr_TR
+
+info.redstonearsenal.tool.chargeOff=§eZayıflatmak için (%s)tuşuna bas§r
+info.redstonearsenal.tool.chargeOn=§bGüçlendirmek için (%s)tuşuna bas§r 
+
+info.redstonearsenal.tool.energyPerUse=Kullanım Başına RF
+info.redstonearsenal.tool.shovel=Ayrıca eğilirken çapa görevi görür.
+info.redstonearsenal.tool.wrench=Ayrıca makas görevi görür.
+
+item.redstonearsenal.armor.fluxBoots.name=Flux-Kaplama Botlar
+item.redstonearsenal.armor.fluxHelmet.name=Flux-Kaplama Kask
+item.redstonearsenal.armor.fluxLegs.name=Flux-Kaplama Pantolon
+item.redstonearsenal.armor.fluxPlate.name=Flux-Kaplama Zırh
+
+item.redstonearsenal.material.dustElectrumFlux.name=Flux'lı Elektrum Alaşım
+item.redstonearsenal.material.gearElectrumFlux.name=Flux'lı Elektrum Dişli
+item.redstonearsenal.material.gemCrystalFlux.name=Flux Kristali
+item.redstonearsenal.material.ingotElectrumFlux.name=Flux'lı Elektrum Külçe
+item.redstonearsenal.material.nuggetElectrumFlux.name=Flux'lı Elektrum Parçası
+item.redstonearsenal.material.plateElectrumFlux.name=Flux'lı Elektrum Plaka
+item.redstonearsenal.material.plateArmorFlux.name=Flux'lı Zırh Kaplaması
+item.redstonearsenal.material.rodObsidian.name=Obsidyen Çubuk
+item.redstonearsenal.material.rodObsidianFlux.name=Flux-Kaplama Obsidyen Çubuk
+
+item.redstonearsenal.tool.fluxAxe.name=Flux-Kaplama Balta
+item.redstonearsenal.tool.fluxBattleWrench.name=Flux-Kaplama Savaş Anahtarı
+item.redstonearsenal.tool.fluxBow.name=Flux-Kaplama Yay
+item.redstonearsenal.tool.fluxFishingRod.name=Flux-Kaplama Olta
+item.redstonearsenal.tool.fluxHammer.name=Flux-Kaplama Çekiç
+item.redstonearsenal.tool.fluxPickaxe.name=Flux-Kaplama Kazma
+item.redstonearsenal.tool.fluxShield.name=Flux-Kaplama Kalkan
+item.redstonearsenal.tool.fluxShovel.name=Flux-Kaplama Kürek
+item.redstonearsenal.tool.fluxSickle.name=Flux-Kaplama Orak
+item.redstonearsenal.tool.fluxSword.name=Flux-Kaplama Kılıç
+item.redstonearsenal.tool.fluxWrench.name=Flux-Kaplama Çoklu-Kullanım Anahtar
+item.redstonearsenal.util.fluxQuiver.name=Flux-Kaplama Ok Kılıfı
+
+itemGroup.redstonearsenal.creativeTab=Redstone Arsenal
+
+tile.redstonearsenal.storage.crystalFlux.name=Flux Kristal Blok
+tile.redstonearsenal.storage.electrumFlux.name=Flux'lı Elektrum Blok
