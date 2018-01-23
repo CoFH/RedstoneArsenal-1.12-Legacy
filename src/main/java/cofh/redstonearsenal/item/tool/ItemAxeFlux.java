@@ -49,7 +49,7 @@ public class ItemAxeFlux extends ItemToolFlux implements IEnchantableItem {
 	@Override
 	public boolean canEnchant(ItemStack stack, Enchantment enchantment) {
 
-		return enchantment == CoreEnchantments.leech || enchantment == CoreEnchantments.vorpal;
+		return super.canEnchant(stack, enchantment) || enchantment == CoreEnchantments.leech || enchantment == CoreEnchantments.vorpal;
 	}
 
 	@Override
