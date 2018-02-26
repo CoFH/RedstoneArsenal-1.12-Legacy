@@ -1,6 +1,6 @@
 {
 	"parent": "redstonearsenal:item/tool/shield_flux",
 	"textures": {
-		"layer0": "redstonearsenal:items/tool/shield_flux_active"
+		"all": "redstonearsenal:items/tool/shield_flux_active"
 	}
 }

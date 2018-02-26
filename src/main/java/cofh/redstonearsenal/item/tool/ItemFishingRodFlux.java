@@ -212,7 +212,7 @@ public class ItemFishingRodFlux extends ItemFishingRodCore implements IMultiMode
 		if (container.getTagCompound() == null) {
 			EnergyHelper.setDefaultEnergyTag(container, 0);
 		}
-		int stored = container.getTagCompound().getInteger("Energy");
+		int stored = Math.min(container.getTagCompound().getInteger("Energy"), getMaxEnergyStored(container));
 		int receive = Math.min(maxReceive, Math.min(getMaxEnergyStored(container) - stored, maxTransfer));
 
 		if (!simulate) {
@@ -228,10 +228,7 @@ public class ItemFishingRodFlux extends ItemFishingRodCore implements IMultiMode
 		if (container.getTagCompound() == null) {
 			EnergyHelper.setDefaultEnergyTag(container, 0);
 		}
-		if (container.getTagCompound().hasKey("Unbreakable")) {
-			container.getTagCompound().removeTag("Unbreakable");
-		}
-		int stored = container.getTagCompound().getInteger("Energy");
+		int stored = Math.min(container.getTagCompound().getInteger("Energy"), getMaxEnergyStored(container));
 		int extract = Math.min(maxExtract, stored);
 
 		if (!simulate) {
@@ -251,7 +248,7 @@ public class ItemFishingRodFlux extends ItemFishingRodCore implements IMultiMode
 		if (container.getTagCompound() == null) {
 			EnergyHelper.setDefaultEnergyTag(container, 0);
 		}
-		return container.getTagCompound().getInteger("Energy");
+		return Math.min(container.getTagCompound().getInteger("Energy"), getMaxEnergyStored(container));
 	}
 
 	@Override
