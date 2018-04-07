@@ -1,13 +1,13 @@
 package cofh.redstonearsenal.item.util;
 
 import cofh.api.item.IMultiModeItem;
+import cofh.api.item.IToolQuiver;
 import cofh.core.init.CoreEnchantments;
 import cofh.core.init.CoreProps;
 import cofh.core.item.IEnchantableItem;
 import cofh.core.item.ItemCore;
 import cofh.core.render.IModelRegister;
 import cofh.core.util.core.IInitializer;
-import cofh.core.util.core.IQuiverItem;
 import cofh.core.util.helpers.EnergyHelper;
 import cofh.core.util.helpers.MathHelper;
 import cofh.core.util.helpers.StringHelper;
@@ -46,7 +46,7 @@ import java.util.List;
 
 import static cofh.core.util.helpers.RecipeHelper.addShapedRecipe;
 
-public class ItemQuiverFlux extends ItemCore implements IModelRegister, IMultiModeItem, IEnergyContainerItem, IQuiverItem, IEnchantableItem, IInitializer {
+public class ItemQuiverFlux extends ItemCore implements IModelRegister, IMultiModeItem, IEnergyContainerItem, IToolQuiver, IEnchantableItem, IInitializer {
 
 	protected int maxEnergy = 320000;
 	protected int maxTransfer = 4000;
@@ -102,8 +102,7 @@ public class ItemQuiverFlux extends ItemCore implements IModelRegister, IMultiMo
 		if (stack.getTagCompound() == null) {
 			EnergyHelper.setDefaultEnergyTag(stack, 0);
 		}
-		tooltip.add(StringHelper.localize("info.cofh.charge") + ": " + StringHelper.formatNumber(stack.getTagCompound().getInteger("Energy")) + " / " + StringHelper.formatNumber(getMaxEnergyStored(stack)) + " RF");
-
+		tooltip.add(StringHelper.localize("info.cofh.charge") + ": " + StringHelper.getScaledNumber(getEnergyStored(stack)) + " / " + StringHelper.getScaledNumber(getMaxEnergyStored(stack)) + " RF");
 		tooltip.add(StringHelper.ORANGE + getEnergyPerUse(stack) + " " + StringHelper.localize("info.redstonearsenal.tool.energyPerUse") + StringHelper.END);
 		RAProps.addEmpoweredTip(this, stack, tooltip);
 	}
@@ -260,24 +259,24 @@ public class ItemQuiverFlux extends ItemCore implements IModelRegister, IMultiMo
 		return maxEnergy + maxEnergy * enchant / 2;
 	}
 
-	/* IQuiverItem */
+	/* IToolQuiver */
 	@Override
-	public EntityArrow createEntityArrow(World world, ItemStack stack, EntityLivingBase shooter) {
+	public EntityArrow createEntityArrow(World world, ItemStack item, EntityLivingBase shooter) {
 
-		return new EntityFluxArrow(world, shooter, isEmpowered(stack));
+		return new EntityFluxArrow(world, shooter, isEmpowered(item));
 	}
 
 	@Override
-	public boolean isEmpty(ItemStack stack, EntityLivingBase shooter) {
+	public boolean isEmpty(ItemStack item, EntityLivingBase shooter) {
 
-		return !(shooter instanceof EntityPlayer && ((EntityPlayer) shooter).capabilities.isCreativeMode) && getEnergyStored(stack) <= 0;
+		return !(shooter instanceof EntityPlayer && ((EntityPlayer) shooter).capabilities.isCreativeMode) && getEnergyStored(item) <= 0;
 	}
 
 	@Override
-	public void onArrowFired(ItemStack stack, EntityLivingBase shooter) {
+	public void onArrowFired(ItemStack item, EntityLivingBase shooter) {
 
 		if (shooter instanceof EntityPlayer) {
-			extractEnergy(stack, getEnergyPerUse(stack), ((EntityPlayer) shooter).capabilities.isCreativeMode);
+			extractEnergy(item, getEnergyPerUse(item), ((EntityPlayer) shooter).capabilities.isCreativeMode);
 		}
 	}
 

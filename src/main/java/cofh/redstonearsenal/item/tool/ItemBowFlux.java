@@ -87,7 +87,7 @@ public class ItemBowFlux extends ItemBowCore implements IMultiModeItem, IEnergyC
 		if (stack.getTagCompound() == null) {
 			EnergyHelper.setDefaultEnergyTag(stack, 0);
 		}
-		tooltip.add(StringHelper.localize("info.cofh.charge") + ": " + StringHelper.formatNumber(stack.getTagCompound().getInteger("Energy")) + " / " + StringHelper.formatNumber(getMaxEnergyStored(stack)) + " RF");
+		tooltip.add(StringHelper.localize("info.cofh.charge") + ": " + StringHelper.getScaledNumber(getEnergyStored(stack)) + " / " + StringHelper.getScaledNumber(getMaxEnergyStored(stack)) + " RF");
 
 		tooltip.add(StringHelper.ORANGE + getEnergyPerUse(stack) + " " + StringHelper.localize("info.redstonearsenal.tool.energyPerUse") + StringHelper.END);
 		RAProps.addEmpoweredTip(this, stack, tooltip);
@@ -171,23 +171,23 @@ public class ItemBowFlux extends ItemBowCore implements IMultiModeItem, IEnergyC
 		return super.onItemRightClick(world, player, hand);
 	}
 
-	/* IBowImproved */
+	/* IToolBow */
 	@Override
-	public void onBowFired(EntityPlayer player, ItemStack stack) {
+	public void onBowFired(EntityPlayer player, ItemStack item) {
 
-		useEnergy(stack, player.capabilities.isCreativeMode);
+		useEnergy(item, player.capabilities.isCreativeMode);
 	}
 
 	@Override
-	public float getArrowDamageMultiplier(ItemStack stack) {
+	public float getArrowDamageMultiplier(ItemStack item) {
 
-		return isEmpowered(stack) ? arrowDamageMultiplier * 1.5F : arrowDamageMultiplier;
+		return isEmpowered(item) ? arrowDamageMultiplier * 1.5F : arrowDamageMultiplier;
 	}
 
 	@Override
-	public float getArrowSpeedMultiplier(ItemStack stack) {
+	public float getArrowSpeedMultiplier(ItemStack item) {
 
-		return isEmpowered(stack) ? arrowSpeedMultiplier + 0.1F : arrowSpeedMultiplier;
+		return isEmpowered(item) ? arrowSpeedMultiplier + 0.1F : arrowSpeedMultiplier;
 	}
 
 	/* IMultiModeItem */
