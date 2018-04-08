@@ -318,7 +318,6 @@ public class ItemQuiverFlux extends ItemCore implements IModelRegister, IMultiMo
 			return false;
 		}
 		// @formatter:off
-
 		addShapedRecipe(quiverElectrumFlux,
 				"AA ",
 				"GIS",
@@ -328,9 +327,7 @@ public class ItemQuiverFlux extends ItemCore implements IModelRegister, IMultiMo
 				'I', "ingotElectrumFlux",
 				'S', Items.STRING
 		);
-
 		// @formatter:on
-
 		return true;
 	}
 

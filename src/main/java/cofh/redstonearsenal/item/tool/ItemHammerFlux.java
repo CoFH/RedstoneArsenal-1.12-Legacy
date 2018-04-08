@@ -76,6 +76,9 @@ public class ItemHammerFlux extends ItemToolFlux implements IAOEBreakItem {
 				case UP:
 					for (int i = x - radius; i <= x + radius; i++) {
 						for (int k = z - radius; k <= z + radius; k++) {
+							if (i == x && k == z) {
+								continue;
+							}
 							adjPos = new BlockPos(i, y, k);
 							adjState = world.getBlockState(adjPos);
 							strength = adjState.getPlayerRelativeBlockHardness(player, world, adjPos);
@@ -87,8 +90,13 @@ public class ItemHammerFlux extends ItemToolFlux implements IAOEBreakItem {
 					break;
 				case NORTH:
 				case SOUTH:
+					int posY = y;
+					y = y - 1 + radius;     // Offset for 5x5
 					for (int i = x - radius; i <= x + radius; i++) {
 						for (int j = y - radius; j <= y + radius; j++) {
+							if (i == x && j == posY) {
+								continue;
+							}
 							adjPos = new BlockPos(i, j, z);
 							adjState = world.getBlockState(adjPos);
 							strength = adjState.getPlayerRelativeBlockHardness(player, world, adjPos);
@@ -100,8 +108,13 @@ public class ItemHammerFlux extends ItemToolFlux implements IAOEBreakItem {
 					break;
 				case WEST:
 				case EAST:
+					posY = y;
+					y = y - 1 + radius;     // Offset for 5x5
 					for (int j = y - radius; j <= y + radius; j++) {
 						for (int k = z - radius; k <= z + radius; k++) {
+							if (j == posY && k == z) {
+								continue;
+							}
 							adjPos = new BlockPos(x, j, k);
 							adjState = world.getBlockState(adjPos);
 							strength = adjState.getPlayerRelativeBlockHardness(player, world, adjPos);
@@ -116,7 +129,7 @@ public class ItemHammerFlux extends ItemToolFlux implements IAOEBreakItem {
 				useEnergy(stack, false);
 			}
 		}
-		return true;
+		return false;
 	}
 
 	/* IAOEBreakItem */
@@ -154,9 +167,11 @@ public class ItemHammerFlux extends ItemToolFlux implements IAOEBreakItem {
 				break;
 			case NORTH:
 			case SOUTH:
+				int posY = y;
+				y = y - 1 + radius;     // Offset for 5x5
 				for (int i = x - radius; i <= x + radius; i++) {
 					for (int j = y - radius; j <= y + radius; j++) {
-						if (i == x && j == y) {
+						if (i == x && j == posY) {
 							continue;
 						}
 						harvestPos = new BlockPos(i, j, z);
@@ -168,9 +183,11 @@ public class ItemHammerFlux extends ItemToolFlux implements IAOEBreakItem {
 				break;
 			case WEST:
 			case EAST:
+				posY = y;
+				y = y - 1 + radius;     // Offset for 5x5
 				for (int j = y - radius; j <= y + radius; j++) {
 					for (int k = z - radius; k <= z + radius; k++) {
-						if (j == y && k == z) {
+						if (j == posY && k == z) {
 							continue;
 						}
 						harvestPos = new BlockPos(x, j, k);
