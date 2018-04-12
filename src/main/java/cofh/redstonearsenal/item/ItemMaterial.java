@@ -5,7 +5,6 @@ import cofh.core.item.ItemMulti;
 import cofh.core.util.core.IInitializer;
 import cofh.core.util.helpers.ItemHelper;
 import cofh.redstonearsenal.RedstoneArsenal;
-import cofh.redstonearsenal.block.BlockStorage;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumRarity;
@@ -24,7 +23,7 @@ public class ItemMaterial extends ItemMulti implements IInitializer {
 		super("redstonearsenal");
 
 		setUnlocalizedName("material");
-		setCreativeTab(RedstoneArsenal.tabCommon);
+		setCreativeTab(RedstoneArsenal.tabItems);
 	}
 
 	/* IInitializer */

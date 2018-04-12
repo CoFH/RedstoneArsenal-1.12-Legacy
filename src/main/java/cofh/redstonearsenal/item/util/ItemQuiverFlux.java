@@ -63,7 +63,7 @@ public class ItemQuiverFlux extends ItemCore implements IModelRegister, IMultiMo
 		setNoRepair();
 		setMaxStackSize(1);
 		setUnlocalizedName("redstonearsenal.util.fluxQuiver");
-		setCreativeTab(RedstoneArsenal.tabCommon);
+		setCreativeTab(RedstoneArsenal.tabBasicCombat);
 
 		addPropertyOverride(new ResourceLocation("active"), (stack, world, entity) -> ItemQuiverFlux.this.getEnergyStored(stack) > 0 && !ItemQuiverFlux.this.isEmpowered(stack) ? 1F : 0F);
 		addPropertyOverride(new ResourceLocation("empowered"), (stack, world, entity) -> ItemQuiverFlux.this.isEmpowered(stack) ? 1F : 0F);

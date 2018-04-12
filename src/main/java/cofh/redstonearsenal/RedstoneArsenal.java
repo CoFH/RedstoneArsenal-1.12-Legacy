@@ -47,7 +47,12 @@ public class RedstoneArsenal {
 	public static final ConfigHandler CONFIG = new ConfigHandler(VERSION);
 	public static final ConfigHandler CONFIG_CLIENT = new ConfigHandler(VERSION);
 
-	public static CreativeTabs tabCommon;
+	public static CreativeTabs tabCommon;       // Blocks and general stuff.
+	public static CreativeTabs tabItems;        // Non-usable items.
+
+	public static CreativeTabs tabBasicTools;   // Basic Tools, Non-Combat
+	public static CreativeTabs tabBasicCombat;  // Basic Tools, Combat
+	public static CreativeTabs tabBasicArmor;   // Basic Armor
 
 	public RedstoneArsenal() {
 

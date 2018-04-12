@@ -5,6 +5,7 @@ import cofh.core.gui.CreativeTabCore;
 import cofh.core.key.KeyBindingItemMultiMode;
 import cofh.core.util.helpers.StringHelper;
 import cofh.redstonearsenal.RedstoneArsenal;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.relauncher.Side;
@@ -37,23 +38,44 @@ public class RAProps {
 
 	private static void configClient() {
 
+		String category;
+		String comment;
+
+		boolean useVanillaTabs = false;
+
+		category = "Interface";
+
+		comment = "If TRUE, Redstone Arsenal will use Standard Minecraft Creative Tabs and not its own.";
+		useVanillaTabs = RedstoneArsenal.CONFIG_CLIENT.getConfiguration().getBoolean("UseMinecraftCreativeTabs", category, useVanillaTabs, comment);
+
 		/* CREATIVE TABS */
-		RedstoneArsenal.tabCommon = new CreativeTabCore("redstonearsenal") {
+		if (useVanillaTabs) {
 
-			@Override
-			@SideOnly (Side.CLIENT)
-			public ItemStack getIconItemStack() {
+			RedstoneArsenal.tabItems = CreativeTabs.MISC;
+			RedstoneArsenal.tabBasicTools = CreativeTabs.TOOLS;
+			RedstoneArsenal.tabBasicCombat = CreativeTabs.COMBAT;
+			RedstoneArsenal.tabBasicArmor = CreativeTabs.COMBAT;
+		} else {
+			RedstoneArsenal.tabCommon = new CreativeTabCore("redstonearsenal") {
 
-				ItemStack iconStack = new ItemStack(RAEquipment.ToolSet.FLUX.itemSword);
-				iconStack.setTagCompound(new NBTTagCompound());
-				iconStack.getTagCompound().setBoolean("CreativeTab", true);
-				iconStack.getTagCompound().setInteger("Energy", 32000);
-				iconStack.getTagCompound().setInteger("Mode", 1);
+				@Override
+				@SideOnly (Side.CLIENT)
+				public ItemStack getTabIconItem() {
 
-				return iconStack;
-			}
+					ItemStack iconStack = new ItemStack(RAEquipment.ToolSet.FLUX.itemSword);
+					iconStack.setTagCompound(new NBTTagCompound());
+					iconStack.getTagCompound().setBoolean("CreativeTab", true);
+					iconStack.getTagCompound().setInteger("Energy", 32000);
+					iconStack.getTagCompound().setInteger("Mode", 1);
 
-		};
+					return iconStack;
+				}
+			};
+			RedstoneArsenal.tabItems = RedstoneArsenal.tabCommon;
+			RedstoneArsenal.tabBasicTools = RedstoneArsenal.tabCommon;
+			RedstoneArsenal.tabBasicCombat = RedstoneArsenal.tabCommon;
+			RedstoneArsenal.tabBasicArmor = RedstoneArsenal.tabCommon;
+		}
 	}
 
 	public static void addEmpoweredTip(IMultiModeItem item, ItemStack stack, List<String> tooltip) {
