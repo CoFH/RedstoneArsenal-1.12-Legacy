@@ -1,6 +1,5 @@
 package cofh.redstonearsenal.item.tool;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -56,8 +55,14 @@ public class ItemSickleFlux extends ItemToolFlux {
 
 		boolean used = false;
 		int boost = isEmpowered(stack) ? 2 : 0;
-		world.playEvent(2001, pos, Block.getStateId(state));
 
+		// world.playEvent(2001, pos, Block.getStateId(state));
+		if (player.isSneaking()) {
+			if (!player.capabilities.isCreativeMode) {
+				useEnergy(stack, false);
+			}
+			return false;
+		}
 		for (int i = x - (radius + boost); i <= x + (radius + boost); i++) {
 			for (int k = z - (radius + boost); k <= z + (radius + boost); k++) {
 				for (int j = y - boost; j <= y + boost; j++) {
