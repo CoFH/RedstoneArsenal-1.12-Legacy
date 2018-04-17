@@ -2,6 +2,7 @@ package cofh.redstonearsenal.init;
 
 import cofh.api.item.IMultiModeItem;
 import cofh.core.gui.CreativeTabCore;
+import cofh.core.init.CoreProps;
 import cofh.core.key.KeyBindingItemMultiMode;
 import cofh.core.util.helpers.StringHelper;
 import cofh.redstonearsenal.RedstoneArsenal;
@@ -64,9 +65,9 @@ public class RAProps {
 
 					ItemStack iconStack = new ItemStack(RAEquipment.ToolSet.FLUX.itemSword);
 					iconStack.setTagCompound(new NBTTagCompound());
-					iconStack.getTagCompound().setBoolean("CreativeTab", true);
-					iconStack.getTagCompound().setInteger("Energy", 32000);
-					iconStack.getTagCompound().setInteger("Mode", 1);
+					iconStack.getTagCompound().setBoolean(CoreProps.CREATIVE_TAB, true);
+					iconStack.getTagCompound().setInteger(CoreProps.ENERGY, 32000);
+					iconStack.getTagCompound().setInteger(CoreProps.MODE, 1);
 
 					return iconStack;
 				}

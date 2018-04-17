@@ -192,7 +192,7 @@ public abstract class ItemToolFlux extends ItemToolCore implements IMultiModeIte
 	@Override
 	public boolean showDurabilityBar(ItemStack stack) {
 
-		return RAProps.showToolCharge && stack.getTagCompound() != null && !stack.getTagCompound().getBoolean("CreativeTab");
+		return RAProps.showToolCharge && stack.getTagCompound() != null && !stack.getTagCompound().getBoolean(CoreProps.CREATIVE_TAB);
 	}
 
 	@Override
@@ -222,7 +222,7 @@ public abstract class ItemToolFlux extends ItemToolCore implements IMultiModeIte
 		if (stack.getTagCompound() == null) {
 			EnergyHelper.setDefaultEnergyTag(stack, 0);
 		}
-		return 1D - (double) stack.getTagCompound().getInteger("Energy") / (double) getMaxEnergyStored(stack);
+		return 1D - (double) stack.getTagCompound().getInteger(CoreProps.ENERGY) / (double) getMaxEnergyStored(stack);
 	}
 
 	@Override
@@ -266,12 +266,12 @@ public abstract class ItemToolFlux extends ItemToolCore implements IMultiModeIte
 		if (container.getTagCompound() == null) {
 			EnergyHelper.setDefaultEnergyTag(container, 0);
 		}
-		int stored = Math.min(container.getTagCompound().getInteger("Energy"), getMaxEnergyStored(container));
+		int stored = Math.min(container.getTagCompound().getInteger(CoreProps.ENERGY), getMaxEnergyStored(container));
 		int receive = Math.min(maxReceive, Math.min(getMaxEnergyStored(container) - stored, maxTransfer));
 
 		if (!simulate) {
 			stored += receive;
-			container.getTagCompound().setInteger("Energy", stored);
+			container.getTagCompound().setInteger(CoreProps.ENERGY, stored);
 		}
 		return receive;
 	}
@@ -282,12 +282,12 @@ public abstract class ItemToolFlux extends ItemToolCore implements IMultiModeIte
 		if (container.getTagCompound() == null) {
 			EnergyHelper.setDefaultEnergyTag(container, 0);
 		}
-		int stored = Math.min(container.getTagCompound().getInteger("Energy"), getMaxEnergyStored(container));
+		int stored = Math.min(container.getTagCompound().getInteger(CoreProps.ENERGY), getMaxEnergyStored(container));
 		int extract = Math.min(maxExtract, stored);
 
 		if (!simulate) {
 			stored -= extract;
-			container.getTagCompound().setInteger("Energy", stored);
+			container.getTagCompound().setInteger(CoreProps.ENERGY, stored);
 
 			if (stored == 0) {
 				setMode(container, 0);
@@ -302,7 +302,7 @@ public abstract class ItemToolFlux extends ItemToolCore implements IMultiModeIte
 		if (container.getTagCompound() == null) {
 			EnergyHelper.setDefaultEnergyTag(container, 0);
 		}
-		return Math.min(container.getTagCompound().getInteger("Energy"), getMaxEnergyStored(container));
+		return Math.min(container.getTagCompound().getInteger(CoreProps.ENERGY), getMaxEnergyStored(container));
 	}
 
 	@Override

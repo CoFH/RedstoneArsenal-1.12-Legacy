@@ -82,7 +82,7 @@ public class ItemHammerFlux extends ItemToolFlux implements IAOEBreakItem {
 							adjPos = new BlockPos(i, y, k);
 							adjState = world.getBlockState(adjPos);
 							strength = adjState.getPlayerRelativeBlockHardness(player, world, adjPos);
-							if (strength > 0F && refStrength / strength <= 10F) {
+							if (strength > 0F && refStrength / strength <= 4F) {
 								used |= harvestBlock(world, adjPos, player);
 							}
 						}
@@ -100,7 +100,7 @@ public class ItemHammerFlux extends ItemToolFlux implements IAOEBreakItem {
 							adjPos = new BlockPos(i, j, z);
 							adjState = world.getBlockState(adjPos);
 							strength = adjState.getPlayerRelativeBlockHardness(player, world, adjPos);
-							if (strength > 0F && refStrength / strength <= 10F) {
+							if (strength > 0F && refStrength / strength <= 4F) {
 								used |= harvestBlock(world, adjPos, player);
 							}
 						}
@@ -118,7 +118,7 @@ public class ItemHammerFlux extends ItemToolFlux implements IAOEBreakItem {
 							adjPos = new BlockPos(x, j, k);
 							adjState = world.getBlockState(adjPos);
 							strength = adjState.getPlayerRelativeBlockHardness(player, world, adjPos);
-							if (strength > 0F && refStrength / strength <= 10F) {
+							if (strength > 0F && refStrength / strength <= 4F) {
 								used |= harvestBlock(world, adjPos, player);
 							}
 						}

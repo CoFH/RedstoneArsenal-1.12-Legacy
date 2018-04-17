@@ -66,7 +66,7 @@ public class ItemArmorFlux extends ItemArmorCore implements ISpecialArmor, IEner
 		if (stack.getTagCompound() == null) {
 			EnergyHelper.setDefaultEnergyTag(stack, 0);
 		}
-		tooltip.add(StringHelper.localize("info.cofh.charge") + ": " + StringHelper.formatNumber(stack.getTagCompound().getInteger("Energy")) + " / " + StringHelper.formatNumber(getMaxEnergyStored(stack)) + " RF");
+		tooltip.add(StringHelper.localize("info.cofh.charge") + ": " + StringHelper.formatNumber(stack.getTagCompound().getInteger(CoreProps.ENERGY)) + " / " + StringHelper.formatNumber(getMaxEnergyStored(stack)) + " RF");
 	}
 
 	@Override
@@ -93,7 +93,7 @@ public class ItemArmorFlux extends ItemArmorCore implements ISpecialArmor, IEner
 	@Override
 	public boolean showDurabilityBar(ItemStack stack) {
 
-		return !RAProps.showArmorCharge ? false : stack.getTagCompound() == null || !stack.getTagCompound().getBoolean("CreativeTab");
+		return RAProps.showArmorCharge && (stack.getTagCompound() == null || !stack.getTagCompound().getBoolean(CoreProps.CREATIVE_TAB));
 	}
 
 	@Override
@@ -114,7 +114,7 @@ public class ItemArmorFlux extends ItemArmorCore implements ISpecialArmor, IEner
 		if (stack.getTagCompound() == null) {
 			EnergyHelper.setDefaultEnergyTag(stack, 0);
 		}
-		return 1D - (double) stack.getTagCompound().getInteger("Energy") / (double) getMaxEnergyStored(stack);
+		return 1D - (double) stack.getTagCompound().getInteger(CoreProps.ENERGY) / (double) getMaxEnergyStored(stack);
 	}
 
 	@Override
@@ -174,12 +174,12 @@ public class ItemArmorFlux extends ItemArmorCore implements ISpecialArmor, IEner
 		if (container.getTagCompound() == null) {
 			EnergyHelper.setDefaultEnergyTag(container, 0);
 		}
-		int stored = Math.min(container.getTagCompound().getInteger("Energy"), getMaxEnergyStored(container));
+		int stored = Math.min(container.getTagCompound().getInteger(CoreProps.ENERGY), getMaxEnergyStored(container));
 		int receive = Math.min(maxReceive, Math.min(getMaxEnergyStored(container) - stored, maxTransfer));
 
 		if (!simulate) {
 			stored += receive;
-			container.getTagCompound().setInteger("Energy", stored);
+			container.getTagCompound().setInteger(CoreProps.ENERGY, stored);
 		}
 		return receive;
 	}
@@ -190,12 +190,12 @@ public class ItemArmorFlux extends ItemArmorCore implements ISpecialArmor, IEner
 		if (container.getTagCompound() == null) {
 			EnergyHelper.setDefaultEnergyTag(container, 0);
 		}
-		int stored = Math.min(container.getTagCompound().getInteger("Energy"), getMaxEnergyStored(container));
+		int stored = Math.min(container.getTagCompound().getInteger(CoreProps.ENERGY), getMaxEnergyStored(container));
 		int extract = Math.min(maxExtract, stored);
 
 		if (!simulate) {
 			stored -= extract;
-			container.getTagCompound().setInteger("Energy", stored);
+			container.getTagCompound().setInteger(CoreProps.ENERGY, stored);
 		}
 		return extract;
 	}
@@ -206,7 +206,7 @@ public class ItemArmorFlux extends ItemArmorCore implements ISpecialArmor, IEner
 		if (container.getTagCompound() == null) {
 			EnergyHelper.setDefaultEnergyTag(container, 0);
 		}
-		return Math.min(container.getTagCompound().getInteger("Energy"), getMaxEnergyStored(container));
+		return Math.min(container.getTagCompound().getInteger(CoreProps.ENERGY), getMaxEnergyStored(container));
 	}
 
 	@Override

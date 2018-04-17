@@ -63,13 +63,49 @@ public class RAEquipment {
 	}
 
 	/* MATERIALS */
-	public static final ArmorMaterial ARMOR_MATERIAL_FLUX = EnumHelper.addArmorMaterial("RA:FLUXELECTRUM", "flux_armor", 100, new int[] { 3, 6, 8, 3 }, 20, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 2F);
-	public static final ToolMaterial TOOL_MATERIAL_FLUX = EnumHelper.addToolMaterial("RA:FLUXELECTRUM", 4, 100, 8.0F, 0, 25);
+	public static ArmorMaterial armorMaterialFlux;
+	public static ToolMaterial toolMaterialFlux;
+
+	static {
+		String category;
+		String comment;
+
+		int helm = 3;
+		int legs = 6;
+		int chest = 8;
+		int boots = 3;
+
+		int harvestLevel = 4;
+		float efficiency = 8.0F;
+
+		category = "Equipment.Armor";
+		comment = "Adjust this value to set the default protection provided by the Flux-Infused Boots.";
+		boots = RedstoneArsenal.CONFIG.getConfiguration().getInt("BootsProtection", category, boots, 1, 10, comment);
+
+		comment = "Adjust this value to set the default protection provided by the Flux-Infused Leggings.";
+		legs = RedstoneArsenal.CONFIG.getConfiguration().getInt("LegsProtection", category, legs, 1, 10, comment);
+
+		comment = "Adjust this value to set the default protection provided by the Flux-Infused Chestplate.";
+		chest = RedstoneArsenal.CONFIG.getConfiguration().getInt("ChestProtection", category, chest, 1, 10, comment);
+
+		comment = "Adjust this value to set the default protection provided by the Flux-Infused Helmet.";
+		helm = RedstoneArsenal.CONFIG.getConfiguration().getInt("HelmProtection", category, helm, 1, 10, comment);
+
+		category = "Equipment.Tools";
+		comment = "Adjust this value to set the default harvest level of Flux-Infused Tools.";
+		harvestLevel = RedstoneArsenal.CONFIG.getConfiguration().getInt("HarvestLevel", category, harvestLevel, 0, 10, comment);
+
+		comment = "Adjust this value to set the default efficiency (mining speed) of Flux-Infused Tools";
+		efficiency = RedstoneArsenal.CONFIG.getConfiguration().getFloat("Efficiency", category, efficiency, 2.0F, 32.0F, comment);
+
+		armorMaterialFlux = EnumHelper.addArmorMaterial("RA:FLUXELECTRUM", "flux_armor", 100, new int[] { boots, legs, chest, helm }, 20, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 2.0F);
+		toolMaterialFlux = EnumHelper.addToolMaterial("RA:FLUXELECTRUM", harvestLevel, 100, efficiency, 0, 25);
+	}
 
 	/* ARMOR */
 	public enum ArmorSet implements IModelRegister {
 
-		FLUX("flux", ARMOR_MATERIAL_FLUX);
+		FLUX("flux", armorMaterialFlux);
 
 		private final String name;
 		private final ArmorMaterial ARMOR_MATERIAL;
@@ -184,7 +220,7 @@ public class RAEquipment {
 	/* TOOLS */
 	public enum ToolSet implements IModelRegister {
 
-		FLUX("flux", TOOL_MATERIAL_FLUX);
+		FLUX("flux", toolMaterialFlux);
 
 		private final String name;
 		private final ToolMaterial TOOL_MATERIAL;

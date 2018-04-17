@@ -108,26 +108,26 @@ public class ItemPickaxeFlux extends ItemToolFlux implements IAOEBreakItem {
 							adjPos = new BlockPos(x, y, z - 1);
 							adjState = world.getBlockState(adjPos);
 							strength = adjState.getPlayerRelativeBlockHardness(player, world, adjPos);
-							if (strength > 0F && refStrength / strength <= 10F) {
+							if (strength > 0F && refStrength / strength <= 4F) {
 								harvestBlock(world, adjPos, player);
 							}
 							adjPos = new BlockPos(x, y, z + 1);
 							adjState = world.getBlockState(adjPos);
 							strength = adjState.getPlayerRelativeBlockHardness(player, world, adjPos);
-							if (strength > 0F && refStrength / strength <= 10F) {
+							if (strength > 0F && refStrength / strength <= 4F) {
 								harvestBlock(world, adjPos, player);
 							}
 						} else {
 							adjPos = new BlockPos(x - 1, y, z);
 							adjState = world.getBlockState(adjPos);
 							strength = adjState.getPlayerRelativeBlockHardness(player, world, adjPos);
-							if (strength > 0F && refStrength / strength <= 10F) {
+							if (strength > 0F && refStrength / strength <= 4F) {
 								harvestBlock(world, adjPos, player);
 							}
 							adjPos = new BlockPos(x + 1, y, z);
 							adjState = world.getBlockState(adjPos);
 							strength = adjState.getPlayerRelativeBlockHardness(player, world, adjPos);
-							if (strength > 0F && refStrength / strength <= 10F) {
+							if (strength > 0F && refStrength / strength <= 4F) {
 								harvestBlock(world, adjPos, player);
 							}
 						}
@@ -136,13 +136,13 @@ public class ItemPickaxeFlux extends ItemToolFlux implements IAOEBreakItem {
 						adjPos = new BlockPos(x, y - 1, z);
 						adjState = world.getBlockState(adjPos);
 						strength = adjState.getPlayerRelativeBlockHardness(player, world, adjPos);
-						if (strength > 0F && refStrength / strength <= 10F) {
+						if (strength > 0F && refStrength / strength <= 4F) {
 							harvestBlock(world, adjPos, player);
 						}
 						adjPos = new BlockPos(x, y + 1, z);
 						adjState = world.getBlockState(adjPos);
 						strength = adjState.getPlayerRelativeBlockHardness(player, world, adjPos);
-						if (strength > 0F && refStrength / strength <= 10F) {
+						if (strength > 0F && refStrength / strength <= 4F) {
 							harvestBlock(world, adjPos, player);
 						}
 				}
