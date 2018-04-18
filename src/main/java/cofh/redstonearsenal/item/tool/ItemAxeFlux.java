@@ -8,6 +8,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemAxe;
 import net.minecraft.item.ItemStack;
@@ -42,7 +43,7 @@ public class ItemAxeFlux extends ItemToolFlux implements IEnchantableItem {
 	@Override
 	public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
 
-		return enchantment.type.canEnchantItem(stack.getItem()) || enchantment.canApply(new ItemStack(Items.IRON_AXE));
+		return enchantment.type.canEnchantItem(stack.getItem()) || enchantment != Enchantments.MENDING && enchantment.canApply(new ItemStack(Items.IRON_AXE));
 	}
 
 	/* IEnchantableItem */

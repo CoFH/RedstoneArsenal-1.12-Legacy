@@ -79,9 +79,27 @@ public class ItemArmorFlux extends ItemArmorCore implements ISpecialArmor, IEner
 	}
 
 	@Override
+	public void setDamage(ItemStack stack, int damage) {
+
+		super.setDamage(stack, 0);
+	}
+
+	@Override
 	public boolean getIsRepairable(ItemStack itemToRepair, ItemStack stack) {
 
 		return false;
+	}
+
+	@Override
+	public boolean isDamageable() {
+
+		return false;
+	}
+
+	@Override
+	public boolean isEnchantable(ItemStack stack) {
+
+		return true;
 	}
 
 	@Override

@@ -14,7 +14,6 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Enchantments;
 import net.minecraft.init.SoundEvents;
@@ -103,14 +102,6 @@ public class ItemBowFlux extends ItemBowCore implements IMultiModeItem, IEnergyC
 	}
 
 	@Override
-	public void onUpdate(ItemStack stack, World world, Entity entity, int slot, boolean isSelected) {
-
-		if (stack.getItemDamage() > 0) {
-			stack.setItemDamage(0);
-		}
-	}
-
-	@Override
 	public void setDamage(ItemStack stack, int damage) {
 
 		super.setDamage(stack, 0);
@@ -118,6 +109,12 @@ public class ItemBowFlux extends ItemBowCore implements IMultiModeItem, IEnergyC
 
 	@Override
 	public boolean getIsRepairable(ItemStack itemToRepair, ItemStack stack) {
+
+		return false;
+	}
+
+	@Override
+	public boolean isDamageable() {
 
 		return false;
 	}

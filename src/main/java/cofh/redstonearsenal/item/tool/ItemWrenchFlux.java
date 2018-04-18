@@ -129,14 +129,6 @@ public class ItemWrenchFlux extends ItemShears implements IEnergyContainerItem, 
 	}
 
 	@Override
-	public void onUpdate(ItemStack stack, World world, Entity entity, int slot, boolean isSelected) {
-
-		if (stack.getItemDamage() > 0) {
-			stack.setItemDamage(0);
-		}
-	}
-
-	@Override
 	public void setDamage(ItemStack stack, int damage) {
 
 		super.setDamage(stack, 0);
@@ -159,6 +151,18 @@ public class ItemWrenchFlux extends ItemShears implements IEnergyContainerItem, 
 
 		entity.rotationYaw += 90;
 		entity.rotationYaw %= 360;
+		return true;
+	}
+
+	@Override
+	public boolean isDamageable() {
+
+		return false;
+	}
+
+	@Override
+	public boolean isEnchantable(ItemStack stack) {
+
 		return true;
 	}
 

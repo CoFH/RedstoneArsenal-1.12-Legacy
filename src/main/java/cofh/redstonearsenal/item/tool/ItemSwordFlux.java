@@ -19,7 +19,6 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
@@ -134,14 +133,6 @@ public class ItemSwordFlux extends ItemSword implements IMultiModeItem, IEnergyC
 	}
 
 	@Override
-	public void onUpdate(ItemStack stack, World world, Entity entity, int slot, boolean isSelected) {
-
-		if (stack.getItemDamage() > 0) {
-			stack.setItemDamage(0);
-		}
-	}
-
-	@Override
 	public void setDamage(ItemStack stack, int damage) {
 
 		super.setDamage(stack, 0);
@@ -171,6 +162,12 @@ public class ItemSwordFlux extends ItemSword implements IMultiModeItem, IEnergyC
 			useEnergy(stack, thePlayer.capabilities.isCreativeMode);
 		}
 		return true;
+	}
+
+	@Override
+	public boolean isDamageable() {
+
+		return false;
 	}
 
 	@Override

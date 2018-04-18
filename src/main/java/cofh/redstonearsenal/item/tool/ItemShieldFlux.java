@@ -132,14 +132,6 @@ public class ItemShieldFlux extends ItemShieldCore implements IMultiModeItem, IE
 	}
 
 	@Override
-	public void onUpdate(ItemStack stack, World world, Entity entity, int slot, boolean isSelected) {
-
-		if (stack.getItemDamage() > 0) {
-			stack.setItemDamage(0);
-		}
-	}
-
-	@Override
 	public void setDamage(ItemStack stack, int damage) {
 
 		super.setDamage(stack, 0);
@@ -170,6 +162,12 @@ public class ItemShieldFlux extends ItemShieldCore implements IMultiModeItem, IE
 			useEnergy(stack, thePlayer.capabilities.isCreativeMode);
 		}
 		return true;
+	}
+
+	@Override
+	public boolean isDamageable() {
+
+		return false;
 	}
 
 	@Override
