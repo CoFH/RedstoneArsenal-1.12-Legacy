@@ -128,7 +128,7 @@ public class ItemBowFlux extends ItemBowCore implements IMultiModeItem, IEnergyC
 	@Override
 	public boolean showDurabilityBar(ItemStack stack) {
 
-		return RAProps.showToolCharge && stack.getTagCompound() != null && !stack.getTagCompound().getBoolean(CoreProps.CREATIVE_TAB);
+		return RAProps.showToolCharge && getEnergyStored(stack) > 0;
 	}
 
 	@Override

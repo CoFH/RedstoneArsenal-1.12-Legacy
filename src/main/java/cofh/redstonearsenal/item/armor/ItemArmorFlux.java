@@ -39,7 +39,7 @@ public class ItemArmorFlux extends ItemArmorCore implements ISpecialArmor, IEner
 	protected int maxTransfer = 4000;
 
 	protected double absorbRatio = 0.9D;
-	protected int energyPerDamage = 160;
+	protected int energyPerDamage = 200;
 
 	public ItemArmorFlux(ArmorMaterial material, EntityEquipmentSlot type) {
 
@@ -111,7 +111,7 @@ public class ItemArmorFlux extends ItemArmorCore implements ISpecialArmor, IEner
 	@Override
 	public boolean showDurabilityBar(ItemStack stack) {
 
-		return RAProps.showArmorCharge && (stack.getTagCompound() == null || !stack.getTagCompound().getBoolean(CoreProps.CREATIVE_TAB));
+		return RAProps.showToolCharge && getEnergyStored(stack) > 0;
 	}
 
 	@Override

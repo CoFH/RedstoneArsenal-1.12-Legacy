@@ -5,6 +5,7 @@ import cofh.api.item.IToolHammer;
 import cofh.core.init.CoreEnchantments;
 import cofh.core.init.CoreProps;
 import cofh.core.item.IEnchantableItem;
+import cofh.core.item.tool.ItemShearsCore;
 import cofh.core.util.helpers.*;
 import cofh.redstonearsenal.init.RAProps;
 import cofh.redstoneflux.api.IEnergyContainerItem;
@@ -28,7 +29,6 @@ import net.minecraft.init.Enchantments;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemShears;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.stats.StatList;
@@ -49,22 +49,18 @@ import java.util.List;
 
 //TODO FIXME @Optional
 //@Implementable ({ "buildcraft.api.tools.IToolWrench", "mods.railcraft.api.core.items.IToolCrowbar" })
-public class ItemWrenchFlux extends ItemShears implements IEnergyContainerItem, IEnchantableItem, IToolHammer {
+public class ItemWrenchFlux extends ItemShearsCore implements IEnergyContainerItem, IEnchantableItem, IToolHammer {
 
 	protected int maxEnergy = 320000;
 	protected int maxTransfer = 4000;
 
 	protected int energyPerUse = 200;
 
-	protected ToolMaterial toolMaterial;
-
 	protected boolean showInCreative = true;
 
 	public ItemWrenchFlux(ToolMaterial toolMaterial) {
 
-		super();
-
-		this.toolMaterial = toolMaterial;
+		super(toolMaterial);
 		setMaxDamage(toolMaterial.getMaxUses());
 		setNoRepair();
 
@@ -244,7 +240,7 @@ public class ItemWrenchFlux extends ItemShears implements IEnergyContainerItem, 
 	@Override
 	public boolean showDurabilityBar(ItemStack stack) {
 
-		return RAProps.showToolCharge && stack.getTagCompound() != null && !stack.getTagCompound().getBoolean(CoreProps.CREATIVE_TAB);
+		return RAProps.showToolCharge && getEnergyStored(stack) > 0;
 	}
 
 	@Override

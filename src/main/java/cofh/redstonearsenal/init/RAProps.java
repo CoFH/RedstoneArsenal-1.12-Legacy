@@ -2,13 +2,11 @@ package cofh.redstonearsenal.init;
 
 import cofh.api.item.IMultiModeItem;
 import cofh.core.gui.CreativeTabCore;
-import cofh.core.init.CoreProps;
 import cofh.core.key.KeyBindingItemMultiMode;
 import cofh.core.util.helpers.StringHelper;
 import cofh.redstonearsenal.RedstoneArsenal;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -63,13 +61,7 @@ public class RAProps {
 				@SideOnly (Side.CLIENT)
 				public ItemStack getTabIconItem() {
 
-					ItemStack iconStack = new ItemStack(RAEquipment.ToolSet.FLUX.itemSword);
-					iconStack.setTagCompound(new NBTTagCompound());
-					iconStack.getTagCompound().setBoolean(CoreProps.CREATIVE_TAB, true);
-					iconStack.getTagCompound().setInteger(CoreProps.ENERGY, 32000);
-					iconStack.getTagCompound().setInteger(CoreProps.MODE, 1);
-
-					return iconStack;
+					return new ItemStack(RAEquipment.ToolSet.FLUX.itemSword);
 				}
 			};
 			RedstoneArsenal.tabItems = RedstoneArsenal.tabCommon;
