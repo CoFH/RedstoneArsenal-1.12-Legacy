@@ -111,7 +111,7 @@ public class ItemArmorFlux extends ItemArmorCore implements ISpecialArmor, IEner
 	@Override
 	public boolean showDurabilityBar(ItemStack stack) {
 
-		return RAProps.showToolCharge && getEnergyStored(stack) > 0;
+		return RAProps.showArmorCharge && getEnergyStored(stack) > 0;
 	}
 
 	@Override
