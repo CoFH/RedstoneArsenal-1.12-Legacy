@@ -1,6 +1,7 @@
 package cofh.redstonearsenal;
 
 import cofh.CoFHCore;
+import cofh.core.init.CoreEnchantments;
 import cofh.core.init.CoreProps;
 import cofh.core.util.ConfigHandler;
 import cofh.redstonearsenal.init.RABlocks;
@@ -71,6 +72,8 @@ public class RedstoneArsenal {
 		RABlocks.preInit();
 		RAItems.preInit();
 		RAEquipment.preInit();
+
+		CoreEnchantments.register();
 
 		proxy.preInit(event);
 	}
