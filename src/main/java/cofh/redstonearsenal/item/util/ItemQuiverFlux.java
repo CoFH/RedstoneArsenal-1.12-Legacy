@@ -293,7 +293,7 @@ public class ItemQuiverFlux extends ItemCore implements IModelRegister, IMultiMo
 
 	/* IInitializer */
 	@Override
-	public boolean initialize() {
+	public boolean preInit() {
 
 		this.setRegistryName("util.quiver_flux");
 		ForgeRegistries.ITEMS.register(this);
@@ -309,7 +309,7 @@ public class ItemQuiverFlux extends ItemCore implements IModelRegister, IMultiMo
 	}
 
 	@Override
-	public boolean register() {
+	public boolean initialize() {
 
 		if (!enable) {
 			return false;

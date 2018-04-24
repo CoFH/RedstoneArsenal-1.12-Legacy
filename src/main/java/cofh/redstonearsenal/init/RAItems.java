@@ -27,7 +27,7 @@ public class RAItems {
 		initList.add(itemQuiver);
 
 		for (IInitializer init : initList) {
-			init.initialize();
+			init.preInit();
 		}
 		MinecraftForge.EVENT_BUS.register(INSTANCE);
 	}
@@ -37,7 +37,7 @@ public class RAItems {
 	public void registerRecipes(RegistryEvent.Register<IRecipe> event) {
 
 		for (IInitializer init : initList) {
-			init.register();
+			init.initialize();
 		}
 	}
 
