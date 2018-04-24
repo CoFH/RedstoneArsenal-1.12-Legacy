@@ -24,7 +24,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 
-@Mod (modid = RedstoneArsenal.MOD_ID, name = RedstoneArsenal.MOD_NAME, version = RedstoneArsenal.VERSION, dependencies = RedstoneArsenal.DEPENDENCIES, updateJSON = RedstoneArsenal.UPDATE_URL)
+@Mod (modid = RedstoneArsenal.MOD_ID, name = RedstoneArsenal.MOD_NAME, version = RedstoneArsenal.VERSION, dependencies = RedstoneArsenal.DEPENDENCIES, updateJSON = RedstoneArsenal.UPDATE_URL, certificateFingerprint = "8a6abf2cb9e141b866580d369ba6548732eff25f")
 public class RedstoneArsenal {
 
 	public static final String MOD_ID = "redstonearsenal";
