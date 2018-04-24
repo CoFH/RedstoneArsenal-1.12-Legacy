@@ -12,6 +12,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.oredict.OreDictionary;
 
 import static cofh.core.util.helpers.RecipeHelper.*;
@@ -22,7 +23,6 @@ public class ItemMaterial extends ItemMulti implements IInitializer {
 
 		super("redstonearsenal");
 
-		register("material");
 		setUnlocalizedName("material");
 		setCreativeTab(RedstoneArsenal.tabItems);
 	}
@@ -30,6 +30,9 @@ public class ItemMaterial extends ItemMulti implements IInitializer {
 	/* IInitializer */
 	@Override
 	public boolean initialize() {
+
+		ForgeRegistries.ITEMS.register(setRegistryName("material"));
+		RedstoneArsenal.proxy.addIModelRegister(this);
 
 		dustElectrumFlux = addOreDictItem(0, "dustElectrumFlux", EnumRarity.UNCOMMON);
 		ingotElectrumFlux = addOreDictItem(32, "ingotElectrumFlux", EnumRarity.UNCOMMON);
@@ -44,8 +47,6 @@ public class ItemMaterial extends ItemMulti implements IInitializer {
 		rodObsidianFlux = addItem(193, "rodObsidianFlux", EnumRarity.UNCOMMON);
 
 		plateArmorFlux = addItem(224, "plateArmorFlux", EnumRarity.UNCOMMON);
-
-		RedstoneArsenal.proxy.addIModelRegister(this);
 
 		return true;
 	}
