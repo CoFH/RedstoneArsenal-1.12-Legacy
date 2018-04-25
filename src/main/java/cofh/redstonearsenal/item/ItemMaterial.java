@@ -82,12 +82,8 @@ public class ItemMaterial extends ItemMulti implements IInitializer {
 			ItemStack dustElectrum = ItemHelper.cloneStack(OreDictionary.getOres("dustElectrum", false).get(0), 1);
 			FluidStack fluidRedstone = new FluidStack(FluidRegistry.getFluid("redstone"), 500);
 
-			ThermalExpansionHelper.addSmelterRecipe(4000, dustElectrumFlux, new ItemStack(Blocks.SAND), ingotElectrumFlux);
-
-			ThermalExpansionHelper.addCompactorPressRecipe(4000, ingotElectrumFlux, plateElectrumFlux);
-
-			ThermalExpansionHelper.addTransposerFill(400, dustElectrum, dustElectrumFlux, fluidRedstone, false);
-			ThermalExpansionHelper.addTransposerFill(400, new ItemStack(Items.DIAMOND), gemCrystalFlux, fluidRedstone, false);
+			ThermalExpansionHelper.addTransposerFill(2000, dustElectrum, dustElectrumFlux, fluidRedstone, false);
+			ThermalExpansionHelper.addTransposerFill(2000, new ItemStack(Items.DIAMOND), gemCrystalFlux, fluidRedstone, false);
 		}
 		return true;
 	}
