@@ -49,7 +49,7 @@ import java.util.List;
 
 //TODO FIXME @Optional
 //@Implementable ({ "buildcraft.api.tools.IToolWrench", "mods.railcraft.api.core.items.IToolCrowbar" })
-public class ItemWrenchFlux extends ItemShearsCore implements IEnergyContainerItem, IEnchantableItem, IToolHammer {
+public class ItemWrenchFlux extends ItemShearsCore implements IEnchantableItem, IEnergyContainerItem, IToolHammer {
 
 	protected int maxEnergy = 320000;
 	protected int maxTransfer = 4000;
@@ -336,49 +336,11 @@ public class ItemWrenchFlux extends ItemShearsCore implements IEnergyContainerIt
 		return multimap;
 	}
 
-	/* IToolHammer */
+	/* IEnchantableItem */
 	@Override
-	public boolean isUsable(ItemStack item, EntityLivingBase user, BlockPos pos) {
+	public boolean canEnchant(ItemStack stack, Enchantment enchantment) {
 
-		if (user instanceof EntityPlayer) {
-			if (((EntityPlayer) user).capabilities.isCreativeMode) {
-				return true;
-			}
-		}
-		return getEnergyStored(item) >= getEnergyPerUse(item);
-	}
-
-	@Override
-	public boolean isUsable(ItemStack item, EntityLivingBase user, Entity entity) {
-
-		if (user instanceof EntityPlayer) {
-			if (((EntityPlayer) user).capabilities.isCreativeMode) {
-				return true;
-			}
-		}
-		return getEnergyStored(item) >= getEnergyPerUse(item);
-	}
-
-	@Override
-	public void toolUsed(ItemStack item, EntityLivingBase user, BlockPos pos) {
-
-		if (user instanceof EntityPlayer) {
-			EntityPlayer player = (EntityPlayer) user;
-			if (!player.capabilities.isCreativeMode) {
-				useEnergy(player.getHeldItemMainhand(), false);
-			}
-		}
-	}
-
-	@Override
-	public void toolUsed(ItemStack item, EntityLivingBase user, Entity entity) {
-
-		if (user instanceof EntityPlayer) {
-			EntityPlayer player = (EntityPlayer) user;
-			if (!player.capabilities.isCreativeMode) {
-				useEnergy(player.getHeldItemMainhand(), false);
-			}
-		}
+		return enchantment == CoreEnchantments.holding;
 	}
 
 	/* IEnergyContainerItem */
@@ -430,11 +392,49 @@ public class ItemWrenchFlux extends ItemShearsCore implements IEnergyContainerIt
 		return maxEnergy + maxEnergy * enchant / 2;
 	}
 
-	/* IEnchantableItem */
+	/* IToolHammer */
 	@Override
-	public boolean canEnchant(ItemStack stack, Enchantment enchantment) {
+	public boolean isUsable(ItemStack item, EntityLivingBase user, BlockPos pos) {
 
-		return enchantment == CoreEnchantments.holding;
+		if (user instanceof EntityPlayer) {
+			if (((EntityPlayer) user).capabilities.isCreativeMode) {
+				return true;
+			}
+		}
+		return getEnergyStored(item) >= getEnergyPerUse(item);
+	}
+
+	@Override
+	public boolean isUsable(ItemStack item, EntityLivingBase user, Entity entity) {
+
+		if (user instanceof EntityPlayer) {
+			if (((EntityPlayer) user).capabilities.isCreativeMode) {
+				return true;
+			}
+		}
+		return getEnergyStored(item) >= getEnergyPerUse(item);
+	}
+
+	@Override
+	public void toolUsed(ItemStack item, EntityLivingBase user, BlockPos pos) {
+
+		if (user instanceof EntityPlayer) {
+			EntityPlayer player = (EntityPlayer) user;
+			if (!player.capabilities.isCreativeMode) {
+				useEnergy(player.getHeldItemMainhand(), false);
+			}
+		}
+	}
+
+	@Override
+	public void toolUsed(ItemStack item, EntityLivingBase user, Entity entity) {
+
+		if (user instanceof EntityPlayer) {
+			EntityPlayer player = (EntityPlayer) user;
+			if (!player.capabilities.isCreativeMode) {
+				useEnergy(player.getHeldItemMainhand(), false);
+			}
+		}
 	}
 
 	/* IMPLEMENTABLES */

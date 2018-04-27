@@ -40,7 +40,7 @@ import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public abstract class ItemToolFlux extends ItemToolCore implements IMultiModeItem, IEnergyContainerItem, IEnchantableItem {
+public abstract class ItemToolFlux extends ItemToolCore implements IEnchantableItem, IEnergyContainerItem, IMultiModeItem {
 
 	protected int maxEnergy = 320000;
 	protected int maxTransfer = 4000;
@@ -245,15 +245,11 @@ public abstract class ItemToolFlux extends ItemToolCore implements IMultiModeIte
 		return multimap;
 	}
 
-	/* IMultiModeItem */
+	/* IEnchantableItem */
 	@Override
-	public void onModeChange(EntityPlayer player, ItemStack stack) {
+	public boolean canEnchant(ItemStack stack, Enchantment enchantment) {
 
-		if (isEmpowered(stack)) {
-			player.world.playSound(null, player.getPosition(), SoundEvents.ENTITY_LIGHTNING_THUNDER, SoundCategory.PLAYERS, 0.4F, 1.0F);
-		} else {
-			player.world.playSound(null, player.getPosition(), SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYERS, 0.2F, 0.6F);
-		}
+		return enchantment == CoreEnchantments.holding;
 	}
 
 	/* IEnergyContainerItem */
@@ -309,11 +305,15 @@ public abstract class ItemToolFlux extends ItemToolCore implements IMultiModeIte
 		return maxEnergy + maxEnergy * enchant / 2;
 	}
 
-	/* IEnchantableItem */
+	/* IMultiModeItem */
 	@Override
-	public boolean canEnchant(ItemStack stack, Enchantment enchantment) {
+	public void onModeChange(EntityPlayer player, ItemStack stack) {
 
-		return enchantment == CoreEnchantments.holding;
+		if (isEmpowered(stack)) {
+			player.world.playSound(null, player.getPosition(), SoundEvents.ENTITY_LIGHTNING_THUNDER, SoundCategory.PLAYERS, 0.4F, 1.0F);
+		} else {
+			player.world.playSound(null, player.getPosition(), SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYERS, 0.2F, 0.6F);
+		}
 	}
 
 	/* CAPABILITIES */

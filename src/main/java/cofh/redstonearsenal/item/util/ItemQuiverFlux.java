@@ -45,7 +45,7 @@ import java.util.List;
 
 import static cofh.core.util.helpers.RecipeHelper.addShapedRecipe;
 
-public class ItemQuiverFlux extends ItemCore implements IModelRegister, IMultiModeItem, IEnergyContainerItem, IToolQuiver, IEnchantableItem, IInitializer {
+public class ItemQuiverFlux extends ItemCore implements IInitializer, IModelRegister, IEnchantableItem, IEnergyContainerItem, IMultiModeItem, IToolQuiver {
 
 	protected int maxEnergy = 320000;
 	protected int maxTransfer = 4000;
@@ -184,23 +184,11 @@ public class ItemQuiverFlux extends ItemCore implements IModelRegister, IMultiMo
 		return isEmpowered(stack) ? EnumRarity.RARE : EnumRarity.UNCOMMON;
 	}
 
-	/* IModelRegister */
+	/* IEnchantableItem */
 	@Override
-	@SideOnly (Side.CLIENT)
-	public void registerModels() {
+	public boolean canEnchant(ItemStack stack, Enchantment enchantment) {
 
-		ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation(RedstoneArsenal.MOD_ID + ":util/quiver_flux", "inventory"));
-	}
-
-	/* IMultiModeItem */
-	@Override
-	public void onModeChange(EntityPlayer player, ItemStack stack) {
-
-		if (isEmpowered(stack)) {
-			player.world.playSound(null, player.getPosition(), SoundEvents.ENTITY_LIGHTNING_THUNDER, SoundCategory.PLAYERS, 0.4F, 1.0F);
-		} else {
-			player.world.playSound(null, player.getPosition(), SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYERS, 0.2F, 0.6F);
-		}
+		return enchantment == CoreEnchantments.holding;
 	}
 
 	/* IEnergyContainerItem */
@@ -277,11 +265,15 @@ public class ItemQuiverFlux extends ItemCore implements IModelRegister, IMultiMo
 		}
 	}
 
-	/* IEnchantableItem */
+	/* IMultiModeItem */
 	@Override
-	public boolean canEnchant(ItemStack stack, Enchantment enchantment) {
+	public void onModeChange(EntityPlayer player, ItemStack stack) {
 
-		return enchantment == CoreEnchantments.holding;
+		if (isEmpowered(stack)) {
+			player.world.playSound(null, player.getPosition(), SoundEvents.ENTITY_LIGHTNING_THUNDER, SoundCategory.PLAYERS, 0.4F, 1.0F);
+		} else {
+			player.world.playSound(null, player.getPosition(), SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYERS, 0.2F, 0.6F);
+		}
 	}
 
 	/* CAPABILITIES */
@@ -289,6 +281,14 @@ public class ItemQuiverFlux extends ItemCore implements IModelRegister, IMultiMo
 	public ICapabilityProvider initCapabilities(ItemStack stack, NBTTagCompound nbt) {
 
 		return new EnergyContainerItemWrapper(stack, this);
+	}
+
+	/* IModelRegister */
+	@Override
+	@SideOnly (Side.CLIENT)
+	public void registerModels() {
+
+		ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation(RedstoneArsenal.MOD_ID + ":util/quiver_flux", "inventory"));
 	}
 
 	/* IInitializer */
