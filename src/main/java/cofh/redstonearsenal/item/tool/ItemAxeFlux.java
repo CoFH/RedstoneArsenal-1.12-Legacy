@@ -6,6 +6,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Enchantments;
@@ -35,15 +36,18 @@ public class ItemAxeFlux extends ItemToolFlux implements IEnchantableItem {
 	}
 
 	@Override
-	public boolean canDisableShield(ItemStack stack, ItemStack shield, EntityLivingBase entity, EntityLivingBase attacker) {
+	public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
 
-		return true;
+		if (EnumEnchantmentType.BREAKABLE.equals(enchantment.type)) {
+			return enchantment.equals(Enchantments.UNBREAKING);
+		}
+		return enchantment.type.canEnchantItem(this) || enchantment.canApply(new ItemStack(Items.IRON_AXE));
 	}
 
 	@Override
-	public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
+	public boolean canDisableShield(ItemStack stack, ItemStack shield, EntityLivingBase entity, EntityLivingBase attacker) {
 
-		return enchantment.type.canEnchantItem(stack.getItem()) || enchantment != Enchantments.MENDING && enchantment.canApply(new ItemStack(Items.IRON_AXE));
+		return true;
 	}
 
 	/* IEnchantableItem */

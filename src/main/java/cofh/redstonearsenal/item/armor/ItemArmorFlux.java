@@ -14,6 +14,7 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Enchantments;
@@ -44,6 +45,8 @@ public class ItemArmorFlux extends ItemArmorCore implements ISpecialArmor, IEner
 	public ItemArmorFlux(ArmorMaterial material, EntityEquipmentSlot type) {
 
 		super(material, type);
+		setMaxDamage(0);
+		setNoRepair();
 	}
 
 	public ItemArmorFlux setEnergyParams(int maxEnergy, int maxTransfer) {
@@ -79,9 +82,12 @@ public class ItemArmorFlux extends ItemArmorCore implements ISpecialArmor, IEner
 	}
 
 	@Override
-	public void setDamage(ItemStack stack, int damage) {
+	public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
 
-		super.setDamage(stack, 0);
+		if (EnumEnchantmentType.BREAKABLE.equals(enchantment.type)) {
+			return enchantment.equals(Enchantments.UNBREAKING);
+		}
+		return enchantment.type.canEnchantItem(this);
 	}
 
 	@Override
@@ -93,7 +99,7 @@ public class ItemArmorFlux extends ItemArmorCore implements ISpecialArmor, IEner
 	@Override
 	public boolean isDamageable() {
 
-		return false;
+		return true;
 	}
 
 	@Override

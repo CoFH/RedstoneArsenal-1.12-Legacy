@@ -20,6 +20,7 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
@@ -54,6 +55,7 @@ public abstract class ItemToolFlux extends ItemToolCore implements IEnchantableI
 	public ItemToolFlux(float baseDamage, float attackSpeed, ToolMaterial toolMaterial) {
 
 		super(baseDamage, attackSpeed, toolMaterial);
+		setMaxDamage(0);
 		setNoRepair();
 
 		addPropertyOverride(new ResourceLocation("active"), (stack, world, entity) -> ItemToolFlux.this.getEnergyStored(stack) > 0 && !ItemToolFlux.this.isEmpowered(stack) ? 1F : 0F);
@@ -137,9 +139,12 @@ public abstract class ItemToolFlux extends ItemToolCore implements IEnchantableI
 	}
 
 	@Override
-	public void setDamage(ItemStack stack, int damage) {
+	public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
 
-		super.setDamage(stack, 0);
+		if (EnumEnchantmentType.BREAKABLE.equals(enchantment.type)) {
+			return enchantment.equals(Enchantments.UNBREAKING);
+		}
+		return enchantment.type.canEnchantItem(this);
 	}
 
 	@Override
@@ -171,7 +176,7 @@ public abstract class ItemToolFlux extends ItemToolCore implements IEnchantableI
 	@Override
 	public boolean isDamageable() {
 
-		return false;
+		return true;
 	}
 
 	@Override

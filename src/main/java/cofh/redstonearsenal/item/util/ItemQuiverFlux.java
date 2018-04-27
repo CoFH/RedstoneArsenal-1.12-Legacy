@@ -21,6 +21,7 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityArrow;
@@ -58,8 +59,9 @@ public class ItemQuiverFlux extends ItemCore implements IInitializer, IModelRegi
 	public ItemQuiverFlux() {
 
 		super("redstonearsenal");
-
+		setMaxDamage(0);
 		setNoRepair();
+
 		setMaxStackSize(1);
 		setUnlocalizedName("redstonearsenal.util.fluxQuiver");
 		setCreativeTab(RedstoneArsenal.tabBasicCombat);
@@ -116,9 +118,12 @@ public class ItemQuiverFlux extends ItemCore implements IInitializer, IModelRegi
 	}
 
 	@Override
-	public void setDamage(ItemStack stack, int damage) {
+	public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
 
-		super.setDamage(stack, 0);
+		if (EnumEnchantmentType.BREAKABLE.equals(enchantment.type)) {
+			return enchantment.equals(Enchantments.UNBREAKING);
+		}
+		return enchantment.type.canEnchantItem(this);
 	}
 
 	@Override
@@ -130,7 +135,7 @@ public class ItemQuiverFlux extends ItemCore implements IInitializer, IModelRegi
 	@Override
 	public boolean isDamageable() {
 
-		return false;
+		return true;
 	}
 
 	@Override

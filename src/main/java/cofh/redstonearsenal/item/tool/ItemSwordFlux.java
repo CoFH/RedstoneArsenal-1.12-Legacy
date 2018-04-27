@@ -19,6 +19,7 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
@@ -58,6 +59,7 @@ public class ItemSwordFlux extends ItemSword implements IEnchantableItem, IEnerg
 	public ItemSwordFlux(ToolMaterial toolMaterial) {
 
 		super(toolMaterial);
+		setMaxDamage(0);
 		setNoRepair();
 
 		addPropertyOverride(new ResourceLocation("active"), (stack, world, entity) -> ItemSwordFlux.this.getEnergyStored(stack) > 0 && !ItemSwordFlux.this.isEmpowered(stack) ? 1F : 0F);
@@ -133,9 +135,12 @@ public class ItemSwordFlux extends ItemSword implements IEnchantableItem, IEnerg
 	}
 
 	@Override
-	public void setDamage(ItemStack stack, int damage) {
+	public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
 
-		super.setDamage(stack, 0);
+		if (EnumEnchantmentType.BREAKABLE.equals(enchantment.type)) {
+			return enchantment.equals(Enchantments.UNBREAKING);
+		}
+		return enchantment.type.canEnchantItem(this);
 	}
 
 	@Override
@@ -167,7 +172,7 @@ public class ItemSwordFlux extends ItemSword implements IEnchantableItem, IEnerg
 	@Override
 	public boolean isDamageable() {
 
-		return false;
+		return true;
 	}
 
 	@Override

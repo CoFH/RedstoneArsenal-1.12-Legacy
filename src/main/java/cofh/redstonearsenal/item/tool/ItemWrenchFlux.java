@@ -18,6 +18,7 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -61,7 +62,7 @@ public class ItemWrenchFlux extends ItemShearsCore implements IEnchantableItem, 
 	public ItemWrenchFlux(ToolMaterial toolMaterial) {
 
 		super(toolMaterial);
-		setMaxDamage(toolMaterial.getMaxUses());
+		setMaxDamage(0);
 		setNoRepair();
 
 		setHarvestLevel("wrench", 1);
@@ -125,9 +126,12 @@ public class ItemWrenchFlux extends ItemShearsCore implements IEnchantableItem, 
 	}
 
 	@Override
-	public void setDamage(ItemStack stack, int damage) {
+	public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
 
-		super.setDamage(stack, 0);
+		if (EnumEnchantmentType.BREAKABLE.equals(enchantment.type)) {
+			return enchantment.equals(Enchantments.UNBREAKING);
+		}
+		return enchantment.type.canEnchantItem(this);
 	}
 
 	@Override
@@ -153,7 +157,7 @@ public class ItemWrenchFlux extends ItemShearsCore implements IEnchantableItem, 
 	@Override
 	public boolean isDamageable() {
 
-		return false;
+		return true;
 	}
 
 	@Override

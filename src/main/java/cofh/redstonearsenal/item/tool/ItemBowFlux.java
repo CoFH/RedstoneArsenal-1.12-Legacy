@@ -14,6 +14,7 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Enchantments;
 import net.minecraft.init.SoundEvents;
@@ -39,6 +40,7 @@ public class ItemBowFlux extends ItemBowCore implements IEnergyContainerItem, IM
 	public ItemBowFlux(Item.ToolMaterial toolMaterial) {
 
 		super(toolMaterial);
+		setMaxDamage(0);
 		setNoRepair();
 
 		addPropertyOverride(new ResourceLocation("active"), (stack, world, entity) -> ItemBowFlux.this.getEnergyStored(stack) > 0 && !ItemBowFlux.this.isEmpowered(stack) ? 1F : 0F);
@@ -102,9 +104,12 @@ public class ItemBowFlux extends ItemBowCore implements IEnergyContainerItem, IM
 	}
 
 	@Override
-	public void setDamage(ItemStack stack, int damage) {
+	public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
 
-		super.setDamage(stack, 0);
+		if (EnumEnchantmentType.BREAKABLE.equals(enchantment.type)) {
+			return enchantment.equals(Enchantments.UNBREAKING);
+		}
+		return enchantment.type.canEnchantItem(this);
 	}
 
 	@Override
@@ -116,7 +121,7 @@ public class ItemBowFlux extends ItemBowCore implements IEnergyContainerItem, IM
 	@Override
 	public boolean isDamageable() {
 
-		return false;
+		return true;
 	}
 
 	@Override
