@@ -192,7 +192,7 @@ public class ItemFishingRodFlux extends ItemFishingRodCore implements IEnchantab
 				EntityFishHook hook = new EntityFishHook(world, player);
 
 				int enchantSpeed = EnchantmentHelper.getFishingSpeedBonus(stack);
-				hook.setLureSpeed(Math.max(speedModifier + enchantSpeed + (isEmpowered(stack) ? 2 : 0), 5));
+				hook.setLureSpeed(Math.min(speedModifier + enchantSpeed + (isEmpowered(stack) ? 2 : 0), 5));
 
 				int enchantLuck = EnchantmentHelper.getFishingLuckBonus(stack);
 				hook.setLuck(luckModifier + enchantLuck + (isEmpowered(stack) ? 2 : 0));

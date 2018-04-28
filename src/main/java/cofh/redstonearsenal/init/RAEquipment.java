@@ -40,11 +40,11 @@ public class RAEquipment {
 	public static void preInit() {
 
 		for (ArmorSet e : ArmorSet.values()) {
-			e.initialize();
+			e.preInit();
 			RedstoneArsenal.proxy.addIModelRegister(e);
 		}
 		for (ToolSet e : ToolSet.values()) {
-			e.initialize();
+			e.preInit();
 			RedstoneArsenal.proxy.addIModelRegister(e);
 		}
 		MinecraftForge.EVENT_BUS.register(INSTANCE);
@@ -55,10 +55,10 @@ public class RAEquipment {
 	public void registerRecipes(RegistryEvent.Register<IRecipe> event) {
 
 		for (ArmorSet e : ArmorSet.values()) {
-			e.register();
+			e.initialize();
 		}
 		for (ToolSet e : ToolSet.values()) {
-			e.register();
+			e.initialize();
 		}
 	}
 
@@ -136,7 +136,7 @@ public class RAEquipment {
 			itemBoots = new ItemArmorFlux(ARMOR_MATERIAL, EntityEquipmentSlot.FEET);
 		}
 
-		protected void initialize() {
+		protected void preInit() {
 
 			final String ARMOR = "redstonearsenal.armor." + name;
 			final String PATH_ARMOR = "redstonearsenal:textures/armor/";
@@ -182,7 +182,7 @@ public class RAEquipment {
 			armorBoots = EnergyHelper.setDefaultEnergyTag(new ItemStack(itemBoots), 0);
 		}
 
-		protected void register() {
+		protected void initialize() {
 
 			if (enable[0]) {
 				addShapedRecipe(armorHelmet, "III", "I I", 'I', ItemMaterial.plateArmorFlux);
@@ -282,7 +282,7 @@ public class RAEquipment {
 			itemShield = new ItemShieldFlux(TOOL_MATERIAL);
 		}
 
-		protected void initialize() {
+		protected void preInit() {
 
 			final String TOOL = "redstonearsenal.tool." + name;
 
@@ -385,7 +385,7 @@ public class RAEquipment {
 			toolShield = EnergyHelper.setDefaultEnergyTag(new ItemStack(itemShield), 0);
 		}
 
-		protected void register() {
+		protected void initialize() {
 
 			if (enable[0]) {
 				addShapedRecipe(toolWrench, "I I", " R ", " I ", 'I', "ingotElectrumFlux", 'R', ItemMaterial.rodObsidianFlux);

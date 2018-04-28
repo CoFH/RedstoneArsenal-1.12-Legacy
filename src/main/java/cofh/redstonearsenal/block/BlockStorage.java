@@ -205,7 +205,7 @@ public class BlockStorage extends BlockCore implements IInitializer, IModelRegis
 		// @formatter:off
 		ELECTRUM_FLUX(0, "electrumFlux", blockElectrumFlux, 7),
 		CRYSTAL_FLUX(1, "crystalFlux", blockCrystalFlux, 7);
-		// @formatter: on
+		// @formatter:on
 
 		private static final Type[] METADATA_LOOKUP = new Type[values().length];
 		private final int metadata;
