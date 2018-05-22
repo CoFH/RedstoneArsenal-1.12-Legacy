@@ -257,6 +257,12 @@ public class ItemQuiverFlux extends ItemCore implements IInitializer, IModelRegi
 	}
 
 	@Override
+	public boolean allowCustomArrow(ItemStack item) {
+
+		return false;
+	}
+
+	@Override
 	public boolean isEmpty(ItemStack item, EntityLivingBase shooter) {
 
 		return !(shooter instanceof EntityPlayer && ((EntityPlayer) shooter).capabilities.isCreativeMode) && getEnergyStored(item) <= 0;
