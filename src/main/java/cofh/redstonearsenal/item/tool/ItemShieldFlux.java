@@ -112,7 +112,7 @@ public class ItemShieldFlux extends ItemShieldCore implements IEnchantableItem, 
 	@Override
 	public void onHit(ItemStack stack, EntityPlayer player, Entity source) {
 
-		if (source != null) {
+		if (source != null && player != source) {
 			float potionDamage = 1.0F;
 			if (player.isPotionActive(MobEffects.STRENGTH)) {
 				potionDamage += player.getActivePotionEffect(MobEffects.STRENGTH).getAmplifier() * 1.3F;

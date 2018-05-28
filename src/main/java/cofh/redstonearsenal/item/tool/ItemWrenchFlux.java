@@ -1,5 +1,6 @@
 package cofh.redstonearsenal.item.tool;
 
+import buildcraft.api.tools.IToolWrench;
 import cofh.api.block.IDismantleable;
 import cofh.api.item.IToolHammer;
 import cofh.core.init.CoreEnchantments;
@@ -12,6 +13,7 @@ import cofh.redstoneflux.api.IEnergyContainerItem;
 import cofh.redstoneflux.util.EnergyContainerItemWrapper;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
+import crazypants.enderio.api.tool.ITool;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.ITooltipFlag;
@@ -24,7 +26,6 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.item.EntityMinecart;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Enchantments;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -43,14 +44,15 @@ import net.minecraftforge.common.IShearable;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
-//TODO FIXME @Optional
-//@Implementable ({ "buildcraft.api.tools.IToolWrench", "mods.railcraft.api.core.items.IToolCrowbar" })
-public class ItemWrenchFlux extends ItemShearsCore implements IEnchantableItem, IEnergyContainerItem, IToolHammer {
+@Optional.InterfaceList ({ @Optional.Interface (iface = "buildcraft.api.tools.IToolWrench", modid = "buildcraftcore"), @Optional.Interface (iface = "crazypants.enderio.api.tool.ITool", modid = "enderio") })
+public class ItemWrenchFlux extends ItemShearsCore implements IEnchantableItem, IEnergyContainerItem, IToolHammer, IToolWrench, ITool {
 
 	protected int maxEnergy = 320000;
 	protected int maxTransfer = 4000;
@@ -443,58 +445,34 @@ public class ItemWrenchFlux extends ItemShearsCore implements IEnchantableItem, 
 
 	/* IMPLEMENTABLES */
 
-	/* IToolCrowbar */
-	public boolean canWhack(EntityPlayer player, EnumHand hand, ItemStack crowbar, BlockPos pos) {
+	/* ITool */
+	@Override
+	public boolean shouldHideFacades(@Nonnull ItemStack stack, @Nonnull EntityPlayer player) {
 
-		return getEnergyStored(crowbar) >= getEnergyPerUse(crowbar) || player.capabilities.isCreativeMode;
+		return false;
 	}
 
-	public void onWhack(EntityPlayer player, EnumHand hand, ItemStack crowbar, BlockPos pos) {
+	@Override
+	public boolean canUse(@Nonnull EnumHand stack, @Nonnull EntityPlayer player, @Nonnull BlockPos pos) {
 
-		if (!player.capabilities.isCreativeMode) {
-			useEnergy(crowbar, false);
-		}
-		player.swingArm(EnumHand.MAIN_HAND);
+		return true;
 	}
 
-	public boolean canLink(EntityPlayer player, EnumHand hand, ItemStack crowbar, EntityMinecart cart) {
+	@Override
+	public void used(@Nonnull EnumHand stack, @Nonnull EntityPlayer player, @Nonnull BlockPos pos) {
 
-		return player.isSneaking() && getEnergyStored(crowbar) >= getEnergyPerUse(crowbar) || player.capabilities.isCreativeMode;
-	}
-
-	public void onLink(EntityPlayer player, EnumHand hand, ItemStack crowbar, EntityMinecart cart) {
-
-		if (!player.capabilities.isCreativeMode) {
-			useEnergy(crowbar, false);
-		}
-		player.swingArm(EnumHand.MAIN_HAND);
-	}
-
-	public boolean canBoost(EntityPlayer player, EnumHand hand, ItemStack crowbar, EntityMinecart cart) {
-
-		return !player.isSneaking() && getEnergyStored(crowbar) >= getEnergyPerUse(crowbar);
-	}
-
-	public void onBoost(EntityPlayer player, EnumHand hand, ItemStack crowbar, EntityMinecart cart) {
-
-		if (!player.capabilities.isCreativeMode) {
-			useEnergy(crowbar, false);
-		}
-		player.swingArm(EnumHand.MAIN_HAND);
 	}
 
 	/* IToolWrench */
+	@Override
 	public boolean canWrench(EntityPlayer player, EnumHand hand, ItemStack wrench, RayTraceResult rayTrace) {
 
-		ItemStack stack = player.getHeldItemMainhand();
-		return getEnergyStored(stack) >= getEnergyPerUse(stack) || player.capabilities.isCreativeMode;
+		return true;
 	}
 
+	@Override
 	public void wrenchUsed(EntityPlayer player, EnumHand hand, ItemStack wrench, RayTraceResult rayTrace) {
 
-		if (!player.capabilities.isCreativeMode) {
-			useEnergy(player.getHeldItemMainhand(), false);
-		}
 	}
 
 	/* CAPABILITIES */

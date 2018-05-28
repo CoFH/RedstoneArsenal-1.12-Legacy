@@ -257,7 +257,7 @@ public class ItemQuiverFlux extends ItemCore implements IInitializer, IModelRegi
 	}
 
 	@Override
-	public boolean allowCustomArrow(ItemStack item) {
+	public boolean allowCustomArrowOverride(ItemStack item) {
 
 		return false;
 	}

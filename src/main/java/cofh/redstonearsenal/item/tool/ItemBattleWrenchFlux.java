@@ -1,14 +1,15 @@
 package cofh.redstonearsenal.item.tool;
 
+import buildcraft.api.tools.IToolWrench;
 import cofh.api.block.IDismantleable;
 import cofh.api.item.IToolHammer;
 import cofh.core.util.helpers.BlockHelper;
 import cofh.core.util.helpers.ServerHelper;
+import crazypants.enderio.api.tool.ITool;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.item.EntityMinecart;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumActionResult;
@@ -21,11 +22,13 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
 
-//TODO FIXME, @Optional.
-//@Implementable ({ "buildcraft.api.tools.IToolWrench", "mods.railcraft.api.core.items.IToolCrowbar" })
-public class ItemBattleWrenchFlux extends ItemSwordFlux implements IToolHammer {
+import javax.annotation.Nonnull;
+
+@Optional.InterfaceList ({ @Optional.Interface (iface = "buildcraft.api.tools.IToolWrench", modid = "buildcraftcore"), @Optional.Interface (iface = "crazypants.enderio.api.tool.ITool", modid = "enderio") })
+public class ItemBattleWrenchFlux extends ItemSwordFlux implements IToolHammer, IToolWrench, ITool {
 
 	public ItemBattleWrenchFlux(ToolMaterial toolMaterial) {
 
@@ -146,58 +149,34 @@ public class ItemBattleWrenchFlux extends ItemSwordFlux implements IToolHammer {
 
 	/* IMPLEMENTABLES */
 
-	/* IToolCrowbar */
-	public boolean canWhack(EntityPlayer player, EnumHand hand, ItemStack crowbar, BlockPos pos) {
+	/* ITool */
+	@Override
+	public boolean shouldHideFacades(@Nonnull ItemStack stack, @Nonnull EntityPlayer player) {
 
-		return getEnergyStored(crowbar) >= getEnergyPerUse(crowbar) || player.capabilities.isCreativeMode;
+		return false;
 	}
 
-	public void onWhack(EntityPlayer player, EnumHand hand, ItemStack crowbar, BlockPos pos) {
+	@Override
+	public boolean canUse(@Nonnull EnumHand stack, @Nonnull EntityPlayer player, @Nonnull BlockPos pos) {
 
-		if (!player.capabilities.isCreativeMode) {
-			useEnergy(crowbar, false);
-		}
-		player.swingArm(EnumHand.MAIN_HAND);
+		return true;
 	}
 
-	public boolean canLink(EntityPlayer player, EnumHand hand, ItemStack crowbar, EntityMinecart cart) {
+	@Override
+	public void used(@Nonnull EnumHand stack, @Nonnull EntityPlayer player, @Nonnull BlockPos pos) {
 
-		return player.isSneaking() && getEnergyStored(crowbar) >= getEnergyPerUse(crowbar) || player.capabilities.isCreativeMode;
-	}
-
-	public void onLink(EntityPlayer player, EnumHand hand, ItemStack crowbar, EntityMinecart cart) {
-
-		if (!player.capabilities.isCreativeMode) {
-			useEnergy(crowbar, false);
-		}
-		player.swingArm(EnumHand.MAIN_HAND);
-	}
-
-	public boolean canBoost(EntityPlayer player, EnumHand hand, ItemStack crowbar, EntityMinecart cart) {
-
-		return !player.isSneaking() && getEnergyStored(crowbar) >= getEnergyPerUse(crowbar);
-	}
-
-	public void onBoost(EntityPlayer player, EnumHand hand, ItemStack crowbar, EntityMinecart cart) {
-
-		if (!player.capabilities.isCreativeMode) {
-			useEnergy(crowbar, false);
-		}
-		player.swingArm(EnumHand.MAIN_HAND);
 	}
 
 	/* IToolWrench */
+	@Override
 	public boolean canWrench(EntityPlayer player, EnumHand hand, ItemStack wrench, RayTraceResult rayTrace) {
 
-		ItemStack stack = player.getHeldItemMainhand();
-		return getEnergyStored(stack) >= getEnergyPerUse(stack) || player.capabilities.isCreativeMode;
+		return true;
 	}
 
+	@Override
 	public void wrenchUsed(EntityPlayer player, EnumHand hand, ItemStack wrench, RayTraceResult rayTrace) {
 
-		if (!player.capabilities.isCreativeMode) {
-			useEnergy(player.getHeldItemMainhand(), false);
-		}
 	}
 
 }
