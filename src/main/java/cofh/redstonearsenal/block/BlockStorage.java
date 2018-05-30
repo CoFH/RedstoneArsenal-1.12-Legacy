@@ -1,10 +1,12 @@
 package cofh.redstonearsenal.block;
 
 import cofh.core.block.BlockCore;
+import cofh.core.block.ItemBlockCore;
 import cofh.core.render.IModelRegister;
 import cofh.core.util.core.IInitializer;
 import cofh.core.util.helpers.DamageHelper;
 import cofh.core.util.helpers.EnergyHelper;
+import cofh.core.util.helpers.ItemHelper;
 import cofh.redstonearsenal.RedstoneArsenal;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -77,6 +79,18 @@ public class BlockStorage extends BlockCore implements IInitializer, IModelRegis
 	}
 
 	/* TYPE METHODS */
+	@Override
+	public String getUnlocalizedName(ItemStack stack) {
+
+		return "tile.redstonearsenal.storage." + Type.byMetadata(ItemHelper.getItemDamage(stack)).getNameRaw() + ".name";
+	}
+
+	@Override
+	public EnumRarity getRarity(ItemStack stack) {
+
+		return Type.byMetadata(ItemHelper.getItemDamage(stack)).getRarity();
+	}
+
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
 
@@ -175,7 +189,7 @@ public class BlockStorage extends BlockCore implements IInitializer, IModelRegis
 		this.setRegistryName("storage");
 		ForgeRegistries.BLOCKS.register(this);
 
-		ItemBlockStorage itemBlock = new ItemBlockStorage(this);
+		ItemBlockCore itemBlock = new ItemBlockCore(this);
 		itemBlock.setRegistryName(this.getRegistryName());
 		ForgeRegistries.ITEMS.register(itemBlock);
 
