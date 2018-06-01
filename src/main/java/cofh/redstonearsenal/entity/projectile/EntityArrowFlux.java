@@ -31,9 +31,9 @@ import net.minecraftforge.fml.common.registry.EntityRegistry;
 
 import javax.annotation.Nullable;
 
-public class EntityFluxArrow extends EntityArrow {
+public class EntityArrowFlux extends EntityArrow {
 
-	private static DataParameter<Boolean> EMPOWERED = EntityDataManager.createKey(EntityFluxArrow.class, DataSerializers.BOOLEAN);
+	private static DataParameter<Boolean> EMPOWERED = EntityDataManager.createKey(EntityArrowFlux.class, DataSerializers.BOOLEAN);
 
 	public static final int MAX_TICKS = 100;
 	public static final float MIN_VELOCITY = 0.5F;
@@ -45,15 +45,15 @@ public class EntityFluxArrow extends EntityArrow {
 
 	public static void initialize(int id) {
 
-		EntityRegistry.registerModEntity(new ResourceLocation("redstonearsenal:flux_arrow"), EntityFluxArrow.class, "redstonearsenal.flux_arrow", id, RedstoneArsenal.instance, CoreProps.ENTITY_TRACKING_DISTANCE, 1, true);
+		EntityRegistry.registerModEntity(new ResourceLocation("redstonearsenal:flux_arrow"), EntityArrowFlux.class, "redstonearsenal.flux_arrow", id, RedstoneArsenal.instance, CoreProps.ENTITY_TRACKING_DISTANCE, 1, true);
 	}
 
-	public EntityFluxArrow(World world) {
+	public EntityArrowFlux(World world) {
 
 		this(world, false);
 	}
 
-	public EntityFluxArrow(World world, boolean empowered) {
+	public EntityArrowFlux(World world, boolean empowered) {
 
 		super(world);
 		this.empowered = empowered;
@@ -61,7 +61,7 @@ public class EntityFluxArrow extends EntityArrow {
 		setNoGravity(true);
 	}
 
-	public EntityFluxArrow(World world, double x, double y, double z, boolean empowered) {
+	public EntityArrowFlux(World world, double x, double y, double z, boolean empowered) {
 
 		super(world, x, y, z);
 		this.empowered = empowered;
@@ -69,7 +69,7 @@ public class EntityFluxArrow extends EntityArrow {
 		setNoGravity(true);
 	}
 
-	public EntityFluxArrow(World world, EntityLivingBase shooter, boolean empowered) {
+	public EntityArrowFlux(World world, EntityLivingBase shooter, boolean empowered) {
 
 		super(world, shooter);
 		this.empowered = empowered;
@@ -169,7 +169,7 @@ public class EntityFluxArrow extends EntityArrow {
 			}
 		}
 		if (!world.isRemote && empowered) {
-			world.createExplosion(this, posX, posY, posZ, EXPLOSION_STRENGTH + (getIsCritical() ? 2 + rand.nextFloat() : 0), RAProps.explosionsDestroyBlocks);
+			world.createExplosion(shootingEntity, posX, posY, posZ, EXPLOSION_STRENGTH + (getIsCritical() ? 2 + rand.nextFloat() : 0), RAProps.explosionsDestroyBlocks);
 		}
 		this.setDead();
 	}

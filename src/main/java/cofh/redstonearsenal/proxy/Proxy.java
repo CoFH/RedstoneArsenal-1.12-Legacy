@@ -1,7 +1,7 @@
 package cofh.redstonearsenal.proxy;
 
 import cofh.core.render.IModelRegister;
-import cofh.redstonearsenal.entity.projectile.EntityFluxArrow;
+import cofh.redstonearsenal.entity.projectile.EntityArrowFlux;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -25,7 +25,7 @@ public class Proxy {
 	/* REGISTRATION */
 	public void registerEntities() {
 
-		EntityFluxArrow.initialize(0);
+		EntityArrowFlux.initialize(0);
 	}
 
 	/* HELPERS */

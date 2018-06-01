@@ -3,7 +3,7 @@ package cofh.redstonearsenal.proxy;
 import cofh.core.render.IModelRegister;
 import cofh.core.render.entity.RenderArrowCore;
 import cofh.redstonearsenal.RedstoneArsenal;
-import cofh.redstonearsenal.entity.projectile.EntityFluxArrow;
+import cofh.redstonearsenal.entity.projectile.EntityArrowFlux;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -41,7 +41,7 @@ public class ProxyClient extends Proxy {
 	/* REGISTRATION */
 	public void registerRenderInformation() {
 
-		RenderingRegistry.registerEntityRenderingHandler(EntityFluxArrow.class, manager -> new RenderArrowCore(manager, new ResourceLocation(RedstoneArsenal.MOD_ID, "textures/entity/arrow_flux.png")));
+		RenderingRegistry.registerEntityRenderingHandler(EntityArrowFlux.class, manager -> new RenderArrowCore(manager, new ResourceLocation(RedstoneArsenal.MOD_ID, "textures/entity/arrow_flux.png")));
 	}
 
 	/* HELPERS */
