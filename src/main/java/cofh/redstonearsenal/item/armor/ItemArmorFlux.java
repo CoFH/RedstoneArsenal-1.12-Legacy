@@ -10,12 +10,15 @@ import cofh.core.util.helpers.StringHelper;
 import cofh.redstonearsenal.init.RAProps;
 import cofh.redstoneflux.api.IEnergyContainerItem;
 import cofh.redstoneflux.util.EnergyContainerItemWrapper;
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Multimap;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Enchantments;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -147,22 +150,29 @@ public class ItemArmorFlux extends ItemArmorCore implements ISpecialArmor, IEner
 		return EnumRarity.UNCOMMON;
 	}
 
+	@Override
+	public Multimap<String, AttributeModifier> getAttributeModifiers(EntityEquipmentSlot slot, ItemStack stack) {
+
+		return HashMultimap.create();
+	}
+
 	/* ISpecialArmor */
 	@Override
 	public ArmorProperties getProperties(EntityLivingBase player, ItemStack armor, DamageSource source, double damage, int slot) {
 
-		if (source.damageType.equals("flux")) {
-			return FLUX;
-		} else if (source.damageType.equals("fall")) {
-			if (slot == 0) {
-				int absorbMax = energyPerDamage > 0 ? 25 * getEnergyStored(armor) / energyPerDamage : 0;
-				return new ArmorProperties(0, absorbRatio * getArmorMaterial().getDamageReductionAmount(armorType) * 0.25, absorbMax);
-			}
-			return FALL;
-		} else if (source.isUnblockable()) {
-			int absorbMax = energyPerDamage > 0 ? 25 * getEnergyStored(armor) / energyPerDamage : 0;
-			return new ArmorProperties(0, absorbRatio * getArmorMaterial().getDamageReductionAmount(armorType) * 0.025, absorbMax);
-		}
+		// TODO: Re-implement when Forge fixes this thing.
+		//		if (source.damageType.equals("flux")) {
+		//			return FLUX;
+		//		} else if (source.damageType.equals("fall")) {
+		//			if (slot == 0) {
+		//				int absorbMax = energyPerDamage > 0 ? 25 * getEnergyStored(armor) / energyPerDamage : 0;
+		//				return new ArmorProperties(0, absorbRatio * getArmorMaterial().getDamageReductionAmount(armorType) * 0.25, absorbMax);
+		//			}
+		//			return FALL;
+		//		} else if (source.isUnblockable()) {
+		//			int absorbMax = energyPerDamage > 0 ? 25 * getEnergyStored(armor) / energyPerDamage : 0;
+		//			return new ArmorProperties(0, absorbRatio * getArmorMaterial().getDamageReductionAmount(armorType) * 0.025, absorbMax);
+		//		}
 		int absorbMax = energyPerDamage > 0 ? 25 * getEnergyStored(armor) / energyPerDamage : 0;
 		return new ArmorProperties(0, absorbRatio * getArmorMaterial().getDamageReductionAmount(armorType) * 0.05, absorbMax);
 		// 0.05 = 1 / 20 (max armor)
@@ -171,8 +181,8 @@ public class ItemArmorFlux extends ItemArmorCore implements ISpecialArmor, IEner
 	@Override
 	public int getArmorDisplay(EntityPlayer player, ItemStack armor, int slot) {
 
-		if (getEnergyStored(armor) < energyPerDamage) {
-			return -getArmorMaterial().getDamageReductionAmount(armorType);
+		if (getEnergyStored(armor) >= energyPerDamage) {
+			return getArmorMaterial().getDamageReductionAmount(armorType);
 		}
 		return 0;
 	}
