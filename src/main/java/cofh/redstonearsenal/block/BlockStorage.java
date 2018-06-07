@@ -67,7 +67,7 @@ public class BlockStorage extends BlockCore implements IInitializer, IModelRegis
 	@Override
 	protected BlockStateContainer createBlockState() {
 
-		return new BlockStateContainer(this, new IProperty[] { VARIANT });
+		return new BlockStateContainer(this, VARIANT);
 	}
 
 	@Override
