@@ -154,7 +154,7 @@ public class ItemBowFlux extends ItemBowCore implements IEnergyContainerItem, IM
 		if (stack.getTagCompound() == null) {
 			EnergyHelper.setDefaultEnergyTag(stack, 0);
 		}
-		return 1D - (double) stack.getTagCompound().getInteger(CoreProps.ENERGY) / (double) getMaxEnergyStored(stack);
+		return MathHelper.clamp(1.0D - ((double) stack.getTagCompound().getInteger(CoreProps.ENERGY) / (double) getMaxEnergyStored(stack)), 0.0D, 1.0D);
 	}
 
 	@Override

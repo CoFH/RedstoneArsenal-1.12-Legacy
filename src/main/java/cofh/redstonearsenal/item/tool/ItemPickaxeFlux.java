@@ -1,5 +1,6 @@
 package cofh.redstonearsenal.item.tool;
 
+import cofh.core.init.CoreProps;
 import cofh.core.item.IAOEBreakItem;
 import cofh.core.util.RayTracer;
 import cofh.core.util.helpers.MathHelper;
@@ -84,6 +85,7 @@ public class ItemPickaxeFlux extends ItemToolFlux implements IAOEBreakItem {
 			return false;
 		}
 		float refStrength = state.getPlayerRelativeBlockHardness(player, world, pos);
+		float maxStrength = refStrength / CoreProps.AOE_BREAK_FACTOR;
 
 		if (refStrength != 0.0F) {
 			if (isEmpowered(stack) && canHarvestBlock(state, stack)) {
@@ -108,26 +110,26 @@ public class ItemPickaxeFlux extends ItemToolFlux implements IAOEBreakItem {
 							adjPos = new BlockPos(x, y, z - 1);
 							adjState = world.getBlockState(adjPos);
 							strength = adjState.getPlayerRelativeBlockHardness(player, world, adjPos);
-							if (strength > 0F && refStrength / strength <= 4F) {
+							if (strength > 0F && strength >= maxStrength) {
 								harvestBlock(world, adjPos, player);
 							}
 							adjPos = new BlockPos(x, y, z + 1);
 							adjState = world.getBlockState(adjPos);
 							strength = adjState.getPlayerRelativeBlockHardness(player, world, adjPos);
-							if (strength > 0F && refStrength / strength <= 4F) {
+							if (strength > 0F && strength >= maxStrength) {
 								harvestBlock(world, adjPos, player);
 							}
 						} else {
 							adjPos = new BlockPos(x - 1, y, z);
 							adjState = world.getBlockState(adjPos);
 							strength = adjState.getPlayerRelativeBlockHardness(player, world, adjPos);
-							if (strength > 0F && refStrength / strength <= 4F) {
+							if (strength > 0F && strength >= maxStrength) {
 								harvestBlock(world, adjPos, player);
 							}
 							adjPos = new BlockPos(x + 1, y, z);
 							adjState = world.getBlockState(adjPos);
 							strength = adjState.getPlayerRelativeBlockHardness(player, world, adjPos);
-							if (strength > 0F && refStrength / strength <= 4F) {
+							if (strength > 0F && strength >= maxStrength) {
 								harvestBlock(world, adjPos, player);
 							}
 						}
@@ -136,13 +138,13 @@ public class ItemPickaxeFlux extends ItemToolFlux implements IAOEBreakItem {
 						adjPos = new BlockPos(x, y - 1, z);
 						adjState = world.getBlockState(adjPos);
 						strength = adjState.getPlayerRelativeBlockHardness(player, world, adjPos);
-						if (strength > 0F && refStrength / strength <= 4F) {
+						if (strength > 0F && strength >= maxStrength) {
 							harvestBlock(world, adjPos, player);
 						}
 						adjPos = new BlockPos(x, y + 1, z);
 						adjState = world.getBlockState(adjPos);
 						strength = adjState.getPlayerRelativeBlockHardness(player, world, adjPos);
-						if (strength > 0F && refStrength / strength <= 4F) {
+						if (strength > 0F && strength >= maxStrength) {
 							harvestBlock(world, adjPos, player);
 						}
 				}

@@ -1,0 +1,6 @@
+{
+	"parent": "redstonearsenal:item/tool/excavator_flux",
+	"textures": {
+		"layer0": "redstonearsenal:items/tool/excavator_flux_empowered"
+	}
+}

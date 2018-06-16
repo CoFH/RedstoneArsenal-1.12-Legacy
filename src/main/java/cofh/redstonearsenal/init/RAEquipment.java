@@ -245,6 +245,7 @@ public class RAEquipment {
 		public ItemFishingRodFlux itemFishingRod;
 		public ItemSickleFlux itemSickle;
 		public ItemHammerFlux itemHammer;
+		public ItemExcavatorFlux itemExcavator;
 		public ItemShieldFlux itemShield;
 
 		public ItemStack toolWrench;
@@ -257,9 +258,10 @@ public class RAEquipment {
 		public ItemStack toolFishingRod;
 		public ItemStack toolSickle;
 		public ItemStack toolHammer;
+		public ItemStack toolExcavator;
 		public ItemStack toolShield;
 
-		public boolean[] enable = new boolean[11];
+		public boolean[] enable = new boolean[12];
 
 		ToolSet(String name, ToolMaterial material) {
 
@@ -279,6 +281,7 @@ public class RAEquipment {
 			itemFishingRod = new ItemFishingRodFlux(TOOL_MATERIAL);
 			itemSickle = new ItemSickleFlux(TOOL_MATERIAL);
 			itemHammer = new ItemHammerFlux(TOOL_MATERIAL);
+			itemExcavator = new ItemExcavatorFlux(TOOL_MATERIAL);
 			itemShield = new ItemShieldFlux(TOOL_MATERIAL);
 		}
 
@@ -298,7 +301,8 @@ public class RAEquipment {
 			enable[7] = RedstoneArsenal.CONFIG.getConfiguration().get(category, "FishingRod", true).getBoolean(true);
 			enable[8] = RedstoneArsenal.CONFIG.getConfiguration().get(category, "Sickle", true).getBoolean(true);
 			enable[9] = RedstoneArsenal.CONFIG.getConfiguration().get(category, "Hammer", true).getBoolean(true);
-			enable[10] = RedstoneArsenal.CONFIG.getConfiguration().get(category, "Shield", true).getBoolean(true);
+			enable[10] = RedstoneArsenal.CONFIG.getConfiguration().get(category, "Excavator", true).getBoolean(true);
+			enable[11] = RedstoneArsenal.CONFIG.getConfiguration().get(category, "Shield", true).getBoolean(true);
 
 			create();
 
@@ -364,9 +368,15 @@ public class RAEquipment {
 			itemHammer.setRegistryName("tool.hammer_" + name);
 			ForgeRegistries.ITEMS.register(itemHammer);
 
+			/* EXCAVATOR */
+			itemExcavator.setUnlocalizedName(TOOL + "Excavator").setCreativeTab(RedstoneArsenal.tabBasicTools);
+			itemExcavator.setShowInCreative(enable[10]);
+			itemExcavator.setRegistryName("tool.excavator_" + name);
+			ForgeRegistries.ITEMS.register(itemExcavator);
+
 			/* SHIELD */
 			itemShield.setUnlocalizedName(TOOL + "Shield").setCreativeTab(RedstoneArsenal.tabBasicCombat);
-			itemShield.setShowInCreative(enable[10]);
+			itemShield.setShowInCreative(enable[11]);
 			itemShield.setRegistryName("tool.shield_" + name);
 			ForgeRegistries.ITEMS.register(itemShield);
 
@@ -382,6 +392,7 @@ public class RAEquipment {
 			toolFishingRod = EnergyHelper.setDefaultEnergyTag(new ItemStack(itemFishingRod), 0);
 			toolSickle = EnergyHelper.setDefaultEnergyTag(new ItemStack(itemSickle), 0);
 			toolHammer = EnergyHelper.setDefaultEnergyTag(new ItemStack(itemHammer), 0);
+			toolExcavator = EnergyHelper.setDefaultEnergyTag(new ItemStack(itemExcavator), 0);
 			toolShield = EnergyHelper.setDefaultEnergyTag(new ItemStack(itemShield), 0);
 		}
 
@@ -418,6 +429,9 @@ public class RAEquipment {
 				addShapedRecipe(toolHammer, "III", "IRI", " R ", 'I', "ingotElectrumFlux", 'R', ItemMaterial.rodObsidianFlux);
 			}
 			if (enable[10]) {
+				addShapedRecipe(toolHammer, " I ", "IRI", " R ", 'I', "ingotElectrumFlux", 'R', ItemMaterial.rodObsidianFlux);
+			}
+			if (enable[11]) {
 				addShapedRecipe(toolShield, "IRI", "III", " I ", 'I', "ingotElectrumFlux", 'R', "gemCrystalFlux");
 			}
 		}
@@ -444,6 +458,7 @@ public class RAEquipment {
 			registerModel(itemFishingRod, "fishing_rod_" + name);
 			registerModel(itemSickle, "sickle_" + name);
 			registerModel(itemHammer, "hammer_" + name);
+			registerModel(itemExcavator, "excavator_" + name);
 			registerModel(itemShield, "shield_" + name);
 		}
 	}
