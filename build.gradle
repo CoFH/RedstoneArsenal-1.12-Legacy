@@ -49,8 +49,8 @@ repositories {
 }
 
 dependencies {
-	compile "cofh:RedstoneFlux:${config.rf_mc_version}-${config.rf_version}:deobf"
-	compile "cofh:CoFHCore:${config.mc_version}-${config.cofh_core_version}:deobf"
+	deobfCompile "cofh:RedstoneFlux:${config.rf_mc_version}-${config.rf_version}:universal"
+    deobfCompile "cofh:CoFHCore:${config.mc_version}-${config.cofh_core_version}:universal"
 }
 
 //Pull the mod version from code.
