@@ -417,10 +417,10 @@ public class RAEquipment {
 				addShapedRecipe(toolAxe, "II ", "IR ", " R ", 'I', "ingotElectrumFlux", 'R', ItemMaterial.rodObsidianFlux);
 			}
 			if (enable[6]) {
-				addShapedRecipe(toolBow, " IS", "R S", " IS", 'I', "ingotElectrumFlux", 'R', ItemMaterial.rodObsidianFlux, 'S', Items.STRING);
+				addShapedRecipe(toolBow, " IS", "R S", " IS", 'I', "ingotElectrumFlux", 'R', ItemMaterial.rodObsidianFlux, 'S', "string");
 			}
 			if (enable[7]) {
-				addShapedRecipe(toolFishingRod, "  I", " IS", "R S", 'I', "ingotElectrumFlux", 'R', ItemMaterial.rodObsidianFlux, 'S', Items.STRING);
+				addShapedRecipe(toolFishingRod, "  I", " IS", "R S", 'I', "ingotElectrumFlux", 'R', ItemMaterial.rodObsidianFlux, 'S', "string");
 			}
 			if (enable[8]) {
 				addShapedRecipe(toolSickle, " I ", "  I", "RI ", 'I', "ingotElectrumFlux", 'R', ItemMaterial.rodObsidianFlux);

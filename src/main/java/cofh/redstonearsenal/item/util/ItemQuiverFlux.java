@@ -333,7 +333,7 @@ public class ItemQuiverFlux extends ItemCore implements IInitializer, IModelRegi
 				'A', Items.ARROW,
 				'G', "gemCrystalFlux",
 				'I', "ingotElectrumFlux",
-				'S', Items.STRING
+				'S', "string"
 		);
 		// @formatter:on
 		return true;
