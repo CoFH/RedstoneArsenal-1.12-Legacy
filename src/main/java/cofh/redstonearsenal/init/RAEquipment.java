@@ -8,7 +8,6 @@ import cofh.redstonearsenal.item.ItemMaterial;
 import cofh.redstonearsenal.item.armor.ItemArmorFlux;
 import cofh.redstonearsenal.item.tool.*;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
