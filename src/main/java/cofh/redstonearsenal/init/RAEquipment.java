@@ -428,7 +428,7 @@ public class RAEquipment {
 				addShapedRecipe(toolHammer, "III", "IRI", " R ", 'I', "ingotElectrumFlux", 'R', ItemMaterial.rodObsidianFlux);
 			}
 			if (enable[10]) {
-				addShapedRecipe(toolHammer, " I ", "IRI", " R ", 'I', "ingotElectrumFlux", 'R', ItemMaterial.rodObsidianFlux);
+				addShapedRecipe(toolExcavator, " I ", "IRI", " R ", 'I', "ingotElectrumFlux", 'R', ItemMaterial.rodObsidianFlux);
 			}
 			if (enable[11]) {
 				addShapedRecipe(toolShield, "IRI", "III", " I ", 'I', "ingotElectrumFlux", 'R', "gemCrystalFlux");
