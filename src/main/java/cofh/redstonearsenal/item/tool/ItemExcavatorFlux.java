@@ -7,7 +7,7 @@ import com.google.common.collect.ImmutableList;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemPickaxe;
+import net.minecraft.item.ItemSpade;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
@@ -15,26 +15,24 @@ import net.minecraft.world.World;
 
 import java.util.ArrayList;
 
-public class ItemHammerFlux extends ItemToolFlux implements IAOEBreakItem {
+public class ItemExcavatorFlux extends ItemToolFlux implements IAOEBreakItem {
 
-	public ItemHammerFlux(ToolMaterial toolMaterial) {
+	public ItemExcavatorFlux(ToolMaterial toolMaterial) {
 
-		super(-3.2F, toolMaterial);
-		addToolClass("pickaxe");
-		addToolClass("hammer");
-		damage = 9;
-		damageCharged = 6;
+		super(-3.0F, toolMaterial);
+		addToolClass("shovel");
+		addToolClass("excavator");
+		damage = 4;
 		energyPerUseCharged = 1600;
 
-		effectiveBlocks.addAll(ItemPickaxe.EFFECTIVE_ON);
+		effectiveBlocks.addAll(ItemSpade.EFFECTIVE_ON);
 
-		effectiveMaterials.add(Material.IRON);
-		effectiveMaterials.add(Material.ANVIL);
-		effectiveMaterials.add(Material.ROCK);
-		effectiveMaterials.add(Material.ICE);
-		effectiveMaterials.add(Material.PACKED_ICE);
-		effectiveMaterials.add(Material.GLASS);
-		effectiveMaterials.add(Material.REDSTONE_LIGHT);
+		effectiveMaterials.add(Material.GROUND);
+		effectiveMaterials.add(Material.GRASS);
+		effectiveMaterials.add(Material.SAND);
+		effectiveMaterials.add(Material.SNOW);
+		effectiveMaterials.add(Material.CRAFTED_SNOW);
+		effectiveMaterials.add(Material.CLAY);
 	}
 
 	@Override

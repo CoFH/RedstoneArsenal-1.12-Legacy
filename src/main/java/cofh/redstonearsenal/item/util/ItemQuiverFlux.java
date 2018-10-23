@@ -12,7 +12,7 @@ import cofh.core.util.helpers.EnergyHelper;
 import cofh.core.util.helpers.MathHelper;
 import cofh.core.util.helpers.StringHelper;
 import cofh.redstonearsenal.RedstoneArsenal;
-import cofh.redstonearsenal.entity.projectile.EntityFluxArrow;
+import cofh.redstonearsenal.entity.projectile.EntityArrowFlux;
 import cofh.redstonearsenal.init.RAProps;
 import cofh.redstoneflux.api.IEnergyContainerItem;
 import cofh.redstoneflux.util.EnergyContainerItemWrapper;
@@ -180,7 +180,7 @@ public class ItemQuiverFlux extends ItemCore implements IInitializer, IModelRegi
 		if (stack.getTagCompound() == null) {
 			EnergyHelper.setDefaultEnergyTag(stack, 0);
 		}
-		return 1D - (double) stack.getTagCompound().getInteger(CoreProps.ENERGY) / (double) getMaxEnergyStored(stack);
+		return MathHelper.clamp(1.0D - ((double) stack.getTagCompound().getInteger(CoreProps.ENERGY) / (double) getMaxEnergyStored(stack)), 0.0D, 1.0D);
 	}
 
 	@Override
@@ -253,7 +253,7 @@ public class ItemQuiverFlux extends ItemCore implements IInitializer, IModelRegi
 	@Override
 	public EntityArrow createEntityArrow(World world, ItemStack item, EntityLivingBase shooter) {
 
-		return new EntityFluxArrow(world, shooter, isEmpowered(item));
+		return new EntityArrowFlux(world, shooter, isEmpowered(item));
 	}
 
 	@Override
@@ -333,7 +333,7 @@ public class ItemQuiverFlux extends ItemCore implements IInitializer, IModelRegi
 				'A', Items.ARROW,
 				'G', "gemCrystalFlux",
 				'I', "ingotElectrumFlux",
-				'S', Items.STRING
+				'S', "string"
 		);
 		// @formatter:on
 		return true;

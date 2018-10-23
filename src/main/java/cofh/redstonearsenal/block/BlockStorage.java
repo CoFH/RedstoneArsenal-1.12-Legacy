@@ -1,14 +1,15 @@
 package cofh.redstonearsenal.block;
 
 import cofh.core.block.BlockCore;
+import cofh.core.block.ItemBlockCore;
 import cofh.core.render.IModelRegister;
 import cofh.core.util.core.IInitializer;
 import cofh.core.util.helpers.DamageHelper;
 import cofh.core.util.helpers.EnergyHelper;
+import cofh.core.util.helpers.ItemHelper;
 import cofh.redstonearsenal.RedstoneArsenal;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
@@ -65,7 +66,7 @@ public class BlockStorage extends BlockCore implements IInitializer, IModelRegis
 	@Override
 	protected BlockStateContainer createBlockState() {
 
-		return new BlockStateContainer(this, new IProperty[] { VARIANT });
+		return new BlockStateContainer(this, VARIANT);
 	}
 
 	@Override
@@ -78,9 +79,21 @@ public class BlockStorage extends BlockCore implements IInitializer, IModelRegis
 
 	/* TYPE METHODS */
 	@Override
+	public String getUnlocalizedName(ItemStack stack) {
+
+		return "tile.redstonearsenal.storage." + Type.values()[ItemHelper.getItemDamage(stack)].getNameRaw() + ".name";
+	}
+
+	@Override
+	public EnumRarity getRarity(ItemStack stack) {
+
+		return Type.values()[ItemHelper.getItemDamage(stack)].getRarity();
+	}
+
+	@Override
 	public IBlockState getStateFromMeta(int meta) {
 
-		return this.getDefaultState().withProperty(VARIANT, Type.byMetadata(meta));
+		return this.getDefaultState().withProperty(VARIANT, Type.values()[meta]);
 	}
 
 	@Override
@@ -164,7 +177,7 @@ public class BlockStorage extends BlockCore implements IInitializer, IModelRegis
 	public void registerModels() {
 
 		for (int i = 0; i < Type.values().length; i++) {
-			ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), i, new ModelResourceLocation(modName + ":" + name, "type=" + Type.byMetadata(i).getName()));
+			ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), i, new ModelResourceLocation(modName + ":" + name, "type=" + Type.values()[i].getName()));
 		}
 	}
 
@@ -175,7 +188,7 @@ public class BlockStorage extends BlockCore implements IInitializer, IModelRegis
 		this.setRegistryName("storage");
 		ForgeRegistries.BLOCKS.register(this);
 
-		ItemBlockStorage itemBlock = new ItemBlockStorage(this);
+		ItemBlockCore itemBlock = new ItemBlockCore(this);
 		itemBlock.setRegistryName(this.getRegistryName());
 		ForgeRegistries.ITEMS.register(itemBlock);
 
@@ -288,20 +301,6 @@ public class BlockStorage extends BlockCore implements IInitializer, IModelRegis
 		public EnumRarity getRarity() {
 
 			return this.rarity;
-		}
-
-		public static Type byMetadata(int metadata) {
-
-			if (metadata < 0 || metadata >= METADATA_LOOKUP.length) {
-				metadata = 0;
-			}
-			return METADATA_LOOKUP[metadata];
-		}
-
-		static {
-			for (Type type : values()) {
-				METADATA_LOOKUP[type.getMetadata()] = type;
-			}
 		}
 	}
 
