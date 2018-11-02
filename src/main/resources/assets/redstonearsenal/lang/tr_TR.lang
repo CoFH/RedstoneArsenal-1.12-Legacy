@@ -1,8 +1,8 @@
+### Translated by RoCoKo
 #tr_TR
 
 info.redstonearsenal.tool.chargeOff=§eZayıflatmak için (%s)tuşuna bas§r
 info.redstonearsenal.tool.chargeOn=§bGüçlendirmek için (%s)tuşuna bas§r 
-
 info.redstonearsenal.tool.energyPerUse=Kullanım Başına RF
 info.redstonearsenal.tool.shovel=Ayrıca eğilirken çapa görevi görür.
 info.redstonearsenal.tool.wrench=Ayrıca makas görevi görür.
@@ -11,7 +11,6 @@ item.redstonearsenal.armor.fluxBoots.name=Flux-Kaplama Botlar
 item.redstonearsenal.armor.fluxHelmet.name=Flux-Kaplama Kask
 item.redstonearsenal.armor.fluxLegs.name=Flux-Kaplama Pantolon
 item.redstonearsenal.armor.fluxPlate.name=Flux-Kaplama Zırh
-
 item.redstonearsenal.material.dustElectrumFlux.name=Flux'lı Elektrum Alaşım
 item.redstonearsenal.material.gearElectrumFlux.name=Flux'lı Elektrum Dişli
 item.redstonearsenal.material.gemCrystalFlux.name=Flux Kristali
@@ -21,10 +20,10 @@ item.redstonearsenal.material.plateElectrumFlux.name=Flux'lı Elektrum Plaka
 item.redstonearsenal.material.plateArmorFlux.name=Flux'lı Zırh Kaplaması
 item.redstonearsenal.material.rodObsidian.name=Obsidyen Çubuk
 item.redstonearsenal.material.rodObsidianFlux.name=Flux-Kaplama Obsidyen Çubuk
-
 item.redstonearsenal.tool.fluxAxe.name=Flux-Kaplama Balta
 item.redstonearsenal.tool.fluxBattleWrench.name=Flux-Kaplama Savaş Anahtarı
 item.redstonearsenal.tool.fluxBow.name=Flux-Kaplama Yay
+item.redstonearsenal.tool.fluxExcavator.name=Flux-Kaplama Ekskavatör
 item.redstonearsenal.tool.fluxFishingRod.name=Flux-Kaplama Olta
 item.redstonearsenal.tool.fluxHammer.name=Flux-Kaplama Çekiç
 item.redstonearsenal.tool.fluxPickaxe.name=Flux-Kaplama Kazma
