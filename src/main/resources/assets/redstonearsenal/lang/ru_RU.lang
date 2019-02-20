@@ -1,10 +1,10 @@
 #ru_RU
 
-info.redstonearsenal.tool.chargeOff=§eНажмите (%s) что бы подавить§r
-info.redstonearsenal.tool.chargeOn=§bНажмите (%s) что бы разрешить§r
+info.redstonearsenal.tool.chargeOff=§eНажмите (%s) для подавления§r
+info.redstonearsenal.tool.chargeOn=§bНажмите (%s) для расширения возможностей§r
 
 info.redstonearsenal.tool.energyPerUse=RF за использование
-info.redstonearsenal.tool.shovel=Также работает как мотыга.
+info.redstonearsenal.tool.shovel=Также работает как мотыга, пока сидите.
 info.redstonearsenal.tool.wrench=Также работает как ножницы.
 
 item.redstonearsenal.armor.fluxBoots.name=Наполненные флаксом ботинки
@@ -16,7 +16,7 @@ item.redstonearsenal.material.dustElectrumFlux.name=Флаксовая элек�
 item.redstonearsenal.material.gearElectrumFlux.name=Флаксовая электрумовая шестерня
 item.redstonearsenal.material.gemCrystalFlux.name=Флаксовый кристалл
 item.redstonearsenal.material.ingotElectrumFlux.name=Флаксовый электрумовый слиток
-item.redstonearsenal.material.nuggetElectrumFlux.name=Кусочек флаксового электрума
+item.redstonearsenal.material.nuggetElectrumFlux.name=Флаксовый электрумовый самородок
 item.redstonearsenal.material.plateElectrumFlux.name=Флаксовая электрумовая пластина
 item.redstonearsenal.material.plateArmorFlux.name=Флаксовое покрытие брони
 item.redstonearsenal.material.rodObsidian.name=Обсидиановый стержень
@@ -25,7 +25,7 @@ item.redstonearsenal.material.rodObsidianFlux.name=Наполненный фла
 item.redstonearsenal.tool.fluxAxe.name=Наполненный флаксом топор
 item.redstonearsenal.tool.fluxBattleWrench.name=Наполненный флаксом боевой гаечный ключ
 item.redstonearsenal.tool.fluxBow.name=Наполненный флаксом лук
-item.redstonearsenal.tool.fluxExcavator.name=Наполненный флаксом заступ
+item.redstonearsenal.tool.fluxExcavator.name=Наполненная флаксом большая лопата
 item.redstonearsenal.tool.fluxFishingRod.name=Наполненная флаксом удочка
 item.redstonearsenal.tool.fluxHammer.name=Наполненный флаксом молот
 item.redstonearsenal.tool.fluxPickaxe.name=Наполненная флаксом кирка
