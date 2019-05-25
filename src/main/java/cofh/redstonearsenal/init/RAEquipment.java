@@ -225,7 +225,7 @@ public class RAEquipment {
 		private final ToolMaterial TOOL_MATERIAL;
 
 		/* BOW */
-		private float arrowDamage = 1.5F;
+		private float arrowDamage = 0.5F;
 		private float arrowSpeed = 0.5F;
 		private float zoomMultiplier = 0.35F;
 
