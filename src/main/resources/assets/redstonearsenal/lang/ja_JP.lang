@@ -7,10 +7,10 @@ info.redstonearsenal.tool.energyPerUse=消費RF
 info.redstonearsenal.tool.shovel=スニーク中はクワとしても機能します
 info.redstonearsenal.tool.wrench=スニーク中はハサミとしても機能します
 
-item.redstonearsenal.armor.fluxBoots.name=フラックス注入ブーツ
-item.redstonearsenal.armor.fluxHelmet.name=フラックス注入ヘルメット
-item.redstonearsenal.armor.fluxLegs.name=フラックス注入レギンス
-item.redstonearsenal.armor.fluxPlate.name=フラックス注入チェストプレート
+item.redstonearsenal.armor.fluxBoots.name=フラックス充電式ブーツ
+item.redstonearsenal.armor.fluxHelmet.name=フラックス充電式ヘルメット
+item.redstonearsenal.armor.fluxLegs.name=フラックス充電式レギンス
+item.redstonearsenal.armor.fluxPlate.name=フラックス充電式チェストプレート
 
 item.redstonearsenal.material.dustElectrumFlux.name=フラックス化エレクトラムの粉
 item.redstonearsenal.material.gearElectrumFlux.name=フラックス化エレクトラムの歯車
@@ -20,22 +20,22 @@ item.redstonearsenal.material.nuggetElectrumFlux.name=フラックス化エレ�
 item.redstonearsenal.material.plateElectrumFlux.name=フラックス化エレクトラムプレート
 item.redstonearsenal.material.plateArmorFlux.name=フラックス化アーマープレート
 item.redstonearsenal.material.rodObsidian.name=黒曜石の棒
-item.redstonearsenal.material.rodObsidianFlux.name=フラックス注入黒曜石の棒
+item.redstonearsenal.material.rodObsidianFlux.name=フラックス充電式黒曜石の棒
 
-item.redstonearsenal.tool.fluxAxe.name=フラックス注入斧
-item.redstonearsenal.tool.fluxBattleWrench.name=フラックス注入バトルレンチ
-item.redstonearsenal.tool.fluxBow.name=フラックス注入弓
-item.redstonearsenal.tool.fluxExcavator.name=フラックス注入エクスカベーター
-item.redstonearsenal.tool.fluxFishingRod.name=フラックス注入釣り竿
-item.redstonearsenal.tool.fluxHammer.name=フラックス注入ハンマー
-item.redstonearsenal.tool.fluxPickaxe.name=フラックス注入ツルハシ
-item.redstonearsenal.tool.fluxShield.name=フラックス注入盾
-item.redstonearsenal.tool.fluxShovel.name=フラックス注入シャベル
-item.redstonearsenal.tool.fluxSickle.name=フラックス注入草刈り鎌
-item.redstonearsenal.tool.fluxSword.name=フラックス注入剣
-item.redstonearsenal.tool.fluxWrench.name=フラックス注入オムニレンチ
+item.redstonearsenal.tool.fluxAxe.name=フラックス充電式斧
+item.redstonearsenal.tool.fluxBattleWrench.name=フラックス充電式バトルレンチ
+item.redstonearsenal.tool.fluxBow.name=フラックス充電式弓
+item.redstonearsenal.tool.fluxExcavator.name=フラックス充電式エクスカベーター
+item.redstonearsenal.tool.fluxFishingRod.name=フラックス充電式釣り竿
+item.redstonearsenal.tool.fluxHammer.name=フラックス充電式ハンマー
+item.redstonearsenal.tool.fluxPickaxe.name=フラックス充電式ツルハシ
+item.redstonearsenal.tool.fluxShield.name=フラックス充電式盾
+item.redstonearsenal.tool.fluxShovel.name=フラックス充電式シャベル
+item.redstonearsenal.tool.fluxSickle.name=フラックス充電式草刈り鎌
+item.redstonearsenal.tool.fluxSword.name=フラックス充電式剣
+item.redstonearsenal.tool.fluxWrench.name=フラックス充電式オムニレンチ
 
-item.redstonearsenal.util.fluxQuiver.name=フラックス注入矢筒
+item.redstonearsenal.util.fluxQuiver.name=フラックス充電式矢筒
 
 itemGroup.redstonearsenal.creativeTab=Redstone Arsenal
 
