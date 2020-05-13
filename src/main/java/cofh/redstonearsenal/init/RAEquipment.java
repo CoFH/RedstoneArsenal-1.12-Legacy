@@ -64,6 +64,13 @@ public class RAEquipment {
 	/* MATERIALS */
 	public static ArmorMaterial armorMaterialFlux;
 	public static ToolMaterial toolMaterialFlux;
+	
+	/* COSTS */
+	public static int basePower;
+	public static int toolPowerScale;
+	public static int armorPowerScale;
+	public static int empowerScale;
+	public static int multiblockScale;
 
 	static {
 		String category;
@@ -76,6 +83,32 @@ public class RAEquipment {
 
 		int harvestLevel = 4;
 		float efficiency = 8.0F;
+		
+		baseCost = 200;
+		toolPowerScale = 100;
+		armorPowerScale = 100;
+		empowerScale = 400;
+		multiblockScale = 200;
+		
+		category = "Equipment";
+		comment = "Base Power per usage.";
+		RedstoneArsenal.CONFIC.getConfiguration().getInt("BasePower", category, baseCost, 100, 3600, comment);
+		
+		category = "Equipment.CustomPowerScaling";
+		comment = "ADVANCED FEATURE - ONLY EDIT IF YOU KNOW WHAT YOU ARE DOING.\nValues are expressed as a percentage of Base Power; Base Scale Factor is 100 percent.\nValue will be rounded down to the nearest 10.";
+		RedstoneArsenal.CONFIG.getCategory(category).setComment(comment);
+		
+		comment = "Scale Factor for Tool usage.";
+		toolPowerScale = RedstoneArsenal.CONFIG.getConfiguration().getInt("Tools", category, toolPowerScale, 10, 1000, comment);
+		
+		comment = "Scale Factor for Armor usage.";
+		armorPowerScale = RedstoneArsenal.CONFIG.getConfiguration().getInt("Armor", category, armorPowerScale, 10, 1000, comment);
+		
+		comment = "Scale Factor for Empowered usage.";
+		empowerScale = RedstoneArsenal.CONFIG.getConfiguration().getInt("Empowered", category, empowerScale, 100, 3600, comment);
+		
+		comment = "Scale Factor for Axe, Hammer, Excavator, and Sickle usage. This only applies in Empowered mode, and is applied in addition to the Tools Scale Factor.";
+		multiblockScale = RedstoneArsenal.CONFIG.getConfiguration().getInt("MultiblockTools", category, multiblockScale, 100, 1000, comment);
 
 		category = "Equipment.Armor";
 		comment = "Adjust this value to set the default protection provided by the Flux-Infused Boots.";
@@ -99,6 +132,13 @@ public class RAEquipment {
 
 		armorMaterialFlux = EnumHelper.addArmorMaterial("RA:FLUXELECTRUM", "flux_armor", 100, new int[] { boots, legs, chest, helm }, 20, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 2.0F);
 		toolMaterialFlux = EnumHelper.addToolMaterial("RA:FLUXELECTRUM", harvestLevel, 100, efficiency, 0, 25);
+		
+		baseCost = (baseCost / 10) * 10;
+		toolPowerScale = (toolPowerScale / 10) * 10;
+		armorPowerScale = (armorPowerScale / 10) * 10;
+		empowerScale = (empowerScale / 10) * 10;
+		multiblockScale = (multiblockScale / 10) * 10;
+		
 	}
 
 	/* ARMOR */

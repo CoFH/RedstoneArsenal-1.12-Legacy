@@ -3,6 +3,7 @@ package cofh.redstonearsenal.item.tool;
 import cofh.core.init.CoreProps;
 import cofh.core.item.IAOEBreakItem;
 import cofh.core.util.RayTracer;
+import cofh.redstonearsenal.init.RAEquipment;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -24,7 +25,7 @@ public class ItemHammerFlux extends ItemToolFlux implements IAOEBreakItem {
 		addToolClass("hammer");
 		damage = 9;
 		damageCharged = 6;
-		energyPerUseCharged = 1600;
+		energyPerUseCharged = energyPerUseCharged * RAEquipment.multiblockScale / 100;
 
 		effectiveBlocks.addAll(ItemPickaxe.EFFECTIVE_ON);
 

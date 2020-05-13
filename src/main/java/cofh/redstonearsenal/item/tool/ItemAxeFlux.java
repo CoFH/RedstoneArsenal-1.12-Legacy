@@ -2,6 +2,7 @@ package cofh.redstonearsenal.item.tool;
 
 import cofh.core.init.CoreEnchantments;
 import cofh.core.item.IEnchantableItem;
+import cofh.redstonearsenal.init.RAEquipment;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -24,7 +25,7 @@ public class ItemAxeFlux extends ItemToolFlux implements IEnchantableItem {
 		addToolClass("axe");
 		damage = 7;
 		damageCharged = 6;
-		energyPerUseCharged = 1600;
+		energyPerUseCharged = energyPerUseCharged * RAEquipment.multiblockScale / 100;
 
 		effectiveBlocks.addAll(ItemAxe.EFFECTIVE_ON);
 

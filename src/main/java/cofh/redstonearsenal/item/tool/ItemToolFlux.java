@@ -9,6 +9,7 @@ import cofh.core.util.helpers.DamageHelper;
 import cofh.core.util.helpers.EnergyHelper;
 import cofh.core.util.helpers.MathHelper;
 import cofh.core.util.helpers.StringHelper;
+import cofh.redstonearsenal.init.RAEquipment;
 import cofh.redstonearsenal.init.RAProps;
 import cofh.redstoneflux.api.IEnergyContainerItem;
 import cofh.redstoneflux.util.EnergyContainerItemWrapper;
@@ -46,8 +47,8 @@ public abstract class ItemToolFlux extends ItemToolCore implements IEnchantableI
 	protected int maxEnergy = 320000;
 	protected int maxTransfer = 4000;
 
-	protected int energyPerUse = 200;
-	protected int energyPerUseCharged = 800;
+	protected int energyPerUse = RAEquipment.basePower * RAEquipment.toolPowerScale / 100;
+	protected int energyPerUseCharged = energyPerUse * RAEquipment.empoweredScale / 100;
 
 	protected int damage;
 	protected int damageCharged = 4;

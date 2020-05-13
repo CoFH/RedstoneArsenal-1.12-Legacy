@@ -1,5 +1,6 @@
 package cofh.redstonearsenal.item.tool;
 
+import cofh.redstonearsenal.init.RAEquipment;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -18,7 +19,7 @@ public class ItemSickleFlux extends ItemToolFlux {
 		addToolClass("sickle");
 		damage = 4;
 		damageCharged = 6;
-		energyPerUseCharged = 1200;
+		energyPerUseCharged = energyPerUseCharged * RAEquipment.multiblockScale / 100;
 
 		effectiveBlocks.add(Blocks.WEB);
 		effectiveBlocks.add(Blocks.VINE);
