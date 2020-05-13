@@ -7,6 +7,7 @@ import cofh.core.item.ItemArmorCore;
 import cofh.core.util.helpers.EnergyHelper;
 import cofh.core.util.helpers.MathHelper;
 import cofh.core.util.helpers.StringHelper;
+import cofh.redstonearsenal.init.RAEquipment;
 import cofh.redstonearsenal.init.RAProps;
 import cofh.redstoneflux.api.IEnergyContainerItem;
 import cofh.redstoneflux.util.EnergyContainerItemWrapper;
@@ -43,7 +44,7 @@ public class ItemArmorFlux extends ItemArmorCore implements ISpecialArmor, IEner
 	protected int maxTransfer = 4000;
 
 	protected double absorbRatio = 0.9D;
-	protected int energyPerDamage = 200;
+	protected int energyPerDamage = RAEquipment.basePower * RAEquipment.armorPowerScale / 100;
 
 	public ItemArmorFlux(ArmorMaterial material, EntityEquipmentSlot type) {
 
