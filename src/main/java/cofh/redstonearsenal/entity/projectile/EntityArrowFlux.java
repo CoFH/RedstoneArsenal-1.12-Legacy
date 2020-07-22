@@ -27,6 +27,7 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.*;
 import net.minecraft.world.World;
+import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 
 import javax.annotation.Nullable;
@@ -228,7 +229,7 @@ public class EntityArrowFlux extends EntityArrow {
 					traceResult = null;
 				}
 			}
-			if (traceResult != null) {
+			if (traceResult != null && !ForgeEventFactory.onProjectileImpact(this, traceResult)) {
 				this.onHit(traceResult);
 			}
 			this.posX += this.motionX;
